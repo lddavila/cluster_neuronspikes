@@ -1,0 +1,4 @@
+#ignore all the .mat files
+*.mat
+#ignore all files in the data folder
+/Data
