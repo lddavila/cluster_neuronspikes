@@ -42,6 +42,9 @@ function good_filt = remove_bad_clusters(aligned, cfs, ir, tvals, config)
         [~, peakpcs] = pca(peaks);
         data = zscore([peaks, peakpcs(:, 1:num_peaks-1)]);
         dim_filter = select_dimensions_dip(data, config);
-        good_filt(k) = ~any(dim_filter);
+        good_filt(k) = ~any(dim_filter); %if any of the dimensions are bad then the entire cluster is scrapped
+        if ~good_filt(k) 
+            % disp("Cluster " + string(k) + " had " + string(sum(dim_filter))+" bad dimensions and will be removed");
+        end
     end
 end

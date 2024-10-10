@@ -17,7 +17,7 @@ timestamps = timestamps(:);
 % to sample X spike to concatenate wires, and transpose to spike X sample:
 if save_data
     matdata = [1e-6*timestamps clustnums ...
-                reshape(permute(raw, [3 1 2]), 128, [])' ];
+                reshape(permute(raw, [3 1 2]), [], size(raw,2)).' ];
 else
     matdata = [1e-6*timestamps clustnums ];
     matdata(matdata(:, 2) == 0, :) = [];

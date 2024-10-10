@@ -32,6 +32,8 @@ function [final_clusters, bad_clusters] = run_clustering(aligned, spike_idx, ir,
     spike_aligned = aligned(:, true_spike_idx, :);
     % plot_the_spikes_ver_2(spike_aligned,"In Run_clustering.m",[],[1,2,3,4],[])
     raw_clusters = core_cluster_loop(spike_aligned, @extract_cluster_features, config);
+
+    % plot_the_cf(raw_clusters,aligned,["Called by run\_clustering.m","Before Refinment"]);
     
     % Inject those cluster indices into the set of indices defined by the
     % refine_spike_idx
@@ -43,6 +45,7 @@ function [final_clusters, bad_clusters] = run_clustering(aligned, spike_idx, ir,
     else
         refined_clusters = cellmap(@(x) refine_spike_idx(x), inj_clusters);
     end
+    % plot_the_cf(refined_clusters,aligned,["Called by run\_clustering.m","After Refinment"]);
         
     % Side effect of `cluster' + refinement is that it can output really
     % obviously bad clusters. Remove those.
@@ -50,4 +53,6 @@ function [final_clusters, bad_clusters] = run_clustering(aligned, spike_idx, ir,
     bad_clusters = refined_clusters(~good_filt);
         
     final_clusters = finalize_clusters(aligned, refined_clusters(good_filt), config);
+    %plot_the_cf(final_clusters,aligned,["Called by run\_clustering.m","After finalize\_clusters"]);
+
 end

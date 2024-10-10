@@ -40,6 +40,10 @@ function [refined_cluster_idx, backup] = refine_cluster(features, peaks, cluster
         any(mean_peaks > config.params.TF_NUM_THRESH * tvals' & mean_peaks ./ ir' > config.params.TF_IR_PERCENT);
     if rating < config.params.RF_GOOD_RATING || far_thresh
         new_core = extract_core(features, extract_core(features, r_cluster_idx, config), config);
+        if isempty(new_core)
+            refined_cluster_idx = [];
+            return;
+        end
         clean = ~far_thresh;
         peak_filt = find_singular_cols(peaks(new_core, :));
         

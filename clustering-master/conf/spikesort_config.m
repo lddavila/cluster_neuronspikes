@@ -9,7 +9,7 @@ config.DEBUG = true;
 
 % If not empty, puts results in a separate directory instead of the session
 % dir.
-config.SAVE_DIRECTORY = '';
+config.SAVE_DIRECTORY = 'C:\Users\ldd77\OneDrive\Desktop\cluster_neuronspikes\Data\Results';
 
 % Usually keep it false - instead of only spikesorting a single session,
 % spikesorts all subfolders too.

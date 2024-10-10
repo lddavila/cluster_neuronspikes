@@ -1,0 +1,13 @@
+function [] = cut_spikes_around_gt(ordered_list_of_channels,array_of_ground_truth,min_z_score,channel_recording_dir,number_dps)
+
+data_cuts = {};
+for i=1:length(ordered_list_of_channels)
+    current_channel_data = importdata(dir_with_channel_recordings+"\"+ordered_list_of_channels+".mat");
+    for j=1:length(array_of_ground_truth)
+        current_peak = array_of_ground_truth(j);
+        if curren
+    end
+
+end
+
+end

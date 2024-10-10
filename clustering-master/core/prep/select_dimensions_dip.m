@@ -9,7 +9,7 @@ function [dim_filter, num_good_dims] = select_dimensions_dip(data, config)
     num_good_dims = 0;
     for k = 1:size(data, 2)
         dim = data(:, k);
-        [passed, good] = overlap_test(dim, config);
+        [passed, good] = overlap_test(dim, config,k);
         if passed
             dim_filter(k) = true;
             if good

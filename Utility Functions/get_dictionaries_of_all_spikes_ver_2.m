@@ -1,4 +1,4 @@
-function [tetrode_dictionary,spike_tetrode_dictionary,timing_tetrode_dictionary,channel_to_tetrode_dictionary,spiking_channel_tetrode_dictionary,spike_tetrode_dictionary_samples_format] = get_dictionaries_of_all_spikes(art_tetr_array,spike_windows,recording_matrix,timestamps,number_of_dps_per_slice)
+function [tetrode_dictionary,spike_tetrode_dictionary,timing_tetrode_dictionary,channel_to_tetrode_dictionary,spiking_channel_tetrode_dictionary,spike_tetrode_dictionary_samples_format] = get_dictionaries_of_all_spikes_ver_2(art_tetr_array,spike_windows,dir_with_chan_recordings,timestamps,number_of_dps_per_slice,scale_factor)
 %tetrode_dictionary
     %keys: "t" + tetrode number
     %values: all channels which are part of the current dictionary
@@ -41,7 +41,7 @@ for i=1:size(art_tetr_array,1)
     % if i==57
     %     % disp("nan")
     % end
-    [current_slice,current_timing,current_spiking_channels,spike_slices_in_samples_format] = get_slices_per_artificial_tetrode(channels_in_current_tetrode,spike_windows,recording_matrix,timestamps,number_of_dps_per_slice);
+    [current_slice,current_timing,current_spiking_channels,spike_slices_in_samples_format] = get_slices_per_artificial_tetrode_ver_2(channels_in_current_tetrode,spike_windows,dir_with_chan_recordings,timestamps,number_of_dps_per_slice,scale_factor);
 
 
 

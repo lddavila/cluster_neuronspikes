@@ -1,4 +1,4 @@
-function [passed, good] = overlap_test(dim, config)
+function [passed, good] = overlap_test(dim, config,dimension_number)
 %OVERLAP_TEST Performs the overlap test as part of dimension selection.
 %   [passed, good] = OVERLAP_TEST(dim) returns whether the dimension passed
 %   the overlap test, as well as whether it can be considered a "good"
@@ -16,9 +16,23 @@ function [passed, good] = overlap_test(dim, config)
     k = config.params.OT_WIDTH_SCALING_FACTOR;
     width = k * (4/(3 * length(dim)))^(1/5);
     [f, xi] = ksdensity(dim, 'width', width);
+    % 
+    % figure();
+    % plot(xi,f);
+    % hold on;
+    % xlabel("Estimated Function Values");
+    % ylabel("Evalutation Points");
+    % hold off;
+    % close all;
     
     pks = find_peaks(f);
+    if isempty(pks)
+        disp("No Peaks Found for dim" + string(dimension_number))
+    end
     valleys = find_peaks(-1 * f);
+    if isempty(valleys)
+        disp("No valleys found for dim" + string(dimension_number))
+    end
     pks = pks{1};
     valleys = valleys{1};
     

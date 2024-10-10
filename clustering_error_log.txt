@@ -1,0 +1,61 @@
+Tetrode: t7 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t21 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t22 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t27 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t27 aligned.mat'.
+Tetrode: t28 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
+Tetrode: t36 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t39 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t42 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t54 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t54 aligned.mat'.
+Tetrode: t55 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t55 aligned.mat'.
+Tetrode: t56 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t56 output.mat'.
+Tetrode: t57 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t57 output.mat'.
+Tetrode: t58 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t58 output.mat'.
+Tetrode: t59 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t55 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t55 output.mat'.
+Tetrode: t56 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t56 output.mat'.
+Tetrode: t57 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t57 output.mat'.
+Tetrode: t58 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t58 output.mat'.
+Tetrode: t59 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t60 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t60 output.mat'.
+Tetrode: t59 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t97 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t101 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t103 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t126 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t128 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t129 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t130 threw the following error while clusteirng mahal.m threw the warning Warning: Matrix is singular to working precision. 
+Tetrode: t131 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t132 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t138 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t151 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t155 threw the following error while clusteirng mahal.m threw the warning Warning: Matrix is singular to working precision. 
+Tetrode: t164 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t164 aligned.mat'.
+Tetrode: t165 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t166 threw the following error while clusteirng Unable to write file C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t166 output.mat: No space left on device.
+Tetrode: t167 threw the following error while clusteirng mahal.m threw the warning Warning: Matrix is singular to working precision. 
+Tetrode: t168 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t169 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t169 output.mat'.
+Tetrode: t170 threw the following error while clusteirng mahal.m threw the warning Warning: Matrix is singular to working precision. 
+Tetrode: t165 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t167 threw the following error while clusteirng mahal.m threw the warning Warning: Matrix is singular to working precision. 
+Tetrode: t168 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t170 threw the following error while clusteirng mahal.m threw the warning Warning: Matrix is singular to working precision. 
+Tetrode: t173 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t179 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t186 threw the following error while clusteirng mahal.m threw the warning Warning: Matrix is singular to working precision. 
+Tetrode: t190 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t193 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t219 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t234 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t252 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t259 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t260 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t260 output.mat'.
+Tetrode: t261 threw the following error while clusteirng Unable to write file 'C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed\initial_pass_results\t261 output.mat'.
+Tetrode: t264 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t267 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t274 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t281 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t169 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
+Tetrode: t1 threw the following error while clusteirng The number of rows of X must exceed the number of columns.

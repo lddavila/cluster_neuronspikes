@@ -6,7 +6,7 @@ function run_spikesort_ntt(filename, config)
 %
 %   'config' is the global spikesort configuration struct.
     
-    filenames = setup_filenames(filename, config.save_dir);
+    filenames = setup_filenames(filename, config.SAVE_DIRECTORY);
     
     if strncmp(config.MANUAL_DIR, '/', 1)
         manual_clustered = fullfile(config.MANUAL_DIR, filenames.session_name);

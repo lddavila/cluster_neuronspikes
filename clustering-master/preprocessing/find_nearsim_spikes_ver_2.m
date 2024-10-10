@@ -18,7 +18,7 @@ function nearsim_spikes = find_nearsim_spikes_ver_2(spikes, tvals)
     nearsim_spikes = false(1, numspikes);
     mindist = ceil(0.33 * numdp); % 200 Microseconds, min distance between the peaks of two spikes
     
-    %mindist = 6; % 200 Microseconds, min distance between the peaks of two spikes
+    % mindist = 6; % 200 Microseconds, min distance between the peaks of two spikes
     
     pks = cell(numwires, numspikes);
     

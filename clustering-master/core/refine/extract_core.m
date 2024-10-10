@@ -17,9 +17,27 @@ function cluster_core_idx = extract_core(features, cluster_idx, config)
     
     % Calculates Euclidean distance from each point to the center of the
     % cluster.
+    if size(cluster_features,1) < size(cluster_features,2)
+        disp("warning")
+        disp("cluster features has fewer row than columns")
+        disp("will error")
+        disp("occurs in extract_core.m")
+    end
     dists = mahal(cluster_features, cluster_features);
+    [warnMsg, warnId] = lastwarn;
+    if contains(warnMsg,'Matrix is close to singular or badly scaled. Results may be inaccurate')
+        warning("");
+        error("mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode")
+        % print("mahal.m thre the warning matrix is close to singular or badly scaled, so we won't use the current tetrode")
+        % cluster_core_idx =[];
+        % return;
+    end
+    if contains(warnMsg,'Matrix is singular to working')
+        warning("");
+        error("mahal.m threw the warning Warning: Matrix is singular to working precision. ")
+    end
     [~, ind] = sort(dists);
-    
+
     % Ideally the cluster core consists of 30% of the spikes in the
     % cluster.
     num_core_spikes = round(config.params.RF_CORE_CLUSTER_PERCENT * num_spikes);

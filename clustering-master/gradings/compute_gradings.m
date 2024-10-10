@@ -155,7 +155,7 @@ function grades = compute_gradings(aligned, timestamps, tvals, clusters, config)
         if isempty(other_cf)
             near_thresh_idx = [];
         else
-            near_thresh_idx = other_cf(all(bsxfun(@(x, y) x < y, other_peaks, 1.5 * tvals'), 2));
+            near_thresh_idx = other_cf(all(bsxfun(@(x, y) x < y, other_peaks, 1.5 * tvals), 2));
         end
         near_thresh_peaks = all_peaks(:, near_thresh_idx)';
         dim_filt = find_singular_cols(peaks) & find_singular_cols(near_thresh_peaks);
