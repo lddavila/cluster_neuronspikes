@@ -22,7 +22,7 @@ end
 what_is_precomputed = ["z_score","mean_and_std", "spikes_per_channel 3","spike_windows min_z_score 4 num dps 60","spikes_per_channel min_z_score 4","dictionaries min_z_score 4 num_dps 60"];
 
 %then plot the results of adding new channels in
-for i=7:length(valid_neighbors)
+for i=1:length(valid_neighbors)
     [output_array,aligned_array,reg_timestamps_array] =run_clustering_on_subtetrode(scale_factor,dir_with_channel_recordings,min_z_score,num_dps,timestamps_dir,precomputed_dir,what_is_precomputed,min_threshold,[channels_in_current_tetrode,valid_neighbors(i)],tetrode_you_want_to_load,valid_neighbors(i));
 
     output = output_array{1};

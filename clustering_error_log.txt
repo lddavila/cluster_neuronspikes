@@ -59,3 +59,6 @@ Tetrode: t274 threw the following error while clusteirng mahal.m threw the warni
 Tetrode: t281 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
 Tetrode: t169 threw the following error while clusteirng mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode
 Tetrode: t1 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
+Tetrode: t1 threw the following error while clusteirng Out of memory.
+Tetrode: t1 threw the following error while clusteirng Out of memory.
+Tetrode: t1 threw the following error while clusteirng Out of memory.

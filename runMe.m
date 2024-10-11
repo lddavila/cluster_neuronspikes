@@ -52,6 +52,7 @@ what_is_precomputed = ["z_score","mean_and_std", "spikes_per_channel 3","spike_w
 what_is_precomputed = run_entire_clustering_algorithm_ver_2(scale_factor,dir_with_channel_recordings,min_z_score,num_dps,timestamps_dir,precomputed_dir,what_is_precomputed,min_threshold);
 
 %% now test how adding new channels will affect the clustering results of 50 neuron recording
+close all;
 clc;
 art_tetr_array = build_artificial_tetrode;
 array_of_desired_tetrodes = get_array_of_all_tetrodes_which_contain_given_channel(345,art_tetr_array);
