@@ -1,7 +1,7 @@
-function [output_array,aligned_array,reg_timestamps_array] = run_clustering_on_subtetrode(scale_factor,dir_with_channel_recordings,min_z_score,num_dps,timestamps_dir,precomputed_dir,what_is_pre_computed,min_threshold,art_tetr_array,name_of_original_tetrode,added_channels,pass_number)
+function [has_been_computed] = manually_test_algorithm(scale_factor,dir_with_channel_recordings,min_z_score,num_dps,timestamps_dir,precomputed_dir,what_is_pre_computed,min_threshold,size_of_tetrode,art_tetr_array,example_name,extract_features_fn)
 % if what_is_pre_computed is not empty then we can skip several of the steps and just load the data
 %   each element of "what_is_precomputed" is a string telling you what is already done
-
+config = spikesort_config();
 %create the directory if it doesn't alreay exist so you can save anything you need to it
 if isempty(what_is_pre_computed)
     precomputed_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir);
@@ -33,11 +33,6 @@ else
 end
 %there is 1 mean per channel and 1 std dvn per channel
 
-%step 6: create artificial_tetrodes first pass,
-clc;
-% art_tetr_array = build_artificial_tetrode;
-% art_tetr_array = [25 26 27 28 ;122 219 314 315];
-% art_tetr_array = [25 26 27 101; 122 219 314 290];
 
 
 % step 7: get potential spikes from continuous recordings
@@ -56,11 +51,13 @@ if ~ismember("spikes_per_channel min_z_score "+ string(min_z_score),what_is_pre_
 else
     load(precomputed_dir+"\spikes_per_channel min_z_score " + string(min_z_score)+"\spikes_per_channel.mat", "spikes_per_channel")
 end
+
 % step 6; Get all the data points from the potential spikes
-if ~ismember("spike_windows min_z_score " + string(min_z_score) + " num dps " + string(num_dps),what_is_pre_computed)
-    spike_windows_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\spike_windows min_z_score " + string(min_z_score) + " num dps "+ string(num_dps));
+spike_windows_label = "spike_windows min_z_score " + string(min_z_score) + " num dps " + string(num_dps) ;
+if ~ismember(spike_windows_label,what_is_pre_computed)
+    spike_windows_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\"+spike_windows_label);
     spike_windows = get_spike_windows_ver_2(ordered_list_of_channels,spikes_per_channel,min_z_score,num_dps,z_score_dir);
-    has_been_computed = [has_been_computed,"spike_windows min_z_score" + string(min_z_score) + " num dps " + string(num_dps),what_is_pre_computed];
+    has_been_computed = [has_been_computed,spike_windows_label];
     %each array is made up of 4 numbers:
     %the first is the beginning of the spike window
     %the second is the end of the spike_window
@@ -68,7 +65,7 @@ if ~ismember("spike_windows min_z_score " + string(min_z_score) + " num dps " + 
     %the fourth is the original the peak of the spike according to find_peaks
     save(spike_windows_dir+"\spike_windows.mat","spike_windows");
 else
-    load(precomputed_dir+"\spike_windows min_z_score "+string(min_z_score)+" num dps "+string(num_dps) +"\spike_windows.mat","spike_windows")
+    load(precomputed_dir+"\"+spike_windows_label+"\spike_windows.mat","spike_windows")
 end
 
 
@@ -76,10 +73,10 @@ end
 timestamps = importdata(timestamps_dir+"\timestamps.mat");
 
 % step 8: get maps of each tetrode to its spikes
-name_of_possible_dictionaries_dir = "sub_tetrode_dictionaries min_z_score " + string(min_z_score) + " num_dps " + string(num_dps)+" OG tetrode "+name_of_original_tetrode + " new channels " + strjoin(string(added_channels));
-if ~ismember(name_of_possible_dictionaries_dir,what_is_pre_computed)
-    clc;
-    dictionaries_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\"+name_of_possible_dictionaries_dir);
+dictionaries_label = "testing dictionaries min_z_score " + string(min_z_score) + " num_dps " + string(num_dps) + " Number of Channels " + string(size_of_tetrode) + " Example " + example_name;
+if ~ismember(dictionaries_label,what_is_pre_computed)
+    % clc;
+    dictionaries_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\"+dictionaries_label);
     get_dictionaries_of_all_spikes_ver_3(art_tetr_array,spike_windows,dir_with_channel_recordings,timestamps,num_dps,scale_factor,dictionaries_dir);
     %tetrode_dictionary
     %keys: "t" + tetrode number
@@ -109,22 +106,34 @@ if ~ismember(name_of_possible_dictionaries_dir,what_is_pre_computed)
     % number_of_non_empty_tetrodes = check_how_many_tetrodes_have_more_than_zero_spikes(spike_tetrode_dictionary);
     % disp("Non Empty Tetrodes:" + string(number_of_non_empty_tetrodes))
     % clc;
-    has_been_computed = [has_been_computed,name_of_possible_dictionaries_dir];
+    has_been_computed = [has_been_computed,dictionaries_label];
 else
-    dictionaries_dir = precomputed_dir+"\"+name_of_possible_dictionaries_dir;
+    dictionaries_dir = precomputed_dir+"\"+dictionaries_label;
 end
 
 
 % Step 9: Run Clustering Algorithm
-% close all;
-clc;
-pass_label = "pass_number " + string(pass_number);
-if ~ismember(pass_label,what_is_pre_computed)
-    tetrode_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\" + pass_label);
-    tetrode_results_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\"+pass_label);
-    [output_array,aligned_array,reg_timestamps_array] = run_clustering_algorithm_on_desired_sub_tetrodes("t1",channel_wise_means,channel_wise_std,min_threshold,dir_with_channel_recordings,dictionaries_dir,tetrode_dir,tetrode_results_dir,name_of_original_tetrode + " Supplemental Channels "+strjoin(string(added_channels)));
-    has_been_computed = [has_been_computed,pass_label];
+%clc;
+array_of_desired_tetrodes = strcat("t",string(1:size(art_tetr_array,1)));
+initial_pass_label = "manual tests "+ "min_z_score " + string(min_z_score) + " num_dps " + string(num_dps) + " size of tetrode " + string(size_of_tetrode) + " channels Example" + example_name;
+if ~ismember(initial_pass_label,what_is_pre_computed)
 
+    initial_tetrode_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\"+initial_pass_label);
+    initial_tetrode_results_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\"+initial_pass_label+"results");
+    [output_array,aligned_array,~] = run_clustering_algorithm_on_desired_tetrodes_ver_4(array_of_desired_tetrodes,channel_wise_means,channel_wise_std,min_threshold,dir_with_channel_recordings,dictionaries_dir,initial_tetrode_dir,initial_tetrode_results_dir,extract_features_fn);
+    has_been_computed = [has_been_computed,initial_pass_label];
 
+end
+if ~isempty(output_array{1})
+    output = output_array{1};
+    aligned = aligned_array{1};
+    idx = extract_clusters_from_output(output(:,1),output,config);
+    for first_dimension = 1:length(art_tetr_array)
+        for second_dimension = first_dimension+1:length(art_tetr_array)
+            new_plot_proj(idx,aligned,first_dimension,second_dimension,art_tetr_array,example_name);
+        end
+    end
+else
+    disp(example_name + " failed to return any clusters");
 end
 end

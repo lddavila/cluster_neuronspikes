@@ -1,4 +1,4 @@
-function [output, aligned, reg_timestamps] = run_spikesort_ntt_core_ver2(raw, timestamps, good_spikes_idx_inj, ir, tvals, filenames, config,channels,iteration_number)
+function [output, aligned, reg_timestamps] = run_spikesort_ntt_core_ver3(raw, timestamps, good_spikes_idx_inj, ir, tvals, filenames, config,channels,iteration_number,extract_features_fn)
 %RUN_SPIKESORT_NTT_CORE Runs spike sorter on data extracted from the
 %tetrode.
 %   [output, aligned, reg_timestamps] = RUN_SPIKESORT_NTT_CORE(raw,
@@ -54,7 +54,7 @@ function [output, aligned, reg_timestamps] = run_spikesort_ntt_core_ver2(raw, ti
     
     % Run the spikesort algorithm (with only the spike-sort related config
     % struct).
-    [aligned, cf, grades] = spikesort_ver_2(reg_interp_raw, reg_timestamps, ir, tvals, config.spikesort,channels);
+    [aligned, cf, grades] = spikesort_ver_3(reg_interp_raw, reg_timestamps, ir, tvals, config.spikesort,channels,extract_features_fn);
     %plot_the_spikes_ver_2(raw,"Before Alignment",[4],channels,timestamps);
     %plot_the_spikes_ver_3(aligned,"After Alignment",[4],channels);
     % plot_the_spikes_ver_4(raw,"Before Alignment Channel 1",1)

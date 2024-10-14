@@ -27,14 +27,14 @@ function cluster_core_idx = extract_core(features, cluster_idx, config)
     [warnMsg, warnId] = lastwarn;
     if contains(warnMsg,'Matrix is close to singular or badly scaled. Results may be inaccurate')
         warning("");
-        error("mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode")
+        % error("mahal.m threw the warning matrix is close to singular or badly scaled, so we won't use the current tetrode")
         % print("mahal.m thre the warning matrix is close to singular or badly scaled, so we won't use the current tetrode")
         % cluster_core_idx =[];
         % return;
     end
     if contains(warnMsg,'Matrix is singular to working')
         warning("");
-        error("mahal.m threw the warning Warning: Matrix is singular to working precision. ")
+        % error("mahal.m threw the warning Warning: Matrix is singular to working precision. ")
     end
     [~, ind] = sort(dists);
 

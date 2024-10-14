@@ -13,12 +13,11 @@ for j=1:size(peaks,2)
         raw_spikes_1 = peaks(:,j);
         raw_spikes_2 = peaks(:,k);
         scatter(raw_spikes_1,raw_spikes_2);
-        hold on;
-        title([stage, "Num Spikes: "+string(size(peaks,1))])
-        subtitle(string(j) + " Vs " + string(k))
-       
-        xlabel("Peak " +string(j));
-        ylabel("Peak " + string(k));
+
+        title(stage)
+        subtitle(string(channels(j)) + " Vs " + string(channels(k)))
+        xlabel("Peak " +string(channels(j)));
+        ylabel("Peak " + string(channels(k)));
     end
 end
 

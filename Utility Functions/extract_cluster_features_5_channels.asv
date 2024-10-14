@@ -1,4 +1,7 @@
-function [cluster_data, supp_data] = extract_cluster_features(raw)
+function [cluster_data, supp_data] = extract_cluster_features_5_channels(raw)
+%slight modification of the extract_cluster_features function
+%modified to remove the non peak pcs
+%this is because when this function is used it means your tetrode is composed of 5 channels and therefore we eliminate one of the pc dimensions iin 
 %EXTRACT_CLUSTER_FEATURES Extracts features from the spike waveforms.
 %   [cluster_data, supp_data] = EXTRACT_CLUSTER_FEATURES(raw) returns two
 %   sets of features:
@@ -30,18 +33,16 @@ function [cluster_data, supp_data] = extract_cluster_features(raw)
 %
 %   See also GET_PEAKS, PCA, GET_NEW_PCS.
     peaks = get_peaks(raw, true);
-   % plot_peaks(peaks.',"in extract cluster features.m",[])
     num_peaks = size(peaks, 1);
     [~, peakpcs] = pca(peaks');
    %plot_pca_results(peakpcs);
     pcs = get_new_pcs(raw);
-    pc1 = pcs(:, :, 1);
+    % pc1 = pcs(:, :, 1);
 %     pc2 = pcs(:, :, 2);
 %     pcs = get_new_pcs(raw, true);
 %     pc1 = pcs(:, :, 1);
     
-    cluster_data = zscore([peaks ; pc1 ; peakpcs(:, 1:num_peaks-1)']'); % OG LINE
-     cluster_data = [peaks ; pc1 ; peakpcs(:, 1:num_peaks-1)']'; % OG LINE
+    cluster_data = zscore([peaks ; peakpcs(:, 1:num_peaks-1)']'); % OG LINE
    % cluster_data = zscore(peaks); %new line with pcs remsoved
 %     supp_data = zscore(pc2');
     supp_data = [];

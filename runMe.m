@@ -5,6 +5,11 @@ cd("..");
 cd("clustering-master\")
 addpath(genpath(pwd));
 cd("..")
+%% id unique clusters in initial pass
+clc;
+dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed (1)\initial_pass_results";
+unique_clusters = id_unique_clusters_in_nth_pass(dir_with_nth_pass_results,0.18);
+disp(size(unique_clusters))
 %% Work with ground truths
 ordered_list_of_channels = get_ordered_list_of_channel_names();
 ground_truth_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 Second Recording Ground Truth";
@@ -35,7 +40,8 @@ dir_to_save_everything_to = "C:\Users\ldd77\OneDrive - The University of Texas a
 precomputed_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 Second Precomputed Data";
 what_is_precomputed = ["z_score","mean_and_std", "spikes_per_channel 3","spike_windows min_z_score 4 num dps 60","spikes_per_channel min_z_score 4","dictionaries min_z_score 4 num_dps 60"];
 what_is_precomputed = run_entire_clustering_algorithm_ver_2(scale_factor,dir_with_channel_recordings,min_z_score,num_dps,timestamps_dir,precomputed_dir,what_is_precomputed,min_threshold);
-
+%% plot the graph of the probe
+create_graph_object_representing_probe();
 %% run spike detection for 50 neuron recording
 close all;
 clc;
@@ -49,7 +55,8 @@ create_z_score_matrix = 0;
 dir_to_save_everything_to = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second";
 precomputed_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed";
 what_is_precomputed = ["z_score","mean_and_std", "spikes_per_channel 3","spike_windows min_z_score 4 num dps 60","spikes_per_channel min_z_score 4", "dictionaries min_z_score 4 num_dps 60"];
-what_is_precomputed = run_entire_clustering_algorithm_ver_2(scale_factor,dir_with_channel_recordings,min_z_score,num_dps,timestamps_dir,precomputed_dir,what_is_precomputed,min_threshold);
+size_of_tetrode = 4;
+what_is_precomputed = run_entire_clustering_algorithm_ver_3(scale_factor,dir_with_channel_recordings,min_z_score,num_dps,timestamps_dir,precomputed_dir,what_is_precomputed,min_threshold,size_of_tetrode);
 
 %% now test how adding new channels will affect the clustering results of 50 neuron recording
 close all;
@@ -72,7 +79,35 @@ timestamps_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\3
 precomputed_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed";
 run_second_stage_of_clustering(dir_with_tetrode_initial_pass_grades,dir_with_tetrode_initial_pass_results,neighbors_of_current_tetrode,channels_in_current_tetrode,tetrode_you_want_to_load,dir_to_save_sub_tetrodes_to,dir_with_channel_recordings,scale_factor,min_z_score,num_dps,timestamps_dir,precomputed_dir,min_threshold);
 
+%% run the second stage en masse
+clc;
+results_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed (1)\initial_pass_results" ;
+list_of_initial_tetrodes = strcat("t",string(1:285));
+number_of_channels_to_add =2 ;
+scale_factor = 1;
+dir_with_channel_recordings = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Recording Level 3 Noise";
+min_z_score = 4;
+min_threshold = 20;
+num_dps = 60;
+timestamps_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 second timestamps" ;
+precomputed_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed (1)";
 
+pass_number = 2;
+
+run_second_pass_of_clustering(results_dir,list_of_initial_tetrodes,number_of_channels_to_add,scale_factor,dir_with_channel_recordings,min_z_score,min_threshold,num_dps,timestamps_dir,precomputed_dir,pass_number)
+
+%% manually test different cases 
+manually_made_tetrode = [294,198];
+scale_factor = -1;
+dir_with_channel_recordings = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Recording Level 3 Noise";
+min_z_score = 4;
+num_dps = 60;
+timestamps_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 second timestamps" ;
+precomputed_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed (1)";
+what_is_precomputed = ["z_score","mean_and_std", "spikes_per_channel 3","spike_windows min_z_score 4 num dps 60","spikes_per_channel min_z_score 4", "dictionaries min_z_score 4 num_dps 60"];
+min_threshold = 20;
+size_of_tetrode = length(manually_made_tetrode);
+manually_test_algorithm(scale_factor,dir_with_channel_recordings,min_z_score,num_dps,timestamps_dir,precomputed_dir,what_is_precomputed,min_threshold,size_of_tetrode,manually_made_tetrode)
 %% now test how adding new channels will affect the clustering results
 close all;
 tetrode_you_want_to_load = "t157";
