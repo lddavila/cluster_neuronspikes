@@ -48,7 +48,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
 %   10) Bhattacharyya Distance to unsorted spikes
 
     num_clusters = length(clusters);
-    grades = nan(num_clusters, 29);
+    grades = nan(num_clusters, 30);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -231,5 +231,10 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         else
             grades(k, 29) = 0;
         end
+
+        %grade 30 will only be another incompleteness grade based only off of symmetry of the histogram
+        %it will be #bins to left of bin with highest bin count / # bins to right of bin with highest bin count
+        grades(k,30) = compute_incompleteness_ver_2(compare_peaks);
+
     end
 end
