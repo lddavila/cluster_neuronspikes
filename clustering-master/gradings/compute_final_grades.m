@@ -10,11 +10,11 @@ function [final_grades, confidence] = compute_final_grades(grades, config)
     confidence = ones(1, num_clusters);
     
     for k = 1:num_clusters
-        lratio = grades(k, 1);
-        percent_short_isi = grades(k, 3);
-        below_threshold = grades(k, 4);
+        lratio = grades(k, 1); %
+        percent_short_isi = grades(k, 3); %Pay attention
+        below_threshold = grades(k, 4); %pay attention 
         isolation_dist = grades(k, 5);
-        min_bhat = grades(k, 9);
+        min_bhat = grades(k, 9); %pay attention
         bhat_unsorted = grades(k, 10);
         snr = grades(k, 18);
         
@@ -29,9 +29,9 @@ function [final_grades, confidence] = compute_final_grades(grades, config)
         
         fg = NaN;
         
-        if snr >= 0.25
+        if snr >= 0.25 %check deeper into this
             fg = -1;
-        elseif recording_perc < 0.25
+        elseif recording_perc < 0.25 
             fg = -2;
         elseif mpc > 0.75
             fg = -3;

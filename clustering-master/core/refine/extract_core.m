@@ -13,6 +13,7 @@ function cluster_core_idx = extract_core(features, cluster_idx, config)
     cluster_features = features(cluster_idx, :);
     data_filt = find_singular_cols(cluster_features);
     cluster_features = cluster_features(:, data_filt);
+    % cluster_features = cluster_features * 100;
     num_spikes = length(cluster_idx);
     
     % Calculates Euclidean distance from each point to the center of the

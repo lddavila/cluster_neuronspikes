@@ -72,7 +72,7 @@ function run_comparison(raw, ts, ir, tvals, config, manual_output, kk_cf, kk_out
     stat_filename = fullfile(out_dir, sprintf('%s_stat.mat', basename));
     run_cluster_comparison_statistic(aligned, tvals(wire_filter), ts, kk_output, manual_output, stat_filename, config);
     
-    grades = compute_gradings(aligned, ts, tvals(wire_filter), kk_cf, config.spikesort);
+    grades = compute_gradings_ver_2(aligned, ts, tvals(wire_filter), kk_cf, config.spikesort);
     [final_grades, confidence] = compute_final_grades(grades, config.spikesort);
     info_filename = fullfile(out_dir, sprintf('%s_info.mat', basename));
     save_info(info_filename, grades, final_grades, confidence, {}, '');

@@ -35,7 +35,7 @@ function regrade_ntt_ver_2(filename, config)
         if exist(filenames.output, 'file')
             t = load(filenames.output);
             clusters = extract_clusters_from_output(timestamps * 1e-6, t.output, config.spikesort);
-            grades = compute_gradings(aligned, timestamps, r_tvals, clusters, config.spikesort);
+            grades = compute_gradings_ver_2(aligned, timestamps, r_tvals, clusters, config.spikesort);
             [final_grades, confidence] = compute_final_grades(grades, config.spikesort);
             means = cellmap(@(x) squeeze(mean(aligned(:, x, :), 2)), clusters);
             
@@ -44,7 +44,7 @@ function regrade_ntt_ver_2(filename, config)
         
         if is_manual_clustered
             manual_clusters = extract_clusters_from_output(timestamps * 1e-6, manual_output, config.spikesort);
-            manual_grades = compute_gradings(aligned, timestamps, r_tvals, manual_clusters, config.spikesort);
+            manual_grades = compute_gradings_ver_2(aligned, timestamps, r_tvals, manual_clusters, config.spikesort);
             [manual_final_grades, manual_confidence] = compute_final_grades(manual_grades, config.spikesort);
             manual_means = cellmap(@(x) squeeze(mean(aligned(:, x, :), 2)), manual_clusters);
             

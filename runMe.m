@@ -5,11 +5,33 @@ cd("..");
 cd("clustering-master\")
 addpath(genpath(pwd));
 cd("..")
+
+%% plot ground truth
+close all;
+plot_ground_truth(ground_truth_array,10);
 %% id unique clusters in initial pass
 clc;
-dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\50 Neuron 300 Second Pre Computed (1)\initial_pass_results";
-unique_clusters = id_unique_clusters_in_nth_pass(dir_with_nth_pass_results,0.18);
+close all;
+dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron 300 Second Pre Computed\initial_pass_results";
+[unique_clusters,associated_tetrodes]= id_unique_clusters_in_nth_pass(dir_with_nth_pass_results,0.05,70);
 disp(size(unique_clusters))
+%% test to see which of the clusters contain a good percentage of ground truth timestamps
+clc
+compare_timestamps_to_ground_truth(ground_truth_array,unique_clusters,timestamps,2);
+%% cull noise clusters
+clc;
+close all;
+plot_the_og_output=1;
+grade_threshold = 1;
+less_than_or_greater = 0;
+possible_variables = ["OG tetrode","tightness","%Short ISI","Incompleteness","Template Matching","Min Bhat"];
+dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron 300 Second Pre Computed\initial_pass_results";
+dir_with_nth_pass_grades = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron 300 Second Pre Computed\initial_pass";
+condition_names_to_use = ["tightness","Template Matching","Min Bhat"];
+conditions = ["<","<",">"];
+values_to_compare_against = [0.1, 2, 1];
+min_amplitude = 60;
+cull_noise_clusters_ver_2(unique_clusters,associated_tetrodes,dir_with_nth_pass_grades,dir_with_nth_pass_results,plot_the_og_output,condition_names_to_use,conditions,values_to_compare_against,60);
 %% Work with ground truths
 ordered_list_of_channels = get_ordered_list_of_channel_names();
 ground_truth_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 Second Recording Ground Truth";
@@ -245,7 +267,7 @@ data_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 Sec
 %% get the means per channel, the std deviations per channel, and the z-score for every value
 %% plot ground truth
 close all;
-plot_ground_truth(ground_truth);
+plot_ground_truth(ground_truth_array);
 %% step 4: create artificial_tetrodes first pass, 
 clc;
 art_tetr_array = build_artificial_tetrode;

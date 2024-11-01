@@ -32,8 +32,8 @@ for c = 1:length(cluster_filters)
     legend_string{c+1} = "c"+string(c);
     % hold on;
 end
-xlabel(sprintf('Peak %d', x_axis))
-ylabel(sprintf('Peak %d', y_axis))
+xlabel(sprintf('Channel %d Peaks', channels(x_axis)))
+ylabel(sprintf('Channel %d Peaks', channels(y_axis)))
 title([current_tetrode,channel_string,"# of Total Spikes:"+string(size(aligned,2))]);
 legend(legend_string,'Location','best');
 hold off

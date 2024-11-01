@@ -134,5 +134,5 @@ function [aligned, cleaned_clusters, grades] = spikesort(raw, timestamps, ir, tv
     end
     
     % Finally compute grades
-    grades = compute_gradings(aligned, timestamps, r_tvals, cleaned_clusters, config);
+    grades = compute_gradings_ver_2(aligned, timestamps, r_tvals, cleaned_clusters, config);
 end

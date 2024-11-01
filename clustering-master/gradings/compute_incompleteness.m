@@ -11,6 +11,14 @@ function below_threshold = compute_incompleteness(peaks, tval)
 %   microvolts.
 
     [n, xout] = hist(peaks, 21);
+    mean_of_data = mean(peaks,"all");
+    mode_of_data = mode(peaks,"all");
+    median_of_data = median(peaks,"all");
+    skewness_of_data = skewness(peaks);
+
+    figure;
+    histogram(peaks,21)
+    title("Median:"+string(median_of_data)+" Mode:"+string(mode_of_data)+ " Mean"+string(mean_of_data)+ " Skewness:"+skewness_of_data);
     [~, max_n] = max(n);
     delta = xout(2) - xout(1);
     theo_bottom_half = xout(max_n + 1:end) - (xout(end) - xout(max_n)) - delta;

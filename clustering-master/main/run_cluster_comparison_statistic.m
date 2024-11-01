@@ -47,6 +47,6 @@ function run_cluster_comparison_statistic(aligned, tvals, timestamps, output, ma
         end
     end
     clusters_found = find(found);
-    manual_gradings = compute_gradings(aligned, timestamps, tvals, cf_manual, config.spikesort);
+    manual_gradings = compute_gradings_ver_2(aligned, timestamps, tvals, cf_manual, config.spikesort);
     save_stat(stat_filename, stat, clusters_found, manual_gradings);
 end

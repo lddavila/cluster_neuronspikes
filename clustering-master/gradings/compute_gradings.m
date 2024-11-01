@@ -17,7 +17,7 @@ function grades = compute_gradings(aligned, timestamps, tvals, clusters, config)
 %   'clusters' is a cell array of indices for each of the clusters.
 %
 %   The grades are:
-%   1) LRatio - a measure of isolation of the cluster from the rest of the
+%   1) LRatio(useless) - a measure of isolation of the cluster from the rest of the
 %   spikes
 %   2) Tightness - a measure of how tight the waveforms are using peaks
 %   3) Percent short ISIs - a measure of how much of the cluster has short
@@ -28,7 +28,7 @@ function grades = compute_gradings(aligned, timestamps, tvals, clusters, config)
 %   4) Incompleteness - a measure of how much of the cluster was cut off by the threshold
         %if the threshol is set incorrectly then you won't have smooth round edges to the cluster, instead you'll have sharp cuts
         %sometimes this is necessary because expanding in every dimension isn't possible as it will sometimes overlap with other clusters / destroy your shape
-%   5) Isolation Distance - a measure of how far a cluster is from the threshold
+%   5) Isolation Distance (useless) - a measure of how far a cluster is from the threshold
         %Similar to LRato and Bhaat distance, like distance for the thresholds
         %the more distant from the threshold the better the grade
         %might not be great because it depends on the thresholds which can change quite a bit
@@ -44,8 +44,9 @@ function grades = compute_gradings(aligned, timestamps, tvals, clusters, config)
         %compare with channels with biggest amplitude
         %might be good for creating better tetrode configurations
         %take a template from the highest spiking channel and compare it to the other channels in the tetrode 
-%   9) Bhattacharyya Distance to every cluster
-%   10) Bhattacharyya Distance to unsorted spikes
+        %calculate mean waveform of each cluster and then check the variance between the actual spikes 
+%   9) Bhattacharyya Distance to every cluster (going to be replaced with bhaat distance of correct dimensions) 
+%   10) Bhattacharyya Distance to unsorted spikes (useless because we simply have too many spikes for this to be useful)
 
     num_clusters = length(clusters);
     grades = nan(num_clusters, 27);
@@ -59,7 +60,7 @@ function grades = compute_gradings(aligned, timestamps, tvals, clusters, config)
         spikes = aligned(:, cluster_filter, :);
         peaks = all_peaks(:, cluster_filter);
         
-        % Set up the representative wire for the cluster
+        % Set up the representative wire for the clusterd
         [~, max_wire] = max(peaks, [], 1);
         poss_wires = unique(max_wire);
         n = histc(max_wire, poss_wires);

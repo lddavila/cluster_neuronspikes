@@ -1,8 +1,8 @@
-function [] = plot_ground_truth(ground_truth)
+function [] = plot_ground_truth(ground_truth,number_of_units_to_plot)
 figure;
 y_coordinater = 2;
 y_values = [1, 2];
-for i=1:size(ground_truth,2)
+for i=1:number_of_units_to_plot
     if i==1
         y_values = [y_values(1),y_values(2)];
     else

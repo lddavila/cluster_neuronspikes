@@ -120,7 +120,7 @@ if ~ismember(initial_pass_label,what_is_pre_computed)
 
     initial_tetrode_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\"+initial_pass_label);
     initial_tetrode_results_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\"+initial_pass_label+"results");
-    [output_array,aligned_array,~] = run_clustering_algorithm_on_desired_tetrodes_ver_4(array_of_desired_tetrodes,channel_wise_means,channel_wise_std,min_threshold,dir_with_channel_recordings,dictionaries_dir,initial_tetrode_dir,initial_tetrode_results_dir,extract_features_fn);
+    [output_array,aligned_array,~,filenames] = run_clustering_algorithm_on_desired_tetrodes_ver_5(array_of_desired_tetrodes,channel_wise_means,channel_wise_std,min_threshold,dir_with_channel_recordings,dictionaries_dir,initial_tetrode_dir,initial_tetrode_results_dir,extract_features_fn);
     has_been_computed = [has_been_computed,initial_pass_label];
 
 end
@@ -130,7 +130,7 @@ if ~isempty(output_array{1})
     idx = extract_clusters_from_output(output(:,1),output,config);
     for first_dimension = 1:length(art_tetr_array)
         for second_dimension = first_dimension+1:length(art_tetr_array)
-            new_plot_proj(idx,aligned,first_dimension,second_dimension,art_tetr_array,example_name);
+            new_plot_proj_ver_2(idx,aligned,first_dimension,second_dimension,art_tetr_array,example_name,filenames);
         end
     end
 else
