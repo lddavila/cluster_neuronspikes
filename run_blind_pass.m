@@ -9,12 +9,12 @@ cd("..")
 close all;
 clc;
 scale_factor = -1;
-dir_with_channel_recordings = "";
+dir_with_channel_recordings = "D\100 Neuron 300 Second recording Level 3 Noise";
 min_z_score = 4;
 min_threshold = 20;
 num_dps = 60;
-timestamps_dir = "";
-create_z_score_matrix = 0;
+timestamps_dir = "D:\300 second timestamps";
+create_z_score_matrix = 1;
 dir_to_save_everything_to = "";
 precomputed_dir = "";
 what_is_precomputed = [""];
