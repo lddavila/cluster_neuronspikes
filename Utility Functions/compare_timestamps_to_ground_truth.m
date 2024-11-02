@@ -1,5 +1,4 @@
 function [] = compare_timestamps_to_ground_truth(ground_truth,timestamps_of_clusters,timestamps,min_percentage_threshold)
-tol = 0.000000000000000001;
 ground_truth_timestamps = get_corresponding_timestamp_for_each_unit(timestamps,ground_truth);
 for j=1:size(timestamps_of_clusters,2)
     timestamps_of_current_cluster = timestamps_of_clusters{j}  * 10^6;

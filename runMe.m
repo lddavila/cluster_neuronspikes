@@ -12,7 +12,7 @@ plot_ground_truth(ground_truth_array,10);
 %% id unique clusters in initial pass
 clc;
 close all;
-dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron 300 Second Pre Computed\initial_pass_results";
+dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron Pre Computed For New Grades\initial_pass_results";
 [unique_clusters,associated_tetrodes]= id_unique_clusters_in_nth_pass(dir_with_nth_pass_results,0.05,70);
 disp(size(unique_clusters))
 %% test to see which of the clusters contain a good percentage of ground truth timestamps
