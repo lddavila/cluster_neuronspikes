@@ -13,25 +13,55 @@ plot_ground_truth(ground_truth_array,10);
 clc;
 close all;
 dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron Pre Computed For New Grades\initial_pass_results";
-[unique_clusters,associated_tetrodes]= id_unique_clusters_in_nth_pass(dir_with_nth_pass_results,0.05,70);
+[unique_clusters,associated_tetrodes]= id_unique_clusters_in_nth_pass(dir_with_nth_pass_results,0.1,70);
 disp(size(unique_clusters))
 %% test to see which of the clusters contain a good percentage of ground truth timestamps
 clc
-compare_timestamps_to_ground_truth(ground_truth_array,unique_clusters,timestamps,2);
-%% cull noise clusters
+[info_from_only_timestamp]=compare_timestamps_to_ground_truth(ground_truth_array,unique_clusters,timestamps,1,"only timestamp overlap");
+
+%% find every time a good cluster appears
+clc;
+list_of_clusters_where_good_cluster_appears =find_specific_cluster(associated_tetrodes,"t1 2");
+%% cull noise clusters based on tightness alone
 clc;
 close all;
 plot_the_og_output=1;
+dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron Pre Computed For New Grades\initial_pass_results";
+dir_with_nth_pass_grades = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron Pre Computed For New Grades\initial_pass";
+condition_names_to_use = ["tightness"];
+conditions = ["<"];
+values_to_compare_against = [0.1];
+min_amplitude = 60;
+[associated_tetrodes_without_noise,timestamps_without_noise] = cull_noise_clusters_ver_2(unique_clusters,associated_tetrodes,dir_with_nth_pass_grades,dir_with_nth_pass_results,plot_the_og_output,condition_names_to_use,conditions,values_to_compare_against,60);
+
+%% check against ground truths with my tightness conditions applied
+clc;
+[info_from_timestamp_and_tightness] = compare_timestamps_to_ground_truth(ground_truth_array,timestamps_without_noise,timestamps,2);
+
+%% cull noise clusters based on template matching alone
+clc;
+close all;
+plot_the_og_output=0;
 grade_threshold = 1;
 less_than_or_greater = 0;
 possible_variables = ["OG tetrode","tightness","%Short ISI","Incompleteness","Template Matching","Min Bhat"];
-dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron 300 Second Pre Computed\initial_pass_results";
-dir_with_nth_pass_grades = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron 300 Second Pre Computed\initial_pass";
-condition_names_to_use = ["tightness","Template Matching","Min Bhat"];
-conditions = ["<","<",">"];
-values_to_compare_against = [0.1, 2, 1];
+dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron Pre Computed For New Grades\initial_pass_results";
+dir_with_nth_pass_grades = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron Pre Computed For New Grades\initial_pass";
+condition_names_to_use = ["Template Matching"];
+conditions = ["<"];
+values_to_compare_against = [2];
 min_amplitude = 60;
-cull_noise_clusters_ver_2(unique_clusters,associated_tetrodes,dir_with_nth_pass_grades,dir_with_nth_pass_results,plot_the_og_output,condition_names_to_use,conditions,values_to_compare_against,60);
+[associated_tetrodes_without_noise,timestamps_without_noise] = cull_noise_clusters_ver_2(timestamps_without_noise,associated_tetrodes_without_noise,dir_with_nth_pass_grades,dir_with_nth_pass_results,plot_the_og_output,condition_names_to_use,conditions,values_to_compare_against,60);
+
+%% check against ground truths with my tightness conditions applied
+clc;
+[info_from_timestamp_tightness_and_template_matching] = compare_timestamps_to_ground_truth(ground_truth_array,timestamps_without_noise,timestamps,2);
+
+%%
+clc;
+true_positive_table = table(info_from_only_timestamp.unit_id,info_from_only_timestamp.cluster_number,info_from_only_timestamp.true_positive,info_from_timestamp_and_tightness.true_positive,info_from_timestamp_tightness_and_template_matching.true_positive,'VariableNames',{'Unit ID','Cluster Number','%TP Timestamp Overlap','%TP With Tightness Filter','%TP With TM Filter'});
+rows_where_it_improved = true_positive_table(true_positive_table{:,3} < true_positive_table{:,4} & true_positive_table{:,4} < true_positive_table{:,5},:);
+disp(rows_where_it_improved);
 %% Work with ground truths
 ordered_list_of_channels = get_ordered_list_of_channel_names();
 ground_truth_dir = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 Second Recording Ground Truth";

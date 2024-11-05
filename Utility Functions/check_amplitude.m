@@ -5,9 +5,11 @@ idx = extract_clusters_from_output(output(:,1),output,spikesort_config);
 
 data = get_peaks(aligned, true)';
 
-[~, max_wire] = max(data, [], 2);
-poss_wires = unique(max_wire);
-n = histc(max_wire, poss_wires);
+data_of_only_current_cluster = data(idx{current_cluster});
+
+[~, max_wire_of_current_clsuter] = max(data_of_only_current_cluster, [], 2);
+poss_wires = unique(max_wire_of_current_clsuter);
+n = histc(max_wire_of_current_clsuter, poss_wires);
 [~, max_n] = max(n);
 compare_wire = poss_wires(max_n);
 mean_of_compare_wire = mean(data(idx{current_cluster},compare_wire));
