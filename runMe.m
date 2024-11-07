@@ -12,6 +12,9 @@ load("C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 second ti
 %% plot ground truth
 close all;
 plot_ground_truth(ground_truth_array,10);
+%% extract the timestamps of each of my recordings
+dir_with_nth_pass_results = "D:\spike_gen_data\Recordings By Channel Precomputed";
+id_unique_clusters_in_nth_pass_ver2(dir_with_nth_pass_results,0.1,70);
 %% ensure that timestamps are exact
 check_to_ensure_timestamps_are_exact(timestamps,"C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron 300 Second Pre Computed\initial_pass_results");
 %% id unique clusters in initial pass
