@@ -17,10 +17,10 @@ subfolder_names = {subfolders(3:end).name};
 disp(subfolder_names.')
 
 
-%% Step 3: Run the blind pass parralelization toolbox
+%% Step 3: Run the blind pass
 precomputed_dir = "D:\spike_gen_data\Recordings By Channel Precomputed";
 dir_of_timestamps = "D:\spike_gen_data\Recordings By Channel Timestamps";
-parfor i=1:length(subfolder_names)
+for i=1:length(subfolder_names)
     close all;
     clc;
     scale_factor = -1;

@@ -12,8 +12,6 @@ load("C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 second ti
 %% plot ground truth
 close all;
 plot_ground_truth(ground_truth_array,10);
-%% ensure that timestamps are exact
-check_to_ensure_timestamps_are_exact(timestamps,"C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron 300 Second Pre Computed\initial_pass_results");
 %% id unique clusters in initial pass
 clc;
 close all;
@@ -33,7 +31,7 @@ list_of_clusters_where_good_cluster_appears =find_specific_cluster(associated_te
 %% cull noise clusters based on tightness alone
 clc;
 close all;
-plot_the_og_output=0;
+plot_the_og_output=1;
 dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron Pre Computed For New Grades\initial_pass_results";
 dir_with_nth_pass_grades = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron Pre Computed For New Grades\initial_pass";
 condition_names_to_use = ["tightness"];
@@ -63,7 +61,7 @@ min_amplitude = 60;
 
 %% check against ground truths with my tightness conditions applied
 clc;
-[info_from_timestamp_tightness_and_template_matching] = compare_timestamps_to_ground_truth_ver_2(ground_truth_array,timestamps_without_noise,timestamps);   
+[info_from_timestamp_tightness_and_template_matching] = compare_timestamps_to_ground_truth_ver_2(ground_truth_array,timestamps_without_noise,timestamps);
 
 %%
 clc;
