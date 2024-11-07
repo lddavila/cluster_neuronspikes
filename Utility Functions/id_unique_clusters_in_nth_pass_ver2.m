@@ -9,11 +9,11 @@ for subfolder_counter=1:length(subfolder_names)
     unique_clusters = {};
     associated_tetrodes = {};
     list_of_outputs = strtrim(string(ls(dir_with_nth_pass_results+"\"+current_subfolder+"\initial_pass_results\*output.mat"))); %get list of output files
-    list_of_reg_timestamps = strtrim(string(ls(dir_with_nth_pass_results+"\"+current_subfolder+"\initital_pass_results\*reg_timestamps.mat"))); %get the timestamps in seconds
+    list_of_reg_timestamps = strtrim(string(ls(dir_with_nth_pass_results+"\"+current_subfolder+"\initial_pass_results\*reg_timestamps.mat"))); %get the timestamps in seconds
     config = spikesort_config(); %load the config file;
     for i=1:length(list_of_outputs)
         current_tetrode_output = importdata(dir_with_nth_pass_results+"\"+current_subfolder+"\initial_pass_results\"+list_of_outputs(i)); %load all the output from the results of nth pass
-        current_tetrode_timestamps = importdata(dir_with_nth_pass_results+"\"+current_subfolder+"initial_pass_results\"+list_of_reg_timestamps(i));
+        current_tetrode_timestamps = importdata(dir_with_nth_pass_results+"\"+current_subfolder+"\initial_pass_results\"+list_of_reg_timestamps(i));
         name_of_current_tetrode = split(list_of_outputs(i)," "); %get the name of the current tetrode
         name_of_current_tetrode = name_of_current_tetrode(1); %get the name of the current tetrode
 

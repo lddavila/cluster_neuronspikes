@@ -7,7 +7,7 @@ addpath(genpath(pwd));
 cd("..")
 load("100 Neuron New Grades Clusters and Tetrodes.mat")
 load("100 Neuron Ground Truth.mat")
-load("C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 second timestamps\timestamps.mat");
+%load("C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 second timestamps\timestamps.mat");
 
 %% plot ground truth
 close all;
