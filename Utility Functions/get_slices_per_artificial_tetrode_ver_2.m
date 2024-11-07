@@ -16,7 +16,16 @@ spike_slices_in_samples_format = {};
 spike_windows_for_current_tetrode = [];
 for i=1:length(chan_of_art_tetrode)
     current_channel = chan_of_art_tetrode(i);
-    spike_windows_for_current_channel = cell2mat(spike_windows{current_channel}(:));
+    spike_windows_for_current_channel = zeros(size(spike_windows_for_current_tetrode{current_channel},2),4);
+    for j=1:size(spike_windows{current_channel},2)
+        if isempty(spike_windows_for_current_channel)
+            continue;
+        end
+        spike_windows_for_current_channel(j,1) = spike_windows{current_channel}{j}(1);
+        spike_windows_for_current_channel(j,1) = spike_windows{current_channel}{j}(2);
+        spike_windows_for_current_channel(j,1) = spike_windows{current_channel}{j}(3);
+        spike_windows_for_current_channel(j,1) = spike_windows{current_channel}{j}(4);
+    end
     if isempty(spike_windows_for_current_channel)
         continue;
     end
@@ -55,6 +64,10 @@ for i=1:size(sorted_spike_windows_for_current_tetrode,1)
     current_window = sorted_spike_windows_for_current_tetrode(i,:);
     window_beginning = current_window(1);
     window_end = current_window(2);
+
+    if window_beginning == window_end
+        continue;
+    end
     
     current_timing_slice = timing_matrix(window_beginning:window_end-1);
     time_slices(i,:) = current_timing_slice;
