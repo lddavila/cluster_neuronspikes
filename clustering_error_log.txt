@@ -40,3 +40,109 @@ Tetrode: t1 threw the following error while clusteirng <a href="matlab: opentoli
 Invalid expression. When calling a function or indexing a variable, use parentheses. Otherwise, check for mismatched delimiters.
 Tetrode: t1 threw the following error while clusteirng Index in position 2 is invalid. Array indices must be positive integers or logical values.
 Tetrode: t1 threw the following error while clusteirng Index in position 2 is invalid. Array indices must be positive integers or logical values.
+Tetrode: t1 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t2 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t3 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t4 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t5 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t6 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t7 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t8 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t9 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t10 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t11 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t12 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t13 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t14 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t15 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t16 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t17 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t18 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t19 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t20 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t21 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t22 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t23 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t24 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t25 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t26 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t27 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t28 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t29 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t30 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t31 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t32 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t33 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t34 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t35 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t36 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t37 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t38 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t39 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t40 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t41 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t42 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t43 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t44 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t45 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t46 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t47 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t48 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t49 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t50 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t51 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t52 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t53 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t54 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t55 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t56 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t57 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t58 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t59 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t60 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t61 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t62 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t63 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t64 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t65 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t66 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t67 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t68 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t69 threw the following error while clusteirng Interpolation requires at least two sample points for each grid dimension.
+Tetrode: t12 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
+Tetrode: t138 threw the following error while clusteirng Out of memory.
+Tetrode: t147 threw the following error while clusteirng Out of memory.
+Tetrode: t148 threw the following error while clusteirng Out of memory.
+Tetrode: t149 threw the following error while clusteirng Out of memory.
+Tetrode: t150 threw the following error while clusteirng Out of memory.
+Tetrode: t151 threw the following error while clusteirng Out of memory.
+Tetrode: t152 threw the following error while clusteirng Out of memory.
+Tetrode: t153 threw the following error while clusteirng Out of memory.
+Tetrode: t154 threw the following error while clusteirng Out of memory.
+Tetrode: t155 threw the following error while clusteirng Out of memory.
+Tetrode: t156 threw the following error while clusteirng Out of memory.
+Tetrode: t157 threw the following error while clusteirng Out of memory.
+Tetrode: t158 threw the following error while clusteirng Out of memory.
+Tetrode: t159 threw the following error while clusteirng Out of memory.
+Tetrode: t160 threw the following error while clusteirng Out of memory.
+Tetrode: t161 threw the following error while clusteirng Out of memory.
+Tetrode: t162 threw the following error while clusteirng Out of memory.
+Tetrode: t163 threw the following error while clusteirng Out of memory.
+Tetrode: t164 threw the following error while clusteirng Out of memory.
+Tetrode: t165 threw the following error while clusteirng Out of memory.
+Tetrode: t166 threw the following error while clusteirng Out of memory.
+Tetrode: t167 threw the following error while clusteirng Out of memory.
+Tetrode: t168 threw the following error while clusteirng Out of memory.
+Tetrode: t169 threw the following error while clusteirng Out of memory.
+Tetrode: t170 threw the following error while clusteirng Out of memory.
+Tetrode: t171 threw the following error while clusteirng Out of memory.
+Tetrode: t172 threw the following error while clusteirng Out of memory.
+Tetrode: t173 threw the following error while clusteirng Out of memory.
+Tetrode: t174 threw the following error while clusteirng Out of memory.
+Tetrode: t175 threw the following error while clusteirng Out of memory.
+Tetrode: t80 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
+Tetrode: t26 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
+Tetrode: t26 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
+Tetrode: t217 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
+Tetrode: t218 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
+Tetrode: t220 threw the following error while clusteirng The number of rows of X must exceed the number of columns.

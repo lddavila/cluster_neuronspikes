@@ -1,4 +1,4 @@
-function [has_been_computed] = run_entire_clustering_algorithm_ver_2(scale_factor,dir_with_channel_recordings,min_z_score,num_dps,timestamps_dir,precomputed_dir,what_is_pre_computed,min_threshold)
+function [has_been_computed] = run_spike_cutting(scale_factor,dir_with_channel_recordings,min_z_score,num_dps,timestamps_dir,precomputed_dir,what_is_pre_computed,min_threshold)
 % if what_is_pre_computed is not empty then we can skip several of the steps and just load the data
 %   each element of "what_is_precomputed" is a string telling you what is already done
 
@@ -116,19 +116,5 @@ else
 end
 
 
-% Step 9: Run Clustering Algorithm
-% close all;
-clc;
-% 80 and 116 and 14
-% array_of_desired_tetrodes = get_array_of_all_tetrodes_which_contain_given_channel(54,art_tetr_array);
-% array_of_desired_tetrodes = array_of_desired_tetrodes(2:end);
-array_of_desired_tetrodes = strcat("t",string(1:size(art_tetr_array,1)));
-if ~ismember("initial_pass",what_is_pre_computed)
-    initial_tetrode_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\initial_pass min z_score"+string(min_z_score));
-    initial_tetrode_results_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\initial_pass_results min z_score" + string(min_z_score));
-    [output_array,aligned_array,reg_timestamps_array] = run_clustering_algorithm_on_desired_tetrodes_ver_3(array_of_desired_tetrodes,channel_wise_means,channel_wise_std,min_threshold,dir_with_channel_recordings,dictionaries_dir,initial_tetrode_dir,initial_tetrode_results_dir);
-    has_been_computed = [has_been_computed,"initial_pass"];
 
-
-end
 end
