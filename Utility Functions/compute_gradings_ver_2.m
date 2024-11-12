@@ -245,7 +245,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         low_cutoff = 50;
         medium_cutoff = 100;
         high_cutoff = 150;
-        grades(k,31) = category_of_cluster(low_cutoff,medium_cutoff,high_cutoff,compare_peaks);
+        grades(k,31) = category_of_cluster(low_cutoff,medium_cutoff,high_cutoff,peaks);
         
 
     end

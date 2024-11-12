@@ -20,11 +20,8 @@ for c = 1:length(cluster_filters)
     cluster_x = cluster(:, x_axis);
     cluster_y = cluster(:, y_axis);
     myplot(cluster_x, cluster_y, colors(c,:), 'o', 2)
-    if c==cluster_we_care_about
-        legend_string{c+1} = "*c"+string(c));
-    else
-        legend_string{c+1} = "c"+string(c);
-    end
+
+    legend_string{c+1} = "c"+string(c);
 end
 xlabel(sprintf('Channel %d Peaks', channels(x_axis)))
 ylabel(sprintf('Channel %d Peaks', channels(y_axis)))

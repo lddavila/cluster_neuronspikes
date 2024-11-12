@@ -74,6 +74,20 @@ list_of_tetrodes = strcat("t",string(1:285));
 dir_with_timestamps_and_rvals = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass min z_score"+string(varying_z_scores(i));
 get_grades_for_nth_pass_of_clustering(dir_with_timestamps_and_rvals,dir_with_output,list_of_tetrodes,dir_to_save_grades_to,config,varying_z_scores(i))
 end
-% dir_with_output = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score3.5";
-% dir_with_timestamps_and_rvals = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score3.5";
-% dir_to_save_grades_to = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score 3.5 grades";
+%% compare different cut thresholds for the same recording
+dir_of_nth_pass_recording = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise";
+list_of_z_scores_to_check = [3,3.5,4];
+list_of_tetrodes = strcat("t",string(1:285));
+%relevant grades include
+%tightness 2
+%percent short isi 3
+%incompleteness 4
+%template matching 8
+%min bhat 9
+clc;
+close all;
+names_of_grades = ["Tight","% Short ISI","Inc", "Temp Mat","Min Bhat","Skewness","TM Updated","Sym of Hist","Average Amp"];
+relevant_grades = [2,3,4,8,9,28,29,30,31];
+
+
+compare_different_cut_thresholds(dir_of_nth_pass_recording,list_of_z_scores_to_check,list_of_tetrodes,relevant_grades,names_of_grades);
