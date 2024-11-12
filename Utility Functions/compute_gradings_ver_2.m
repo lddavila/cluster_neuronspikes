@@ -48,7 +48,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
 %   10) Bhattacharyya Distance to unsorted spikes
 
     num_clusters = length(clusters);
-    grades = nan(num_clusters, 30);
+    grades = nan(num_clusters, 31);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -84,7 +84,8 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         isi = diff(ts) * 1e-6; % Convert to seconds
         short_isi_len = config.params.GR_SHORT_ISI_LEN;
         short_isi = sum(isi < short_isi_len)/length(isi); % Fraction of ISI < short_isi_len
-        grades(k, 3) = short_isi;
+        grades(k, 3) = short_isi; %OG
+        
         
         % Theoretical fraction below threshold
         below_threshold = compute_incompleteness(compare_peaks, wire_thresh);
@@ -235,6 +236,17 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         %grade 30 will only be another incompleteness grade based only off of symmetry of the histogram
         %it will be #bins to left of bin with highest bin count / # bins to right of bin with highest bin count
         grades(k,30) = compute_incompleteness_ver_2(compare_peaks);
+
+        %grade 31 will classify the cluster into high medium or low 
+        %grade of 1 indicates low average amplitude of cluster
+        %grade of 2 indicates medium average amplitude of cluster
+        %grade of 3 indicates high average amplitude of cluster
+        %this grade can be used to interpret the validity of other grades
+        low_cutoff = 50;
+        medium_cutoff = 100;
+        high_cutoff = 150;
+        grades(k,31) = category_of_cluster(low_cutoff,medium_cutoff,high_cutoff,compare_peaks);
+        
 
     end
 end

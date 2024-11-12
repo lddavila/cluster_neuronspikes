@@ -17,7 +17,9 @@ for i=1:length(list_of_desired_tetrodes)
     load(dictionaries_dir+"\"+current_tetrode+" spike_tetrode_dictionary_samples_format.mat","spike_tetrode_dictionary_samples_format");
     channels_in_current_tetrode = tetrode_dictionary(current_tetrode);
     raw = spike_tetrode_dictionary(current_tetrode);
-
+    if isempty(raw)
+        continue
+    end
     number_of_spikes = size(raw,2);
     %disp("Tetrode #"+ string(current_tetrode)+" has " + string(size(raw,2)) + " spikes")
     raw_in_samples_format = spike_tetrode_dictionary_samples_format(current_tetrode);
@@ -47,7 +49,7 @@ for i=1:length(list_of_desired_tetrodes)
 
 
     try
-    [output,aligned,reg_timestamps] = run_spikesort_ntt_core_ver2(raw,timestamps_for_current_tetrode,good_spike_idx,ir,tvals,filenames,config,channels_in_current_tetrode,i);
+    [output,aligned,reg_timestamps] = run_spikesort_ntt_core_ver4(raw,timestamps_for_current_tetrode,good_spike_idx,ir,tvals,filenames,config,channels_in_current_tetrode,i);
     %   - the first column contains the timestamps of the spikes in seconds
     %   - the second column contains the cluster classification of the spikes
     %       E.g., a value of '3' means that the spike belongs to cluster 3.
@@ -88,6 +90,6 @@ for i=1:length(list_of_desired_tetrodes)
         fclose(fileID);
         disp("Error Logged")
     end
-    disp("Finished "+ string(i)+"/"+string(length(list_of_desired_tetrodes)))
+    disp("Finished Clustering"+ string(i)+"/"+string(length(list_of_desired_tetrodes)))
 end
 end

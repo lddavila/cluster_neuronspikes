@@ -4,10 +4,13 @@ dir_flags = [files_containing_recordings.isdir];
 subfolders = files_containing_recordings(dir_flags);
 subfolder_names = {subfolders(3:end).name};
 %disp(subfolder_names.')
+unique_clusters =cell(1,length(subfolder_names));
+associated_tetrodes = {1,length(subfolder_names)};
 for subfolder_counter=1:length(subfolder_names)
     current_subfolder = subfolder_names{subfolder_counter};
-    unique_clusters = {};
-    associated_tetrodes = {};
+
+    current_subfolder_clusters= {};
+    current_subfolder_associated_tetrodes = {};
     list_of_outputs = strtrim(string(ls(dir_with_nth_pass_results+"\"+current_subfolder+"\initial_pass_results\*output.mat"))); %get list of output files
     list_of_reg_timestamps = strtrim(string(ls(dir_with_nth_pass_results+"\"+current_subfolder+"\initial_pass_results\*reg_timestamps.mat"))); %get the timestamps in seconds
     config = spikesort_config(); %load the config file;
@@ -23,12 +26,12 @@ for subfolder_counter=1:length(subfolder_names)
         %the remaining columns are the actual data points of the spikes
         if i==1 %if i is equal to 1 then just add all of the clusters to the unique clusters list
             for j=1:length(cluster_idxs)
-                unique_clusters{end+1} = current_tetrode_timestamps(cluster_idxs{j},1); %add the current cluster to your list of unique clusters
-                associated_tetrodes{end+1} = name_of_current_tetrode+" " +string(j); %add the name of the tetrodes where this cluster appears
+                current_subfolder_clusters{end+1} = current_tetrode_timestamps(cluster_idxs{j},1); %add the current cluster to your list of unique clusters
+                current_subfolder_associated_tetrodes{end+1} = name_of_current_tetrode+" " +string(j); %add the name of the tetrodes where this cluster appears
             end
         else
-            for unique_cluster_counter=1:length(unique_clusters) %cycle through all of the already identified clusters
-                cluster_to_check_against = unique_clusters{unique_cluster_counter}; %get the timestamps of the current cluster
+            for unique_cluster_counter=1:length(current_subfolder_clusters) %cycle through all of the already identified clusters
+                cluster_to_check_against = current_subfolder_clusters{unique_cluster_counter}; %get the timestamps of the current cluster
                 supplemental_clusters = {}; %will contain any new clusters which are found
                 supplemental_associated_tetrodes = {}; %will contain the name of which tetrodes the new clusters were found in
                 for possible_new_cluster_counter=1:length(cluster_idxs) %cycle through possible new clusters
@@ -53,8 +56,8 @@ for subfolder_counter=1:length(subfolder_names)
                     %yes
                     %unique_clusters{unique_cluster_counter} =
                     if length(intersect(current_cluster_timestamps,cluster_to_check_against)) >=  min_overlap_percentage * min([length(cluster_to_check_against),length(current_cluster_timestamps)])
-                        unique_clusters{unique_cluster_counter} = union(current_cluster_timestamps,cluster_to_check_against); %overwrite the existing cluster timestamps, by unioning it with the existing cluster
-                        associated_tetrodes{unique_cluster_counter} = [associated_tetrodes{unique_cluster_counter},name_of_current_tetrode+" " + string(possible_new_cluster_counter)]; %add the tetrode to the association to the associated
+                        current_subfolder_clusters{unique_cluster_counter} = union(current_cluster_timestamps,cluster_to_check_against); %overwrite the existing cluster timestamps, by unioning it with the existing cluster
+                        current_subfolder_associated_tetrodes{unique_cluster_counter} = [current_subfolder_associated_tetrodes{unique_cluster_counter},name_of_current_tetrode+" " + string(possible_new_cluster_counter)]; %add the tetrode to the association to the associated
                     else
                         the_max_vals_of_each_spike = max(abs(current_tetrode_output(cluster_idxs{possible_new_cluster_counter},3:end)),[],2);
                         if sum(the_max_vals_of_each_spike>= min_amplitude) > sum(the_max_vals_of_each_spike < min_amplitude) %attempt to filter out noise clusters
@@ -65,11 +68,14 @@ for subfolder_counter=1:length(subfolder_names)
                 end
             end
 
-            unique_clusters = [unique_clusters,supplemental_clusters]; %add supplemental clusters to the list of unique clusters
-            associated_tetrodes = [associated_tetrodes,supplemental_associated_tetrodes]; %add supplemental associated tetrodes to the list
+            current_subfolder_clusters= [current_subfolder_clusters,supplemental_clusters]; %add supplemental clusters to the list of unique clusters
+            current_subfolder_associated_tetrodes = [current_subfolder_associated_tetrodes,supplemental_associated_tetrodes]; %add supplemental associated tetrodes to the list
             % disp("Finished " + string(j) + "/" + string(length(cluster_idxs)));
         end
+
         disp("Finished " + string(i) + "/" + string(length(list_of_outputs)))
     end
+    unique_clusters{subfolder_counter} = current_subfolder_clusters;
+    associated_tetrodes{subfolder_counter} =current_subfolder_associated_tetrodes;
 end
 end

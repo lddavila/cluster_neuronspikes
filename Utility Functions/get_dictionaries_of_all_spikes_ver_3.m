@@ -56,6 +56,6 @@ for i=1:size(art_tetr_array,1)
     save(dictionaries_dir+"\t"+string(i)+" spike_tetrode_dictionary_samples_format.mat","spike_tetrode_dictionary_samples_format");
 
     
-    disp("Completed " + string(i) + "/"+string(size(art_tetr_array,1)))
+    disp("Completed Dictionary " + string(i) + "/"+string(size(art_tetr_array,1)))
 end
 end

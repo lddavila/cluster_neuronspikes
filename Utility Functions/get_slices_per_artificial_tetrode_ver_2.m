@@ -13,7 +13,17 @@ time_slices = {};
 spiking_channels = {};
 spike_slices_in_samples_format = {};
 
-spike_windows_for_current_tetrode = [];
+%spike_windows_for_current_tetrode = [];
+number_of_rows_required = 0;
+number_of_cols_required = length(chan_of_art_tetrode);
+number_of_spikes_per_channel = zeros(1,length(chan_of_art_tetrode));
+for i=1:length(chan_of_art_tetrode)
+    current_channel = chan_of_art_tetrode(i);
+    number_of_rows_required = number_of_rows_required+size(spike_windows{current_channel},2);
+    number_of_spikes_per_channel(i) = size(spike_windows{current_channel},2);
+end
+spike_windows_for_current_tetrode = zeros(number_of_rows_required,number_of_cols_required);
+
 for i=1:length(chan_of_art_tetrode)
     current_channel = chan_of_art_tetrode(i);
     spike_windows_for_current_channel = zeros(size(spike_windows{current_channel},2),4);
@@ -32,7 +42,11 @@ for i=1:length(chan_of_art_tetrode)
     if isempty(spike_windows_for_current_channel)
         continue;
     end
-    spike_windows_for_current_tetrode = [spike_windows_for_current_tetrode;spike_windows_for_current_channel];
+    if i==1
+        spike_windows_for_current_tetrode(1:number_of_spikes_per_channel(i),:) = spike_windows_for_current_channel;
+    else
+        spike_windows_for_current_tetrode(sum(number_of_spikes_per_channel(1:i-1))+1:sum(number_of_spikes_per_channel(1:i)),:) = spike_windows_for_current_channel;
+    end
 end
 
 if isempty(spike_windows_for_current_tetrode)
@@ -67,6 +81,7 @@ for i=1:size(sorted_spike_windows_for_current_tetrode,1)
     current_window = sorted_spike_windows_for_current_tetrode(i,:);
     window_beginning = current_window(1);
     window_end = current_window(2);
+
 
     if window_beginning == window_end || length(timing_matrix(window_beginning:window_end-1)) <10
         continue;
