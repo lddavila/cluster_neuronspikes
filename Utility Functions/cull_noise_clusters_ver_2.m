@@ -17,7 +17,7 @@ list_of_tetrodes = build_artificial_tetrode();
 couldnt_load = 0;
 associated_tetrodes_without_noise = cell(1,length(unique_clusters));
 cluster_timestamps_without_noise = cell(1,length(unique_clusters));
-for i=2:length(unique_clusters)
+for i=1:length(unique_clusters)
     if isempty(unique_clusters{i})
         continue;
     end

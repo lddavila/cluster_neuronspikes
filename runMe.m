@@ -5,10 +5,25 @@ cd("..");
 cd("clustering-master\")
 addpath(genpath(pwd));
 cd("..")
+
 load("100 Neuron New Grades Clusters and Tetrodes.mat")
 load("100 Neuron Ground Truth.mat")
 %load("C:\Users\ldd77\OneDrive - The University of Texas at El Paso\300 second timestamps\timestamps.mat");
 
+%% get the average grade per cluster 
+%dir_with_nth_pass_results = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron Pre Computed For New Grades\initial_pass_results";
+dir_with_nth_pass_grades = "C:\Users\ldd77\OneDrive - The University of Texas at El Paso\100 Neuron Pre Computed For New Grades\initial_pass";
+%relevant grades include
+%tightness 2
+%percent short isi 3
+%incompleteness 4
+%template matching 8
+%min bhat 9
+relevant_grades = [2 3 4 8 9];
+clc;
+names_of_grades = ["Cluster","Tightness","% Short ISI","Incompleteness", "Template Matching","Min Bhat"];
+mean_grade_per_cluster_table = calculate_the_average_grade_per_cluster(associated_tetrodes,dir_with_nth_pass_grades,relevant_grades,names_of_grades);
+disp(mean_grade_per_cluster_table)
 %% plot ground truth
 close all;
 plot_ground_truth(ground_truth_array,10);

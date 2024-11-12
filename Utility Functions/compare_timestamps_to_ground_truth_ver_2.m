@@ -5,6 +5,7 @@ unit_id = [];
 overlap_with_unit = [];
 cluster_number = [];
 number_of_false_positives = [];
+number_of_true_positives = [];
 
 for j=1:size(timestamps_of_clusters,2)
     timestamps_of_current_cluster = timestamps_of_clusters{j};
@@ -26,6 +27,7 @@ for j=1:size(timestamps_of_clusters,2)
         cluster_number = [cluster_number;j];
         unit_id = [unit_id;i];
         number_of_false_positives = [number_of_false_positives;false_positives];
+        number_of_true_positives = [number_of_true_positives;number_of_timestamps_in_both];
 
 
 
