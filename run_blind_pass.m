@@ -62,9 +62,11 @@ end
 clc;
 config = spikesort_config; %load the config file;
 config = config.spikesort;
-%%
+clc;
+close all;
 dir_with_data = "D:\spike_gen_data\Recordings By Channel Precomputed";
 current_recording = "0_100Neuron300SecondRecordingWithLevel3Noise";
+debug = 1;
 varying_z_scores = [3,3.5,4];
 for i=1:length(varying_z_scores)
 dir_with_output = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass_results min z_score"+string(varying_z_scores(i));
@@ -72,7 +74,9 @@ dir_to_save_grades_to = "D:\spike_gen_data\Recordings By Channel Precomputed\"+c
 dir_to_save_grades_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_grades_to);
 list_of_tetrodes = strcat("t",string(1:285));
 dir_with_timestamps_and_rvals = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass min z_score"+string(varying_z_scores(i));
-get_grades_for_nth_pass_of_clustering(dir_with_timestamps_and_rvals,dir_with_output,list_of_tetrodes,dir_to_save_grades_to,config,varying_z_scores(i))
+name_of_grades = ["Tight","% Short ISI","Inc", "Temp Mat","Min Bhat","Skewness","TM Updated","Sym of Hist","Amp Category"];
+relevant_grades = [2,3,4,8,9,28,29,30,31];
+get_grades_for_nth_pass_of_clustering(dir_with_timestamps_and_rvals,dir_with_output,list_of_tetrodes,dir_to_save_grades_to,config,varying_z_scores(i),debug,relevant_grades,name_of_grades)
 end
 %% compare different cut thresholds for the same recording
 dir_of_nth_pass_recording = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise";

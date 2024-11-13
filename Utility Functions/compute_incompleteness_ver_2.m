@@ -18,8 +18,8 @@ function rato_of_left_side_to_right_side = compute_incompleteness_ver_2(peaks)
     % median_of_data = median(peaks,"all");
     % skewness_of_data = skewness(peaks);
     % 
-    % figure;
-    % histogram(peaks,21)
+    %figure;
+    %histogram(peaks,21)
     % title("Median:"+string(median_of_data)+" Mode:"+string(mode_of_data)+ " Mean"+string(mean_of_data)+ " Skewness:"+skewness_of_data);
     [~, max_n] = max(n);
 
