@@ -97,8 +97,9 @@ compare_different_cut_thresholds(dir_of_nth_pass_recording,list_of_z_scores_to_c
 %% compare tests
 dir_with_grades = ;
 dir_with_outputs = ;
-relevant_grades = ;
-names_of_relevant_grades =;
-spikesort_config=;
-the_range =  ;
-compare_before_after_filter_application(dir_with_grades,dir_with_outputs,relevant_grades,names_of_relevant_grades,spikesort_config,the_range);
+relevant_grades = [30] ;
+names_of_relevant_grades = ["Sym of Hist"];
+config = spikesort_config; %load the config file;
+config = config.spikesort;
+the_range = [0.5,6] ;
+compare_before_after_filter_application(dir_with_grades,dir_with_outputs,relevant_grades,names_of_relevant_grades,config,the_range);
