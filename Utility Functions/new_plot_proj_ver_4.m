@@ -15,6 +15,9 @@ myplot(data(:, x_axis), data(:, y_axis), my_gray, 'o', 2)
 legend_string{1} = "Unclustered";
 for c = 1:length(cluster_filters)
     peaks_in_cluster = cluster_filters{c}; 
+    if isempty(peaks_in_cluster)
+        continue;
+    end
     peaks_in_cluster(peaks_in_cluster > size(aligned,2)) = [];
     cluster = data(peaks_in_cluster, :);
     cluster_x = cluster(:, x_axis);

@@ -1,0 +1,41 @@
+function [] = compare_before_after_filter_application(dir_with_grades,dir_with_outputs,relevant_grades,names_of_relevant_grades,spikesort_config,range)
+art_tetr_array = build_artificial_tetrode();
+list_of_tetrodes = strcat("t",string(1:285));
+number_of_filters_to_apply = length(relevant_grades);
+for i=1:length(list_of_tetrodes)
+    current_tetrode = list_of_tetrodes(i);
+    channels_of_curr_tetr = art_tetr_array(i,:);
+    load(dir_with_grades+"\"+current_tetrode+" Grades.mat","grades");
+    load(dir_with_outputs+"\"+current_tetrode+" output.mat","output");
+    %will only really work for tetrodes of 4 channels
+    figure('units','normalized','outerposition',[0 0 1 1])
+    plot_counter = 1;
+    idx = extract_clusters_from_output(output(:,1),output,spikesort_config);
+    %plot the data without filters
+    for first_dimension = 1:length(channels_of_curr_tetr)
+        for second_dimension = first_dimension+1:length(channels_of_curr_tetr)
+            subplot(number_of_filters_to_apply,6,plot_counter);
+            new_plot_proj_ver_4(idx,aligned,first_dimension,second_dimension,channels_of_curr_tetr,"","");
+            plot_counter = plot_counter+1;
+        end
+    end
+
+    %plot the data after applying filter
+    for first_dimension = 1:length(channels_of_curr_tetr)
+        for second_dimension = first_dimension+1:length(channels_of_curr_tetr)
+            subplot(number_of_filters_to_apply,6,plot_counter);
+            new_plot_proj_ver_4(idx,aligned,first_dimension,second_dimension,channels_of_curr_tetr,current_tetrode,names_of_relevant_grades);
+            plot_counter = plot_counter+1;
+        end
+    end
+    % subplot(number_of_filters_to_apply,6,7:12);
+    % relevant_grades_of_current_tetrode = grades(:,relevant_grades);
+    % 
+    % x_values = names_of_relevant_grades;
+    % y_values = strcat("c",string(1:size(grades,1)));
+    % heatmap(x_values,y_values,relevant_grades_of_current_tetrode,'ColorbarVisible','off','CellLabelFormat','%0.10f');
+
+    close all;
+
+end
+end
