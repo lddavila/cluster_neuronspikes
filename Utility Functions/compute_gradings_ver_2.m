@@ -251,6 +251,21 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
     end
 
     if debug
+        % creates the mean waveform per cluster
+         figure('units','normalized','outerposition',[0 0 1 1])
+        for i=1:num_clusters
+            subplot(1,num_clusters,i);
+            cluster_filter = clusters{k};
+            ts = timestamps(cluster_filter);
+            spikes = aligned(:, cluster_filter, :);
+            for j=1:length(spikes)
+                current_spike = spikes(j);
+                plot(1:length(current_spike),current_spike);
+                hold on;
+            end
+
+        end
+
         %will only really work for tetrodes of 4 channels
         figure('units','normalized','outerposition',[0 0 1 1])
         plot_counter = 1;

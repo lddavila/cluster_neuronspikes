@@ -204,9 +204,9 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
             grades(k, 24) = 0;
             grades(k, 25) = 0;
         end
-        
+
         grades(k, 26) = length(cluster_filter) * 1e6 / (timestamps(end) - timestamps(1));
-        
+
         pks = find_peaks(mean_spike);
         pks = pks{1};
         [~, idx] = max(mean_spike(pks));
@@ -223,8 +223,8 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
 
         %grade 29 will be the measure of template matching within the
         %cluster's template instead of the normal template matching
-         % Template matching with per cluster template, instead of general
-         % template
+        % Template matching with per cluster template, instead of general
+        % template
         if length(cluster_filter) > 1
             mean_waveform = mean(shiftdim(spikes(compare_wire, :, :), 1));
             mean_waveform = mean_waveform - mean(mean_waveform);
@@ -237,7 +237,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         %it will be #bins to left of bin with highest bin count / # bins to right of bin with highest bin count
         grades(k,30) = compute_incompleteness_ver_2(peaks);
 
-        %grade 31 will classify the cluster into high medium or low 
+        %grade 31 will classify the cluster into high medium or low
         %grade of 1 indicates low average amplitude of cluster
         %grade of 2 indicates medium average amplitude of cluster
         %grade of 3 indicates high average amplitude of cluster
@@ -246,33 +246,43 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         medium_cutoff = 100;
         high_cutoff = 150;
         grades(k,31) = category_of_cluster(low_cutoff,medium_cutoff,high_cutoff,peaks);
-        
+
 
     end
 
     if debug
-        %will only really work for tetrodes of 4 channels
-        figure('units','normalized','outerposition',[0 0 1 1])
-        plot_counter = 1;
-        for first_dimension = 1:length(channels_in_current_tetrode)
-            for second_dimension = first_dimension+1:length(channels_in_current_tetrode)
-                idx = extract_clusters_from_output(output(:,1),output,spikesort_config);
-
-                subplot(1,6,plot_counter);
-                new_plot_proj_ver_4(idx,aligned,first_dimension,second_dimension,channels_of_curr_tetr,"","");
-
-                subplot(1,6,7:12);
-                relevant_grades_of_current_tetrode = grades(:,relevant_grades);
-
-                x_values = name_of_relevant_grades;
-                y_values = strcat("c",string(1:size(grades,1)));
-                heatmap(x_values,y_values,relevant_grades_of_current_tetrode,'ColorbarVisible','off','CellLabelFormat','%0.2f');
-
-
-               
+        % creates the mean waveform per cluster
+         figure('units','normalized','outerposition',[0 0 1 1])
+        for i=1:num_clusters
+            subplot(1,num_clusters,i);
+            cluster_filter = clusters{k};
+            ts = timestamps(cluster_filter);
+            spikes = aligned(:, cluster_filter, :);
+            for j=1:length(spikes)
+                current_spike = spikes(i);
+                plot(1:length(current_spike),current_spik);
             end
 
         end
+
+        %will only really work for tetrodes of 4 channels
+        figure('units','normalized','outerposition',[0 0 1 1])
+        plot_counter = 1;
+        for first_dimension = 1:length(channels_of_curr_tetr)
+            for second_dimension = first_dimension+1:length(channels_of_curr_tetr)
+                idx = extract_clusters_from_output(output(:,1),output,spikesort_config);
+                subplot(2,6,plot_counter);
+                new_plot_proj_ver_4(idx,aligned,first_dimension,second_dimension,channels_of_curr_tetr,"","");
+                plot_counter = plot_counter+1;
+            end
+
+        end
+        subplot(2,6,7:12);
+        relevant_grades_of_current_tetrode = grades(:,relevant_grades);
+
+        x_values = name_of_relevant_grades;
+        y_values = strcat("c",string(1:size(grades,1)));
+        heatmap(x_values,y_values,relevant_grades_of_current_tetrode,'ColorbarVisible','off','CellLabelFormat','%0.10f');
 
         close all;
     end
