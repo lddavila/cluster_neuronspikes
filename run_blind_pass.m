@@ -95,11 +95,11 @@ relevant_grades = [2,3,4,8,9,28,29,30,31];
 compare_different_cut_thresholds(dir_of_nth_pass_recording,list_of_z_scores_to_check,list_of_tetrodes,relevant_grades,names_of_grades);
 
 %% compare tests
-dir_with_grades = ;
-dir_with_outputs = ;
-relevant_grades = [30] ;
-names_of_relevant_grades = ["Sym of Hist"];
+clc;
+dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score 3 grades";
+dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score3";
+relevant_grades = [2] ;
+names_of_relevant_grades = ["Tightness","Overlap Percentage"];
 config = spikesort_config; %load the config file;
-config = config.spikesort;
-the_range = [0.5,6] ;
-compare_before_after_filter_application(dir_with_grades,dir_with_outputs,relevant_grades,names_of_relevant_grades,config,the_range);
+the_range = [0.0 0.1] ;
+compare_before_after_filter_application(dir_with_grades,dir_with_outputs,relevant_grades,names_of_relevant_grades,config,the_range,ground_truth_array,timestamps);
