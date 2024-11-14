@@ -10,9 +10,8 @@ my_gray = [0.5 0.5 0.5];
 myplot = @(x, y, c, m, s) plot(x, y, 'Color', c, 'LineStyle', 'none', 'Marker', m, 'MarkerSize', s,'MarkerFaceColor',c,'MarkerEdgeColor',c);
 
 hold on
-legend_string = cell(1,length(cluster_filters)+1);
+legend_string = ["Unclustered"];
 myplot(data(:, x_axis), data(:, y_axis), my_gray, 'o', 2)
-legend_string{1} = "Unclustered";
 for c = 1:length(cluster_filters)
     peaks_in_cluster = cluster_filters{c}; 
     if isempty(peaks_in_cluster)
@@ -24,7 +23,7 @@ for c = 1:length(cluster_filters)
     cluster_y = cluster(:, y_axis);
     myplot(cluster_x, cluster_y, colors(c,:), 'o', 2)
 
-    legend_string{c+1} = "c"+string(c);
+    legend_string =[legend_string, "c"+string(c)];
 end
 xlabel(sprintf('Channel %d Peaks', channels(x_axis)))
 ylabel(sprintf('Channel %d Peaks', channels(y_axis)))
