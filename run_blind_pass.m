@@ -66,7 +66,7 @@ clc;
 close all;
 dir_with_data = "D:\spike_gen_data\Recordings By Channel Precomputed";
 current_recording = "0_100Neuron300SecondRecordingWithLevel3Noise";
-debug = 1;
+debug = 0;
 varying_z_scores = [3,3.5,4];
 for i=1:length(varying_z_scores)
 dir_with_output = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass_results min z_score"+string(varying_z_scores(i));
