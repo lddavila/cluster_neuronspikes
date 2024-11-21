@@ -23,5 +23,5 @@ if debug
     histogram(reshape(euc_dist_between_spikes_and_mean_waveform,1,[]))
 end
 
-avg_tightness_of_cluster = mean(euc_dist_between_spikes_and_mean_waveform,"all");
+avg_tightness_of_cluster = median(euc_dist_between_spikes_and_mean_waveform,"all") / max(euc_dist_between_spikes_and_mean_waveform,[],"all");
 end
