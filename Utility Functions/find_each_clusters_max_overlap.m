@@ -4,6 +4,9 @@ names_of_units_with_max_overlap = [];
 for i=1:length(names_of_clusters)
     current_cluster = names_of_clusters(i);
     current_cluster_timestamps = reg_timestamps(cluster_idxs{current_cluster});
+    if isempty(current_cluster_timestamps)
+        continue;
+    end
     max_overlap = 0;
     name_of_unit_with_max_over_lap = "None";
     for j=1:length(ground_truth)

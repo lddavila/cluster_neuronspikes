@@ -66,8 +66,9 @@ clc;
 close all;
 dir_with_data = "D:\spike_gen_data\Recordings By Channel Precomputed";
 current_recording = "0_100Neuron300SecondRecordingWithLevel3Noise";
-debug = 1;
+debug = 0;
 varying_z_scores = [3,3.5,4];
+varying_z_scores = [4];
 for i=1:length(varying_z_scores)
 dir_with_output = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass_results min z_score"+string(varying_z_scores(i));
 dir_to_save_grades_to = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass min z_score "+string(varying_z_scores(i))+" grades";
@@ -95,5 +96,51 @@ relevant_grades = [2,3,4,8,9,28,29,30,31];
 compare_different_cut_thresholds(dir_of_nth_pass_recording,list_of_z_scores_to_check,list_of_tetrodes,relevant_grades,names_of_grades);
 
 %% compare tests
+clc;
+close all;
+generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score 3 grades";
+generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score3";
+relevant_grades = [2] ;
+names_of_relevant_grades = ["Tightness","Overlap Percentage"];
+config = spikesort_config; %load the config file;
+the_range = [0.0 0.1] ;
+compare_before_after_filter_application_ver_2(generic_dir_with_grades,generic_dir_with_outputs,relevant_grades,names_of_relevant_grades,config,the_range,ground_truth_array,timestamps);
 
-compare_before_after_filter_application(dir_with_grades,dir_with_outputs,relevant_grades,names_of_relev);
+%% second method of testing
+clc;
+close all;
+generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score 3 grades";
+generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score3";
+%relevant grades include
+%2 tightness 2
+%3 percent short isi 3
+%4 incompleteness 4
+%8 template matching 8
+%9 min bhat 9
+%28 skewness of cluster
+%29 measure the difference between the cluster's individual spikes and the
+%cluster's spike templates
+%30 Incompleteness using histogram symmetry
+%31 Classification of cluster amplitude
+%32 classification of cluster amplitude based only on rep wire
+relevant_grades = [2,31,30,32,4,8,9,28,29];
+relevant_grade_names = ["Tightness","Amplitude","Hist Sym","Rep Wire Amp","incompleteness","TM","Min Bhat","cluster skewness","TM New","Overlap Percentage"];
+debug = 1;
+conditions = {@less_than,@greater_than,@less_than, @greater_than};
+check_against_values = [0.1, 1,7,1];
+ground_truth = importdata("D:\spike_gen_data\Recording By Channel Ground Truth\0_100Neuron300SecondRecordingWithLevel3Noise.h5.mat");
+timestamps = importdata("D:\spike_gen_data\Recordings By Channel Timestamps\0_100Neuron300SecondRecordingWithLevel3Noise\timestamps.mat");
+[clusters_which_survive_purge,names_of_tetrodes_clusters_belong_to] = filter_noise_clusters(debug,conditions,generic_dir_with_grades,generic_dir_with_outputs,ground_truth,timestamps,relevant_grades,check_against_values,relevant_grade_names);
+
+%% grading clusters with a bunch of if statements
+clc;
+%close all;
+generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score";
+generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score";
+optional_z_scores = [3 3.5 4];
+list_of_desired_tetrodes = strcat("t",string(1:285));
+debug =1;
+relevant_grades = [2,31,30,32,8,28,29,33,34];
+relevant_grade_names = ["CV (2)","Amplitude (31)","Hist Sym (30)","Rep Wire Amp(32)","TM(8)","cluster skewness(28)","TM New()","Likeliness Of M.U.A(33)","Min B-Dist From M.U.A(34)"];
+
+grade_clusters(generic_dir_with_grades,generic_dir_with_outputs,optional_z_scores,list_of_tetrodes,debug,relevant_grades,relevant_grade_names)

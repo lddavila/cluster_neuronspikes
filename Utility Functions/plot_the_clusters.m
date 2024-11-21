@@ -1,0 +1,33 @@
+function [] = plot_the_clusters(names_of_clusters,channels_of_curr_tetr,idx,before_or_after,reg_timestamps,ground_truth,timestamps,grades,aligned,relevant_grades,relevant_grade_names)
+%plot all the configurations of the clusters
+figure;
+panel_counter = 1;
+for first_dimension = 1:length(channels_of_curr_tetr)
+    for second_dimension = first_dimension+1:length(channels_of_curr_tetr)
+        subplot(2,3,panel_counter);
+        new_plot_proj_ver_4(idx,aligned,first_dimension,second_dimension,channels_of_curr_tetr,"","",panel_counter);
+        panel_counter = panel_counter+1;
+    end
+end
+sgtitle(before_or_after +" Filtering")
+
+%plot a heat map of the relevant grades
+
+[overlap_percentage,which_cluster] = find_each_clusters_max_overlap(names_of_clusters,idx,reg_timestamps,ground_truth,timestamps);
+disp(which_cluster);
+relevant_grades_of_current_tetrode = [grades(names_of_clusters,relevant_grades),overlap_percentage];
+x_values = relevant_grade_names;
+y_values = strcat("c",string(names_of_clusters));
+if strcmpi(before_or_after,"before")
+    if ~isempty(y_values)
+        figure;
+        heatmap(x_values,y_values,relevant_grades_of_current_tetrode,'ColorbarVisible','off','CellLabelFormat','%0.2f');
+        title(before_or_after + "Filtering")
+    end
+end
+
+%plot the average waveform per cluster
+if strcmpi(before_or_after,"Before")
+    plot_mean_waveform_per_cluster(aligned,idx,names_of_clusters,before_or_after)
+end
+end

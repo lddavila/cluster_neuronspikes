@@ -48,7 +48,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
 %   10) Bhattacharyya Distance to unsorted spikes
 
     num_clusters = length(clusters);
-    grades = nan(num_clusters, 31);
+    grades = nan(num_clusters, 35);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -242,29 +242,88 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         %grade of 2 indicates medium average amplitude of cluster
         %grade of 3 indicates high average amplitude of cluster
         %this grade can be used to interpret the validity of other grades
-        low_cutoff = 50;
-        medium_cutoff = 100;
-        high_cutoff = 150;
+        low_cutoff = 20;
+        medium_cutoff = 50;
+        high_cutoff = 100;
         grades(k,31) = category_of_cluster(low_cutoff,medium_cutoff,high_cutoff,peaks);
+
+        %grade 32 will be similar to 31, but instead of the whole cluster
+        %it will just be the amplitude of the dominant wire
+        grades(k,32) = category_of_cluster(low_cutoff,medium_cutoff,high_cutoff,compare_peaks);
+
+        %grade 33 will be a range of how likely a cluster is to be a multi
+        %unit activity cluster
+        %this is based on several factors including cluster amplitude,
+        %cv, rep wire amplitude
+        %1 is definitely multi unit activity
+        %3 is definitely NOT multiunit activity
+        %2 could go either way
+        if cv > 0.25 && grades(k,31) ==1 && grades(k,32) ==1
+            grades(k,33) = 1;
+        elseif cv < 0.1 && (grades(k,31)>=2 || grades(k,32) >=2) 
+            grades(k,33) = 3;
+        else
+            grades(k,33) = 2;
+        end
+
+        %%grade 35 will be a method of measuring tightness of waveform of
+        %%the cluster, using Euclidean distance
+        mean_waveform_for_cluster_k = mean(shiftdim(spikes(compare_wire, :, :), 1));
+        grades(k,35) = calculate_tightness_of_waveform_per_cluster(mean_waveform_for_cluster_k,spikes,debug);
+
+        %%grade 36 will be the same as 35, but only using the rep wire
+        %%spikes
+        grades(k,36) = calculate_tightness_of_waveform_per_cluster(mean_waveform_for_cluster_k,spikes(compare_wire,:,:),debug);
+
 
 
     end
 
+    %bhat distance from possible multi unit activity clusters
+    for k=1:num_clusters
+        cluster_filter = clusters{k};
+        peaks = all_peaks(:, cluster_filter);
+        dists = inf(num_clusters, 1);
+        peaks = peaks';
+        for c = 1:num_clusters
+            if c == k || grades(c,1) == 1
+                continue
+            end
+            other_cf = clusters{c};
+            other_peaks = all_peaks(:, other_cf)';
+            dim_filt = find_singular_cols(peaks) & find_singular_cols(other_peaks);
+            if any(dim_filt)
+                dists(c) = bhat_dist(peaks(:, dim_filt), other_peaks(:, dim_filt));
+            end
+        end
+        min_bhat = min(dists);
+        grades(k,34) = min_bhat;
+    end
+
     if debug
         % creates the mean waveform per cluster
-         figure('units','normalized','outerposition',[0 0 1 1])
+        figure('units','normalized','outerposition',[0 0 1 1])
+        colors_to_use = distinguishable_colors(size(aligned,1)*3);
+        legend_string = [];
         for i=1:num_clusters
             subplot(1,num_clusters,i);
             cluster_filter = clusters{k};
-            ts = timestamps(cluster_filter);
             spikes = aligned(:, cluster_filter, :);
-            for j=1:length(spikes)
-                current_spike = spikes(j);
-                plot(1:length(current_spike),current_spike);
-                hold on;
-            end
+            for j=1:size(spikes,1)
+                current_channels_spikes = squeeze(spikes(j,:,:));
+                s = RandStream('mlfg6331_64');
+                random_sampling_of_current_channel_spikes = datasample(s,current_channels_spikes,round(size(current_channels_spikes,1)*.10),"Replace",false);
+                for p=1:size(random_sampling_of_current_channel_spikes,1)
+                    current_spike = random_sampling_of_current_channel_spikes(p,:);
+                    plot(1:length(current_spike),current_spike,'Color',colors_to_use(j+(size(aligned,1)*2),:));
+                    hold on;
 
+                end
+
+            end
+            title("10% Sample of Cluster "+string(i));
         end
+
 
         %will only really work for tetrodes of 4 channels
         figure('units','normalized','outerposition',[0 0 1 1])

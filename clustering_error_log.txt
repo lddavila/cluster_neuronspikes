@@ -146,3 +146,5 @@ Tetrode: t26 threw the following error while clusteirng The number of rows of X 
 Tetrode: t217 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
 Tetrode: t218 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
 Tetrode: t220 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
+Tetrode: t167 threw the following error while clusteirng The number of rows of X must exceed the number of columns.
+Tetrode: t233 threw the following error while clusteirng The number of rows of X must exceed the number of columns.

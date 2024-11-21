@@ -7,7 +7,7 @@ for i=1:length(list_of_tetrodes)
     
     channels_of_curr_tetr = array_of_tetrodes(tetrode_number,:);
     try
-        load(dir_with_timestamps_and_rvals+"\"+current_tetrode+".mat","timestamps","r_tvals","cleaned_clusters")
+        load(dir_with_timestamps_and_rvals+"\"+current_tetrode+".mat","timestamps","r_tvals","cleaned_clusters");
         load(dir_with_results+"\"+current_tetrode+" aligned.mat","aligned");
         load(dir_with_results+"\"+current_tetrode+" output.mat","output");
     catch
@@ -20,6 +20,6 @@ for i=1:length(list_of_tetrodes)
     grades = compute_gradings_ver_2(aligned, timestamps, r_tvals, cleaned_clusters, config,debug,relevant_grades,output,name_of_relevant_grades,channels_of_curr_tetr);
 
     save(dir_to_save_grades_to+"\"+current_tetrode+" Grades.mat","grades");
-    disp(string(min_z_score)+" Finished "+string(i)+"/"+string(length(list_of_tetrodes)))
+    disp(string(min_z_score)+" Finished "+string(i)+"/"+string(length(list_of_tetrodes)));
 end
 end

@@ -1,4 +1,4 @@
-function new_plot_proj_ver_4(cluster_filters, aligned, x_axis, y_axis,channels,current_tetrode,z_score,the_number)
+function new_plot_proj_ver_5(cluster_filters, aligned, x_axis, y_axis,channels,current_tetrode,z_score,the_number,category_of_clusters)
 channel_string = "";
 for j=1:size(channels,2)
     channel_string = channel_string + " C"+string(channels(j));
@@ -23,7 +23,7 @@ for c = 1:length(cluster_filters)
     cluster_y = cluster(:, y_axis);
     myplot(cluster_x, cluster_y, colors(c+length(cluster_filters),:), 'o', 2)
 
-    legend_string =[legend_string, "c"+string(c)];
+    legend_string =[legend_string, "c"+string(c) + " "+category_of_clusters(c)];
 end
 xlabel(sprintf('Channel %d Peaks', channels(x_axis)))
 ylabel(sprintf('Channel %d Peaks', channels(y_axis)))

@@ -23,8 +23,8 @@ function rato_of_left_side_to_right_side = compute_incompleteness_ver_2(peaks)
     % title("Median:"+string(median_of_data)+" Mode:"+string(mode_of_data)+ " Mean"+string(mean_of_data)+ " Skewness:"+skewness_of_data);
     [~, max_n] = max(n);
 
-    number_of_bins_to_left_of_max_bin = length(1:max_n-1);
-    number_of_bins_to_right_of_max_bin = length(max_n+1:21);
+    number_of_bins_to_left_of_max_bin = length(1:(max_n-1));
+    number_of_bins_to_right_of_max_bin = length((max_n+1):21);
 
 
 

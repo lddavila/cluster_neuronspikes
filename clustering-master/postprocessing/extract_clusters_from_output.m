@@ -19,9 +19,9 @@ function idx = extract_clusters_from_output(timestamps, output, config)
     for k = 1:length(ids)
         cluster_timestamps = output(output(:, 2) == ids(k), 1);
         idx{k} = get_idx_from_timestamps(timestamps, cluster_timestamps);
-        if length(idx{k}) < config.MIN_NUMBER_OF_SPIKES
-            idx{k} = [];
-        end
+        % if length(idx{k}) < config.MIN_NUMBER_OF_SPIKES
+        %     idx{k} = [];
+        % end
     end
     idx = idx(~cellfun('isempty', idx));
 end
