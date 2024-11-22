@@ -38,7 +38,7 @@ end
 %% run the blind pass with a different min_z_score (cut threshold) of 3.9
 precomputed_dir = "D:\spike_gen_data\Recordings By Channel Precomputed";
 dir_of_timestamps = "D:\spike_gen_data\Recordings By Channel Timestamps";
-varying_z_scores = [3,3.5,4];
+varying_z_scores = [5,6,7,8,9];
 for i=1:1.5%length(subfolder_names)
     for j=1:length(varying_z_scores)
         close all;
@@ -51,8 +51,8 @@ for i=1:1.5%length(subfolder_names)
         timestamps_dir = dir_of_timestamps+"\"+string(subfolder_names{i});
         create_z_score_matrix = 0;
         precomputed_dir_current = precomputed_dir +"\"+string(subfolder_names{i});
-        %what_is_precomputed = ["z_score","mean_and_std"];
-        what_is_precomputed = ["mean_and_std","z_score","dictionaries min_z_score "+string(min_z_score)+" num_dps 60","spike_windows min_z_score "+string(min_z_score)+" num dps 60","spikes_per_channel min_z_score " + string(min_z_score)];
+        what_is_precomputed = ["z_score","mean_and_std"];
+        %what_is_precomputed = ["mean_and_std","z_score","dictionaries min_z_score "+string(min_z_score)+" num_dps 60","spike_windows min_z_score "+string(min_z_score)+" num dps 60","spikes_per_channel min_z_score " + string(min_z_score)];
         
         what_is_precomputed = run_entire_clustering_algorithm_ver_2(scale_factor,dir_with_channel_recordings,min_z_score,num_dps,timestamps_dir,precomputed_dir_current,what_is_precomputed,min_threshold);
     end
@@ -68,7 +68,7 @@ dir_with_data = "D:\spike_gen_data\Recordings By Channel Precomputed";
 current_recording = "0_100Neuron300SecondRecordingWithLevel3Noise";
 debug = 0;
 varying_z_scores = [3,3.5,4];
-varying_z_scores = [4];
+varying_z_scores = [3, 3.5, 4, 5, 6,7,8,9];
 for i=1:length(varying_z_scores)
 dir_with_output = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass_results min z_score"+string(varying_z_scores(i));
 dir_to_save_grades_to = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass min z_score "+string(varying_z_scores(i))+" grades";
@@ -138,9 +138,10 @@ clc;
 generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score";
 generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score";
 optional_z_scores = [3 3.5 4];
+optional_z_scores = [4,3.5,3];
 list_of_desired_tetrodes = strcat("t",string(1:285));
 debug =1;
 relevant_grades = [2,31,30,32,8,28,29,33,34];
 relevant_grade_names = ["CV (2)","Amplitude (31)","Hist Sym (30)","Rep Wire Amp(32)","TM(8)","cluster skewness(28)","TM New()","Likeliness Of M.U.A(33)","Min B-Dist From M.U.A(34)"];
-
-grade_clusters(generic_dir_with_grades,generic_dir_with_outputs,optional_z_scores,list_of_tetrodes,debug,relevant_grades,relevant_grade_names)
+dir_to_save_figs_to = "D:\OneDrive - The University of Texas at El Paso\Graded Clusters Z Score 4";
+grade_clusters(generic_dir_with_grades,generic_dir_with_outputs,optional_z_scores,list_of_tetrodes,debug,relevant_grades,relevant_grade_names,dir_to_save_figs_to);

@@ -21,7 +21,11 @@ for c = 1:length(cluster_filters)
     cluster = data(peaks_in_cluster, :);
     cluster_x = cluster(:, x_axis);
     cluster_y = cluster(:, y_axis);
-    myplot(cluster_x, cluster_y, colors(c+length(cluster_filters),:), 'o', 2)
+    if strcmpi(category_of_clusters(c),"No category")
+        myplot(cluster_x, cluster_y, colors(2,:), 'o', 2)
+    else
+        myplot(cluster_x, cluster_y, colors(c+length(cluster_filters),:), 'o', 2)
+    end
 
     legend_string =[legend_string, "c"+string(c) + " "+category_of_clusters(c)];
 end

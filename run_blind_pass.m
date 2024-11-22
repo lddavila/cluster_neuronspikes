@@ -68,7 +68,7 @@ dir_with_data = "D:\spike_gen_data\Recordings By Channel Precomputed";
 current_recording = "0_100Neuron300SecondRecordingWithLevel3Noise";
 debug = 0;
 varying_z_scores = [3,3.5,4];
-varying_z_scores = [4];
+varying_z_scores = [3, 3.5, 4, 5, 6,7,8,9];
 for i=1:length(varying_z_scores)
 dir_with_output = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass_results min z_score"+string(varying_z_scores(i));
 dir_to_save_grades_to = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass min z_score "+string(varying_z_scores(i))+" grades";
@@ -138,9 +138,10 @@ clc;
 generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score";
 generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score";
 optional_z_scores = [3 3.5 4];
+optional_z_scores = [4,3.5,3];
 list_of_desired_tetrodes = strcat("t",string(1:285));
 debug =1;
 relevant_grades = [2,31,30,32,8,28,29,33,34];
 relevant_grade_names = ["CV (2)","Amplitude (31)","Hist Sym (30)","Rep Wire Amp(32)","TM(8)","cluster skewness(28)","TM New()","Likeliness Of M.U.A(33)","Min B-Dist From M.U.A(34)"];
-
-grade_clusters(generic_dir_with_grades,generic_dir_with_outputs,optional_z_scores,list_of_tetrodes,debug,relevant_grades,relevant_grade_names)
+dir_to_save_figs_to = "D:\OneDrive - The University of Texas at El Paso\Graded Clusters Z Score 4";
+grade_clusters(generic_dir_with_grades,generic_dir_with_outputs,optional_z_scores,list_of_tetrodes,debug,relevant_grades,relevant_grade_names,dir_to_save_figs_to);

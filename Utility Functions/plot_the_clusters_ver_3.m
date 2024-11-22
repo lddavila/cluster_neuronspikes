@@ -1,6 +1,6 @@
-function [] = plot_the_clusters_ver_3(names_of_clusters,channels_of_curr_tetr,idx,before_or_after,grades,aligned,relevant_grades,relevant_grade_names,cluster_categories)
+function [] = plot_the_clusters_ver_3(names_of_clusters,channels_of_curr_tetr,idx,before_or_after,grades,aligned,relevant_grades,relevant_grade_names,cluster_categories,dir_to_save_figs_to,name_of_tetrode)
 %plot all the configurations of the clusters
-figure;
+figure('units','normalized','outerposition',[0 0 1 1])
 panel_counter = 1;
 for first_dimension = 1:length(channels_of_curr_tetr)
     for second_dimension = first_dimension+1:length(channels_of_curr_tetr)
@@ -9,25 +9,26 @@ for first_dimension = 1:length(channels_of_curr_tetr)
         panel_counter = panel_counter+1;
     end
 end
-sgtitle(before_or_after +" Filtering")
+sgtitle(name_of_tetrode+" "+before_or_after +" Filtering")
+saveas(gcf,dir_to_save_figs_to+"\"+name_of_tetrode+".fig")
 
 %plot a heat map of the relevant grades
 
 % [overlap_percentage,which_cluster] = find_each_clusters_max_overlap(names_of_clusters,idx,reg_timestamps,ground_truth,timestamps);
 %disp(which_cluster);
-relevant_grades_of_current_tetrode = grades(names_of_clusters,relevant_grades);
-x_values = relevant_grade_names;
-y_values = strcat("c",string(names_of_clusters));
-if contains(before_or_after,"before","IgnoreCase",true)
-    if ~isempty(y_values)
-        figure;
-        heatmap(x_values,y_values,relevant_grades_of_current_tetrode,'ColorbarVisible','off','CellLabelFormat','%0.2f');
-        title(before_or_after + " Filtering")
-    end
-end
+% relevant_grades_of_current_tetrode = grades(names_of_clusters,relevant_grades);
+% x_values = relevant_grade_names;
+% y_values = strcat("c",string(names_of_clusters));
+% if contains(before_or_after,"before","IgnoreCase",true)
+%     if ~isempty(y_values)
+%         figure;
+%         heatmap(x_values,y_values,relevant_grades_of_current_tetrode,'ColorbarVisible','off','CellLabelFormat','%0.2f');
+%         title(before_or_after + " Filtering")
+%     end
+% end
 
-%plot the average waveform per cluster
-if contains(before_or_after,"Before","IgnoreCase",true)
-    plot_mean_waveform_per_cluster(aligned,idx,names_of_clusters,before_or_after)
-end
+% %plot the average waveform per cluster
+% if contains(before_or_after,"Before","IgnoreCase",true)
+%     plot_mean_waveform_per_cluster(aligned,idx,names_of_clusters,before_or_after)
+% end
 end

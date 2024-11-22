@@ -1,4 +1,4 @@
-function [classification_of_clusters,tetrode_and_cluster_number] = grade_clusters(generic_dir_with_grades,generic_dir_with_outputs,optional_z_scores,list_of_tetrodes_to_check,debug,relevant_grades,relevant_grade_names)
+function [classification_of_clusters,tetrode_and_cluster_number] = grade_clusters(generic_dir_with_grades,generic_dir_with_outputs,optional_z_scores,list_of_tetrodes_to_check,debug,relevant_grades,relevant_grade_names,dir_to_save_figs_to)
 %relevant grades include
 %2 cv 2
 %3 percent short isi 3
@@ -23,7 +23,7 @@ tetrode_and_cluster_number = [];
 art_tetr_array = build_artificial_tetrode();
 default_z_score = optional_z_scores(1);
 have_tried_lower_cutting_threshold = 0;
-for tetrode_counter=18:length(list_of_tetrodes_to_check)
+for tetrode_counter=1:length(list_of_tetrodes_to_check)
     current_tetrode = list_of_tetrodes_to_check(tetrode_counter);
     channels_of_curr_tetr = art_tetr_array(tetrode_counter,:);
     dir_with_grades = generic_dir_with_grades + " "+string(default_z_score) + " grades";
@@ -55,7 +55,7 @@ for tetrode_counter=18:length(list_of_tetrodes_to_check)
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         else
             current_clusters_category = [current_clusters_category;"No category"];
-            list_of_clusters(cluster_counter) = NaN;
+            idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         end
         classification_of_clusters = [classification_of_clusters;current_clusters_category];
         tetrode_and_cluster_number = [tetrode_and_cluster_number; string(current_tetrode)+"_"+string(cluster_counter)];
@@ -93,8 +93,8 @@ for tetrode_counter=18:length(list_of_tetrodes_to_check)
     if debug
         clc;
         disp(current_clusters_category);
-        plot_the_clusters_ver_2(1:length(idx_b4_filt),channels_of_curr_tetr,idx_b4_filt,"Min Z Score "+ string(default_z_score)+"Before",current_grades,aligned,relevant_grades,relevant_grade_names);
-        plot_the_clusters_ver_3(list_of_clusters,channels_of_curr_tetr,idx_aft_filt,"Min Z Score "+string(default_z_score) +"After",current_grades,aligned,relevant_grades,relevant_grade_names,current_clusters_category);
+        %plot_the_clusters_ver_2(1:length(idx_b4_filt),channels_of_curr_tetr,idx_b4_filt,"Min Z Score "+ string(default_z_score)+"Before",current_grades,aligned,relevant_grades,relevant_grade_names);
+        plot_the_clusters_ver_3(list_of_clusters,channels_of_curr_tetr,idx_aft_filt,"Min Z Score "+string(default_z_score) +"After",current_grades,aligned,relevant_grades,relevant_grade_names,current_clusters_category,dir_to_save_figs_to,current_tetrode);
     end
     close all;
 end
