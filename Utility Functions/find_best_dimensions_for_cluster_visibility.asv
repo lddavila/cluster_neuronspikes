@@ -7,9 +7,8 @@ the_various_dimensions = {};
 for k = 1:size(all_peaks,2)
     all_comb_for_k_dimensions = nchoosek(list_of_all_dimensions,k);
     bhat_distances_for_current_dim = [];
-    dimension_combinations_to_add = {};
     for current_combination = 1:size(all_comb_for_k_dimensions,1)
-        dimension_combinations_to_add{end+1} = all_comb_for_k_dimensions(current_combination,:);
+        the_various_dimensions{end+1} = all_comb_for_k_dimensions(current_combination,:);
         curr_clust_in_curr_dim_comb = all_peaks(cluster_idx{current_cluster},all_comb_for_k_dimensions(current_combination,:));
         for cluster_counter=1:length(cluster_idx)
             if cluster_counter==current_cluster
@@ -25,13 +24,12 @@ for k = 1:size(all_peaks,2)
         mean_bhat_of_varying_number_of_dimensions = [mean_bhat_of_varying_number_of_dimensions,mean_of_b_dist_for_curr_dim_comb];
         bhat_distances_for_varying_number_of_dimensions{end+1} = bhat_distances_for_current_dim;
     end
-    the_various_dimensions{end+1} = dimension_combinations_to_add;
 end
 
-[~,Index_of_max_mean] = max(mean_bhat_of_varying_number_of_dimensions);
-dimensions_with_highest_bhat_distance = bhat_distances_for_varying_number_of_dimensions{Index_of_max_mean};
-[min_b_dist_among_highest_mean_b_dist,Index_of_min]= min(dimensions_with_highest_bhat_distance);
-which_dim_were_best = the_various_dimensions{Index_of_max_mean}{Index_of_min};
+[~,I] = max(mean_bhat_of_varying_number_of_dimensions);
+dimensions_with_highest_bhat_distance = bhat_distances_for_varying_number_of_dimensions{I};
+[min_b_dist_among_highest_mean_b_dist,Index_of_min ]= min(dimensions_with_highest_bhat_distance);
+which_dim_were_best = 
 
 
 end
