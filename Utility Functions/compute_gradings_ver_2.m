@@ -48,7 +48,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
 %   10) Bhattacharyya Distance to unsorted spikes
 
     num_clusters = length(clusters);
-    grades = nan(num_clusters, 35);
+    grades = nan(num_clusters, 36);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -277,6 +277,9 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         %%spikes
         grades(k,36) = calculate_tightness_of_waveform_per_cluster(mean_waveform_for_cluster_k,spikes(compare_wire,:,:),debug);
 
+        %grade 37 will be checking the best possible dimensions for seeing
+        %the cluster, this will be done by
+        
 
 
     end
