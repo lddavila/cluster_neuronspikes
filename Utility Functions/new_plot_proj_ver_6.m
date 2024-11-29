@@ -1,8 +1,4 @@
-function new_plot_proj_ver_5(cluster_filters, aligned, x_axis, y_axis,channels,current_tetrode,z_score,the_number,category_of_clusters)
-channel_string = "";
-for j=1:size(channels,2)
-    channel_string = channel_string + " C"+string(channels(j));
-end
+function new_plot_proj_ver_6(cluster_filters, aligned, x_axis, y_axis,z_score,plot_counter,overlap_percentage,cluster_primary)
 
 data = get_peaks(aligned, true)';
 colors = distinguishable_colors(length(cluster_filters)*3);
@@ -12,7 +8,7 @@ myplot = @(x, y, c, m, s) plot(x, y, 'Color', c, 'LineStyle', 'none', 'Marker', 
 hold on
 legend_string = ["Unclustered"];
 myplot(data(:, x_axis), data(:, y_axis), my_gray, 'o', 2)
-for c = 1:length(cluster_filters)
+for c = cluster_primary:cluster_primary+0.5
     peaks_in_cluster = cluster_filters{c};
     if isempty(peaks_in_cluster)
         continue;
@@ -21,19 +17,22 @@ for c = 1:length(cluster_filters)
     cluster = data(peaks_in_cluster, :);
     cluster_x = cluster(:, x_axis);
     cluster_y = cluster(:, y_axis);
-    if strcmpi(category_of_clusters(c),"No category") || contains(category_of_clusters(c),"Not")
-        myplot(cluster_x, cluster_y, colors(2,:), 'o', 2)
-    else
-        myplot(cluster_x, cluster_y, colors(c,:), 'o', 2)
-    end
 
-    legend_string =[legend_string, "c"+string(c) + " "+category_of_clusters(c)];
+    myplot(cluster_x, cluster_y, colors(c,:), 'o', 2)
+
+
+    if plot_counter==1
+        legend_string =[legend_string, "c"+string(c) + " Primary"];
+    else
+        legend_string = [legend_string,"c"+string(c)+"Overlap Percentage:"+string(overlap_percentage)];
+    end
 end
 xlabel(sprintf('Dim %d Peaks', x_axis))
 ylabel(sprintf('Dim %d Peaks', y_axis))
 title(string(z_score));
-if the_number==1
+if mod(plot_counter-1,6)==0
     legend(legend_string,'Location','best');
+    xlabel(sprintf('Dim %d Peaks Overlap Percentage:%s', x_axis,overlap_percentage) )
 end
 hold off
 end

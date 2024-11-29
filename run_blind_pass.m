@@ -69,6 +69,7 @@ current_recording = "0_100Neuron300SecondRecordingWithLevel3Noise";
 debug = 0;
 varying_z_scores = [3,3.5,4];
 varying_z_scores = [3, 3.5, 4, 5, 6,7,8,9];
+varying_z_scores = [3, 3.5, 5, 6,7,8,9];
 for i=1:length(varying_z_scores)
 dir_with_output = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass_results min z_score"+string(varying_z_scores(i));
 dir_to_save_grades_to = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass min z_score "+string(varying_z_scores(i))+" grades";
@@ -141,12 +142,19 @@ optional_z_scores = [3 3.5 4];
 optional_z_scores = [4,3.5,3];
 list_of_desired_tetrodes = strcat("t",string(1:285));
 debug =1;
-relevant_grades = [2,31,30,32,8,28,29,33,34,9,35,36];
-relevant_grade_names = ["CV (2)","Amp. (31)","Hist. Sym. (30)","R-Wire Amp(32)","TM(8)","CL. Skew(28)","TM New()","Chance Of M.U.A(33)","Min B-Dist From M.U.A(34)","Min B-Dist To Neighbor(9)","TM Cluster Level(35)","TM Rep Wire Level(36)"];
+relevant_grades = [2,31,30,32,8,28,29,33,34,9,35,36,37,38];
+relevant_grade_names = ["CV (2)","Amp. (31)","Hist. Sym. (30)","R-Wire Amp(32)","TM(8)","CL. Skew(28)","TM New()","Chance Of M.U.A(33)","Min B-Dist From M.U.A(34)","Min B-Dist To Neighbor(9)","TM Cluster Level(35)","TM Rep Wire Level(36)","Min Bhat Best Dim","Best Dim"];
 dir_to_save_figs_to = "D:\OneDrive - The University of Texas at El Paso\Graded Clusters Z Score 4";
 grade_clusters(generic_dir_with_grades,generic_dir_with_outputs,optional_z_scores,list_of_tetrodes,debug,relevant_grades,relevant_grade_names,dir_to_save_figs_to);
 
-%%
-concatenate_many_plots_updated("D:\OneDrive - The University of Texas at El Paso\Graded Clusters Z Score 4\Cluster Plots","Cluster Plots.pdf","D:\OneDrive - The University of Texas at El Paso\PDF of Clusters")
-%%
-concatenate_many_plots_updated("D:\OneDrive - The University of Texas at El Paso\Graded Clusters Z Score 4\Grade Plots","Grades Plots.pdf","D:\OneDrive - The University of Texas at El Paso\PDF of Clusters")
+%% finding clusters with varying z scores and 
+clc;
+close all;
+dir_with_precomputed = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise";
+varying_z_scores = [3, 3.5, 4, 5,6,7,8,9];
+tetrodes_to_check = strcat("t",string(1:285));
+debug = 0;
+grades_that_matter = [2,31,30,32,8,28,29,33,34,9,35,36,37,38];
+names_of_grades = ["CV (2)","Amp. (31)","Hist. Sym. (30)","R-Wire Amp(32)","TM(8)","CL. Skew(28)","TM New()","Chance Of M.U.A(33)","Min B-Dist From M.U.A(34)","Min B-Dist To Neighbor(9)","TM Cluster Level(35)","TM Rep Wire Level(36)","Min Bhat Best Dim","Best Dim"];
+min_overlap_percentage = 50;
+finding_clusters_bringing_in_varying_z_scores(dir_with_precomputed,varying_z_scores,tetrodes_to_check,min_overlap_percentage,debug,grades_that_matter,names_of_grades);

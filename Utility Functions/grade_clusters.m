@@ -23,7 +23,7 @@ tetrode_and_cluster_number = [];
 art_tetr_array = build_artificial_tetrode();
 default_z_score = optional_z_scores(1);
 have_tried_lower_cutting_threshold = 0;
-for tetrode_counter=9:length(list_of_tetrodes_to_check)
+for tetrode_counter=74:length(list_of_tetrodes_to_check)
     current_tetrode = list_of_tetrodes_to_check(tetrode_counter);
     channels_of_curr_tetr = art_tetr_array(tetrode_counter,:);
     dir_with_grades = generic_dir_with_grades + " "+string(default_z_score) + " grades";
@@ -39,38 +39,42 @@ for tetrode_counter=9:length(list_of_tetrodes_to_check)
     for cluster_counter=1:size(current_grades,1)
 
         current_cluster_grades = current_grades(cluster_counter,:);
-        if size(idx_b4_filt{cluster_counter},1) <50
-            current_clusters_category = [current_clusters_category;"Not Enough Spikes"];
+        if size(idx_b4_filt{cluster_counter},1) <=100
+            current_clusters_category = [current_clusters_category;"Not Enough Data c1"];
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
+        elseif current_cluster_grades(37) <1.1
+            current_clusters_category = [current_clusters_category;"Probably Multi Unit Activity c2"];
+        elseif current_cluster_grades(37) > 10
+            current_clusters_category = [current_clusters_category;"Probably a Neuron c3"];
         elseif current_cluster_grades(2) < 0.1 && current_cluster_grades(31) > 1 && current_cluster_grades(30) < 7 && current_cluster_grades(31) > 1
-            current_clusters_category = [current_clusters_category;"Probably A Neuron c1"];
+            current_clusters_category = [current_clusters_category;"Probably A Neuron c4"];
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         elseif current_cluster_grades(2) < 0.1  && current_cluster_grades(30) < 7 && current_cluster_grades(32) > 1
-           current_clusters_category = [current_clusters_category;"Probably A Neuron c2"];
+           current_clusters_category = [current_clusters_category;"Probably A Neuron c5"];
            idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         elseif current_cluster_grades(34) > 20 && (current_cluster_grades(33) == 2 || current_cluster_grades(33)==1) && ~isinf(current_cluster_grades(34))
-            current_clusters_category = [current_clusters_category; "Probabaly A Neuron c3"];
+            current_clusters_category = [current_clusters_category; "Probabaly A Neuron c6"];
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         elseif current_cluster_grades(34)>12 && current_cluster_grades(33) == 2  && current_cluster_grades(32) >1
-            current_clusters_category = [current_clusters_category;"Probably A Neuron c9"];
+            current_clusters_category = [current_clusters_category;"Probably A Neuron c7"];
         elseif current_cluster_grades(34)>12 && current_cluster_grades(33) ==2
-            current_clusters_category = [current_clusters_category;"Maybe a Neuron"];
+            current_clusters_category = [current_clusters_category;"Maybe a Neuron c8"];
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         elseif current_cluster_grades(2) > 0.1&& current_cluster_grades(34)>4 && (current_cluster_grades(33) == 2 || current_cluster_grades(33) == 1)
-            current_clusters_category = [current_clusters_category;"Probably Multi Unit Activity c10"];
+            current_clusters_category = [current_clusters_category;"Probably Multi Unit Activity c9"];
         elseif current_cluster_grades(34)>4 && (current_cluster_grades(33) == 2 || current_cluster_grades(33) == 1)
-            current_clusters_category = [current_clusters_category;"Maybe multi unit actvity c4"];
+            current_clusters_category = [current_clusters_category;"Maybe multi unit actvity c10"];
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         elseif current_cluster_grades(34) > 4 && current_cluster_grades(33) ~=1 
-            current_clusters_category =[current_clusters_category;"Might Be a Neuron c5"];
+            current_clusters_category =[current_clusters_category;"Might Be a Neuron c11"];
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         elseif current_cluster_grades(33) == 1
-            current_clusters_category = [current_clusters_category;"Probably Multi Unit Activity c6"];
+            current_clusters_category = [current_clusters_category;"Probably Multi Unit Activity c12"];
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         elseif current_cluster_grades(33) == 2 && current_cluster_grades(31) ==1 
-            current_clusters_category = [current_clusters_category;"Probably Multi Unit Activity c7"];
+            current_clusters_category = [current_clusters_category;"Probably Multi Unit Activity c13"];
         elseif current_cluster_grades(33) == 2 
-            current_clusters_category = [current_clusters_category;"Might Be Multi Unit Activity c8"];
+            current_clusters_category = [current_clusters_category;"Might Be Multi Unit Activity c14"];
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         else
             current_clusters_category = [current_clusters_category;"No category"];
