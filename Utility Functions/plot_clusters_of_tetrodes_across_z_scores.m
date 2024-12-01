@@ -17,5 +17,5 @@ sgtitle(current_tetrode)
 % %%Plot the heat map of grades
 % figure;
 % heatmap(names_of_grades,z_scores,grades,'ColorbarVisible','off','CellLabelFormat','%0.2f');
-% title(name_of_tetrode+" "+ before_or_after + " Filtering")
+% % title(name_of_tetrode+" "+ before_or_after + " Filtering")
 end

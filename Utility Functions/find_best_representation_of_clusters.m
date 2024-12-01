@@ -24,9 +24,11 @@ for i=1:size(table_of_varying_z_score_info,1)
             disp(all_data)
         end
 
-        if size(all_data,1) == 0
+        if all_data==""
             continue;
         end
+        % display([i,j])
+        % display(all_data)
         just_z_score_and_cluster = split(all_data(2)," Cluster ");
         compare_against_z_score = str2double(just_z_score_and_cluster(1));
         

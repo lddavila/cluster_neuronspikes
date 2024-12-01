@@ -48,7 +48,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
 %   10) Bhattacharyya Distance to unsorted spikes
 
     num_clusters = length(clusters);
-    grades = nan(num_clusters, 38);
+    grades = nan(num_clusters, 40);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -284,6 +284,10 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         %grade 39 will just be a simple boolean to report if the cluster is
         %underpowered (ie has less than 100 spikes
         grades(k,39) = size(clusters{k},2) < 100 ;
+
+        %grade 40 will be a measure of signal to noise ratio, closer to 1
+        %is better
+        grades(k,40) = calculate_signal_to_noise_of_cluster(aligned,cluster_filter);
         
 
 
