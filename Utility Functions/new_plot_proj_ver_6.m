@@ -9,7 +9,9 @@ myplot = @(x, y, c, m, s) plot(x, y, 'Color', c, 'LineStyle', 'none', 'Marker', 
 hold on
 legend_string = ["Unclustered"];
 myplot(data(:, x_axis), data(:, y_axis), my_gray, 'o', 2)
-
+if size(cluster_filters,1) ==0
+    return
+end
 for c = cluster_primary:cluster_primary+0.5
     peaks_in_cluster = cluster_filters{c};
     if isempty(peaks_in_cluster)

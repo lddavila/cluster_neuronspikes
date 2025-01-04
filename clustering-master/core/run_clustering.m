@@ -41,7 +41,8 @@ function [final_clusters, bad_clusters] = run_clustering(aligned, spike_idx, ir,
     
     if config.DO_REFINEMENT
         % Take the clusters found by `cluster,' and refine them.
-        refined_clusters = refine_clusters(aligned, refine_spike_idx, inj_clusters, ir, tvals, config);
+        %refined_clusters = refine_clusters(aligned, refine_spike_idx, inj_clusters, ir, tvals, config); %% OG line
+        refined_clusters = refine_clusters_ver_2(aligned, refine_spike_idx, inj_clusters, ir, tvals, config);%EDITED BY LUIS DAVID DAVILA
     else
         refined_clusters = cellmap(@(x) refine_spike_idx(x), inj_clusters);
     end

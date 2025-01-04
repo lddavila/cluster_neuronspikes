@@ -49,7 +49,7 @@ for i=1:length(list_of_desired_tetrodes)
 
 
     try
-    [output,aligned,reg_timestamps] = run_spikesort_ntt_core_ver4(raw,timestamps_for_current_tetrode,good_spike_idx,ir,tvals,filenames,config,channels_in_current_tetrode,i);
+    [output,aligned,reg_timestamps,reg_timestamps_of_the_spikes] = run_spikesort_ntt_core_ver4(raw,timestamps_for_current_tetrode,good_spike_idx,ir,tvals,filenames,config,channels_in_current_tetrode,i);
     %   - the first column contains the timestamps of the spikes in seconds
     %   - the second column contains the cluster classification of the spikes
     %       E.g., a value of '3' means that the spike belongs to cluster 3.
@@ -61,6 +61,7 @@ for i=1:length(list_of_desired_tetrodes)
         save(initial_tetrodes_results_dir+"\"+current_tetrode+" output.mat","output")
         save(initial_tetrodes_results_dir+"\"+current_tetrode+" aligned.mat","aligned")
         save(initial_tetrodes_results_dir+"\"+current_tetrode+" reg_timestamps.mat","reg_timestamps")
+        save(initial_tetrodes_results_dir+"\"+current_tetrode+ " reg_timestamps_of_spikes.mat","reg_timestamps_of_the_spikes")
 
     else
         output_array{i} = NaN;
@@ -90,6 +91,6 @@ for i=1:length(list_of_desired_tetrodes)
         fclose(fileID);
         disp("Error Logged")
     end
-    disp("Finished Clustering"+ string(i)+"/"+string(length(list_of_desired_tetrodes)))
+    % disp("Finished Clustering"+ string(i)+"/"+string(length(list_of_desired_tetrodes)))
 end
 end

@@ -5,7 +5,7 @@ for j=1:size(channels,2)
 end
 
 data = get_peaks(aligned, true)';
-colors = distinguishable_colors(length(cluster_filters)*3);
+colors = distinguishable_colors(length(cluster_filters));
 my_gray = [0.5 0.5 0.5];
 myplot = @(x, y, c, m, s) plot(x, y, 'Color', c, 'LineStyle', 'none', 'Marker', m, 'MarkerSize', s,'MarkerFaceColor',c,'MarkerEdgeColor',c);
 
@@ -21,7 +21,7 @@ for c = 1:length(cluster_filters)
     cluster = data(peaks_in_cluster, :);
     cluster_x = cluster(:, x_axis);
     cluster_y = cluster(:, y_axis);
-    myplot(cluster_x, cluster_y, colors(c+length(cluster_filters),:), 'o', 2)
+    myplot(cluster_x, cluster_y, colors(c,:), 'o', 2)
 
     legend_string =[legend_string, "c"+string(c)];
 end

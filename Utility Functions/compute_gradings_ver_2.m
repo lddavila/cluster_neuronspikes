@@ -288,6 +288,11 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         %grade 40 will be a measure of signal to noise ratio, closer to 1
         %is better
         grades(k,40) = calculate_signal_to_noise_of_cluster(aligned,cluster_filter);
+
+        %grade 41 will be some kind of measure of likeliness of a bursting
+        %neuron
+        grades(k,41) = check_for_burst(ts,spikes,debug);
+
         
 
 

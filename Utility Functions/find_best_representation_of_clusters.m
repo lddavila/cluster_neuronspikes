@@ -47,7 +47,11 @@ for i=1:size(table_of_varying_z_score_info,1)
 
     end
     if debug
-        number_of_rows = length(array_of_other_appearences)+1;
+        if array_of_other_appearences==""
+            number_of_rows=1;
+        else
+            number_of_rows = length(array_of_other_appearences)+1;
+        end
         number_of_cols = 6;
         plot_clusters_of_tetrodes_across_z_scores(all_grades_of_primary_cluster,secondary_array_of_overlap_percentages,number_of_rows,number_of_cols,names_of_grades,all_z_scores_of_primary_cluster,current_tetrode,aligned_spike_cluster_data,idx_cluster_data,cluster_names_of_primary_cluster)
 

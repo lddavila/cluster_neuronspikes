@@ -23,7 +23,7 @@ outer_rim_below = cluster_mean_x - (outer_circle_n_of_std * cluster_std_x);
 n_dpts_in_cluster = length(peaks_in_cluster);
 n_dpts_in_outer_rim = size(data( (data(:,i) > inner_rim_above & data(:,i) <= outer_rim_above) | (data(:,i) < inner_rim_below & data(:,i) > outer_rim_below )  ,i),1) ;
 n_dpts_in_inner_rim = size(data( (data(:,i) <= inner_rim_above) & (data(:,i) >= inner_rim_below)  ,i),1) ; 
-all_snr(i) = (n_dpts_in_inner_rim - n_dpts_in_outer_rim )/ (n_dpts_in_inner_rim + n_dpts_in_outer_rim);
+all_snr(i) = (n_dpts_in_cluster - n_dpts_in_outer_rim )/ (n_dpts_in_cluster + n_dpts_in_outer_rim);
 
 end
 

@@ -23,13 +23,13 @@ tetrode_and_cluster_number = [];
 art_tetr_array = build_artificial_tetrode();
 default_z_score = optional_z_scores(1);
 have_tried_lower_cutting_threshold = 0;
-for tetrode_counter=74:length(list_of_tetrodes_to_check)
+for tetrode_counter=1:length(list_of_tetrodes_to_check)
     current_tetrode = list_of_tetrodes_to_check(tetrode_counter);
     channels_of_curr_tetr = art_tetr_array(tetrode_counter,:);
     dir_with_grades = generic_dir_with_grades + " "+string(default_z_score) + " grades";
     dir_with_outputs = generic_dir_with_outputs +string(default_z_score);
     default_z_score = optional_z_scores(1);
-    [current_grades,~,aligned,~,idx_b4_filt] = import_data(dir_with_grades,dir_with_outputs,current_tetrode);
+    [current_grades,~,aligned,ts,idx_b4_filt] = import_data(dir_with_grades,dir_with_outputs,current_tetrode);
     if any(isnan(current_grades))
         continue;
     end
@@ -80,6 +80,13 @@ for tetrode_counter=74:length(list_of_tetrodes_to_check)
             current_clusters_category = [current_clusters_category;"No category"];
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         end
+
+        if contains(current_clusters_category,"Multi Unit") %a special case to try and save multi unit activity to check if they are possibly bursting
+            %check_for_cross_correlation_between_clusters(aligned,idx_b4_filt,debug,cluster_counter,ts)
+            if current_cluster_grades(41) > 0.7
+                current_clusters_category = current_clusters_category + " Hi Burst Ratio";
+            end
+        end
         classification_of_clusters = [classification_of_clusters;current_clusters_category];
         tetrode_and_cluster_number = [tetrode_and_cluster_number; string(current_tetrode)+"_"+string(cluster_counter)];
         idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
@@ -113,6 +120,7 @@ for tetrode_counter=74:length(list_of_tetrodes_to_check)
         tetrode_counter = tetrode_counter-1; %modify the tetrode counter as to repeat the current grading with the next lowest cutting threshold
         default_z_score = optional_z_scores(3); % lower the cutting threshold
         have_tried_lower_cutting_threshold = 1;
+        
     end
     if debug
         clc;
@@ -120,6 +128,7 @@ for tetrode_counter=74:length(list_of_tetrodes_to_check)
         %plot_the_clusters_ver_2(1:length(idx_b4_filt),channels_of_curr_tetr,idx_b4_filt,"Min Z Score "+ string(default_z_score)+"Before",current_grades,aligned,relevant_grades,relevant_grade_names);
         plot_the_clusters_ver_3(list_of_clusters,channels_of_curr_tetr,idx_aft_filt,"Min Z Score "+string(default_z_score) +"After",current_grades,aligned,relevant_grades,relevant_grade_names,current_clusters_category,dir_to_save_figs_to,current_tetrode);
     end
+    disp("Finished "+string(tetrode_counter)+ "/"+string(length(tetrode_counter)));
     close all;
 end
 
