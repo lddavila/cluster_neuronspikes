@@ -1,4 +1,4 @@
-function [table_of_best_representation] = return_best_conf_for_cluster(table_of_overlapping_clusters,table_of_only_neurons,grades_array,aligned_array,idx_array,debug,timestamp_array,min_overlap_percentage)
+function [table_of_best_representation] = return_best_conf_for_cluster(table_of_overlapping_clusters,table_of_only_neurons,grades_array,debug,timestamp_array,min_overlap_percentage)
 table_of_best_representation = table(repelem("",10000,1),nan(10000,1),nan(10000,1),nan(10000,1),repelem("",10000,1),nan(10000,1),'VariableNames',["Tetrode","Cluster","Z Score","SNR","Overlap Percentage","idx of its location in arrays"]);
 already_appeared = [];
 for i=1:size(table_of_overlapping_clusters,1)

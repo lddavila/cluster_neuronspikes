@@ -10,7 +10,7 @@ cd(directory_with_plots_abs);
 list_of_all_plots = strtrim(string(ls(strcat(pwd,"\*.fig"))));
 disp(list_of_all_plots)
 
-list_of_all_plots = strcat("t",string(1:285),".fig");
+list_of_all_plots = strcat("Unit ",string(1:100),".fig");
 for i=1:length(list_of_all_plots)
     try
         openfig(list_of_all_plots(i),"reuse");

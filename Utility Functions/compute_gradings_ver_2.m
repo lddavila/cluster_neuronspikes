@@ -137,6 +137,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
             grades(k, 10) = bhat_dist(peaks(:, dim_filt), other_peaks(:, dim_filt));
         end
         
+        %how much it deviates from the noise
         grades(k, 11) = compute_lratio(peaks(:, dim_filt), other_peaks(:, dim_filt));
         
         rep_wire = shiftdim(spikes(compare_wire, :, :), 1);

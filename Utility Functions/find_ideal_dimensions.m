@@ -1,4 +1,4 @@
-function [rows_to_use,table_of_ideal_dimensions] = find_ideal_dimensions(current_table_of_channels,min_improvement,number_of_channels_to_use)
+function [rows_to_use,table_of_ideal_dimensions] = find_ideal_dimensions(current_table_of_channels,min_improvement,number_of_channels_to_use,min_amp)
 channel_counter =1;
 rows_to_use = nan(1,number_of_channels_to_use);
 starting_channel_index =1;
@@ -45,7 +45,7 @@ end
 index_in_rows_to_use =1;
 all_found = false;
 already_used_channels = [];
-min_amp =40;
+%min_amp =40;
 for i=1:size(consecutive_ranges,1)
     original_row_idx_in_current_table_of_channels = consecutive_ranges(i,1):consecutive_ranges(i,2);
     table_of_current_channel = current_table_of_channels(original_row_idx_in_current_table_of_channels,:);

@@ -30,7 +30,6 @@ for current_neuron_counter=1:size(table_of_neurons,1)
         if current_neuron_counter == compare_neuron_counter
             iter_count = iter_count+1;
             continue
-            
         end
         compare_neuron_tetrode = table_of_neurons{compare_neuron_counter,2};
         compare_neuron_tetrode_number = str2double(strrep(compare_neuron_tetrode,"t",""));
@@ -45,7 +44,7 @@ for current_neuron_counter=1:size(table_of_neurons,1)
         %reason to compare a cluster found on t1 to a cluster found on t50
         %cause they're so distant, I'll set the range to 15 before and
         %after the current tetrode number but even this might be excessive
-        if abs(compare_neuron_tetrode_number -current_neuron_tetrode_number) > 15
+        if abs(compare_neuron_tetrode_number -current_neuron_tetrode_number) > 5
             iter_count = iter_count+1;
             continue;
         end

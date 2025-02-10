@@ -30,6 +30,7 @@ for i=1:length(list_of_desired_tetrodes)
     std_dvns_of_relevant_channels = channel_wise_std(channels_in_current_tetrode);
 
     wire_filter = find_live_wires(raw);
+    % wire_filter = [1 2 3 4];
     nonzero_samples = raw_in_samples_format(:,wire_filter,:);
     minpeaks = shiftdim(min(max(nonzero_samples),[],2),2);
     maxvals = shiftdim(max(min(nonzero_samples),[],2),2);
@@ -48,7 +49,7 @@ for i=1:length(list_of_desired_tetrodes)
     config = spikesort_config(); %load the config file;
 
 
-    try
+    % try
     [output,aligned,reg_timestamps,reg_timestamps_of_the_spikes] = run_spikesort_ntt_core_ver4(raw,timestamps_for_current_tetrode,good_spike_idx,ir,tvals,filenames,config,channels_in_current_tetrode,i);
     %   - the first column contains the timestamps of the spikes in seconds
     %   - the second column contains the cluster classification of the spikes
@@ -66,7 +67,7 @@ for i=1:length(list_of_desired_tetrodes)
     else
         output_array{i} = NaN;
         aligned_array{i} = NaN;
-        reg_timestamps_array{i} = Nan;
+        reg_timestamps_array{i} = NaN;
         disp("Finished "+ string(i)+"/"+string(length(list_of_desired_tetrodes)))
         continue;
     end
@@ -85,12 +86,12 @@ for i=1:length(list_of_desired_tetrodes)
     %     end
     % end
     %close all;
-    catch ME
-        fileID = fopen('clustering_error_log.txt','a+');
-        fprintf(fileID,'Tetrode: %s threw the following error while clusteirng %s\n',current_tetrode,ME.message);
-        fclose(fileID);
-        disp("Error Logged")
-    end
+    % catch ME
+    %     fileID = fopen('clustering_error_log.txt','a+');
+    %     fprintf(fileID,'Tetrode: %s threw the following error while clusteirng %s\n',current_tetrode,ME.message);
+    %     fclose(fileID);
+    %     disp("Error Logged")
+    % end
     % disp("Finished Clustering"+ string(i)+"/"+string(length(list_of_desired_tetrodes)))
 end
 end

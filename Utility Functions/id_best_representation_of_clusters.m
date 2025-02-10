@@ -57,7 +57,7 @@ if ~refinement_pass
     if load_previous_attempt
         load(dir_to_save_to+"\table of best appearences of cluster.mat","best_appearences_of_cluster");
     else
-        best_appearences_of_cluster = return_best_conf_for_cluster(table_of_overlapping_clusters,table_of_only_neurons,grades_array,aligned_array,idx_array,debug,timestamp_array,min_overlap_percentage);
+        best_appearences_of_cluster = return_best_conf_for_cluster(table_of_overlapping_clusters,table_of_only_neurons,grades_array,debug,timestamp_array,min_overlap_percentage);
         if save_results
             save(dir_to_save_to+"\table of best appearences of cluster.mat","best_appearences_of_cluster");
         end

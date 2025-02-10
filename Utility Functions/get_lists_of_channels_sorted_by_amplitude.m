@@ -1,4 +1,4 @@
-function [array_of_channels_sorted_by_amplitude] = get_lists_of_channels_sorted_by_amplitude(united_list,generic_dir_with_grades,generic_dir_with_outputs)
+function [array_of_channels_sorted_by_amplitude] = get_lists_of_channels_sorted_by_amplitude(united_list,generic_dir_with_grades,generic_dir_with_outputs,refined_pass)
 array_of_channels_sorted_by_amplitude = cell(1,length(united_list));
 art_tetr_array = build_artificial_tetrode;
 for i=2:size(united_list,2)
@@ -12,7 +12,7 @@ for i=2:size(united_list,2)
     z_scores = split(current_united_list(:,2),":",2);
     z_scores = z_scores(:,2);
     table_of_only_neurons = table(nan(size(current_united_list,1),1),tetrodes,str2double(clusters),str2double(z_scores),'VariableNames',["category","tetrode","cluster","z-score"]);
-    [grades_array,~,aligned_array,~,~]= get_data_of_neurons_identified_as_clusters(table_of_only_neurons,generic_dir_with_grades,generic_dir_with_outputs);
+    [grades_array,~,aligned_array,~,~]= get_data_of_neurons_identified_as_clusters(table_of_only_neurons,generic_dir_with_grades,generic_dir_with_outputs,refined_pass);
     peaks_array = cell(1,length(aligned_array));
     for j=1:length(aligned_array)
         peaks_array{j} = get_peaks(aligned_array{j},true);
