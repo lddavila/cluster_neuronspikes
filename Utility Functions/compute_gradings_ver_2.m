@@ -271,6 +271,11 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         %%the cluster, using Euclidean distance
         %It measures the euc distance of the mean waveform to all spikes in the peak then divides it by the max euc distance
         %thus this gradewill be from 0-1 with closer to 0 being better
+
+        %
+        % mean_waveform = mean(shiftdim(spikes(compare_wire, :, :), 1));
+        % mean_waveform = mean_waveform - mean(mean_waveform);
+        % grades(k, 8) = template_match(mean_waveform, temp.nt);
         mean_waveform_for_cluster_k = mean(shiftdim(spikes(compare_wire, :, :), 1));
         grades(k,35) = calculate_tightness_of_waveform_per_cluster(mean_waveform_for_cluster_k,spikes,debug);
 
