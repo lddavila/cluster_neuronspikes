@@ -18,5 +18,5 @@ time_delta = 0.0004;
 refinement_pass = true;
 dir_to_save_to = "Reclustered Pass Min Overlap 10";
 [best_appearences_of_cluster_from_reclustered_pass,timestamps_of_best_clusters_from_reclustered_pass,table_of_overlapping_clusters_from_reclustered_pass]= id_best_representation_of_clusters(varying_z_scores,tetrodes_to_check,min_overlap_percentage,debug,grades_that_matter,names_of_grades,generic_dir_with_grades,generic_dir_with_outputs,dir_to_save_figs_to,load_previous_attempt,save_results,time_delta,refinement_pass,dir_to_save_to);
-
+save(dir_to_save_to+"/output_of_id_best_rep_of_clusters.mat","best_appearences_of_cluster_from_reclustered_pass","timestamps_of_best_clusters_from_reclustered_pass","table_of_overlapping_clusters_from_reclustered_pass");
 end
