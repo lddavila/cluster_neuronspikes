@@ -10,7 +10,7 @@ end
 
 %grade all the clusters across varying z_scores
 %load("table of cluster classification.mat");
-table_of_cluster_classification = grade_clusters_ver_2(generic_dir_with_grades,generic_dir_with_outputs,varying_z_scores,tetrodes_to_check,debug,grades_that_matter,names_of_grades,dir_to_save_figs_to,refinement_pass);
+table_of_cluster_classification = grade_clusters_hpc(generic_dir_with_grades,generic_dir_with_outputs,varying_z_scores,tetrodes_to_check,debug,grades_that_matter,names_of_grades,dir_to_save_figs_to,refinement_pass);
 if save_results
     save(dir_to_save_to+"/table_of_cluster_classification_data.mat","table_of_cluster_classification");
 end
@@ -22,7 +22,7 @@ table_of_only_neurons = table_of_cluster_classification(contains(table_of_cluste
 
 %get the data of all the clusters found to be neurons
 
-[grades_array,~,aligned_array,timestamp_array,idx_array]= get_data_of_neurons_identified_as_clusters(table_of_only_neurons,generic_dir_with_grades,generic_dir_with_outputs,refinement_pass);
+[grades_array,~,aligned_array,timestamp_array,idx_array]= get_data_of_neurons_identified_as_clusters_hpc(table_of_only_neurons,generic_dir_with_grades,generic_dir_with_outputs,refinement_pass);
 if save_results
     save(dir_to_save_to+"/aligned_array.mat","aligned_array");
     save(dir_to_save_to+"/grades.mat","grades_array");
