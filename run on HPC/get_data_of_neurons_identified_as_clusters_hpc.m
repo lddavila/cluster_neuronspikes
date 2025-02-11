@@ -24,7 +24,7 @@ for i=1:size(table_of_only_neurons,1)
     aligned_array{i} = aligned_data(:,idx_array{i},:);
     timestamp_array{i} = timestamp_data(idx_array{i});
     
-    
+    disp("get_data_of_neurons_identified_as_clusters_hpc.m"+string(i)+"/"+string(size(table_of_only_neurons,1)))
 end
 disp("Finished get_data_of_neurons_identified_as_clusters Finished");
 end
