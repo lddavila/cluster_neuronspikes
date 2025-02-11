@@ -12,7 +12,7 @@ end
 %load("table of cluster classification.mat");
 table_of_cluster_classification = grade_clusters_hpc(generic_dir_with_grades,generic_dir_with_outputs,varying_z_scores,tetrodes_to_check,debug,grades_that_matter,names_of_grades,dir_to_save_figs_to,refinement_pass);
 if save_results
-    save("./"+dir_to_save_to+"/table_of_cluster_classification_data.mat","table_of_cluster_classification");
+    save(dir_to_save_to+" table_of_cluster_classification_data.mat","table_of_cluster_classification");
 end
 
 
@@ -24,10 +24,10 @@ table_of_only_neurons = table_of_cluster_classification(contains(table_of_cluste
 
 [grades_array,~,aligned_array,timestamp_array,idx_array]= get_data_of_neurons_identified_as_clusters_hpc(table_of_only_neurons,generic_dir_with_grades,generic_dir_with_outputs,refinement_pass);
 if save_results
-    save(dir_to_save_to+"/aligned_array.mat","aligned_array");
-    save(dir_to_save_to+"/grades.mat","grades_array");
-    save(dir_to_save_to+"/timestamp_array.mat","timestamp_array");
-    save(dir_to_save_to+"/idx.mat","idx_array");
+    save(dir_to_save_to+" aligned_array.mat","aligned_array");
+    save(dir_to_save_to+" grades.mat","grades_array");
+    save(dir_to_save_to+" timestamp_array.mat","timestamp_array");
+    save(dir_to_save_to+" idx.mat","idx_array");
 end
 
 
@@ -37,7 +37,7 @@ end
 
 table_of_overlapping_clusters =check_timestamp_overlap_between_clusters_ver_3(table_of_only_neurons,timestamp_array,min_overlap_percentage,time_delta);
 if save_results
-    save(dir_to_save_to+"/table of overlapping clusters.mat","table_of_overlapping_clusters")
+    save(dir_to_save_to+" table of overlapping clusters.mat","table_of_overlapping_clusters")
 end
 %now given that we have this table we can now check to see which
 %z score gives the best/only representation of the cluster
@@ -46,7 +46,7 @@ if ~refinement_pass
 
     best_appearences_of_cluster = return_best_conf_for_cluster(table_of_overlapping_clusters,table_of_only_neurons,grades_array,debug,timestamp_array,min_overlap_percentage);
     if save_results
-        save(dir_to_save_to+"/table of best appearences of cluster.mat","best_appearences_of_cluster");
+        save(dir_to_save_to+" table of best appearences of cluster.mat","best_appearences_of_cluster");
     end
 
 
