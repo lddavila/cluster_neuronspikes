@@ -2,7 +2,7 @@ function [] = run_overlap_checks_on_hpc()
 % now run regrading on this reclustered data set 
 clc;
 %close all;
-dir_with_output = "/home/lddavila/spike_gen_data/TEST refinement_pass_results min amp 0 Top 4 Channels";
+dir_with_output = "/gpfs/home/lddavila/spike_gen_data/TEST refinement_pass_results min amp 0 Top 4 Channels";
 varying_z_scores = [0];
 tetrodes_to_check = strcat("t",string(1:148));
 min_overlap_percentage = 10;
