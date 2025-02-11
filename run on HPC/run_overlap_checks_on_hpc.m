@@ -1,7 +1,8 @@
 function [] = run_overlap_checks_on_hpc()
 home_dir = cd("..");
-cd(home_dir);
 addpath(genpath(pwd));
+cd(home_dir);
+
 % now run regrading on this reclustered data set 
 clc;
 %close all;
