@@ -2,7 +2,7 @@ function [] = run_overlap_checks_on_hpc()
 % now run regrading on this reclustered data set 
 clc;
 %close all;
-dir_with_output = "/home/lddavila/spike_gen_data/Recordings By Channel Precomputed/0_100Neuron300SecondRecordingWithLevel3Noise/TEST refinement_pass_results min amp 0 Top 4 Channels";
+dir_with_output = "/home/lddavila/spike_gen_data/TEST refinement_pass_results min amp 0 Top 4 Channels";
 varying_z_scores = [0];
 tetrodes_to_check = strcat("t",string(1:148));
 min_overlap_percentage = 10;
@@ -18,5 +18,5 @@ time_delta = 0.0004;
 refinement_pass = true;
 dir_to_save_to = "Reclustered Pass Min Overlap 10";
 [best_appearences_of_cluster_from_reclustered_pass,timestamps_of_best_clusters_from_reclustered_pass,table_of_overlapping_clusters_from_reclustered_pass]= id_best_representation_of_clusters_hpc(varying_z_scores,tetrodes_to_check,min_overlap_percentage,debug,grades_that_matter,names_of_grades,generic_dir_with_grades,generic_dir_with_outputs,dir_to_save_figs_to,load_previous_attempt,save_results,time_delta,refinement_pass,dir_to_save_to);
-save(dir_to_save_to+"/output_of_id_best_rep_of_clusters.mat","best_appearences_of_cluster_from_reclustered_pass","timestamps_of_best_clusters_from_reclustered_pass","table_of_overlapping_clusters_from_reclustered_pass");
+save("./"+dir_to_save_to+"/output_of_id_best_rep_of_clusters.mat","best_appearences_of_cluster_from_reclustered_pass","timestamps_of_best_clusters_from_reclustered_pass","table_of_overlapping_clusters_from_reclustered_pass");
 end
