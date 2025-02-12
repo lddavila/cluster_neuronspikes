@@ -25,4 +25,5 @@ dir_to_save_to = "Reclustered Pass Min Overlap Percentage "+string(min_overlap_p
 home_dir = cd(dir_to_save_to);
 save(dir_to_save_to+" output_of_id_best_rep_of_clusters.mat","best_appearences_of_cluster_from_reclustered_pass","timestamps_of_best_clusters_from_reclustered_pass","table_of_overlapping_clusters_from_reclustered_pass");
 cd(home_dir);
+disp("run_overlap_checks_on_hpc.m Finished")
 end

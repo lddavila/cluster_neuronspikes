@@ -4,7 +4,9 @@ try
     
     load(dir_with_grades+"/"+current_tetrode+" Grades.mat","grades");
     load(dir_with_outputs+"/"+current_tetrode+" output.mat","output");
-    load(dir_with_outputs+"/"+current_tetrode+" aligned.mat","aligned");
+    if ~refinement_pass
+        load(dir_with_outputs+"/"+current_tetrode+" aligned.mat","aligned");
+    end
     load(dir_with_outputs+"/"+current_tetrode+" reg_timestamps_of_spikes","reg_timestamps_of_the_spikes");
     idx = extract_clusters_from_output(output(:,1),output,spikesort_config);
 catch

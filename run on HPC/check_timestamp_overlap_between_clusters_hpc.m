@@ -19,7 +19,7 @@ cell_array_of_cluster_number = cell(1,number_of_rows_in_table_of_neurons);
 cell_array_of_overlap_percentage = cell(1,number_of_rows_in_table_of_neurons);
 cell_array_of_other_appearences = cell(1,number_of_rows_in_table_of_neurons);
 cell_array_of_other_tetrodes = cell(1,number_of_rows_in_table_of_neurons);
-parpool("Threads",6)
+% parpool("Threads",6)
 parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
     current_neuron_tetrode = table_of_neurons{current_neuron_counter,2};
     current_neuron_tetrode_number = str2double(strrep(current_neuron_tetrode,"t",""));
