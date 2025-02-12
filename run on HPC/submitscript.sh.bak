@@ -4,4 +4,5 @@
 #SBATCH -o output.txt 
 #SBATCH -e error.txt 
 module load matlab/R2024b
-matlab run_overlap_checks_on_hpc
+matlab 
+run_overlap_checks_on_hpc
