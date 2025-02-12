@@ -47,12 +47,11 @@ cd(home_dir);
 %will also plot debugging plots in this stage if so desired
 if ~refinement_pass
     best_appearences_of_cluster = return_best_conf_for_cluster(table_of_overlapping_clusters,table_of_only_neurons,grades_array,debug,timestamp_array,min_overlap_percentage);
-
+    home_dir = cd(dir_to_save_to);
     if save_results
         save("table of best appearences of cluster.mat","best_appearences_of_cluster");
     end
-
-
+    cd(home_dir)
     timestamps_of_best_clusters = timestamp_array(best_appearences_of_cluster{:,"idx of its location in arrays"});
 else
     timestamps_of_best_clusters = timestamp_array;
