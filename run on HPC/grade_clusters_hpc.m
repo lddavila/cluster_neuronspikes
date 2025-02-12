@@ -46,7 +46,7 @@ for z_score_counter=1:ending_point
             dir_with_grades = generic_dir_with_grades;
             dir_with_outputs = generic_dir_with_outputs;
         end
-        [current_grades,~,aligned,~,idx_b4_filt] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode);
+        [current_grades,~,~,~,idx_b4_filt] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode);
         if any(isnan(current_grades))
             continue;
         end

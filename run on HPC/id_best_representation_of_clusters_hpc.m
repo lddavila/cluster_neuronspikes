@@ -12,7 +12,7 @@ end
 table_of_cluster_classification = grade_clusters_hpc(generic_dir_with_grades,generic_dir_with_outputs,varying_z_scores,tetrodes_to_check,debug,grades_that_matter,names_of_grades,dir_to_save_figs_to,refinement_pass);
 home_dir = cd(dir_to_save_to);
 if save_results
-    save(" table_of_cluster_classification_data.mat","table_of_cluster_classification");
+    save("table_of_cluster_classification_data.mat","table_of_cluster_classification");
 end
 cd(home_dir);
 
