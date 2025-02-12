@@ -12,9 +12,9 @@ try
 catch ME
     
     disp(current_tetrode +" Failed To Load")
-    disp(ME.identifier)
-    disp(ME.message)
-    disp(ME.cause)
+    % disp(ME.identifier)
+    % disp(ME.message)
+    % disp(ME.cause)
     grades = NaN;
     output = NaN;
     aligned = NaN;
