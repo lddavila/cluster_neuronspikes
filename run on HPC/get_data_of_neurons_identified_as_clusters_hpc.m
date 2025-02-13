@@ -19,7 +19,7 @@ parfor i=1:size(table_of_only_neurons,1)
         dir_with_outputs = generic_dir_with_outputs +string(current_z_score);
     end
     [grades_data,outputs_data,aligned_data,timestamp_data,idx_data] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,refined_pass);
-    if isnan(grades_data) || isnan(outputs_data) || isnan(aligned_data) || isnan(timestamp_data) || isnan(idx_data)
+    if isnan(grades_data)
         continue;
     end
     grades_array{i}=grades_data(current_cluster,:);
