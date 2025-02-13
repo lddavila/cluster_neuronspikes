@@ -25,7 +25,7 @@ table_of_only_neurons = table_of_cluster_classification(contains(table_of_cluste
 [grades_array,~,aligned_array,timestamp_array,idx_array]= get_data_of_neurons_identified_as_clusters_hpc(table_of_only_neurons,generic_dir_with_grades,generic_dir_with_outputs,refinement_pass);
 home_dir = cd(dir_to_save_to);
 if save_results
-    save("aligned_array.mat","aligned_array");
+    save('aligned.mat', 'aligned_array', '-v7.3');
     save("grades.mat","grades_array");
     save("timestamp_array.mat","timestamp_array");
     save("idx.mat","idx_array");
