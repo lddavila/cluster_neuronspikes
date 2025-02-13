@@ -32,11 +32,8 @@ if save_results
 end
 cd(home_dir);
 
-%now see which clusters are just the same cluster in different
-%configurations
-
-
-table_of_overlapping_clusters =check_timestamp_overlap_between_clusters_ver_3(table_of_only_neurons,timestamp_array,min_overlap_percentage,time_delta);
+%now see which clusters are just the same cluster in different configurations
+table_of_overlapping_clusters =check_timestamp_overlap_between_clusters_hpc(table_of_only_neurons,timestamp_array,min_overlap_percentage,time_delta);
 home_dir = cd(dir_to_save_to);
 if save_results
     save("table of overlapping clusters.mat","table_of_overlapping_clusters")
@@ -54,7 +51,13 @@ if ~refinement_pass
     cd(home_dir)
     timestamps_of_best_clusters = timestamp_array(best_appearences_of_cluster{:,"idx of its location in arrays"});
 else
+    home_dir = cd(dir_to_save_to);
+    if save_results
+        save("table of best appearences of cluster.mat","best_appearences_of_cluster");
+    end
+    cd(home_dir)
     timestamps_of_best_clusters = timestamp_array;
     best_appearences_of_cluster = table(table_of_only_neurons{:,"tetrode"},table_of_only_neurons{:,"cluster"},table_of_only_neurons{:,"z-score"},'VariableNames',["Tetrode","Cluster","Z Score"]);
+
 end
 end

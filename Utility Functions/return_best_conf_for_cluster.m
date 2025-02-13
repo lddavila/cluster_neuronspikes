@@ -138,6 +138,6 @@ table_of_best_representation(isnan(table_of_best_representation{:,"Cluster"}),:)
 %now only return the unique versions 
 table_of_best_representation = unique(table_of_best_representation,"stable",'rows');
 
-%remove any rows that have a SNR of 0-0.4
+%remove any rows that have a negative snr
 table_of_best_representation(table_of_best_representation{:,"SNR"}<=0,:) = [];
 end

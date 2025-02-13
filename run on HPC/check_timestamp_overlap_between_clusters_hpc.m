@@ -24,9 +24,7 @@ parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
     current_neuron_tetrode = table_of_neurons{current_neuron_counter,2};
     current_neuron_tetrode_number = str2double(strrep(current_neuron_tetrode,"t",""));
     current_neuron_z_score = table_of_neurons{current_neuron_counter,4};
-    %current_neuron_idx =  idx_cluster_data{current_neuron_counter};
     current_neuron_ts = timestamps_cluster_data{current_neuron_counter};
-    %current_neuron_grades = grades_cluster_data{current_neuron_counter};
     current_neuron_cluster_number = table_of_neurons{current_neuron_counter,3};
 
     other_appearences_of_this_cluster = "";
@@ -41,9 +39,7 @@ parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
         compare_neuron_tetrode = table_of_neurons{compare_neuron_counter,2};
         compare_neuron_tetrode_number = str2double(strrep(compare_neuron_tetrode,"t",""));
         compare_neuron_z_score = table_of_neurons{compare_neuron_counter,4};
-        %compare_neuron_idx =  idx_cluster_data{compare_neuron_counter};
         compare_neuron_ts = timestamps_cluster_data{compare_neuron_counter};
-        %compare_neuron_grades = grades_cluster_data{compare_neuron_counter};
         compare_neuron_cluster = table_of_neurons{compare_neuron_counter,3};
 
         %to avoid excess calculations we will skip any tetrodes that
@@ -51,7 +47,7 @@ parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
         %reason to compare a cluster found on t1 to a cluster found on t50
         %cause they're so distant, I'll set the range to 15 before and
         %after the current tetrode number but even this might be excessive
-        if abs(compare_neuron_tetrode_number -current_neuron_tetrode_number) > 10
+        if abs(compare_neuron_tetrode_number -current_neuron_tetrode_number) > 15
             % iter_count = iter_count+1;
             continue;
         end
@@ -74,8 +70,6 @@ parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
                 other_tetrodes_where_cluster_appears = other_tetrodes_where_cluster_appears +"|"+ compare_neuron_tetrode;
             end
         end
-        % disp("check_timestamp_overlap_between_clusters_hpc.m "+string(current_neuron_counter)+" Finished "+string(iter_count)+"/"+string(size(table_of_neurons,1)*size(table_of_neurons,1)))
-        % iter_count = iter_count+1;
     end
     %,'VariableNames',["Z Score","Cluster #","Overlap %","Other Appearences","Tetrode"]);
     cell_array_of_z_scores{current_neuron_counter} = current_neuron_z_score;
