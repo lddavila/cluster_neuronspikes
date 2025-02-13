@@ -6,7 +6,7 @@ timestamp_array = cell(1,size(table_of_only_neurons,1));
 idx_array = cell(1,size(table_of_only_neurons,1));
 disp("Beginning get_data_of_neurons_identified_as_clusters")
 % parpool("Threads",6)
-parfor i=1:size(table_of_only_neurons,1)
+for i=1:size(table_of_only_neurons,1)
     current_tetrode = table_of_only_neurons{i,2};
     current_z_score = table_of_only_neurons{i,4};
     current_cluster = table_of_only_neurons{i,3};
@@ -18,10 +18,8 @@ parfor i=1:size(table_of_only_neurons,1)
         dir_with_grades = generic_dir_with_grades + " "+string(current_z_score) + " grades";
         dir_with_outputs = generic_dir_with_outputs +string(current_z_score);
     end
-    [grades_data,outputs_data,aligned_data,timestamp_data,idx_data] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,refined_pass);
-    if isnan(grades_data) || isnan(outputs_data) || isnan(aligned_data) || isnan(timestamp_data) || isnan(idx_data)
-        continue;
-    end
+    [grades_data,outputs_data,aligned_data,timestamp_data,idx_data] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode);
+    if isnan(grades_data) || isnan(outputs_data) || isnan()
     grades_array{i}=grades_data(current_cluster,:);
     idx_array{i} = idx_data{current_cluster};
     outputs_array{i}= outputs_data(idx_array{i});
