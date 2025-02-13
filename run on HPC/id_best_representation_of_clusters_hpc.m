@@ -42,8 +42,8 @@ cd(home_dir);
 %now given that we have this table we can now check to see which
 %z score gives the best/only representation of the cluster
 %will also plot debugging plots in this stage if so desired
+best_appearences_of_cluster = return_best_conf_for_cluster(table_of_overlapping_clusters,table_of_only_neurons,grades_array,debug,timestamp_array,min_overlap_percentage);
 if ~refinement_pass
-    best_appearences_of_cluster = return_best_conf_for_cluster(table_of_overlapping_clusters,table_of_only_neurons,grades_array,debug,timestamp_array,min_overlap_percentage);
     home_dir = cd(dir_to_save_to);
     if save_results
         save("table of best appearences of cluster.mat","best_appearences_of_cluster");

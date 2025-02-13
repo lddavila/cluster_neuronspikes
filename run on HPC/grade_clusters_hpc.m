@@ -121,8 +121,8 @@ for z_score_counter=1:ending_point
             disp(current_clusters_category);
             
             %plot_the_clusters_ver_2(1:length(idx_b4_filt),channels_of_curr_tetr,idx_b4_filt,"Min Z Score "+ string(default_z_score)+"Before",current_grades,aligned,relevant_grades,relevant_grade_names);
-            plot_the_clusters_ver_3(list_of_clusters,channels_of_curr_tetr,idx_aft_filt,"Min Z Score "+string(current_z_score) +"After",current_grades,aligned,relevant_grades,relevant_grade_names,current_clusters_category,dir_to_save_figs_to,current_tetrode);
-            close all;
+            % plot_the_clusters_hpc(1:length(idx_b4_filt),channels_of_curr_tetr,idx_b4_filt,"Min Z Score "+string(current_z_score) +"Before",current_grades,aligned,relevant_grades,relevant_grade_names,current_clusters_category,dir_to_save_figs_to,current_tetrode);
+
         end
         disp("Z Score:"+string(current_z_score)+" Finished "+string(tetrode_counter)+ "/"+string(length(list_of_tetrodes_to_check)));
         

@@ -1,8 +1,7 @@
 function [] = run_overlap_checks_for_blind_pass(parent_dir_of_data_saving,generic_dir_with_outputs,generic_dir_with_grades)
-% id the best
-clc;
-%close all;
-dir_with_pre_computed = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise";
+home_dir = cd("..");
+addpath(genpath(pwd));
+cd(home_dir);
 varying_z_scores = [4,5,6,7,8,9];
 tetrodes_to_check = strcat("t",string(1:285));
 min_overlap_percentage = 5;
