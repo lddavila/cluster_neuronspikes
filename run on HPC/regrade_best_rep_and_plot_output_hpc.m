@@ -1,4 +1,4 @@
-function [table_of_cluster_classification] = regrade_best_rep_and_plot_output_hpc(generic_dir_with_grades,generic_dir_with_outputs,table_of_best_rep,refinement_pass)
+function [] = regrade_best_rep_and_plot_output_hpc(generic_dir_with_grades,generic_dir_with_outputs,table_of_best_rep,refinement_pass)
 %relevant grades include
 %2 cv 2
 %3 percent short isi 3
@@ -21,10 +21,9 @@ function [table_of_cluster_classification] = regrade_best_rep_and_plot_output_hp
 %10000 default rows are preallocated as an upper bound on clusters
 %its unlikely that all rows will be filled, and in case they are you can
 %simply preallocate more
-table_of_cluster_classification = table(repelem("default value",10000,1),repelem("default value",10000,1),nan(10000,1),nan(10000,1),'VariableNames',["category","tetrode","cluster","z-score"]);
+
 art_tetr_array = build_artificial_tetrode();
 
-row_counter=1;
 
 list_of_tetrodes_to_check = table_of_best_rep.Tetrode;
 for tetrode_counter=1:length(list_of_tetrodes_to_check)
@@ -42,6 +41,7 @@ for tetrode_counter=1:length(list_of_tetrodes_to_check)
     if any(isnan(current_grades))
         continue;
     end
+    table_of_cluster_classification = table(repelem("default value",size(current_grades,1),1),repelem("default value",size(current_grades,1),1),nan(size(current_grades,1),1),nan(size(current_grades,1),1),'VariableNames',["category","tetrode","cluster","z-score"]);
     list_of_clusters = 1:length(idx_b4_filt);
     idx_aft_filt = cell(1,length(idx_b4_filt));
     for cluster_counter=1:size(current_grades,1)
@@ -90,19 +90,17 @@ for tetrode_counter=1:length(list_of_tetrodes_to_check)
         if current_cluster_grades(41) > 0.7
             current_cluster_category = current_cluster_category + " Hi Burst Ratio";
         end
-        %            end
 
-        %table_of_cluster_classication = table(repelem("default value",10000,1),repelem("default value",10000,1),nan(10000,1),nan(10000,1),'VariableNames',["category","tetrode","cluster","z-score"]);
-        table_of_cluster_classification{row_counter,1} = current_cluster_category;
-        table_of_cluster_classification{row_counter,2} = current_tetrode;
-        table_of_cluster_classification{row_counter,3} = cluster_counter;
-        table_of_cluster_classification{row_counter,4} = current_z_score;
 
-        row_counter = row_counter+1;
-        idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
-        fprintf("%i / %i Finished",tetrode_counter,length(list_of_tetrodes_to_check))
+
+        table_of_cluster_classification{cluster_counter,1} = current_cluster_category;
+        table_of_cluster_classification{cluster_counter,2} = current_tetrode;
+        table_of_cluster_classification{cluster_counter,3} = cluster_counter;
+        table_of_cluster_classification{cluster_counter,4} = current_z_score;
+
+        sprintf("%i / %i Finished",tetrode_counter,length(list_of_tetrodes_to_check))
     end
-    
+
 
 
     clc;
