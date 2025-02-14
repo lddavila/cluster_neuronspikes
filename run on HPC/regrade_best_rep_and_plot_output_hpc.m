@@ -29,7 +29,7 @@ list_of_tetrodes_to_check = table_of_best_rep.Tetrode;
 for tetrode_counter=1:length(list_of_tetrodes_to_check)
     current_tetrode = list_of_tetrodes_to_check(tetrode_counter);
     channels_of_curr_tetr = art_tetr_array(tetrode_counter,:);
-    current_z_score = table_of_best_rep.("Z Score");
+    current_z_score = table_of_best_rep.("Z Score")(tetrode_counter);
     if ~refinement_pass
         dir_with_grades = generic_dir_with_grades + " "+string(current_z_score) + " grades";
         dir_with_outputs = generic_dir_with_outputs +string(current_z_score);
