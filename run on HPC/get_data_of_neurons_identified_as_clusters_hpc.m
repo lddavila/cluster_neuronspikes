@@ -6,7 +6,7 @@ timestamp_array = cell(1,size(table_of_only_neurons,1));
 idx_array = cell(1,size(table_of_only_neurons,1));
 disp("Beginning get_data_of_neurons_identified_as_clusters")
 % parpool("Threads",6)
-parfor i=1:size(table_of_only_neurons,1)
+for i=1:size(table_of_only_neurons,1)
     current_tetrode = table_of_only_neurons{i,2};
     current_z_score = table_of_only_neurons{i,4};
     current_cluster = table_of_only_neurons{i,3};
