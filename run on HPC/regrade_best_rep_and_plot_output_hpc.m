@@ -98,13 +98,13 @@ for tetrode_counter=1:length(list_of_tetrodes_to_check)
         table_of_cluster_classification{cluster_counter,3} = cluster_counter;
         table_of_cluster_classification{cluster_counter,4} = current_z_score;
 
-        sprintf("%i / %i Finished",tetrode_counter,length(list_of_tetrodes_to_check))
+        % sprintf("%i / %i Finished",tetrode_counter,length(list_of_tetrodes_to_check))
     end
 
 
-
+    disp("Finished "+string(tetrode_counter)+" /"+string(length(list_of_tetrodes_to_check)))
     clc;
-    current_clusters_category = table_of_cluster_classification{table_of_cluster_classification{:,"tetrode"} == "t"+tetrode_counter,"category"};
+    current_clusters_category = table_of_cluster_classification{:,"category"};
     plot_the_clusters_hpc(channels_of_curr_tetr,idx_b4_filt,"before",aligned,current_clusters_category,dir_to_save_figs_to,current_tetrode);
 
 
