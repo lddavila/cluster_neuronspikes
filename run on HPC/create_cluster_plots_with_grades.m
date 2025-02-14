@@ -11,4 +11,5 @@ refinement_pass = false;
 cd(dir_for_figures_to_be_saved_to)
 regrade_best_rep_and_plot_output_hpc(gen_dir_with_grades,gen_dir_of_outputs,best_appearences_of_cluster,refinement_pass)
 cd(home_dir);
+disp("Finished")
 end
