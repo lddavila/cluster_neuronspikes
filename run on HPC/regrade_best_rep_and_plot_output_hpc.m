@@ -100,6 +100,7 @@ for tetrode_counter=1:length(list_of_tetrodes_to_check)
 
         row_counter = row_counter+1;
         idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
+        fprintf("%i / %i Finished",tetrode_counter,length(list_of_tetrodes_to_check))
     end
     
 

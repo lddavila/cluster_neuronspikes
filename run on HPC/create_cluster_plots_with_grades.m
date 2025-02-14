@@ -2,7 +2,7 @@ function [] = create_cluster_plots_with_grades(parent_dir_of_data_saving,data_to
 home_dir = cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
-load(data_to_load,"best_appearences_of_cluster")
+load(data_to_load,"best_appearences_of_cluster");
 
 %'VariableNames',["Tetrode","Cluster","Z Score","SNR","Overlap Percentage","idx of its location in arrays"]);
 home_dir = cd(parent_dir_of_data_saving);
