@@ -1,4 +1,4 @@
-function [] = regrade_best_rep_and_plot_output_hpc(generic_dir_with_grades,generic_dir_with_outputs,table_of_best_rep,refinement_pass)
+function [] = regrade_best_rep_and_plot_output_hpc(generic_dir_with_grades,generic_dir_with_outputs,table_of_best_rep,refinement_pass,grades_to_check,names_of_grades)
 %relevant grades include
 %2 cv 2
 %3 percent short isi 3
@@ -26,7 +26,7 @@ art_tetr_array = build_artificial_tetrode();
 
 
 list_of_tetrodes_to_check = table_of_best_rep.Tetrode;
-for tetrode_counter=1:length(list_of_tetrodes_to_check)
+parfor tetrode_counter=1:length(list_of_tetrodes_to_check)
     current_tetrode = list_of_tetrodes_to_check(tetrode_counter);
     channels_of_curr_tetr = art_tetr_array(tetrode_counter,:);
     current_z_score = table_of_best_rep.("Z Score")(tetrode_counter);
@@ -106,14 +106,10 @@ for tetrode_counter=1:length(list_of_tetrodes_to_check)
     disp("Finished "+string(tetrode_counter)+" /"+string(length(list_of_tetrodes_to_check)))
     clc;
     current_clusters_category = table_of_cluster_classification{:,"category"};
-    plot_the_clusters_hpc(channels_of_curr_tetr,idx_b4_filt,"before",aligned,current_clusters_category,current_tetrode,current_z_score,current_clust);
+    plot_the_clusters_hpc(channels_of_curr_tetr,idx_b4_filt,"before",aligned,current_clusters_category,current_tetrode,current_z_score,current_clust,grades_to_check,names_of_grades,current_grades);
 
 
 end
-
-
-%remove any empty rows
-%table_of_cluster_classification(table_of_cluster_classification(:,1)=="default value",:) = [];
 
 
 end
