@@ -105,7 +105,7 @@ for tetrode_counter=1:length(list_of_tetrodes_to_check)
     disp("Finished "+string(tetrode_counter)+" /"+string(length(list_of_tetrodes_to_check)))
     clc;
     current_clusters_category = table_of_cluster_classification{:,"category"};
-    plot_the_clusters_hpc(channels_of_curr_tetr,idx_b4_filt,"before",aligned,current_clusters_category,dir_to_save_figs_to,current_tetrode);
+    plot_the_clusters_hpc(channels_of_curr_tetr,idx_b4_filt,"before",aligned,current_clusters_category,current_tetrode);
 
 
 end
