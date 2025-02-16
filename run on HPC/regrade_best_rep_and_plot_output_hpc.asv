@@ -50,7 +50,7 @@ parfor tetrode_counter=1:length(list_of_tetrodes_to_check)
         if size(idx_b4_filt{cluster_counter},1) <=100
             current_cluster_category = "Not Enough Data c1";
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
-        elseif current_cluster_grades(37) <1.1 ||  current_cluster_grades(32) ==1
+        elseif current_cluster_grades(37) <1.1 || 
             current_cluster_category = "Probably Multi Unit Activity c2";
         elseif current_cluster_grades(37) > 10 
             current_cluster_category = "Probably a Neuron c3";
