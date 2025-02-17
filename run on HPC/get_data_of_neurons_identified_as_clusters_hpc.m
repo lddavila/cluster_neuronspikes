@@ -14,9 +14,9 @@ end
 % parpool("Threads",6)
 parfor i=1:size(table_of_only_neurons,1)
     current_data = table_of_only_neurons_in_cell_format{i};
-    current_tetrode = current_data{i,2};
-    current_z_score = current_data{i,4};
-    current_cluster = current_data{i,3};
+    current_tetrode = current_data{1,2};
+    current_z_score = current_data{1,4};
+    current_cluster = current_data{1,3};
    
     if refined_pass
         dir_with_outputs = generic_dir_with_outputs;

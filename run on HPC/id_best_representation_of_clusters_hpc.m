@@ -55,7 +55,7 @@ else
     if save_results
         save("table of best appearences of cluster.mat","best_appearences_of_cluster");
     end
-    cd(home_dir)
+    % cd(home_dir)
     timestamps_of_best_clusters = timestamp_array;
     best_appearences_of_cluster = table(table_of_only_neurons{:,"tetrode"},table_of_only_neurons{:,"cluster"},table_of_only_neurons{:,"z-score"},'VariableNames',["Tetrode","Cluster","Z Score"]);
 

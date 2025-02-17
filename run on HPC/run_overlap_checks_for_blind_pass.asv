@@ -18,6 +18,6 @@ refinement_pass = false;
 dir_to_save_to = "Blind Pass Overlap Min Overlap Threshold " + string(min_overlap_percentage);
 home_dir = cd(parent_dir_of_data_saving);
 [best_appearences_of_cluster_from_blind_pass,timestamps_of_best_clusters_from_blind_pass,table_of_overlapping_clusters_from_blind_pass]= id_best_representation_of_clusters_hpc(varying_z_scores,tetrodes_to_check,min_overlap_percentage,debug,grades_that_matter,names_of_grades,generic_dir_with_grades,generic_dir_with_outputs,dir_to_save_figs_to,load_previous_attempt,save_results,time_delta,refinement_pass,dir_to_save_to);
-save("blind_pass_results_of_id_best_rep_of_clusters "+string(min_overlap_percentage)+" Percent.mat","best_appearences_of_cluster_from_blind_pass","timestamps_of_best_clusters_from_blind_pass","table_of_overlapping_clusters_from_blind_pass");
+save("blind_pass_results_of_id_best_rep_of_clusters"++.mat","best_appearences_of_cluster_from_blind_pass","timestamps_of_best_clusters_from_blind_pass","table_of_overlapping_clusters_from_blind_pass");
 cd(home_dir);
 end
