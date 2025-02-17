@@ -48,7 +48,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
 %   10) Bhattacharyya Distance to unsorted spikes
 
     num_clusters = length(clusters);
-    grades = nan(num_clusters, 40);
+    grades = nan(num_clusters, 42);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -299,8 +299,9 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         %neuron
         grades(k,41) = check_for_burst(ts,spikes,debug);
 
-        
-
+        %a grade used just to record which wire should actually be looked
+        %at in plots
+        grades(k,42) = compare_wire;
 
     end
 
