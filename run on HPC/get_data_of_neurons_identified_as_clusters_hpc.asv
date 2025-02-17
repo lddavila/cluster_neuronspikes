@@ -9,14 +9,13 @@ disp("Beginning get_data_of_neurons_identified_as_clusters")
 %slice the table
 table_of_only_neurons_in_cell_format = cell(1,size(table_of_only_neurons,1));
 for i=1:size(table_of_only_neurons,1)
-    table_of_only_neurons_in_cell_format{i} = table_of_only_neurons(i,:);
+    table_of_only_neurons_in_cell_format{i} = table_of_only_neurons{;
 end
 % parpool("Threads",6)
 parfor i=1:size(table_of_only_neurons,1)
-    current_data = table_of_only_neurons_in_cell_format{i};
-    current_tetrode = current_data{i,2};
-    current_z_score = current_data{i,4};
-    current_cluster = current_data{i,3};
+    current_tetrode = table_of_only_neurons{i,2};
+    current_z_score = table_of_only_neurons{i,4};
+    current_cluster = table_of_only_neurons{i,3};
    
     if refined_pass
         dir_with_outputs = generic_dir_with_outputs;
