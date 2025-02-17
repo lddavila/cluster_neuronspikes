@@ -21,7 +21,7 @@ function [table_of_cluster_classification] = grade_clusters_hpc(generic_dir_with
 %10000 default rows are preallocated as an upper bound on clusters
 %its unlikely that all rows will be filled, and in case they are you can
 %simply preallocate more
-table_of_cluster_classification = table(repelem("default value",10000,1),repelem("default value",10000,1),nan(10000,1),nan(10000,1),'VariableNames',["category","tetrode","cluster","z-score"]);
+% table_of_cluster_classification = table(repelem("default value",10000,1),repelem("default value",10000,1),nan(10000,1),nan(10000,1),'VariableNames',["category","tetrode","cluster","z-score"]);
 table_of_cluster_classification = cell2table(cell(0,4),'VariableNames',["category","tetrode","cluster","z-score"]);
 % art_tetr_array = build_artificial_tetrode();
 
