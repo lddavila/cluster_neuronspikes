@@ -25,7 +25,7 @@ table_of_cluster_classification = table(repelem("default value",10000,1),repelem
 table_of_cluster_classification = cell2table(cell(0,4),'VariableNames',["category","tetrode","cluster","z-score"]);
 % art_tetr_array = build_artificial_tetrode();
 
-% row_counter=1;
+row_counter=1;
 if refinement_pass
     ending_point = 1;
 else
@@ -59,16 +59,14 @@ for z_score_counter=1:ending_point
             current_cluster_category = classify_clusters_based_on_grades(current_cluster_grades);
 
             %table_of_cluster_classication = table(repelem("default value",10000,1),repelem("default value",10000,1),nan(10000,1),nan(10000,1),'VariableNames',["category","tetrode","cluster","z-score"]);
-            % table_of_cluster_classification{row_counter,1} = current_cluster_category;
-            % table_of_cluster_classification{row_counter,2} = current_tetrode;
-            % table_of_cluster_classification{row_counter,3} = cluster_counter;
-            % table_of_cluster_classification{row_counter,4} = current_z_score;
+            table_of_cluster_classification{row_counter,1} = current_cluster_category;
+            table_of_cluster_classification{row_counter,2} = current_tetrode;
+            table_of_cluster_classification{row_counter,3} = cluster_counter;
+            table_of_cluster_classification{row_counter,4} = current_z_score;
 
-            current_row = table(current_cluster_category,current_tetrode,cluster_counter,current_z_score,'VariableNames',["category","tetrode","cluster","z-score"]);
+            current_row = table(current_cluster_category,current_tetrode,cluster_counter,current_z_score.'VariableNames',["category","tetrode","cluster","z-score"]);
 
-            table_of_cluster_classification = [table_of_cluster_classification;current_row];
-
-            % row_counter = row_counter+1;
+            row_counter = row_counter+1;
             idx_aft_filt{cluster_counter} = idx_b4_filt{cluster_counter};
         end
         % list_of_clusters(isnan(list_of_clusters)) = [];
