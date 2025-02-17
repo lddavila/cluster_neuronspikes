@@ -20,6 +20,7 @@ for i=1:length(varying_z_scores)
     name_of_grades = ["Tight","% Short ISI","Inc", "Temp Mat","Min Bhat","Skewness","TM Updated","Sym of Hist","Amp Category"];
     relevant_grades = [2,3,4,8,9,28,29,30,31];
     get_grades_for_nth_pass_of_clustering(dir_with_timestamps_and_rvals,dir_with_output,list_of_tetrodes,dir_to_save_grades_to,config,varying_z_scores(i),debug,relevant_grades,name_of_grades)
+    disp("finished "+string(i)+"/"+string(length(varying_z_scores)))
 end
 cd(home_dir);
 disp("Finished")
