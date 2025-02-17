@@ -1,6 +1,7 @@
 function [grades,output,aligned,reg_timestamps_of_the_spikes,idx] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,refinement_pass)
 try
-    load(dir_with_grades+"/"+current_tetrode+" Grades.mat","grades");
+    grades = load(dir_with_grades+"/"+current_tetrode+" Grades.mat","grades");
+    grades = grades.grades;
     load(dir_with_outputs+"/"+current_tetrode+" output.mat","output");
     if ~refinement_pass
         load(dir_with_outputs+"/"+current_tetrode+" aligned.mat","aligned");
