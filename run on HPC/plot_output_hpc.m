@@ -1,30 +1,5 @@
-function [] = regrade_best_rep_and_plot_output_hpc(generic_dir_with_grades,generic_dir_with_outputs,table_of_best_rep,refinement_pass,grades_to_check,names_of_grades)
-%relevant grades include
-%2 cv 2
-%3 percent short isi 3
-%4 incompleteness 4
-%8 template matching 8
-%9 min bhat 9
-%28 skewness of cluster
-%29 measure the difference between the cluster's individual spikes and the
-%cluster's spike templates
-%30 Incompleteness using histogram symmetry
-%31 Classification of cluster amplitude
-%32 classification of cluster amplitude based only on rep wire
-%34 min bhat distance from all the clusters in the current configuration which are likely to be co activation
-
-%possible classifications
-%probably a neuron - passes all tests that I care about so far
-%might be a neuron - doesn't pass all the test, but is saved by its bhat distance from clusters identified as multiunit activity
-%probably multi unit activity - a cluster which does not tie to a neuron, but may tie to a helpful multi unit activity cluster, therefore we do not purge it
-
-%10000 default rows are preallocated as an upper bound on clusters
-%its unlikely that all rows will be filled, and in case they are you can
-%simply preallocate more
-
+function [] = plot_output_hpc(generic_dir_with_grades,generic_dir_with_outputs,table_of_best_rep,refinement_pass,grades_to_check,names_of_grades)
 art_tetr_array = build_artificial_tetrode();
-
-
 list_of_tetrodes_to_check = unique(table_of_best_rep.Tetrode);
 number_of_times_the_for_loop_will_run = size(table_of_best_rep,1);
 
@@ -37,8 +12,10 @@ end
 parfor tetrode_counter=1:length(list_of_tetrodes_to_check)
     current_tetrode = list_of_tetrodes_to_check(tetrode_counter);
     channels_of_curr_tetr = art_tetr_array(tetrode_counter,:);
-    current_z_score = table_of_best_rep.("Z Score")(tetrode_counter);
-    current_clust = table_of_best_rep.("Cluster")(tetrode_counter);
+    current_data = table_of_best_rep_in_cell_format{tetrode_counter};
+
+    current_z_score = current_data{1,"Z Score"};
+    current_clust = current_data{1,"Cluster"};
     if ~refinement_pass
         dir_with_grades = generic_dir_with_grades + " "+string(current_z_score) + " grades";
         dir_with_outputs = generic_dir_with_outputs +string(current_z_score);
@@ -69,7 +46,7 @@ parfor tetrode_counter=1:length(list_of_tetrodes_to_check)
     clc;
     current_clusters_category = table_of_cluster_classification{:,"category"};
     plot_the_clusters_hpc(channels_of_curr_tetr,idx_b4_filt,"before",aligned,current_clusters_category,current_tetrode,current_z_score,current_clust,grades_to_check,names_of_grades,current_grades);
-
+    close all;
 
 end
 
