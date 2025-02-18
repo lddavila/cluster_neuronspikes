@@ -1,4 +1,4 @@
-function new_plot_proj_ver_5(cluster_filters, aligned, x_axis, y_axis,channels,current_tetrode,z_score,the_number,category_of_clusters)
+function new_plot_proj_ver_5(cluster_filters, aligned, x_axis, y_axis,channels,current_tetrode,z_score,plot_counter,category_of_clusters,rep_dimensions)
 channel_string = "";
 for j=1:size(channels,2)
     channel_string = channel_string + " C"+string(channels(j));
@@ -28,12 +28,12 @@ for c = 1:length(cluster_filters)
     % else
     %         end
 
-    legend_string =[legend_string, "c"+string(c) + " "+category_of_clusters(c)];
+    legend_string =[legend_string, "c"+string(c) + " "+category_of_clusters(c) +" "+rep_dimensions(c)];
 end
 xlabel(sprintf('Dim %d Peaks', x_axis))
 ylabel(sprintf('Dim %d Peaks', y_axis))
 title(string(z_score));
-if the_number==1
+if plot_counter==1
     legend(legend_string,'Location','best');
 end
 hold off

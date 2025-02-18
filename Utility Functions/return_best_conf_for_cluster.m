@@ -53,6 +53,7 @@ for i=1:size(table_of_overlapping_clusters,1)
             disp("No other appearences of this cluster")
             continue;
         end
+        disp(other_z_score);
         other_z_score = str2double(other_z_score{2});
         other_cluster_number = split(other_z_score_and_cluster_number{2} + " "+ other_z_score_and_cluster_number{3}," ");
         other_cluster_number = str2double(other_cluster_number{2});
