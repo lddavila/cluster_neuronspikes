@@ -1,8 +1,8 @@
 function [current_cluster_category] = classify_clusters_based_on_grades(current_cluster_grades)
 
-if current_cluster_grades(37) <1.1 
-    current_cluster_category = "Probably Multi Unit Activity c2";
-elseif current_cluster_grades(37) > 10
+% if current_cluster_grades(37) <1.1 
+%     current_cluster_category = "Probably Multi Unit Activity c2";
+if current_cluster_grades(37) > 10
     current_cluster_category = "Probably a Neuron c3";
 elseif current_cluster_grades(2) < 0.1 && current_cluster_grades(31) > 1 && current_cluster_grades(30) < 7 && current_cluster_grades(31) > 1
     current_cluster_category = "Probably A Neuron c4";

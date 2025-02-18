@@ -315,6 +315,13 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         %the wire with the 2nd highest amp of peaks
         grades(k,43) =second_compare_wire ;
 
+        %classify the compare peaks as low/med/high compared to all peaks
+        %in the cluster
+        z_scores_of_all_peaks = zscore(all_peaks,1,"all");
+        z_score_of_compare_peaks = z_scores_of_all_peaks(:,cluster_filter);
+        z_score_of_rep_wire_of_compare_peaks = z_score_of_compare_peaks(compare_wire,:);
+        grades(k,44) = mean(z_score_of_rep_wire_of_compare_peaks,"all");
+
     end
 
     %bhat distance from possible multi unit activity clusters
@@ -338,51 +345,5 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         grades(k,34) = min_bhat;
     end
 
-    if debug
-        % creates the mean waveform per cluster
-        figure('units','normalized','outerposition',[0 0 1 1])
-        colors_to_use = distinguishable_colors(size(aligned,1)*3);
-        legend_string = [];
-        for i=1:num_clusters
-            subplot(1,num_clusters,i);
-            cluster_filter = clusters{k};
-            spikes = aligned(:, cluster_filter, :);
-            for j=1:size(spikes,1)
-                current_channels_spikes = squeeze(spikes(j,:,:));
-                s = RandStream('mlfg6331_64');
-                random_sampling_of_current_channel_spikes = datasample(s,current_channels_spikes,round(size(current_channels_spikes,1)*.10),"Replace",false);
-                for p=1:size(random_sampling_of_current_channel_spikes,1)
-                    current_spike = random_sampling_of_current_channel_spikes(p,:);
-                    plot(1:length(current_spike),current_spike,'Color',colors_to_use(j+(size(aligned,1)*2),:));
-                    hold on;
-
-                end
-
-            end
-            title("10% Sample of Cluster "+string(i));
-        end
-
-
-        %will only really work for tetrodes of 4 channels
-        figure('units','normalized','outerposition',[0 0 1 1])
-        plot_counter = 1;
-        for first_dimension = 1:length(channels_of_curr_tetr)
-            for second_dimension = first_dimension+1:length(channels_of_curr_tetr)
-                idx = extract_clusters_from_output(output(:,1),output,spikesort_config);
-                subplot(2,6,plot_counter);
-                new_plot_proj_ver_4(idx,aligned,first_dimension,second_dimension,channels_of_curr_tetr,"","");
-                plot_counter = plot_counter+1;
-            end
-
-        end
-        subplot(2,6,7:12);
-        relevant_grades_of_current_tetrode = grades(:,relevant_grades);
-
-        x_values = name_of_relevant_grades;
-        y_values = strcat("c",string(1:size(grades,1)));
-        heatmap(x_values,y_values,relevant_grades_of_current_tetrode,'ColorbarVisible','off','CellLabelFormat','%0.10f');
-
-        close all;
-    end
 
 end

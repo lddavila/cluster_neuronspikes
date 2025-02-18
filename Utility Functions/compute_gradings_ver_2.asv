@@ -69,8 +69,15 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         compare_peaks = peaks(compare_wire, :);
 
         % get the second best representative wire for the cluster
-        peaks_without_rep_wire = peaks(setdiff(1:size(peaks,1)),:)
-        
+        peaks_without_rep_wire = peaks(setdiff(1:size(peaks,1),compare_wire),:);
+        [~,second_max_wire] = max(peaks_without_rep_wire,[],1);
+        second_poss_wires = unique(second_max_wire);
+        second_n = histc(second_max_wire, second_poss_wires);
+        [~, second_max_n] = max(second_n);
+        second_compare_wire = second_poss_wires(second_max_n);
+        second_wire_thresh = tvals(second_compare_wire);
+        second_set_of_compare_peaks = peaks_without_rep_wire(second_compare_wire, :);
+
         % Rate how good the cluster is based on how far away it is from the
         % rest of the spikes (including unclustered).
         other_good_spikes = setdiff(total_raw_spikes, cluster_filter);
@@ -247,7 +254,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         %grade of 3 indicates high average amplitude of cluster
         %this grade can be used to interpret the validity of other grades
         low_cutoff = 20;
-        medium_cutoff = 50;
+        medium_cutoff = 40;
         high_cutoff = 100;
         grades(k,31) = category_of_cluster(low_cutoff,medium_cutoff,high_cutoff,peaks);
 
@@ -303,10 +310,17 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         grades(k,41) = check_for_burst(ts,spikes,debug);
 
         %the wire with the highest amp of peaks
-        grades(k,42) = max_wire;
+        grades(k,42) = compare_wire;
 
         %the wire with the 2nd highest amp of peaks
-        grades(k,43) =0 ;
+        grades(k,43) =second_compare_wire ;
+
+        %classify the compare peaks as low/med/high compared to all peaks
+        %in the cluster
+        z_scores_of_all_peaks = zscore(all_peaks,1,"all");
+        z_score_of_compare_peaks = z_scores_of_all_peaks(:,cluster_filter);
+        z_score_of_rep_wire_of_compare_peaks = ;
+        grades(k,44) = 
 
     end
 

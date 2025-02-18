@@ -1,12 +1,7 @@
 function [] = open_figures_programatically(dir_with_figures,figure_file_name_struct,mode)
-monitorPositions = get(0, 'MonitorPositions');
+screens = get(0, 'MonitorPositions');
 
-% Get screen size of the primary and secondary monitors
-primaryMonitor = monitorPositions(1, :);  % First monitor (primary)
-secondaryMonitor = monitorPositions(2, :); % Second monitor (secondary)
-screenSize = get(0,'ScreenSize');
-figWidth = primaryMonitor(3) / 2;  % Half the screen width
-figHeight = primaryMonitor(4) * 0.7;  % 70% of the screen height
+close all;
 if mode == "single"
     left_figure_file_struct = figure_file_name_struct(1);
     left_figure_list_of_files = strtrim(string(ls(dir_with_figures+"\"+left_figure_file_struct)));
@@ -30,14 +25,16 @@ if mode=="split"
     right_figure_list_of_files = strtrim(string(ls(dir_with_figures+"\"+right_figure_file_struct)));
 
     for j=1:length(left_figure_list_of_files)
-        fig_left = openFigure(dir_with_figures+"\"+left_figure_list_of_files(j));
-        fig_right = openFigure(dir_with_figures+"\"+right_figure_list_of_files(j));
+        fig1 = openfig(dir_with_figures+"\"+left_figure_list_of_files(j));
+        pause(0.5)
+        fig2 = openfig(dir_with_figures+"\"+right_figure_list_of_files(j));
+        % pause(0.5)
         % 
-        left_pos  =  [0, (primaryMonitor(4) - figHeight) / 2, figWidth, figHeight];
-        right_pos = [secondaryMonitor(1), (secondaryMonitor(4) - figHeight) / 2, figWidth, figHeight];
-
-        % set(fig_left,'Position',left_pos);
-        % set(fig_right,'Position',right_pos);
+        
+        % 
+        set(fig1,'Position',[0. 0 .7 1])
+        set(fig2,'Position',[0.7 0 .3 1])
+                
         input("Hit Enter to move to next setcontinue");
         close all;
     end
