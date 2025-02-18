@@ -105,7 +105,7 @@ create_heatmaps_of_grades_in_accuracy_table(table_of_accuracy_of_clusters_from_b
 % grades_to_check = ["overlap_with_unit"];
 % plot_the_configurations = true;
 % time_delta = 0.0004;
-% plot_debugging_sets(dir_of_precomputed,table_of_accuracy_of_clusters,70,grades_to_check,plot_the_configurations,time_delta);
+plot_debugging_sets(dir_of_precomputed,table_of_accuracy_of_clusters,70,grades_to_check,plot_the_configurations,time_delta);
 %% diagnose the existence of expected error
 % find_auxilary_overlap_clusters(table_of_overlapping_clusters,["t136","138"],["Z_Score:9 Cluster 1","Z_Score:9 Cluster 1"],table_of_only_neurons)
 

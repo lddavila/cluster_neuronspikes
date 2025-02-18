@@ -3,7 +3,7 @@ z_score_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_z_sc
 channel_wise_mean = zeros(1,length(ordered_list_of_channels));
 channel_wise_std = zeros(1,length(ordered_list_of_channels));
  
-for i=1:length(ordered_list_of_channels)
+parfor i=1:length(ordered_list_of_channels)
     current_channel = ordered_list_of_channels(i);
     current_file = fullfile(dir_with_channel_data,current_channel+".mat");
     channel_data = importdata(current_file);
@@ -12,8 +12,9 @@ for i=1:length(ordered_list_of_channels)
 
     if save_z_score
         channel_wise_z_score_data = zscore(channel_data * scale_factor);
-        save(z_score_dir+"\"+current_channel+".mat","channel_wise_z_score_data",'-mat')
+        channel_wise_z_score_data = struct("channel_wize_z_score_data",channel_wise_z_score_data);
+        save(fullfile(z_score_dir,current_channel+".mat"),"-fromstruct",channel_wise_z_score_data)
     end
-    disp("Finished "+string(i) + "/"+string(length(ordered_list_of_channels)) )
+    % disp("Finished "+string(i) + "/"+string(length(ordered_list_of_channels)) )
 end
 end
