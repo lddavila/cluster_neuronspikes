@@ -254,7 +254,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         %grade of 3 indicates high average amplitude of cluster
         %this grade can be used to interpret the validity of other grades
         low_cutoff = 20;
-        medium_cutoff = 50;
+        medium_cutoff = 40;
         high_cutoff = 100;
         grades(k,31) = category_of_cluster(low_cutoff,medium_cutoff,high_cutoff,peaks);
 
