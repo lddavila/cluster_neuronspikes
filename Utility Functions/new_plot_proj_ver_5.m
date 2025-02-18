@@ -28,7 +28,7 @@ for c = 1:length(cluster_filters)
     % else
     %         end
 
-    legend_string =[legend_string, "c"+string(c) + " "+category_of_clusters(c) + " Rep Ch:" + string(channels(rep_dimensions(c,:)))];
+    legend_string =[legend_string, "c"+string(c) + " "+category_of_clusters(c) + " Prim Rep ch" + string(channels(rep_dimensions(c,1)))+ " Sec. Rep ch" + string(channels(rep_dimensions(c,2)))];
 end
 xlabel(sprintf('Dim %d Peaks', channels(x_axis)))
 ylabel(sprintf('Dim %d Peaks', channels(y_axis)))
