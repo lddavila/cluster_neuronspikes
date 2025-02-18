@@ -69,15 +69,8 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         compare_peaks = peaks(compare_wire, :);
 
         % get the second best representative wire for the cluster
-        peaks_without_rep_wire = peaks(setdiff(1:size(peaks,1),compare_wire),:);
-        [~,second_max_wire] = max(peaks_without_rep_wire,[],1);
-        second_poss_wires = unique(second_max_wire);
-        second_n = histc(second_max_wire, second_poss_wires);
-        [~, second_max_n] = max(second_n);
-        second_compare_wire = second_poss_wires(second_max_n);
-        second_wire_thresh = tvals(second_compare_wire);
-        second_set_of_compare_peaks = peaks_without_rep_wire(second_compare_wire, :);
-
+        peaks_without_rep_wire = peaks(setdiff(1:size(peaks,1)),:)
+        
         % Rate how good the cluster is based on how far away it is from the
         % rest of the spikes (including unclustered).
         other_good_spikes = setdiff(total_raw_spikes, cluster_filter);
@@ -313,7 +306,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         grades(k,42) = max_wire;
 
         %the wire with the 2nd highest amp of peaks
-        grades(k,43) =second_compare_wire ;
+        grades(k,43) =0 ;
 
     end
 
