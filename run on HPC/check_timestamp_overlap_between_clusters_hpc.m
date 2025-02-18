@@ -26,7 +26,7 @@ cell_array_of_table_of_neurons = cell(1,number_of_rows_in_table_of_neurons);
 for i=1:length(cell_array_of_table_of_neurons)
     cell_array_of_table_of_neurons{i} = table_of_neurons(i,:);
 end
-for current_neuron_counter=1:number_of_rows_in_table_of_neurons
+parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
     current_data = cell_array_of_table_of_neurons{current_neuron_counter};
     current_neuron_tetrode = current_data{1,2};
     current_neuron_tetrode_number = str2double(strrep(current_neuron_tetrode,"t",""));
@@ -38,7 +38,7 @@ for current_neuron_counter=1:number_of_rows_in_table_of_neurons
     overlap_percentages_of_this_cluster = "";
     other_tetrodes_where_cluster_appears = "";
 
-    parfor compare_neuron_counter=1:size(table_of_neurons,1)
+    for compare_neuron_counter=1:size(table_of_neurons,1)
         if current_neuron_counter == compare_neuron_counter
             % iter_count = iter_count+1;
             continue
