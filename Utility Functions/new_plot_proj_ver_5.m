@@ -28,10 +28,10 @@ for c = 1:length(cluster_filters)
     % else
     %         end
 
-    legend_string =[legend_string, "c"+string(c) + " "+category_of_clusters(c) + " " + string(channels(rep_dimensions(c)))];
+    legend_string =[legend_string, "c"+string(c) + " "+category_of_clusters(c) + " Rep Ch:" + string(channels(rep_dimensions(c)))];
 end
-xlabel(sprintf('Dim %d Peaks', x_axis))
-ylabel(sprintf('Dim %d Peaks', y_axis))
+xlabel(sprintf('Dim %d Peaks', channels(x_axis)))
+ylabel(sprintf('Dim %d Peaks', channels(y_axis)))
 title(string(z_score));
 if plot_counter==1
     legend(legend_string,'Location','best');
