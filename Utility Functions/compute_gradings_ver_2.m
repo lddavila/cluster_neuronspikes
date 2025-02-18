@@ -310,7 +310,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         grades(k,41) = check_for_burst(ts,spikes,debug);
 
         %the wire with the highest amp of peaks
-        grades(k,42) = max_wire;
+        grades(k,42) = compare_wire;
 
         %the wire with the 2nd highest amp of peaks
         grades(k,43) =second_compare_wire ;
