@@ -11,7 +11,7 @@ for first_dimension = 1:length(channels_of_curr_tetr)
     end
 end
 sgtitle(name_of_tetrode+" Z Score:" + string(current_z_score) + " Best Cluster"+string(current_clust))
-saveas(gcf,name_of_tetrode+" Z Score:"+string(current_z_score)+" Cluster Plots.fig");
+saveas(gcf,name_of_tetrode+" Z Score "+string(current_z_score)+" Cluster Plots.fig");
 close all;
 
 figure('units','normalized','outerposition',[0 0 1 1]);
@@ -19,7 +19,7 @@ y_labels = strcat("Cluster",string(1:size(current_grades,1)));
 x_labels = names_of_grades;
 heatmap(x_labels,y_labels,current_grades(:,grades_to_check));
 sgtitle(name_of_tetrode+" Z Score:" + string(current_z_score) + " Best Cluster"+string(current_clust))
-saveas(gcf,name_of_tetrode+" Z Score:" + string(current_z_score) + " Heatmap.fig");
+saveas(gcf,name_of_tetrode+" Z Score " + string(current_z_score) + " Heatmap.fig");
 close all;
 
 end
