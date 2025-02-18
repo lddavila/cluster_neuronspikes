@@ -2,7 +2,8 @@ function [] = plot_the_clusters_hpc(channels_of_curr_tetr,idx,before_or_after,al
 %plot all the configurations of the clusters
 figure('units','normalized','outerposition',[0 0 1 1]);
 panel_counter = 1;
-rep_dimensions = current_grades(:,42);
+rep_dimensions = current_grades(:,42:43);
+
 for first_dimension = 1:length(channels_of_curr_tetr)
     for second_dimension = first_dimension+1:length(channels_of_curr_tetr)
         subplot(2,3,panel_counter);
