@@ -1,4 +1,5 @@
 function [] = classify_clusters_as_neurons_based_on_overlap_with_unit(ground_truth_dir,time_delta,gen_data_dir,dir_of_timestamps,parent_save_dir)
+tic
 z_scores_to_check = [3 4 5 6 7 8 9];
 art_tetr_array = build_artificial_tetrode();
 
@@ -6,7 +7,7 @@ list_of_tetrodes = strcat("t",string(1:size(art_tetr_array,1)));
 list_of_tetrodes = list_of_tetrodes.';
 list_of_clusters = repelem(1,length(list_of_tetrodes),1);
 
-best_appearences_of_cluster = table(repelem(list_of_tetrodes,length(z_scores_to_check)),repelem(list_of_clusters,length(z_scores_to_check)),repelem(z_scores_to_check,length(list_of_tetrodes)).','VariableNames',["Tetrode","Cluster","Z Score"]);
+best_appearences_of_cluster = table(repmat(list_of_tetrodes,length(z_scores_to_check),1),repelem(list_of_clusters,length(z_scores_to_check)),repelem(z_scores_to_check,length(list_of_tetrodes)).','VariableNames',["Tetrode","Cluster","Z Score"]);
 
 % gen_data_dir = "/home/lddavila/spike_gen_data/0_100Neuron300SecondRecordingWithLevel3Noise";
 %slice the best appearences_of_cluster
@@ -22,7 +23,7 @@ final_contamination_table = cell2table(cell(0,8),'VariableNames',["Tetrode","Z S
 ground_truth = importdata(ground_truth_dir);
 
 timestamps = importdata(fullfile(dir_of_timestamps,"timestamps.mat")) ;
-parfor i=1:length(cell_array_of_all_clusters)
+for i=1:length(cell_array_of_all_clusters)
     current_data = cell_array_of_all_clusters{i};
     current_tetrode = current_data{1,"Tetrode"};
     current_z_score = current_data{1,"Z Score"};
@@ -67,4 +68,5 @@ disp(final_contamination_table);
 disp("Finished")
 save("contamination_table.mat","final_contamination_table");
 cd(home_dir)
+toc
 end
