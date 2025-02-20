@@ -15,7 +15,7 @@ for i=1:length(cell_array_of_all_clusters)
     cell_array_of_all_clusters{i} = best_appearences_of_cluster(i,:);
 end
 
-final_contamination_table = cell2table(cell(0,7),'VariableNames',["Tetrode","Z Score","Cluster","Max Overlap % With Unit","Contamination Score","Max Overlap Unit","overlap % with all units","grades"]);
+final_contamination_table = cell2table(cell(0,8),'VariableNames',["Tetrode","Z Score","Cluster","Max Overlap % With Unit","Contamination Score","Max Overlap Unit","overlap % with all units","grades"]);
 
 
 % ground_truth_dir = "/home/lddavila/ground_truth/Recording By Channel Ground Truth";
