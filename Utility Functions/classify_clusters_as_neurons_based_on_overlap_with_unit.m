@@ -19,7 +19,7 @@ final_contamination_table = cell2table(cell(0,7),'VariableNames',["Tetrode","Z S
 
 
 % ground_truth_dir = "/home/lddavila/ground_truth/Recording By Channel Ground Truth";
-ground_truth_array = importdata(ground_truth_dir);
+ground_truth = importdata(ground_truth_dir);
 
 timestamps = importdata(fullfile(dir_of_timestamps,"timestamps.mat")) ;
 parfor i=1:length(cell_array_of_all_clusters)
