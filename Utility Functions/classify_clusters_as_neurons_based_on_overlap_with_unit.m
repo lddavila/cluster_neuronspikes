@@ -29,6 +29,9 @@ parfor i=1:length(cell_array_of_all_clusters)
     dir_with_grades = fullfile(gen_data_dir,"initial_pass min z_score "+string(current_z_score)+" grades");
     dir_with_outputs = fullfile(gen_data_dir,"initial_pass_results min z_score"+string(current_z_score));
     [grades,~,~,reg_timestamps_of_the_spikes,idx] =import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,false);
+    if any(isnan(idx))
+        continue;
+    end
     cell_array_of_grades = cell(size(grades,1),1);
 
 
