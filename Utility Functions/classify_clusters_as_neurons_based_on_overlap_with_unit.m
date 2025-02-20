@@ -23,7 +23,7 @@ final_contamination_table = cell2table(cell(0,8),'VariableNames',["Tetrode","Z S
 ground_truth = importdata(ground_truth_dir);
 
 timestamps = importdata(fullfile(dir_of_timestamps,"timestamps.mat")) ;
-for i=1:length(cell_array_of_all_clusters)
+parfor i=1:length(cell_array_of_all_clusters)
     current_data = cell_array_of_all_clusters{i};
     current_tetrode = current_data{1,"Tetrode"};
     current_z_score = current_data{1,"Z Score"};
