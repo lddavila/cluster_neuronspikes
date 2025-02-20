@@ -30,8 +30,8 @@ for current_grade_counter=1:length(grades_to_check)
             z_scores = cluster_data(:,4);
             empty_col = nan(1,size(cluster_data,1));
             table_of_only_neurons = table(empty_col.',tetrodes,cluster_number,z_scores);
-            generic_dir_with_grades = dir_of_precomputed+"\initial_pass min z_score";
-            generic_dir_with_outputs = dir_of_precomputed+"\initial_pass_results min z_score";
+            generic_dir_with_grades = fullfile(dir_of_precomputed,"initial_pass min z_score");
+            generic_dir_with_outputs = fullfile(dir_of_precomputed,"initial_pass_results min z_score");
             [~,~,array_of_aligned,array_of_ts,array_of_idxs] = get_data_of_tetrodes_containing_neurons(table_of_only_neurons,generic_dir_with_grades,generic_dir_with_outputs);
             art_tetr_array = build_artificial_tetrode();
             %plot the overlap between the cluster
@@ -76,8 +76,8 @@ for current_grade_counter=1:length(grades_to_check)
             current_tetrode = tetrodes(array_of_clusters_never_tied_to_a_unit(j));
             current_cluster = cluster_number(array_of_clusters_never_tied_to_a_unit(j));
 
-            generic_dir_with_grades = dir_of_precomputed+"\initial_pass min z_score";
-            generic_dir_with_outputs = dir_of_precomputed+"\initial_pass_results min z_score";
+            generic_dir_with_grades = fullfile(dir_of_precomputed,"initial_pass min z_score");
+            generic_dir_with_outputs = fullfile(dir_of_precomputed,"initial_pass_results min z_score");
             dir_with_grades = generic_dir_with_grades + " "+string(current_z_score) + " grades";
             dir_with_outputs = generic_dir_with_outputs +string(current_z_score);
             [grades,outputs,aligned,timestamp,idx] = import_data(dir_with_grades,dir_with_outputs,current_tetrode);
