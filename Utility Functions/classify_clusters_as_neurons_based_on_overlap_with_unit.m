@@ -28,32 +28,35 @@ parfor i=1:length(cell_array_of_all_clusters)
     current_z_score = current_data{1,"Z Score"};
     dir_with_grades = fullfile(gen_data_dir,"initial_pass min z_score "+string(current_z_score)+" grades");
     dir_with_outputs = fullfile(gen_data_dir,"initial_pass_results min z_score"+string(current_z_score));
-    [grades,~,~,reg_timestamps_of_the_spikes,idx] =import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,false);
-    if any(isnan(idx))
-        continue;
+    [grades,~,~,reg_timestamps_of_the_spikes,idx,failed_to_load] =import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,false);
+    if failed_to_load
+        current_contamination_table =cell2table(cell(0,8),'VariableNames',["Tetrode","Z Score","Cluster","Max Overlap % With Unit","Contamination Score","Max Overlap Unit","overlap % with all units","grades"]);
+        final_contamination_table = [final_contamination_table;current_contamination_table];
+    else
+        cell_array_of_grades = cell(size(grades,1),1);
+
+
+        contamination_per_cluter = nan(size(grades,1),1);
+        max_overlap_per_cluster = zeros(size(grades,1),1);
+        indexes_of_max_overlap_per_cluster = zeros(size(grades,1),1);
+        array_of_overlap_percentages = cell(size(grades,1),1);
+        for j=1:size(grades,1)
+            array_of_overlap_percentages{j} = get_overlap_between_cluster_and_unit_as_percentage(reg_timestamps_of_the_spikes(idx{j}),ground_truth,timestamps,time_delta);
+            [max_overlap_per_cluster(j),indexes_of_max_overlap_per_cluster(j)] = max(array_of_overlap_percentages{j});
+            contamination_per_cluter(j) =  max_overlap_per_cluster(j) - sum(array_of_overlap_percentages{j}(setdiff(1:length(ground_truth),indexes_of_max_overlap_per_cluster(j))));
+            cell_array_of_grades{j} = grades(j,:);
+        end
+        tetrode_list = repelem(current_tetrode,size(grades,1),1);
+        z_score_list = repelem(current_z_score,size(grades,1),1);
+        clusters_list = 1:size(grades,1);
+        clusters_list = clusters_list.';
+
+        current_contamination_table = table(tetrode_list,z_score_list,clusters_list,max_overlap_per_cluster,contamination_per_cluter,indexes_of_max_overlap_per_cluster,array_of_overlap_percentages,cell_array_of_grades,'VariableNames',["Tetrode","Z Score","Cluster","Max Overlap % With Unit","Contamination Score","Max Overlap Unit","overlap % with all units","grades"]);
+
+        final_contamination_table = [final_contamination_table;current_contamination_table];
+        disp("Finished "+string(i))
     end
-    cell_array_of_grades = cell(size(grades,1),1);
 
-
-    contamination_per_cluter = nan(size(grades,1),1);
-    max_overlap_per_cluster = zeros(size(grades,1),1);
-    indexes_of_max_overlap_per_cluster = zeros(size(grades,1),1);
-    array_of_overlap_percentages = cell(size(grades,1),1);
-    for j=1:size(grades,1)
-        array_of_overlap_percentages{j} = get_overlap_between_cluster_and_unit_as_percentage(reg_timestamps_of_the_spikes(idx{j}),ground_truth,timestamps,time_delta);
-        [max_overlap_per_cluster(j),indexes_of_max_overlap_per_cluster(j)] = max(array_of_overlap_percentages{j});
-        contamination_per_cluter(j) =  max_overlap_per_cluster(j) - sum(array_of_overlap_percentages{j}(setdiff(1:length(ground_truth),indexes_of_max_overlap_per_cluster(j))));
-        cell_array_of_grades{j} = grades(j,:);
-    end
-    tetrode_list = repelem(current_tetrode,size(grades,1),1);
-    z_score_list = repelem(current_z_score,size(grades,1),1);
-    clusters_list = 1:size(grades,1);
-    clusters_list = clusters_list.';
-
-    current_contamination_table = table(tetrode_list,z_score_list,clusters_list,max_overlap_per_cluster,contamination_per_cluter,indexes_of_max_overlap_per_cluster,array_of_overlap_percentages,cell_array_of_grades,'VariableNames',["Tetrode","Z Score","Cluster","Max Overlap % With Unit","Contamination Score","Max Overlap Unit","overlap % with all units","grades"]);
-    
-    final_contamination_table = [final_contamination_table;current_contamination_table];
-    disp("Finished "+string(i))
 
 end
 home_dir = cd(parent_save_dir);
