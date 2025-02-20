@@ -4,4 +4,4 @@
 #SBATCH -o output.txt 
 #SBATCH -e error.txt 
 module load matlab/R2024b
-matlab -batch "classify_clusters_as_neurons_based_on_overlap_with_unit('D:\spike_gen_data\Recording By Channel Ground Truth\0_100Neuron300SecondRecordingWithLevel3Noise.h5.mat',0.0004,'/home/lddavila/spike_gen_data/0_100Neuron300SecondRecordingWithLevel3Noise','/home/lddavila/timestamps/Recordings By Channel Timestamps/0_100Neuron300SecondRecordingWithLevel3Noise','/home/lddavila/data_to_be_copied_to_local_server'); exit;"
+matlab -batch "cd(..);addpath(genpath(pwd));cd('run on HPC');classify_clusters_as_neurons_based_on_overlap_with_unit('D:\spike_gen_data\Recording By Channel Ground Truth\0_100Neuron300SecondRecordingWithLevel3Noise.h5.mat',0.0004,'/home/lddavila/spike_gen_data/0_100Neuron300SecondRecordingWithLevel3Noise','/home/lddavila/timestamps/Recordings By Channel Timestamps/0_100Neuron300SecondRecordingWithLevel3Noise','/home/lddavila/data_to_be_copied_to_local_server'); exit;"
