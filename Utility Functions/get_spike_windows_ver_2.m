@@ -1,6 +1,7 @@
 function [spike_windows] = get_spike_windows_ver_2(ordered_list_of_channels,spikes_per_channel,desired_z_score,desired_number_of_data_points,dir_with_channel_z_scores)
 spike_windows = cell(1,length(ordered_list_of_channels));
-for i=1:length(ordered_list_of_channels)
+number_of_iterations = length(ordered_list_of_channels);
+parfor i=1:length(ordered_list_of_channels)
     current_channel = ordered_list_of_channels(i);
     spike_windows{i} = cell(size(spikes_per_channel,1),1);
     channel_wise_z_score = importdata(dir_with_channel_z_scores+"\"+current_channel+".mat");
@@ -31,7 +32,7 @@ for i=1:length(ordered_list_of_channels)
             end
         end
     end
-    disp("Finished " +string(i)+"/"+string(length(ordered_list_of_channels)));
+    disp("Finished " +string(i)+"/"+string(number_of_iterations));
 
 end
 

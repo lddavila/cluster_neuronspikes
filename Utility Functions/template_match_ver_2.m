@@ -29,8 +29,6 @@ function [maxsnr, amps, snrind] = template_match_ver_2(spikes, templates)
         A = dot(S, S, 2);
         Err = dot(V, V, 2) - A;
         snr = A ./ Err;
-
-        snr = snr ./ size(spikes,1);
         
         [maxsnr(k), sind] = max(snr);
         amps(k) = A(sind);

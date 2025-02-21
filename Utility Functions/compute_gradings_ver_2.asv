@@ -48,7 +48,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
 %   10) Bhattacharyya Distance to unsorted spikes
 
     num_clusters = length(clusters);
-    grades = nan(num_clusters, 31);
+    grades = nan(num_clusters, 43);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -67,7 +67,17 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
         compare_wire = poss_wires(max_n);
         wire_thresh = tvals(compare_wire);
         compare_peaks = peaks(compare_wire, :);
-        
+
+        % get the second best representative wire for the cluster
+        peaks_without_rep_wire = peaks(setdiff(1:size(peaks,1),compare_wire),:);
+        [~,second_max_wire] = max(peaks_without_rep_wire,[],1);
+        second_poss_wires = unique(second_max_wire);
+        second_n = histc(second_max_wire, second_poss_wires);
+        [~, second_max_n] = max(second_n);
+        second_compare_wire = second_poss_wires(second_max_n);
+        second_wire_thresh = tvals(second_compare_wire);
+        second_set_of_compare_peaks = peaks_without_rep_wire(second_compare_wire, :);
+
         % Rate how good the cluster is based on how far away it is from the
         % rest of the spikes (including unclustered).
         other_good_spikes = setdiff(total_raw_spikes, cluster_filter);
@@ -137,6 +147,7 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
             grades(k, 10) = bhat_dist(peaks(:, dim_filt), other_peaks(:, dim_filt));
         end
         
+        %how much it deviates from the noise
         grades(k, 11) = compute_lratio(peaks(:, dim_filt), other_peaks(:, dim_filt));
         
         rep_wire = shiftdim(spikes(compare_wire, :, :), 1);
@@ -204,9 +215,9 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
             grades(k, 24) = 0;
             grades(k, 25) = 0;
         end
-        
+
         grades(k, 26) = length(cluster_filter) * 1e6 / (timestamps(end) - timestamps(1));
-        
+
         pks = find_peaks(mean_spike);
         pks = pks{1};
         [~, idx] = max(mean_spike(pks));
@@ -223,8 +234,8 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
 
         %grade 29 will be the measure of template matching within the
         %cluster's template instead of the normal template matching
-         % Template matching with per cluster template, instead of general
-         % template
+        % Template matching with per cluster template, instead of general
+        % template
         if length(cluster_filter) > 1
             mean_waveform = mean(shiftdim(spikes(compare_wire, :, :), 1));
             mean_waveform = mean_waveform - mean(mean_waveform);
@@ -235,44 +246,148 @@ function grades = compute_gradings_ver_2(aligned, timestamps, tvals, clusters, c
 
         %grade 30 will only be another incompleteness grade based only off of symmetry of the histogram
         %it will be #bins to left of bin with highest bin count / # bins to right of bin with highest bin count
-        grades(k,30) = compute_incompleteness_ver_2(peaks);
+        grades(k,30) = compute_incompleteness_ver_2(compare_peaks);
 
-        %grade 31 will classify the cluster into high medium or low 
+        %grade 31 will classify the cluster into high medium or low
         %grade of 1 indicates low average amplitude of cluster
         %grade of 2 indicates medium average amplitude of cluster
         %grade of 3 indicates high average amplitude of cluster
         %this grade can be used to interpret the validity of other grades
-        low_cutoff = 50;
-        medium_cutoff = 100;
-        high_cutoff = 150;
+        low_cutoff = 20;
+        medium_cutoff = 40;
+        high_cutoff = 100;
         grades(k,31) = category_of_cluster(low_cutoff,medium_cutoff,high_cutoff,peaks);
-        
+
+        %grade 32 will be similar to 31, but instead of the whole cluster
+        %it will just be the amplitude of the dominant wire
+        grades(k,32) = category_of_cluster(low_cutoff,medium_cutoff,high_cutoff,compare_peaks);
+
+        %grade 33 will be a range of how likely a cluster is to be a multi
+        %unit activity cluster
+        %this is based on several factors including cluster amplitude,
+        %cv, rep wire amplitude
+        %1 is definitely multi unit activity
+        %3 is definitely NOT multiunit activity
+        %2 could go either way
+        if cv > 0.25 && grades(k,31) ==1 && grades(k,32) ==1
+            grades(k,33) = 1;
+        elseif cv < 0.1 && (grades(k,31)>=2 || grades(k,32) >=2) 
+            grades(k,33) = 3;
+        else
+            grades(k,33) = 2;
+        end
+
+        %%grade 35 will be a method of measuring tightness of waveform of
+        %%the cluster, using Euclidean distance
+        %It measures the euc distance of the mean waveform to all spikes in the peak then divides it by the max euc distance
+        %thus this gradewill be from 0-1 with closer to 0 being better
+
+        %
+        % mean_waveform = mean(shiftdim(spikes(compare_wire, :, :), 1));
+        % mean_waveform = mean_waveform - mean(mean_waveform);
+        % grades(k, 8) = template_match(mean_waveform, temp.nt);
+        mean_waveform_for_cluster_k = mean(shiftdim(spikes(compare_wire, :, :), 1));
+        grades(k,35) = calculate_tightness_of_waveform_per_cluster(mean_waveform_for_cluster_k,spikes,debug);
+
+        %%grade 36 will be the same as 35, but only using the rep wire
+        %%spikes
+        grades(k,36) = calculate_tightness_of_waveform_per_cluster(mean_waveform_for_cluster_k,spikes(compare_wire,:,:),debug);
+
+        %grade 37 will be checking the best possible dimensions for seeing the cluster
+        %grade 38 will record which those dimensions are for debugging purposes
+        [grades(k,37),grades(k,38)] = find_best_dimensions_for_cluster_visibility(all_peaks,clusters,k);
+
+        %grade 39 will just be a simple boolean to report if the cluster is
+        %underpowered (ie has less than 100 spikes
+        grades(k,39) = size(clusters{k},2) < 100 ;
+
+        %grade 40 will be a measure of signal to noise ratio, closer to 1
+        %is better
+        grades(k,40) = calculate_signal_to_noise_of_cluster(aligned,cluster_filter);
+
+        %grade 41 will be some kind of measure of likeliness of a bursting
+        %neuron
+        grades(k,41) = check_for_burst(ts,spikes,debug);
+
+        %the wire with the highest amp of peaks
+        grades(k,42) = compare_wire;
+
+        %the wire with the 2nd highest amp of peaks
+        grades(k,43) =second_compare_wire ;
+
+        %classify the compare peaks as low/med/high compared to all peaks
+        %in the cluster
+        z_scores_of_all_peaks = zscore(all_peaks,1,"all");
+        z_score_of_compare_peaks = z_scores_of_all_peaks(:,cluster_filter);
+        z_score_of_rep_wire_of_compare_peaks = ;
+        grades(k,44) = 
 
     end
 
+    %bhat distance from possible multi unit activity clusters
+    for k=1:num_clusters
+        cluster_filter = clusters{k};
+        peaks = all_peaks(:, cluster_filter);
+        dists = inf(num_clusters, 1);
+        peaks = peaks';
+        for c = 1:num_clusters
+            if c == k || grades(c,1) == 1
+                continue
+            end
+            other_cf = clusters{c};
+            other_peaks = all_peaks(:, other_cf)';
+            dim_filt = find_singular_cols(peaks) & find_singular_cols(other_peaks);
+            if any(dim_filt)
+                dists(c) = bhat_dist(peaks(:, dim_filt), other_peaks(:, dim_filt));
+            end
+        end
+        min_bhat = min(dists);
+        grades(k,34) = min_bhat;
+    end
+
     if debug
+        % creates the mean waveform per cluster
+        figure('units','normalized','outerposition',[0 0 1 1])
+        colors_to_use = distinguishable_colors(size(aligned,1)*3);
+        legend_string = [];
+        for i=1:num_clusters
+            subplot(1,num_clusters,i);
+            cluster_filter = clusters{k};
+            spikes = aligned(:, cluster_filter, :);
+            for j=1:size(spikes,1)
+                current_channels_spikes = squeeze(spikes(j,:,:));
+                s = RandStream('mlfg6331_64');
+                random_sampling_of_current_channel_spikes = datasample(s,current_channels_spikes,round(size(current_channels_spikes,1)*.10),"Replace",false);
+                for p=1:size(random_sampling_of_current_channel_spikes,1)
+                    current_spike = random_sampling_of_current_channel_spikes(p,:);
+                    plot(1:length(current_spike),current_spike,'Color',colors_to_use(j+(size(aligned,1)*2),:));
+                    hold on;
+
+                end
+
+            end
+            title("10% Sample of Cluster "+string(i));
+        end
+
+
         %will only really work for tetrodes of 4 channels
         figure('units','normalized','outerposition',[0 0 1 1])
         plot_counter = 1;
-        for first_dimension = 1:length(channels_in_current_tetrode)
-            for second_dimension = first_dimension+1:length(channels_in_current_tetrode)
+        for first_dimension = 1:length(channels_of_curr_tetr)
+            for second_dimension = first_dimension+1:length(channels_of_curr_tetr)
                 idx = extract_clusters_from_output(output(:,1),output,spikesort_config);
-
-                subplot(1,6,plot_counter);
+                subplot(2,6,plot_counter);
                 new_plot_proj_ver_4(idx,aligned,first_dimension,second_dimension,channels_of_curr_tetr,"","");
-
-                subplot(1,6,7:12);
-                relevant_grades_of_current_tetrode = grades(:,relevant_grades);
-
-                x_values = name_of_relevant_grades;
-                y_values = strcat("c",string(1:size(grades,1)));
-                heatmap(x_values,y_values,relevant_grades_of_current_tetrode,'ColorbarVisible','off','CellLabelFormat','%0.2f');
-
-
-               
+                plot_counter = plot_counter+1;
             end
 
         end
+        subplot(2,6,7:12);
+        relevant_grades_of_current_tetrode = grades(:,relevant_grades);
+
+        x_values = name_of_relevant_grades;
+        y_values = strcat("c",string(1:size(grades,1)));
+        heatmap(x_values,y_values,relevant_grades_of_current_tetrode,'ColorbarVisible','off','CellLabelFormat','%0.10f');
 
         close all;
     end

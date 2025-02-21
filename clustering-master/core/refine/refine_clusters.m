@@ -25,7 +25,7 @@ function refined_clusters = refine_clusters(spikes, refine_idx_inj, clusters, ir
     refine_spikes = spikes(:, refine_idx_inj, :);
     features = extract_refine_features(refine_spikes);
     peaks = get_peaks(refine_spikes, true)';
-    
+    warning_was_thrown = false;%added by Luis David Davila
     for k = 1:length(clusters)
         cluster_idx = clusters{k};
         % plot_clusters_spike_refinement("Before Refinment In refine\_clusters.m",k,peaks,cluster_idx,4)
@@ -39,7 +39,15 @@ function refined_clusters = refine_clusters(spikes, refine_idx_inj, clusters, ir
                 ~remove_bad_clusters(spikes, {refined_cluster_idx}, ir, tvals, config)
             refined_cluster_idx = refine_idx_inj(backup);
         end
+        [warnMsg_1, ~] = lastwarn(''); %added by Luis David Davila
+        if ~isempty(warnMsg_1)%added by Luis David Davila
+            warning_was_thrown = true;%added by Luis David Davila
+            warnMsg = warnMsg_1;
+        end%added by Luis David Davila
         refined_clusters{k} = refined_cluster_idx;
     end
+    if warning_was_thrown%added by Luis David Davila
+        warning(warnMsg)%added by Luis David Davila
+    end%added by Luis David Davila
     refined_clusters = refined_clusters(~cellfun('isempty', refined_clusters));
 end

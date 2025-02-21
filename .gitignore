@@ -1,2 +1,15 @@
 #ignore all files in the data folder
-/Data
+/Data 
+
+#ignore all files in the Data From Blind Pass Folder
+/Data From Blind Pass
+
+#ignore figures
+/Figures
+
+/Upper Bound 10 Data
+
+/Second Pass Data
+/Reclustered Pass
+/tests
+/Upper Bound 10 Data

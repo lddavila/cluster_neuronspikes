@@ -10,6 +10,6 @@ for i=1:length(ordered_list_of_channels)
 
     [~,pk_locs] = findpeaks(channel_data);
     spikes_matrix{i} = pk_locs;
-    disp("Finished" + string(i)+"/"+string(length(ordered_list_of_channels)));
+    disp("Finished Find Peaks Of Channel " + string(i)+"/"+string(length(ordered_list_of_channels)));
 end
 end

@@ -20,7 +20,7 @@ function aligned = align_to_peak(spikes, tvals, ir)
 %   index.
 
     [numwires, numspikes, numdp] = size(spikes);
-%     rep = get_repwire(spikes, tvals, ir);
+    % rep = get_repwire(spikes, tvals, ir);
     
     align_peak = round(numdp * 0.2); % 200 microsecond mark
     

@@ -1,4 +1,4 @@
-function [output, aligned, reg_timestamps] = run_spikesort_ntt_core_ver4(raw, timestamps, good_spikes_idx_inj, ir, tvals, filenames, config,channels,iteration_number)
+function [output, aligned, reg_timestamps,reg_timestamps_of_the_spikes] = run_spikesort_ntt_core_ver4(raw, timestamps, good_spikes_idx_inj, ir, tvals, filenames, config,channels,iteration_number)
 %RUN_SPIKESORT_NTT_CORE Runs spike sorter on data extracted from the
 %tetrode.
 %   [output, aligned, reg_timestamps] = RUN_SPIKESORT_NTT_CORE(raw,
@@ -47,9 +47,11 @@ function [output, aligned, reg_timestamps] = run_spikesort_ntt_core_ver4(raw, ti
         reg_spikes_idx = good_spikes_idx_inj(~nearsim_spikes);
         reg_interp_raw = interp_raw(:, reg_spikes_idx, :);
         reg_timestamps = timestamps(reg_spikes_idx);
+        reg_timestamps_of_the_spikes = timestamps(reg_spikes_idx,31);
     else
         reg_interp_raw = good_interp_raw;
         reg_timestamps = timestamps(good_spikes_idx_inj);
+        reg_timestamps_of_the_spikes = timestamps(good_spikes_idx_inj,31);
     end
     
     % Run the spikesort algorithm (with only the spike-sort related config

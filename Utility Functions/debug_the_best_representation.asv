@@ -1,0 +1,28 @@
+function [] = debug_the_best_representation(table_of_best_representation,generic_dir_with_grades,generic_dir_with_outputs,names_of_grades_that_matter,grades_that_matter)
+art_tetr_array =build_artificial_tetrode();
+for i=1:size(table_of_best_representation)
+    current_tetrode = table_of_best_representation{i,1};
+    current_z_score = table_of_best_representation{i,3};
+    current_cluster = table_of_best_representation{i,2};
+    dir_with_grades = generic_dir_with_grades + " "+string(current_z_score) + " grades";
+    dir_with_outputs = generic_dir_with_outputs +string(current_z_score);
+    [grades,output,aligned,reg_timestamps,idx] = import_data(dir_with_grades,dir_with_outputs,current_tetrode);
+    channels_of_curr_tetr = art_tetr_array(str2double(strrep(current_tetrode,"t","")),:);
+    figure;
+    plot_counter=1;
+    for first_dimension = 1:length(channels_of_curr_tetr)
+        for second_dimension = first_dimension+1:length(channels_of_curr_tetr)
+            subplot(2,3,plot_counter);
+            new_plot_proj_ver_4(idx,aligned,first_dimension,second_dimension,channels_of_curr_tetr,current_tetrode,current_z_score,plot_counter);
+            plot_counter = plot_counter+1;
+        end
+    end
+    sgtitle(current_tetrode)
+    
+
+    figure
+    heatmap(names_of_grades_that_matter,string(current_cluster),grades(current_cluster,grades_that_matter))
+t
+    close all;
+end
+end
