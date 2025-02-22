@@ -1,5 +1,5 @@
 function [] = plot_output_hpc(generic_dir_with_grades,generic_dir_with_outputs,table_of_best_rep,refinement_pass,grades_to_check,names_of_grades)
-
+art_tetr_array = build_artificial_tetrode();
 subset_of_best_rep = table_of_best_rep(:,["Tetrode","Z Score"]);
 unique_rows_of_best_rep = unique(subset_of_best_rep,"rows");
 
@@ -15,20 +15,16 @@ for i=1:size(unique_rows_of_best_rep,1)
     table_of_best_rep_in_cell_format{i} = table_of_best_rep(table_of_best_rep{:,"Z Score"}==current_z_score & table_of_best_rep{:,"Tetrode"}==current_tetrode,:);
 end
 
-parfor tetrode_counter=1:length(table_of_best_rep_in_cell_format)
-    % current_tetrode = list_of_tetrodes_to_check(tetrode_counter);
-    art_tetr_array = build_artificial_tetrode();
+for tetrode_counter=1:length(table_of_best_rep_in_cell_format)
+    current_tetrode = list_of_tetrodes_to_check(tetrode_counter);
+    channels_of_curr_tetr = art_tetr_array(tetrode_counter,:);
     current_data = table_of_best_rep_in_cell_format{tetrode_counter};
 
 
 
     current_z_score = current_data{1,"Z Score"};
-    current_clust = current_data{:,"Cluster"};
-    current_clust = join(string(current_clust));
-    current_tetrode = current_data{1,"Tetrode"};
-    current_tetrode_number = str2double(strrep(current_tetrode,"t",""));
-
-    channels_of_curr_tetr = art_tetr_array(current_tetrode_number,:);
+    current_clust = current_data{1,"Cluster"};
+    
     if ~refinement_pass
         dir_with_grades = generic_dir_with_grades + " "+string(current_z_score) + " grades";
         dir_with_outputs = generic_dir_with_outputs +string(current_z_score);
