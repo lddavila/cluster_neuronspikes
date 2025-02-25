@@ -23,7 +23,8 @@ final_contamination_table = cell2table(cell(0,8),'VariableNames',["Tetrode","Z S
 ground_truth = importdata(ground_truth_dir);
 
 timestamps = importdata(fullfile(dir_of_timestamps,"timestamps.mat")) ;
-parfor i=1:length(cell_array_of_all_clusters)
+number_of_iterations_to_perform = length(cell_array_of_all_clusters);
+for i=1:length(cell_array_of_all_clusters)
     current_data = cell_array_of_all_clusters{i};
     current_tetrode = current_data{1,"Tetrode"};
     current_z_score = current_data{1,"Z Score"};
@@ -55,13 +56,13 @@ parfor i=1:length(cell_array_of_all_clusters)
         current_contamination_table = table(tetrode_list,z_score_list,clusters_list,max_overlap_per_cluster,contamination_per_cluter,indexes_of_max_overlap_per_cluster,array_of_overlap_percentages,cell_array_of_grades,'VariableNames',["Tetrode","Z Score","Cluster","Max Overlap % With Unit","Contamination Score","Max Overlap Unit","overlap % with all units","grades"]);
 
         final_contamination_table = [final_contamination_table;current_contamination_table];
-        disp("Finished "+string(i))
+        disp("Finished "+string(i) + "/"+string(number_of_iterations_to_perform));
     end
 
 
 end
 home_dir = cd(parent_save_dir);
-data_dir = "contamination table with time delta:"+string(time_delta);
+data_dir = "contamination table 2 with time delta "+string(time_delta);
 dir_to_save_data_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(parent_save_dir,data_dir));
 cd(dir_to_save_data_to);
 disp(final_contamination_table);
