@@ -1,5 +1,5 @@
 #!/bin/bash 
-#SBATCH -n 40
+#SBATCH -n 20
 #SBATCH -p general 
 #SBATCH -o output.txt 
 #SBATCH -e error.txt 
