@@ -17,7 +17,7 @@ parfor i=1:size(table_of_only_neurons,1)
     current_tetrode = current_data{1,"Tetrode"};
     current_z_score = current_data{1,"Z Score"};
     current_cluster = current_data{1,"Cluster"};
-   
+
     if refined_pass
         dir_with_outputs = generic_dir_with_outputs;
         dir_with_grades = generic_dir_with_grades;
@@ -27,14 +27,18 @@ parfor i=1:size(table_of_only_neurons,1)
     end
     [grades_data,outputs_data,aligned_data,timestamp_data,idx_data] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,refined_pass);
     if isnan(grades_data)
-        continue;
+        grades_array{i}=nan;
+        idx_array{i} = nan;
+        outputs_array{i}= nan;
+        aligned_array{i} = nan;
+        timestamp_array{i} = nan;
     end
     grades_array{i}=grades_data(current_cluster,:);
     idx_array{i} = idx_data{current_cluster};
     outputs_array{i}= outputs_data(idx_array{i});
     aligned_array{i} = aligned_data(:,idx_array{i},:);
     timestamp_array{i} = timestamp_data(idx_array{i});
-    
+
     disp("get_data_of_neurons_identified_as_clusters_hpc.m "+string(i))
 end
 %delete(gcp("nocreate"));
