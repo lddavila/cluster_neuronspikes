@@ -28,7 +28,7 @@ for i=1:length(cell_array_of_table_of_neurons)
 end
 parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
     current_data = cell_array_of_table_of_neurons{current_neuron_counter};
-    current_neuron_tetrode = current_data{1,2};
+    current_neuron_tetrode = current_data{1,"Tetrode"};
     current_neuron_tetrode_number = str2double(strrep(current_neuron_tetrode,"t",""));
     current_neuron_z_score = current_data{1,4};
     current_neuron_ts = timestamps_cluster_data{current_neuron_counter};

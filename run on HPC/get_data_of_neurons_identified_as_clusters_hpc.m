@@ -12,6 +12,7 @@ for i=1:size(table_of_only_neurons,1)
     table_of_only_neurons_in_cell_format{i} = table_of_only_neurons(i,:);
 end
 % parpool("Threads",6)
+number_of_data_to_load = length(table_of_only_neurons_in_cell_format);
 parfor i=1:size(table_of_only_neurons,1)
     current_data = table_of_only_neurons_in_cell_format{i};
     current_tetrode = current_data{1,"Tetrode"};
@@ -39,9 +40,9 @@ parfor i=1:size(table_of_only_neurons,1)
     aligned_array{i} = aligned_data(:,idx_array{i},:);
     timestamp_array{i} = timestamp_data(idx_array{i});
 
-    disp("get_data_of_neurons_identified_as_clusters_hpc.m "+string(i))
+    disp("get_data_of_neurons_identified_as_clusters_hpc.m "+string(i) + "/"+string(number_of_data_to_load))
 end
-%delete(gcp("nocreate"));
+
 
 disp("Finished get_data_of_neurons_identified_as_clusters Finished");
 end
