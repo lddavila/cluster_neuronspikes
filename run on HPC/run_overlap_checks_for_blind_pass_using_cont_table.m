@@ -1,4 +1,4 @@
-function [] = run_overlap_checks_for_blind_pass_using_cont_table(parent_dir_of_data_saving,generic_dir_with_outputs,generic_dir_with_grades,ground_truth_dir,dir_of_timestamps,filepath_of_cont_table)
+function [] = run_overlap_checks_for_blind_pass_using_cont_table(parent_dir_of_data_saving,generic_dir_with_outputs,generic_dir_with_grades,file_path_of_ground_truth,dir_of_timestamps,filepath_of_cont_table)
 home_dir = cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
@@ -18,7 +18,7 @@ contamination_table = importdata(filepath_of_cont_table);
 
 
 % ground_truth_dir = "D:\spike_gen_data\Recording By Channel Ground Truth";
-ground_truth_array = load_ground_truth_into_data(ground_truth_dir);
+ground_truth_array = importdata(file_path_of_ground_truth);
 % dir_of_timestamps = "D:\spike_gen_data\Recordings By Channel Timestamps\0_100Neuron300SecondRecordingWithLevel3Noise";
 timestamps = importdata(fullfile(dir_of_timestamps,"timestamps.mat"));
 
