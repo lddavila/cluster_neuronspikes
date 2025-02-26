@@ -15,10 +15,9 @@ for i=1:length(grades_to_check)
         data_to_be_binned = grades_of_clusters_in_current_bin(:,grade_to_bin);
         if j==1
             h = histogram(data_to_be_binned);
-            h = histogram('BinEdges',h.BinEdges,'BinCounts',(h.BinCounts ./ total_number_of_rows_in_cont_table )* 100);
+            h = histogram(h.BinCounts ./ total_number_of_rows_in_cont_table,'BinEdges',h.BinEdges);
         else
-            p = histogram(data_to_be_binned,'BinEdges',h.BinEdges);
-            histogram('BinEdges',h.BinEdges,'BinCounts',(p.BinCounts ./ total_number_of_rows_in_cont_table)*100);
+            histogram(data_to_be_binned,'BinEdges',h.BinEdges,"Normalization","probability")
         end
         % ylim([0,1])
         all_x_lims(j,:) = xlim;

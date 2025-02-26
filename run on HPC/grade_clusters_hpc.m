@@ -56,7 +56,7 @@ for z_score_counter=1:ending_point
         % current_clusters_category = [];
         for cluster_counter=1:size(current_grades,1)
             current_cluster_grades = current_grades(cluster_counter,:);
-            current_cluster_category = classify_clusters_based_on_grades(current_cluster_grades);
+            current_cluster_category = classify_clusters_based_on_grades_ver_2(current_cluster_grades);
 
             %table_of_cluster_classication = table(repelem("default value",10000,1),repelem("default value",10000,1),nan(10000,1),nan(10000,1),'VariableNames',["category","tetrode","cluster","z-score"]);
             % table_of_cluster_classification{row_counter,1} = current_cluster_category;

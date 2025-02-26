@@ -1,4 +1,4 @@
-function [graded_contamination_table,neurons_of_graded_contamination_table] = grade_the_results_of_cont_table(contamination_table,number_of_units)
+function [graded_contamination_table,neurons_of_graded_contamination_table,group_counts] = grade_the_results_of_cont_table(contamination_table,number_of_units)
 home_dir = cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
@@ -14,7 +14,7 @@ end
 
 graded_contamination_table = [contamination_table,column_of_classification];
 neurons_of_graded_contamination_table = graded_contamination_table(contains(graded_contamination_table{:,"Classification"},"Neuron"),:);
-disp(string(size(graded_contamination_table,1) - size(neurons_of_graded_contamination_table,1))+" were eliminated")
+disp(string(size(graded_contamination_table,1) - size(neurons_of_graded_contamination_table,1))+" were eliminated of original "+string(size(graded_contamination_table,1)) + " Leaving " +string(size(neurons_of_graded_contamination_table,1))+" identified as neurons")
 neurons_that_meet_min_overlap = neurons_of_graded_contamination_table(neurons_of_graded_contamination_table{:,"Max Overlap % With Unit"} > 40,:);
 
 for i=1:size(neurons_that_meet_min_overlap,1)
@@ -26,4 +26,4 @@ group_counts = groupcounts(graded_contamination_table,"Classification");
 disp(group_counts);
 
 end
-classify_clusters_as_neurons_based_on_overlap_with_unit
+% classify_clusters_as_neurons_based_on_overlap_with_unit
