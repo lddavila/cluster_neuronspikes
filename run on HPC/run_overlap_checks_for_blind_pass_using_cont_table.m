@@ -14,7 +14,7 @@ home_dir = cd(parent_dir_of_data_saving);
 
 %load the contamination table
 contamination_table = importdata(filepath_of_cont_table);
-[~,neurons_of_graded_contamination_table,~] = grade_the_results_of_cont_table(contamination_table,number_of_units);
+[~,neurons_of_graded_contamination_table,~] = grade_the_results_of_cont_table(contamination_table,1:100);
 
 
 % ground_truth_dir = "D:\spike_gen_data\Recording By Channel Ground Truth";
