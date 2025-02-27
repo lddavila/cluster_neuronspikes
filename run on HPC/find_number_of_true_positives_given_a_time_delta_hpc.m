@@ -1,5 +1,5 @@
 function [number_of_true_positives] = find_number_of_true_positives_given_a_time_delta_hpc(gt_data,ts_of_cluster,time_delta)
-tic
+% tic
 number_of_true_positives = 0;
 
 % for i=1:length(gt_data)
@@ -18,5 +18,5 @@ abs_diffs = abs(gt_data.' - ts_of_cluster);
 mat_of_within_time_delta = abs_diffs < time_delta;
 number_of_true_positives = sum(any(mat_of_within_time_delta,2));
 
-toc
+% toc
 end
