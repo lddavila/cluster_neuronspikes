@@ -36,7 +36,7 @@ for i=1:length(cell_array_of_compare_neurons)
     cell_array_of_compare_neurons_ts{i} = timestamps_cluster_data(compare_neuron_indexes);
 end
 
-parfor current_neuron_counter=1:10%number_of_rows_in_table_of_neurons
+parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
     current_data = cell_array_of_table_of_neurons{current_neuron_counter};
     current_neuron_compare_data = cell_array_of_compare_neurons{current_neuron_counter};
     compare_neuron_ts = cell_array_of_compare_neurons_ts{current_neuron_counter};

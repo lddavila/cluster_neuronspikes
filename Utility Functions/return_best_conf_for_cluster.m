@@ -4,9 +4,9 @@ already_appeared = [];
 for i=1:size(table_of_overlapping_clusters,1)
     current_z_score = table_of_overlapping_clusters{i,"Z Score"};
     current_cluster_num = table_of_overlapping_clusters{i,"Cluster #"};
-    current_overlap_percentages = table_of_overlapping_clusters{i,"Overlap %"};
-    current_other_tetrode_appearences = table_of_overlapping_clusters{i,"Tetrode"};
-    current_cluster_other_appearence = table_of_overlapping_clusters{i,"Other Appearences"};
+    current_overlap_percentages = table_of_overlapping_clusters{i,"Overlap %"}{1};
+    current_other_tetrode_appearences = table_of_overlapping_clusters{i,"Tetrode"}{1};
+    current_cluster_other_appearence = table_of_overlapping_clusters{i,"Other Appearences"}{1};
     current_tetrode = table_of_only_neurons{i,"Tetrode"};
 
     %use this for loop to compile all of the grades of the best
@@ -57,7 +57,7 @@ for i=1:size(table_of_overlapping_clusters,1)
         end
         disp(other_z_score);
         other_z_score = str2double(other_z_score{2});
-        other_cluster_number = other_z_score_and_cluster_number{:,2};
+        other_cluster_number = other_z_score_and_cluster_number{3};
         other_cluster_number = str2double(other_cluster_number);
         other_overlap_percentage = current_overlap_percentages(other_appearence_counter);
 
