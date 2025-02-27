@@ -23,7 +23,7 @@ end
 cd(home_dir);
 
 %now see which clusters are just the same cluster in different configurations
-table_of_overlapping_clusters =check_timestamp_overlap_between_clusters_hpc(table_of_only_neurons,timestamp_array,min_overlap_percentage,time_delta);
+table_of_overlapping_clusters =check_timestamp_overlap_between_clusters_hpc_ver_2(table_of_only_neurons,timestamp_array,min_overlap_percentage,time_delta);
 home_dir = cd(dir_to_save_to);
 if save_results
     save("table of overlapping clusters.mat","table_of_overlapping_clusters")

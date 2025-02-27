@@ -10,7 +10,7 @@ min_overlap_percentage = 15;
 
 save_results = true;
 refinement_pass = false;
-dir_to_save_to = "Blind Pass Overlap Min Overlap Threshold " + string(min_overlap_percentage);
+dir_to_save_to = "Contamination Table Blind Pass Min Overlap Threshold " + string(min_overlap_percentage);
 home_dir = cd(parent_dir_of_data_saving);
 disp("Finished getting into saving dir")
 
@@ -31,9 +31,10 @@ disp("Beginning identification of best cluster using contamination table")
 disp("finished identifying the best clusters using contamination table")
 save("bpass_results_of_id_best_rep_of_clusters using cont table"+string(min_overlap_percentage)+" Percent.mat","best_appearences_of_cluster_from_blind_pass","timestamps_of_best_clusters_from_blind_pass","table_of_overlapping_clusters_from_blind_pass");
 disp("Finished saving results")
-disp("Beginning retriving accuracy ta")
+disp("Beginning retriving accuracy table")
 accuracy_table = compare_timestamps_to_ground_truth_ver_3(ground_truth_array{1},timestamps_of_best_clusters_from_blind_pass,timestamps,time_delta,debug,best_appearences_of_cluster_from_blind_pass);
 save("accuracy_table Min overlap"+string(min_overlap_percentage)+" Percent","accuracy_table")
+disp("Finished calculating and saving accuracy table")
 grades_to_check = ["overlap_with_unit"];
 plot_the_configurations = false;
 %plot_debugging_sets(dir_of_precomputed,accuracy_table,40,grades_to_check,plot_the_configurations,time_delta);

@@ -12,20 +12,21 @@ function [table_of_other_appearences] = check_timestamp_overlap_between_clusters
 
 % check_timestamp_overlap_between_clusters_ver_3
 table_of_other_appearences = table(nan(size(table_of_neurons,1),1),nan(size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),'VariableNames',["Z Score","Cluster #","Overlap %","Other Appearences","Tetrode"]);
-% iter_count = 1;
+
 number_of_rows_in_table_of_neurons = size(table_of_neurons,1);
 cell_array_of_z_scores = cell(1,number_of_rows_in_table_of_neurons);
 cell_array_of_cluster_number = cell(1,number_of_rows_in_table_of_neurons);
 cell_array_of_overlap_percentage = cell(1,number_of_rows_in_table_of_neurons);
 cell_array_of_other_appearences = cell(1,number_of_rows_in_table_of_neurons);
 cell_array_of_other_tetrodes = cell(1,number_of_rows_in_table_of_neurons);
-% parpool("Threads",6)
 
 %slice the table of neurons to avoid overhead in parallelization
 cell_array_of_table_of_neurons = cell(1,number_of_rows_in_table_of_neurons);
 for i=1:length(cell_array_of_table_of_neurons)
     cell_array_of_table_of_neurons{i} = table_of_neurons(i,:);
 end
+
+
 parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
     current_data = cell_array_of_table_of_neurons{current_neuron_counter};
     current_neuron_tetrode = current_data{1,"Tetrode"};
@@ -87,7 +88,6 @@ parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
     disp("check_timestamp_overlap_between_clusters_hpc.m Finished Neuron "+string(current_neuron_counter)+"/"+string(number_of_rows_in_table_of_neurons))
 
 end
-% delete(gcp("nocreate"));
 
 
 for current_neuron_counter=1:number_of_rows_in_table_of_neurons

@@ -10,7 +10,7 @@ min_overlap_percentage = 15;
 
 save_results = true;
 refinement_pass = false;
-dir_to_save_to = "Blind Pass Overlap Min Overlap Threshold " + string(min_overlap_percentage);
+dir_to_save_to = "Contamination Table Blind Pass Min Overlap Threshold " + string(min_overlap_percentage);
 home_dir = cd(parent_dir_of_data_saving);
 disp("Finished getting into saving dir")
 
