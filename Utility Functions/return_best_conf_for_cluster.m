@@ -57,12 +57,12 @@ for i=1:size(table_of_overlapping_clusters,1)
         end
         disp(other_z_score);
         other_z_score = str2double(other_z_score{2});
-        other_cluster_number = other_z_score_and_cluster_number{:,2} + " "+ other_z_score_and_cluster_number{3};
-        other_cluster_number = str2double(other_cluster_number{2});
+        other_cluster_number = other_z_score_and_cluster_number{:,2};
+        other_cluster_number = str2double(other_cluster_number);
         other_overlap_percentage = current_overlap_percentages(other_appearence_counter);
 
         %get the grades of the other appearences
-        [idx_of_array_with_appr_grades, ~] = find(table_of_only_neurons.tetrode == other_tetrode & table_of_only_neurons.cluster ==other_cluster_number & table_of_only_neurons.("z-score") == other_z_score);
+        [idx_of_array_with_appr_grades, ~] = find(table_of_only_neurons.Tetrode == other_tetrode & table_of_only_neurons.Cluster ==other_cluster_number & table_of_only_neurons.("Z Score") == other_z_score);
         grades_of_other_appearence = grades_array{idx_of_array_with_appr_grades};
 
         table_of_other_appearences{other_appearence_counter+1,1} = other_tetrode;

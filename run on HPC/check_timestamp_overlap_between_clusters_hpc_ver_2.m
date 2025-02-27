@@ -27,7 +27,7 @@ for i=1:length(cell_array_of_table_of_neurons)
 end
 
 
-for current_neuron_counter=1:number_of_rows_in_table_of_neurons
+parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
     current_data = cell_array_of_table_of_neurons{current_neuron_counter};
     current_neuron_tetrode = current_data{1,"Tetrode"};
     current_neuron_tetrode_number = str2double(strrep(current_neuron_tetrode,"t",""));
@@ -39,7 +39,7 @@ for current_neuron_counter=1:number_of_rows_in_table_of_neurons
     overlap_percentages_of_this_cluster = [];
     other_tetrodes_where_cluster_appears = [];
 
-    parfor compare_neuron_counter=1:size(table_of_neurons,1)
+    for compare_neuron_counter=1:size(table_of_neurons,1)
         if current_neuron_counter == compare_neuron_counter
             % iter_count = iter_count+1;
             continue
@@ -97,7 +97,7 @@ for current_neuron_counter=1:number_of_rows_in_table_of_neurons
     cell_array_of_other_appearences{current_neuron_counter} = other_appearences_of_this_cluster ;
     cell_array_of_other_tetrodes{current_neuron_counter} = other_tetrodes_where_cluster_appears ;
 
-    disp("check_timestamp_overlap_between_clusters_hpc.m Finished Neuron "+string(current_neuron_counter)+"/"+string(number_of_rows_in_table_of_neurons))
+    disp("check_timestamp_overlap_between_clusters_hpc_ver_2.m Finished Neuron "+string(current_neuron_counter)+"/"+string(number_of_rows_in_table_of_neurons))
 
 end
 
