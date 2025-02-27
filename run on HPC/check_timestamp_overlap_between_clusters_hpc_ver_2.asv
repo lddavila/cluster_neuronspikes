@@ -39,7 +39,7 @@ end
 parfor current_neuron_counter=1:10%number_of_rows_in_table_of_neurons
     current_data = cell_array_of_table_of_neurons{current_neuron_counter};
     current_neuron_compare_data = cell_array_of_compare_neurons{current_neuron_counter};
-    compare_neuron_ts = cell_array_of_compare_neurons_ts{current_neuron_counter};
+    compare_neuron_ts = cell_array_of_compare_neurons_ts{current_neuron_compare_data};
     current_neuron_tetrode = current_data{1,"Tetrode"};
     current_neuron_tetrode_number = str2double(strrep(current_neuron_tetrode,"t",""));
     current_neuron_z_score = current_data{1,"Z Score"};
@@ -60,38 +60,38 @@ parfor current_neuron_counter=1:10%number_of_rows_in_table_of_neurons
         compare_neuron_tetrode = compare_data{1,"Tetrode"};
         compare_neuron_tetrode_number = str2double(strrep(compare_neuron_tetrode,"t",""));
         compare_neuron_z_score = compare_data{1,"Z Score"};
-        current_compare_neuron_ts = compare_neuron_ts{compare_neuron_counter};
+        compare_neuron_ts = timestamps_cluster_data{compare_neuron_counter};
         compare_neuron_cluster = compare_data{1,"Cluster"};
 
         %to avoid excess calculations we will skip any tetrodes that
         %are unlikely to produce a viable comparison (i.e. there's no
         %reason to compare a cluster found on t1 to a cluster found on t50
-        %cause they're so distant, I'll set the range to 10 before and
+        %cause they're so distant, I'll set the range to 15 before and
         %after the current tetrode number but even this might be excessive
-        if abs(compare_neuron_tetrode_number -current_neuron_tetrode_number) > 6
+        if abs(compare_neuron_tetrode_number -current_neuron_tetrode_number) > 10
             % iter_count = iter_count+1;
             continue;
         end
 
 
-        [~,index_of_larger ]= max([length(current_compare_neuron_ts),length(current_neuron_ts)]);
-        [smaller_cluster_size,~ ]= min([length(current_compare_neuron_ts),length(current_neuron_ts)]);
+        [larger_cluster_size,index_of_larger ]= max([length(compare_neuron_ts),length(current_neuron_ts)]);
+        [smaller_cluster_size,smaller ]= min([length(compare_neuron_ts),length(current_neuron_ts)]);
         if index_of_larger==1
             %if the larger cluster is the compare neuron then we use the ts
             %of the current neuron as our compare
-            number_of_timestamps_in_common = find_number_of_true_positives_given_a_time_delta_hpc(current_neuron_ts,current_compare_neuron_ts,time_delta);
+            number_of_timestamps_in_common = find_number_of_true_positives_given_a_time_delta_hpc(current_neuron_ts,compare_neuron_ts,time_delta);
         elseif index_of_larger==2
             %if the larger cluster is the current_neuron then we use the ts
             %of the compare neuron as our compare
             %the logic behind this is that the first set of ts that are put
             %into the function will never be over counted 
-            number_of_timestamps_in_common = find_number_of_true_positives_given_a_time_delta_hpc(current_compare_neuron_ts,current_neuron_ts,time_delta);
+            number_of_timestamps_in_common = find_number_of_true_positives_given_a_time_delta_hpc(compare_neuron_ts,current_neuron_ts,time_delta);
         end
 
         
 
         actual_overlap_percentage = (number_of_timestamps_in_common / smaller_cluster_size) * 100;
-        % disp(actual_overlap_percentage)
+        disp(actual_overlap_percentage)
         if actual_overlap_percentage > min_overlap_percentage
             other_appearences_of_this_cluster =[other_appearences_of_this_cluster,"Z_Score:"+string(compare_neuron_z_score)+" Cluster "+string(compare_neuron_cluster)];
             overlap_percentages_of_this_cluster = [overlap_percentages_of_this_cluster,string(actual_overlap_percentage)+"%"];
