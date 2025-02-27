@@ -55,7 +55,7 @@ for i=1:size(table_of_overlapping_clusters,1)
             disp("No other appearences of this cluster")
             continue;
         end
-        disp(other_z_score);
+        % disp(other_z_score);
         other_z_score = str2double(other_z_score{2});
         other_cluster_number = other_z_score_and_cluster_number{3};
         other_cluster_number = str2double(other_cluster_number);
@@ -103,7 +103,12 @@ for i=1:size(table_of_overlapping_clusters,1)
         %another cluster's best appearences list
         %this ensures that there's no duplicates (multiple clusters
         %representing the same unit
-        if ismember(table_of_other_appearences{best_rep,"Tetrode"}+" "+table_of_other_appearences{best_rep,"Z Score"}+" "+table_of_other_appearences{best_rep,"Cluster"},already_appeared)
+        to_be_added = table_of_other_appearences{best_rep,"Tetrode"}+" "+table_of_other_appearences{best_rep,"Z Score"}+" "+table_of_other_appearences{best_rep,"Cluster"};
+        if ismember(to_be_added,already_appeared)
+            %if to_be_added is already a member of the
+            %already_appeared_list then we take all of its other
+            %appearences and union that with the already_appeared list
+            %this ensures the elimination of auxilary clusters
             already_appeared = union(already_appeared,table_of_other_appearences{:,"Tetrode"}+" "+table_of_other_appearences{:,"Z Score"}+" "+table_of_other_appearences{:,"Cluster"});
             disp("Finished "+string(i)+"/"+string(size(table_of_only_neurons,1)));
             continue;
