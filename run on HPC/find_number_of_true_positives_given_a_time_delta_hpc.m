@@ -2,6 +2,9 @@ function [number_of_true_positives] = find_number_of_true_positives_given_a_time
 % tic
 number_of_true_positives = 0;
 
+
+gt_data =gpuArray(gt_data);
+ts_of_cluster = gpuArray(ts_of_cluster);
 % for i=1:length(gt_data)
 %     current_gt_spike_ts = gt_data(i);
 %     diffs_between_gt_ts_and_clust_ts = abs(current_gt_spike_ts - ts_of_cluster);

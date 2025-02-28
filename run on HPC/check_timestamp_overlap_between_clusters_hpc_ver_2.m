@@ -28,18 +28,18 @@ end
 
 %create an array of compare neurons in order to avoid parallelization
 %overhead from broadvast variables
-cell_array_of_compare_neurons = cell(1,number_of_rows_in_table_of_neurons);
-cell_array_of_compare_neurons_ts = cell(1,number_of_rows_in_table_of_neurons);
-for i=1:length(cell_array_of_compare_neurons)
-    compare_neuron_indexes = setdiff(1:number_of_rows_in_table_of_neurons,i);
-    cell_array_of_compare_neurons{i} = cell_array_of_table_of_neurons(compare_neuron_indexes);
-    cell_array_of_compare_neurons_ts{i} = timestamps_cluster_data(compare_neuron_indexes);
-end
+% cell_array_of_compare_neurons = cell(1,number_of_rows_in_table_of_neurons);
+% cell_array_of_compare_neurons_ts = cell(1,number_of_rows_in_table_of_neurons);
+% for i=1:length(cell_array_of_compare_neurons)
+%     compare_neuron_indexes = setdiff(1:number_of_rows_in_table_of_neurons,i);
+%     cell_array_of_compare_neurons{i} = cell_array_of_table_of_neurons(compare_neuron_indexes);
+%     cell_array_of_compare_neurons_ts{i} = timestamps_cluster_data(compare_neuron_indexes);
+% end
 
-parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
+for current_neuron_counter=1:number_of_rows_in_table_of_neurons
     current_data = cell_array_of_table_of_neurons{current_neuron_counter};
-    current_neuron_compare_data = cell_array_of_compare_neurons{current_neuron_counter};
-    compare_neuron_ts = cell_array_of_compare_neurons_ts{current_neuron_counter};
+    % current_neuron_compare_data = cell_array_of_compare_neurons{current_neuron_counter};
+    % compare_neuron_ts = cell_array_of_compare_neurons_ts{current_neuron_counter};
     current_neuron_tetrode = current_data{1,"Tetrode"};
     current_neuron_tetrode_number = str2double(strrep(current_neuron_tetrode,"t",""));
     current_neuron_z_score = current_data{1,"Z Score"};
@@ -51,16 +51,16 @@ parfor current_neuron_counter=1:number_of_rows_in_table_of_neurons
     other_tetrodes_where_cluster_appears = [];
 
     
-    for compare_neuron_counter=1:length(current_neuron_compare_data)
-        % if current_neuron_counter == compare_neuron_counter
-        %     % iter_count = iter_count+1;
-        %     continue
-        % end
-        compare_data = current_neuron_compare_data{compare_neuron_counter};
+    for compare_neuron_counter=1:length(number_of_rows_in_table_of_neurons)
+        if current_neuron_counter == compare_neuron_counter
+            % iter_count = iter_count+1;
+            continue
+        end
+        compare_data = cell_array_of_table_of_neurons{compare_neuron_counter};
         compare_neuron_tetrode = compare_data{1,"Tetrode"};
         compare_neuron_tetrode_number = str2double(strrep(compare_neuron_tetrode,"t",""));
         compare_neuron_z_score = compare_data{1,"Z Score"};
-        current_compare_neuron_ts = compare_neuron_ts{compare_neuron_counter};
+        current_compare_neuron_ts = timestamps_cluster_data{compare_neuron_counter};
         compare_neuron_cluster = compare_data{1,"Cluster"};
 
         %to avoid excess calculations we will skip any tetrodes that
