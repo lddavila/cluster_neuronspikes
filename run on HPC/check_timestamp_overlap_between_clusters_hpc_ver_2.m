@@ -1,4 +1,5 @@
 function [table_of_other_appearences] = check_timestamp_overlap_between_clusters_hpc_ver_2(table_of_neurons,timestamps_cluster_data,min_overlap_percentage,time_delta)
+tic
 %this function uses timestamps of clusters across various configurations
 %(ie different tetrodes with the same/different z_scores as we all the same
 %tetrode with different z_score, it helps to think of this as vertical and
@@ -11,9 +12,10 @@ function [table_of_other_appearences] = check_timestamp_overlap_between_clusters
 
 
 % check_timestamp_overlap_between_clusters_ver_3
-table_of_other_appearences = cell2table(cell(0,5),'VariableNames',["Z Score","Cluster #","Overlap %","Other Appearences","Tetrode"]);
+
 
 number_of_rows_in_table_of_neurons = size(table_of_neurons,1);
+table_of_other_appearences = table(nan(number_of_rows_in_table_of_neurons,1),nan(number_of_rows_in_table_of_neurons,1),cell(number_of_rows_in_table_of_neurons,1),cell(number_of_rows_in_table_of_neurons,1),cell(number_of_rows_in_table_of_neurons,1),'VariableNames',["Z Score","Cluster #","Overlap %","Other Appearences","Tetrode"]);
 % cell_array_of_z_scores = cell(1,number_of_rows_in_table_of_neurons);
 % cell_array_of_cluster_number = cell(1,number_of_rows_in_table_of_neurons);
 % cell_array_of_overlap_percentage = cell(1,number_of_rows_in_table_of_neurons);
@@ -46,12 +48,13 @@ for current_neuron_counter=1:number_of_rows_in_table_of_neurons
     current_neuron_ts = timestamps_cluster_data{current_neuron_counter};
     current_neuron_cluster_number = current_data{1,"Cluster"};
 
-    other_appearences_of_this_cluster = [];
-    overlap_percentages_of_this_cluster = [];
-    other_tetrodes_where_cluster_appears = [];
+    other_appearences_of_this_cluster = repelem("",1,number_of_rows_in_table_of_neurons);
+    overlap_percentages_of_this_cluster = repelem("",1,number_of_rows_in_table_of_neurons);
+    other_tetrodes_where_cluster_appears = repelem("",1,number_of_rows_in_table_of_neurons);
 
     
-    for compare_neuron_counter=1:length(number_of_rows_in_table_of_neurons)
+    for compare_neuron_counter=1:number_of_rows_in_table_of_neurons
+        %disp(string(current_neuron_counter)+" "+string(compare_neuron_counter))
         if current_neuron_counter == compare_neuron_counter
             % iter_count = iter_count+1;
             continue
@@ -95,11 +98,16 @@ for current_neuron_counter=1:number_of_rows_in_table_of_neurons
         actual_overlap_percentage = (number_of_timestamps_in_common / smaller_cluster_size) * 100;
         % disp(actual_overlap_percentage)
         if actual_overlap_percentage > min_overlap_percentage
-            other_appearences_of_this_cluster =[other_appearences_of_this_cluster,"Z_Score:"+string(compare_neuron_z_score)+" Cluster "+string(compare_neuron_cluster)];
-            overlap_percentages_of_this_cluster = [overlap_percentages_of_this_cluster,string(actual_overlap_percentage)+"%"];
-            other_tetrodes_where_cluster_appears = [other_tetrodes_where_cluster_appears, compare_neuron_tetrode];
+            other_appearences_of_this_cluster(compare_neuron_counter) ="Z_Score:"+string(compare_neuron_z_score)+" Cluster "+string(compare_neuron_cluster);
+            overlap_percentages_of_this_cluster(compare_neuron_counter) = string(actual_overlap_percentage)+"%";
+            other_tetrodes_where_cluster_appears(compare_neuron_counter) = compare_neuron_tetrode;
         end
     end
+
+    other_appearences_of_this_cluster(other_appearences_of_this_cluster =="") = [];
+    overlap_percentages_of_this_cluster(overlap_percentages_of_this_cluster=="") = [];
+    other_tetrodes_where_cluster_appears(other_tetrodes_where_cluster_appears=="") = [];
+    
     % remove the leading | from each of the strings 
     % other_appearences_of_this_cluster = regexprep(other_appearences_of_this_cluster,'^|','');
     % overlap_percentages_of_this_cluster = regexprep(overlap_percentages_of_this_cluster,"^|",'');
@@ -114,7 +122,7 @@ for current_neuron_counter=1:number_of_rows_in_table_of_neurons
     
     current_row =  table(current_neuron_z_score,current_neuron_cluster_number,{overlap_percentages_of_this_cluster},{other_appearences_of_this_cluster},{other_tetrodes_where_cluster_appears},'VariableNames',["Z Score","Cluster #","Overlap %","Other Appearences","Tetrode"]);
 
-    table_of_other_appearences = [table_of_other_appearences;current_row];
+    table_of_other_appearences(current_neuron_counter,:) = current_row;
     disp("check_timestamp_overlap_between_clusters_hpc_ver_2.m Finished Neuron "+string(current_neuron_counter)+"/"+string(number_of_rows_in_table_of_neurons))
 
 end
@@ -127,5 +135,6 @@ end
 %     table_of_other_appearences{current_neuron_counter,4} = cell_array_of_other_appearences{current_neuron_counter} ;
 %     table_of_other_appearences{current_neuron_counter,5} = cell_array_of_other_tetrodes{current_neuron_counter} ;
 % end
+toc
 end
 

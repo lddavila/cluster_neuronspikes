@@ -37,7 +37,7 @@ save("accuracy_table Min overlap"+string(min_overlap_percentage)+" Percent","acc
 disp("Finished calculating and saving accuracy table")
 grades_to_check = ["overlap_with_unit"];
 plot_the_configurations = false;
-%plot_debugging_sets(dir_of_precomputed,accuracy_table,40,grades_to_check,plot_the_configurations,time_delta);
+plot_debugging_sets(dir_of_precomputed,accuracy_table,40,grades_to_check,plot_the_configurations,time_delta);
 cd(home_dir);
 
 end

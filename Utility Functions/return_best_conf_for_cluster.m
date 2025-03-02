@@ -25,7 +25,7 @@ for i=1:size(table_of_overlapping_clusters,1)
 
     %if there are no other appearences of this cluster then it is
     %automatically the best
-    if current_overlap_percentages==""
+    if isempty(current_overlap_percentages)
         %ensure that this cluster hasn't already been represented somewhere
         %else
         if  ~isempty(already_appeared) % check to ensure that there are no other clusters have been added to already_appeared
@@ -37,12 +37,14 @@ for i=1:size(table_of_overlapping_clusters,1)
         else %if they haven't been added and this cluster has no other clusters that it overlaps with then it really is the first and only and thus best representation
             disp("Finished "+string(i)+"/"+string(size(table_of_only_neurons,1)));
             table_of_best_representation{i,:} = table_of_other_appearences{1,:};
+            to_be_added =table_of_other_appearences{1,"Tetrode"}+" "+string(table_of_other_appearences{1,"Z Score"})+" "+string(table_of_other_appearences{1,"Cluster"}) ;
+            already_appeared = [already_appeared,to_be_added];
         end
         continue;
     end
 
     for other_appearence_counter=1:length(current_overlap_percentages)
-        if current_overlap_percentages==""
+        if isempty(current_overlap_percentages)
             continue
         end
         other_tetrode = current_other_tetrode_appearences(other_appearence_counter);
