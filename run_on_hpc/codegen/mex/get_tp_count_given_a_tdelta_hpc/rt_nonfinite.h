@@ -1,16 +1,17 @@
-//
-// Academic License - for use in teaching, academic research, and meeting
-// course requirements at degree granting institutions only.  Not for
-// government, commercial, or other organizational use.
-//
-// rt_nonfinite.h
-//
-// Code generation for function 'get_tp_count_given_a_tdelta_hpc'
-//
+/*
+ * Academic License - for use in teaching, academic research, and meeting
+ * course requirements at degree granting institutions only.  Not for
+ * government, commercial, or other organizational use.
+ *
+ * rt_nonfinite.h
+ *
+ * Code generation for function 'get_tp_count_given_a_tdelta_hpc'
+ *
+ */
 
 #pragma once
 
-// Include files
+/* Include files */
 #include "rtwtypes.h"
 #include "tmwtypes.h"
 
@@ -34,4 +35,4 @@ extern real32_T mex_rtNaNF;
 
 extern void mex_InitInfAndNan(void);
 
-// End of code generation (rt_nonfinite.h)
+/* End of code generation (rt_nonfinite.h) */

@@ -15,7 +15,7 @@ for i=1:size(unique_rows_of_best_rep,1)
     table_of_best_rep_in_cell_format{i} = table_of_best_rep(table_of_best_rep{:,"Z Score"}==current_z_score & table_of_best_rep{:,"Tetrode"}==current_tetrode,:);
 end
 number_of_times_the_for_loop_will_run = length(table_of_best_rep_in_cell_format);
-parfor tetrode_counter=1:length(table_of_best_rep_in_cell_format)
+for tetrode_counter=1:length(table_of_best_rep_in_cell_format)
     % current_tetrode = list_of_tetrodes_to_check(tetrode_counter);
     try
         art_tetr_array = build_artificial_tetrode();
@@ -43,7 +43,7 @@ parfor tetrode_counter=1:length(table_of_best_rep_in_cell_format)
         % idx_aft_filt = cell(1,length(idx_b4_filt));
         for cluster_counter=1:size(current_grades,1)
             current_cluster_grades = current_grades(cluster_counter,:);
-            current_cluster_category = classify_clusters_based_on_grades(current_cluster_grades);
+            current_cluster_category = classify_clusters_based_on_grades_ver_2(current_cluster_grades);
             table_of_cluster_classification{cluster_counter,1} = current_cluster_category;
             table_of_cluster_classification{cluster_counter,2} = current_tetrode;
             table_of_cluster_classification{cluster_counter,3} = cluster_counter;

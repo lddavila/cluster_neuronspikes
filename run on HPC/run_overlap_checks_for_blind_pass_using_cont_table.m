@@ -4,7 +4,7 @@ addpath(genpath(pwd));
 cd(home_dir);
 disp("Finished adding File Path");
 
-min_overlap_percentage = 15;
+min_overlap_percentage = 1;
 % generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score";
 % generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score";
 
@@ -16,7 +16,7 @@ disp("Finished getting into saving dir")
 
 %load the contamination table
 contamination_table = importdata(filepath_of_cont_table);
-[~,neurons_of_graded_contamination_table,~] = grade_the_results_of_cont_table(contamination_table,1:100);
+[graded_contamination_table,neurons_of_graded_contamination_table,~] = grade_the_results_of_cont_table(contamination_table,1:100);
 
 disp("Finished loading contamination table")
 % ground_truth_dir = "D:\spike_gen_data\Recording By Channel Ground Truth";
@@ -27,17 +27,18 @@ disp("Finished importing timestamps and ground truth")
 time_delta = 0.004;
 debug =0;
 disp("Beginning identification of best cluster using contamination table")
-[best_appearences_of_cluster_from_blind_pass,timestamps_of_best_clusters_from_blind_pass,table_of_overlapping_clusters_from_blind_pass] = id_best_rep_of_cl_using_cont_table_hpc(neurons_of_graded_contamination_table,min_overlap_percentage,debug,generic_dir_with_grades,generic_dir_with_outputs,save_results,time_delta,refinement_pass,dir_to_save_to);
+[best_appearences_of_cluster_from_blind_pass,timestamps_of_best_clusters_from_blind_pass,table_of_overlapping_clusters_from_blind_pass] = id_best_rep_of_cl_using_cont_table_hpc(graded_contamination_table,min_overlap_percentage,debug,generic_dir_with_grades,generic_dir_with_outputs,save_results,time_delta,refinement_pass,dir_to_save_to);
 disp("finished identifying the best clusters using contamination table")
 save("bpass_results_of_id_best_rep_of_clusters using cont table"+string(min_overlap_percentage)+" Percent.mat","best_appearences_of_cluster_from_blind_pass","timestamps_of_best_clusters_from_blind_pass","table_of_overlapping_clusters_from_blind_pass");
 disp("Finished saving results")
 disp("Beginning retriving accuracy table")
-accuracy_table = compare_timestamps_to_ground_truth_ver_3(ground_truth_array{1},timestamps_of_best_clusters_from_blind_pass,timestamps,time_delta,debug,best_appearences_of_cluster_from_blind_pass);
-save("accuracy_table Min overlap"+string(min_overlap_percentage)+" Percent","accuracy_table")
-disp("Finished calculating and saving accuracy table")
-grades_to_check = ["overlap_with_unit"];
-plot_the_configurations = false;
-plot_debugging_sets(dir_of_precomputed,accuracy_table,40,grades_to_check,plot_the_configurations,time_delta);
+ % accuracy_table = compare_timestamps_to_ground_truth_ver_3(ground_truth_array,timestamps_of_best_clusters,timestamps,0.004,false,best_appearences_of_cluster);
+% accuracy_table = compare_timestamps_to_ground_truth_ver_3(ground_truth_array{1},timestamps_of_best_clusters_from_blind_pass,timestamps,time_delta,debug,best_appearences_of_cluster_from_blind_pass);
+% save("accuracy_table Min overlap"+string(min_overlap_percentage)+" Percent","accuracy_table")
+% disp("Finished calculating and saving accuracy table")
+% grades_to_check = ["overlap_with_unit"];
+% plot_the_configurations = false;
+% plot_debugging_sets(dir_of_precomputed,accuracy_table,40,grades_to_check,plot_the_configurations,time_delta);
 cd(home_dir);
 
 end

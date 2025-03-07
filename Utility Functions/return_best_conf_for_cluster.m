@@ -65,6 +65,9 @@ for i=1:size(table_of_overlapping_clusters,1)
 
         %get the grades of the other appearences
         [idx_of_array_with_appr_grades, ~] = find(table_of_only_neurons.Tetrode == other_tetrode & table_of_only_neurons.Cluster ==other_cluster_number & table_of_only_neurons.("Z Score") == other_z_score);
+        if isempty(idx_of_array_with_appr_grades)
+            continue;
+        end
         grades_of_other_appearence = grades_array{idx_of_array_with_appr_grades};
 
         table_of_other_appearences{other_appearence_counter+1,1} = other_tetrode;

@@ -1,48 +1,49 @@
-//
-// Academic License - for use in teaching, academic research, and meeting
-// course requirements at degree granting institutions only.  Not for
-// government, commercial, or other organizational use.
-//
-// _coder_get_tp_count_given_a_tdelta_hpc_info.cpp
-//
-// Code generation for function 'get_tp_count_given_a_tdelta_hpc'
-//
+/*
+ * Academic License - for use in teaching, academic research, and meeting
+ * course requirements at degree granting institutions only.  Not for
+ * government, commercial, or other organizational use.
+ *
+ * _coder_get_tp_count_given_a_tdelta_hpc_info.c
+ *
+ * Code generation for function 'get_tp_count_given_a_tdelta_hpc'
+ *
+ */
 
-// Include files
+/* Include files */
 #include "_coder_get_tp_count_given_a_tdelta_hpc_info.h"
 #include "emlrt.h"
 #include "tmwtypes.h"
 
-// Function Declarations
-static const mxArray *c_emlrtMexFcnResolvedFunctionsI();
+/* Function Declarations */
+static const mxArray *c_emlrtMexFcnResolvedFunctionsI(void);
 
-// Function Definitions
-static const mxArray *c_emlrtMexFcnResolvedFunctionsI()
+/* Function Definitions */
+static const mxArray *c_emlrtMexFcnResolvedFunctionsI(void)
 {
-  static const int32_T iv[2]{0, 1};
+  static const int32_T iv[2] = {0, 1};
   const mxArray *m;
   const mxArray *nameCaptureInfo;
-  nameCaptureInfo = nullptr;
+  nameCaptureInfo = NULL;
   m = emlrtCreateNumericArray(2, (const void *)&iv[0], mxDOUBLE_CLASS, mxREAL);
   emlrtAssign(&nameCaptureInfo, m);
   return nameCaptureInfo;
 }
 
-mxArray *emlrtMexFcnProperties()
+mxArray *emlrtMexFcnProperties(void)
 {
   mxArray *xEntryPoints;
   mxArray *xInputs;
   mxArray *xResult;
-  const char_T *propFieldName[9]{"Version",
-                                 "ResolvedFunctions",
-                                 "Checksum",
-                                 "EntryPoints",
-                                 "CoverageInfo",
-                                 "IsPolymorphic",
-                                 "PropertyList",
-                                 "UUID",
-                                 "ClassEntryPointIsHandle"};
-  const char_T *epFieldName[8]{
+  const char_T *propFieldName[9] = {"Version",
+                                    "ResolvedFunctions",
+                                    "Checksum",
+                                    "EntryPoints",
+                                    "CoverageInfo",
+                                    "IsPolymorphic",
+                                    "PropertyList",
+                                    "UUID",
+                                    "ClassEntryPointIsHandle"};
+  const char_T *epFieldName[8] = {
       "QualifiedName",    "NumberOfInputs", "NumberOfOutputs", "ConstantInputs",
       "ResolvedFilePath", "TimeStamp",      "Constructor",     "Visible"};
   xEntryPoints =
@@ -75,4 +76,4 @@ mxArray *emlrtMexFcnProperties()
   return xResult;
 }
 
-// End of code generation (_coder_get_tp_count_given_a_tdelta_hpc_info.cpp)
+/* End of code generation (_coder_get_tp_count_given_a_tdelta_hpc_info.c) */
