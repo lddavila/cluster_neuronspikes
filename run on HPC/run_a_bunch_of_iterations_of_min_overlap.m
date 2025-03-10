@@ -15,6 +15,7 @@ for i=1:size(only_neur_80_perc_ovlp_with_other_neur,1)
     disp([other_appearence_overlap_percentage.',other_appearences_classification.'])
     clc;
 end
+%% get the array of template branches
 
 %% plot by branches
 groupcounts_of_branches =groupcounts(only_neur_80_perc_ovlp_with_other_neur,"Classification");

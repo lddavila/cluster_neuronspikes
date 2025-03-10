@@ -54,7 +54,7 @@ parfor tetrode_counter=1:length(table_of_best_rep_in_cell_format)
         end
 
 
-        disp(current_data{i,"Classification"}+" Finished "+string(tetrode_counter)+" /"+string(length(number_of_times_the_for_loop_will_run)))
+        disp(current_data{1,"Classification"}+" Finished "+string(tetrode_counter)+" /"+string(length(number_of_times_the_for_loop_will_run)))
         % clc;
         current_clusters_category = table_of_cluster_classification{:,"category"};
         current_clusters_max_overlap_perc_with_unit =current_data{:,"Max Overlap % With Unit"} ;
