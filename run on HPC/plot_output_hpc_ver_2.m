@@ -54,13 +54,13 @@ parfor tetrode_counter=1:length(table_of_best_rep_in_cell_format)
         end
 
 
-        disp("Finished "+string(tetrode_counter)+" /"+string(length(number_of_times_the_for_loop_will_run)))
+        disp(current_data{i,"Classification"}+" Finished "+string(tetrode_counter)+" /"+string(length(number_of_times_the_for_loop_will_run)))
         % clc;
         current_clusters_category = table_of_cluster_classification{:,"category"};
         current_clusters_max_overlap_perc_with_unit =current_data{:,"Max Overlap % With Unit"} ;
         current_clusters_max_overlap_unit = current_data{:,"Max Overlap Unit"};
         plot_the_clusters_hpc(channels_of_curr_tetr,{idx_b4_filt{str2double(current_clust)}},"before",aligned,current_clusters_category,current_tetrode,current_z_score,current_clust,grades_to_check,names_of_grades,current_grades,current_clusters_max_overlap_perc_with_unit,current_clusters_max_overlap_unit);
-        % close all;
+        close all;
     catch ME
         disp("############################################")
         disp("Tetrode "+string(tetrode_counter) + " Errored")
