@@ -25,7 +25,7 @@ for i=1:size(groupcounts_of_branches,1)
     current_unit_dir = "Branch "+current_branch+ " Plots";
     mkdir(current_unit_dir);
     cd(current_unit_dir);
-    plot_output_hpc(generic_dir_with_grades,generic_dir_with_outputs,current_branch_samples,false,[],[])
+    plot_output_hpc_ver_2(generic_dir_with_grades,generic_dir_with_outputs,current_branch_samples,false,[],[])
     cd(dir_to_save_plots_to);
     disp("Finished Printing Branch "+string(i)+"/"+string(size(groupcounts_of_branches)));
 end
