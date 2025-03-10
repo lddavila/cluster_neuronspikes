@@ -16,7 +16,7 @@ for i=1:size(unique_rows_of_best_rep,1)
     table_of_best_rep_in_cell_format{i} = table_of_best_rep(table_of_best_rep{:,"Z Score"}==current_z_score & table_of_best_rep{:,"Tetrode"}==current_tetrode & table_of_best_rep{:,"Cluster"}==current_cluster,:);
 end
 number_of_times_the_for_loop_will_run = length(table_of_best_rep_in_cell_format);
-for tetrode_counter=1:length(table_of_best_rep_in_cell_format)
+parfor tetrode_counter=1:length(table_of_best_rep_in_cell_format)
     % current_tetrode = list_of_tetrodes_to_check(tetrode_counter);
     try
         art_tetr_array = build_artificial_tetrode();
