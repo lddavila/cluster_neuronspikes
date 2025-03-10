@@ -1,7 +1,6 @@
 function [] = plot_output_hpc_ver_2(generic_dir_with_grades,generic_dir_with_outputs,table_of_best_rep,refinement_pass,grades_to_check,names_of_grades)
 
-subset_of_best_rep = table_of_best_rep(:,["Tetrode","Z Score"]);
-unique_rows_of_best_rep = unique(subset_of_best_rep,"rows");
+
 
 
 % list_of_tetrodes_to_check = unique(table_of_best_rep,"stable","rows");
@@ -9,11 +8,8 @@ unique_rows_of_best_rep = unique(subset_of_best_rep,"rows");
 
 %slice the data
 table_of_best_rep_in_cell_format = cell(1,size(table_of_best_rep,1));
-for i=1:size(unique_rows_of_best_rep,1)
-    current_z_score = table_of_best_rep{i,"Z Score"};
-    current_tetrode = table_of_best_rep{i,"Tetrode"};
-    current_cluster = table_of_best_rep{i,"Cluster"};
-    table_of_best_rep_in_cell_format{i} = table_of_best_rep(table_of_best_rep{:,"Z Score"}==current_z_score & table_of_best_rep{:,"Tetrode"}==current_tetrode & table_of_best_rep{:,"Cluster"}==current_cluster,:);
+for i=1:size(table_of_best_rep,1)
+    table_of_best_rep_in_cell_format{i} = table_of_best_rep(i,:);
 end
 number_of_times_the_for_loop_will_run = length(table_of_best_rep_in_cell_format);
 parfor tetrode_counter=1:length(table_of_best_rep_in_cell_format)
