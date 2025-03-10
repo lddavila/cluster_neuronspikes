@@ -15,7 +15,7 @@ tic
 
 
 number_of_rows_in_table_of_neurons = size(table_of_all_clusters,1);
-table_of_other_appearences = table(nan(number_of_rows_in_table_of_neurons,1),nan(number_of_rows_in_table_of_neurons,1),cell(number_of_rows_in_table_of_neurons,1),cell(number_of_rows_in_table_of_neurons,1),cell(number_of_rows_in_table_of_neurons,1),'VariableNames',["Tetrode","Cluster #","Z Score","Other Appearence Info","Classification"]);
+table_of_other_appearences = table(repelem("",number_of_rows_in_table_of_neurons,1),nan(number_of_rows_in_table_of_neurons,1),nan(number_of_rows_in_table_of_neurons,1),cell(number_of_rows_in_table_of_neurons,1),repelem("",number_of_rows_in_table_of_neurons,1),'VariableNames',["Tetrode","Cluster","Z Score","Other Appearence Info","Classification"]);
 % cell_array_of_z_scores = cell(1,number_of_rows_in_table_of_neurons);
 % cell_array_of_cluster_number = cell(1,number_of_rows_in_table_of_neurons);
 % cell_array_of_overlap_percentage = cell(1,number_of_rows_in_table_of_neurons);
@@ -102,8 +102,13 @@ for current_neuron_counter=1:number_of_rows_in_table_of_neurons
     end
 
     % other_appearences_of_this_cluster(other_appearences_of_this_cluster =="") = [];
-    overlap_percentages_of_this_cluster(overlap_percentages_of_this_cluster=="") = [];
+    other_cluster_numbers_of_this_cluster(other_cluster_numbers_of_this_cluster=="") = [];
     other_tetrodes_where_cluster_appears(other_tetrodes_where_cluster_appears=="") = [];
+    overlap_percentages_of_this_cluster(overlap_percentages_of_this_cluster=="") = [];
+    other_z_scores_of_this_cluster(other_z_scores_of_this_cluster=="") = [];
+    classification_of_other_appearences(classification_of_other_appearences=="") = [];
+    
+    
     
     other_appearences_dict = containers.Map("KeyType",'char','ValueType','any');
     other_appearences_dict("cluster number of other appearences") = other_cluster_numbers_of_this_cluster;
@@ -112,12 +117,13 @@ for current_neuron_counter=1:number_of_rows_in_table_of_neurons
     other_appearences_dict("Z score of other appearences") = other_z_scores_of_this_cluster;
     other_appearences_dict("classification of other appearences") = classification_of_other_appearences;
 
-    current_row = table(current_neuron_tetrode,current_neuron_cluster_number,current_neuron_z_score,other_appearences_dict,current_neuron_classification,'VariableNames',["Tetrode","Cluster #","Z Score","Other Appearence Info","Classification"]);
+    current_row = table(current_neuron_tetrode,current_neuron_cluster_number,current_neuron_z_score,{other_appearences_dict},current_neuron_classification,'VariableNames',["Tetrode","Cluster #","Z Score","Other Appearence Info","Classification"]);
     % current_row =  table(current_neuron_z_score,current_neuron_cluster_number,{overlap_percentages_of_this_cluster},{other_appearences_of_this_cluster},{other_tetrodes_where_cluster_appears},'VariableNames',["Z Score","Cluster #","Overlap %","Other Appearences","Tetrode"]);
 
-    table_of_other_appearences(current_neuron_counter,:) = current_row;
-    disp("check_timestamp_overlap_between_clusters_hpc_ver_3.m Finished Neuron "+string(current_neuron_counter)+"/"+string(number_of_rows_in_table_of_neurons))
+        table_of_other_appearences(current_neuron_counter,:) = current_row;
+    disp("check_timestamp_overlap_between_clusters_hpc_ver_3.m Finished Cluster "+string(current_neuron_counter)+"/"+string(number_of_rows_in_table_of_neurons))
 
 end
+table_of_other_appearences = join(table_of_other_appearences,table_of_all_clusters,'Keys',["Tetrode","Z Score","Cluster","Classification"]);
 toc
 end

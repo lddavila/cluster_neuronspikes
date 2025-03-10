@@ -1,7 +1,44 @@
 %% Step 0: Run the experimental overlap table
+clc;
 table_of_all_overlap = check_timestamp_overlap_between_clusters_hpc_ver_3(graded_contamination_table,timestamp_array,1,0.004);
 
+%% step 0a: update the table
+clc;
+only_neur_80_perc_ovlp_with_other_neur = update_table_of_other_appearences(table_of_all_overlap,["only neurons","overlap","only overlap with neurons"],final_contamination_table,[nan,80,nan]);
+%% step 0a1: test to make sure that updating the min overlap threshold works
+clc;
+for i=1:size(only_neur_80_perc_ovlp_with_other_neur,1)
+    current_overlap_percentages = only_neur_80_perc_ovlp_with_other_neur{i,"Other Appearence Info"}{1};
+    other_appearence_overlap_percentage = current_overlap_percentages("overlap percentages of other appearences");
+    other_appearences_classification = current_overlap_percentages("classification of other appearences");
 
+    disp([other_appearence_overlap_percentage.',other_appearences_classification.'])
+    clc;
+end
+
+%% plot by branches
+groupcounts_of_branches =groupcounts(only_neur_80_perc_ovlp_with_other_neur,"Classification");
+dir_to_save_plots_to = "D:\cluster_neuronspikes\Data\neuron_plots_by_branches";
+if ~exist(dir_to_save_plots_to,"dir")
+    dir_to_save_plots_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_plots_to);
+end
+for i=1:size(groupcounts_of_branches,1)
+    current_branch = groupcounts_of_branches{i,"Classification"};
+    current_branch_samples = only_neur_80_perc_ovlp_with_other_neur(contains(only_neur_80_perc_ovlp_with_other_neur{:,"Classification"},"Neuron","IgnoreCase",true),:);
+    dir_to_save_plots_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_plots_to);
+    generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score";
+    generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score";
+
+    home_dir = cd(dir_to_save_plots_to);
+
+    current_unit_dir = "Branch "+current_branch+ " Plots";
+    mkdir(current_unit_dir);
+    cd(current_unit_dir);
+    plot_output_hpc(generic_dir_with_grades,generic_dir_with_outputs,current_branch_samples,false,[],[])
+    cd(dir_to_save_plots_to);
+end
+cd(home_dir);
+%% step 0b: make all the plots of 
 %% Step 1
 [graded_contamination_table,neurons_of_graded_cont_table,group_counts]=grade_the_results_of_cont_table(final_contamination_table,1:100);
 array_of_overlap_percentages = [5 10 15 20 25 30 35 40 45 50];
@@ -10,6 +47,7 @@ for i=1:length(array_of_overlap_percentages)
     cell_array_of_overlapping_clusters_tables{i,1} = array_of_overlap_percentages(i);
     cell_array_of_overlapping_clusters_tables{i,2} = check_timestamp_overlap_between_clusters_hpc_ver_2(neurons_of_graded_cont_table,timestamp_array,array_of_overlap_percentages(i),0.004);
 end
+
 save("cell_array_of_overlapping_clusters_tables.mat","cell_array_of_overlapping_clusters_tables");
 
 %% Step 2
@@ -104,7 +142,7 @@ for i=1:size(results_of_meta_data_analysis,1)
     rows_of_cc_where_unit_was_misidentified = current_final_table_of_meta_analysis(current_final_table_of_meta_analysis{:,"Max Overlap % With Unit"} < min_overlap_percentage_with_unit,:);
     units_incorrectly_identified_in_current_configuration = size(rows_of_cc_where_unit_was_misidentified,1);
     units_not_represented = setdiff(unit_list,list_of_units_identified_in_current_configuration);
-    units_represented_multiple_times = groupcounts_by_units_represented_in_current_meta_data(groupcounts_by_units_represented_in_current_meta_data{:,"GroupCount"}>1,["Max Overlap Unit"]);
+    % units_represented_multiple_times = groupcounts_by_units_represented_in_current_meta_data(groupcounts_by_units_represented_in_current_meta_data{:,"GroupCount"}>1,["Max Overlap Unit"]);
 
 
     if first_meta_parameter==30 && second_meta_parameter ==40
@@ -194,6 +232,24 @@ for i=1:size(appearences_of_missing_in_original,2)
     list_of_cases_that_absorbed_missing_units{i,4} = unique(cases_that_were_absorbed);
 end
 disp(list_of_cases_that_absorbed_missing_units)
+
+%% STEP 6: print the missing units cases
+dir_to_save_plots_to = "D:\cluster_neuronspikes\Data\debug_plots";
+for i=5:size(list_of_cases_that_absorbed_missing_units,1)
+    current_missing_unit = list_of_cases_that_absorbed_missing_units{i,1};
+    missing_unit_appearences = list_of_cases_that_absorbed_missing_units{i,2};
+    generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score";
+    generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score";
+    
+    home_dir = cd(dir_to_save_plots_to);
+    
+    current_unit_dir = "Missing UNIT "+string(current_missing_unit)+ " Plots";
+    mkdir(current_unit_dir);
+    cd(current_unit_dir);
+    plot_output_hpc(generic_dir_with_grades,generic_dir_with_outputs,missing_unit_appearences,false,[],[])
+    cd(dir_to_save_plots_to);
+end
+cd(home_dir);
 %% now fix the fp cases
 false_positive_cases = most_tp{1,"fp_cases"}{1};
 branches_of_fp = false_positive_cases{:,"Classification"};

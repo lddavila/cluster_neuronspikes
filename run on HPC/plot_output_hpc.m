@@ -57,7 +57,7 @@ for tetrode_counter=1:length(table_of_best_rep_in_cell_format)
         clc;
         current_clusters_category = table_of_cluster_classification{:,"category"};
         plot_the_clusters_hpc(channels_of_curr_tetr,idx_b4_filt,"before",aligned,current_clusters_category,current_tetrode,current_z_score,current_clust,grades_to_check,names_of_grades,current_grades);
-        close all;
+        % close all;
     catch ME
         disp("############################################")
         disp("Tetrode "+string(tetrode_counter) + " Errored")
