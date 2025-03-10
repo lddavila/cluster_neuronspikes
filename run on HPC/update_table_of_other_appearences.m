@@ -29,15 +29,6 @@ for j=1:size(what_you_want_to_update,2)
             current_overlap_data_dict = updated_table_of_other_appearences{i,"Other Appearence Info"};
             current_overlap_data_dict = current_overlap_data_dict{1};
 
-
-
-
-            % other_appearences_dict = containers.Map("KeyType",'char','ValueType','any');
-            % other_appearences_dict("cluster number of other appearences") = other_cluster_numbers_of_this_cluster;
-            % other_appearences_dict("tetrodes of other appearences") = other_tetrodes_where_cluster_appears;
-            % other_appearences_dict("overlap percentages of other appearences") = overlap_percentages_of_this_cluster;
-            % other_appearences_dict("Z score of other appearences") = other_z_scores_of_this_cluster;
-            % other_appearences_dict("classification of other appearences") = classification_of_other_appearences;
             other_appearences_clusters_array = current_overlap_data_dict("cluster number of other appearences");
             other_appearences_tetrode_array= current_overlap_data_dict("tetrodes of other appearences");
             other_appearences_overlap_percentage_array= current_overlap_data_dict("overlap percentages of other appearences");
