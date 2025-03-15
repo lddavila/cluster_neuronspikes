@@ -1,0 +1,90 @@
+function [table_of_mean_waveform] = get_template_spike_for_clusters(table_of_clusters_to_get_template_spikes_for,generic_dir_of_grades,generic_dir_of_outputs,refinement_pass,dir_with_timestamps_and_rvals)
+home_dir = cd("..");
+addpath(genpath(pwd));
+cd(home_dir);
+disp("Finished adding path");
+
+
+subset_of_best_rep = table_of_clusters_to_get_template_spikes_for(:,["Tetrode","Z Score"]);
+unique_rows_of_best_rep = unique(subset_of_best_rep,"rows");
+
+table_of_mean_waveform = table(nan(size(table_of_clusters_to_get_template_spikes_for,1),1),repelem("",size(table_of_clusters_to_get_template_spikes_for,1),1),nan(size(table_of_clusters_to_get_template_spikes_for,1),1),cell(size(table_of_clusters_to_get_template_spikes_for,1),1),'VariableNames',["Z Score","Tetrode","Cluster","Mean Waveform"]);
+
+number_of_iterations = size(unique_rows_of_best_rep,1);
+
+% dir_with_timestamps_and_rvals = fullfile(dir_with_timestamps_and_rvals,string(varying_z_scores(i)));
+for i=1:size(unique_rows_of_best_rep,1)
+    %art_tetr_array = build_artificial_tetrode();
+    % channels_of_curr_tetr = art_tetr_array(current_tetrode_number,:);
+
+    current_z_score = unique_rows_of_best_rep{i,"Z Score"};
+    current_tetrode = unique_rows_of_best_rep{i,"Tetrode"};
+
+    dir_with_timestamps_and_rvals_current = dir_with_timestamps_and_rvals+string(current_z_score);
+    try
+        ts_r_tvals_cc_struct = load(fullfile(dir_with_timestamps_and_rvals_current,current_tetrode+".mat"),"timestamps","r_tvals","cleaned_clusters");
+    catch
+        disp("failed to load")
+        disp(fullfile(dir_with_timestamps_and_rvals,current_tetrode+".mat"))
+        disp("iteration "+string(i) +" failed with z score:"+string(current_z_score)+" and tetrode:"+string(current_tetrode))
+        continue;
+    end
+    % timestamps = ts_r_tvals_cc_struct.timestamps;
+    tvals = ts_r_tvals_cc_struct.r_tvals;
+    % cleaned_clusters = ts_r_tvals_cc_struct.cleaned_clusters;
+
+
+    if ~refinement_pass
+        dir_with_grades = generic_dir_of_grades + " "+string(current_z_score) + " grades";
+        dir_with_outputs = generic_dir_of_outputs +string(current_z_score);
+    else
+        dir_with_grades = generic_dir_of_grades;
+        dir_with_outputs = generic_dir_of_outputs;
+    end
+    [current_grades,~,aligned,~,idx_b4_filt] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,refinement_pass);
+    if any(isnan(current_grades))
+        continue;
+    end
+
+    all_peaks = get_peaks(aligned, true);
+    c1 = table_of_clusters_to_get_template_spikes_for{:,"Z Score"}==current_z_score;
+    c2 = table_of_clusters_to_get_template_spikes_for{:,"Tetrode"} == current_tetrode;
+    for j=1:length(idx_b4_filt)
+        cluster_filter = idx_b4_filt{j};
+        spikes = aligned(:, cluster_filter, :);
+        peaks = all_peaks(:, cluster_filter);
+        % Set up the representative wire for the cluster
+        [~, max_wire] = max(peaks, [], 1);
+        poss_wires = unique(max_wire);
+        n = histc(max_wire, poss_wires);
+        [~, max_n] = max(n);
+        compare_wire = poss_wires(max_n);
+        wire_thresh = tvals(compare_wire);
+        compare_peaks = peaks(compare_wire, :);
+
+        % get the second best representative wire for the cluster
+        peaks_without_rep_wire = peaks(setdiff(1:size(peaks,1),compare_wire),:);
+        [~,second_max_wire] = max(peaks_without_rep_wire,[],1);
+        second_poss_wires = unique(second_max_wire);
+        second_n = histc(second_max_wire, second_poss_wires);
+        [~, second_max_n] = max(second_n);
+        second_compare_wire = second_poss_wires(second_max_n);
+        second_wire_thresh = tvals(second_compare_wire);
+        second_set_of_compare_peaks = peaks_without_rep_wire(second_compare_wire, :);
+
+        mean_waveform = mean(shiftdim(spikes(compare_wire, :, :), 1));
+        mean_waveform = mean_waveform - mean(mean_waveform);
+
+        c3 = table_of_clusters_to_get_template_spikes_for{:,"Cluster"} == j;
+
+        index_to_use = find(c1 & c2 & c3);
+
+        table_of_mean_waveform{index_to_use,"Z Score"} = current_z_score;
+        table_of_mean_waveform{index_to_use,"Tetrode"} = current_tetrode;
+        table_of_mean_waveform{index_to_use,"Cluster"} = j;
+        table_of_mean_waveform{index_to_use,"Mean Waveform"} = {mean_waveform};
+
+    end
+    disp("Finished "+string(i)+"/"+string(number_of_iterations))
+end
+end

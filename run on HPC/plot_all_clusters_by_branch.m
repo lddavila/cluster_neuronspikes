@@ -15,7 +15,7 @@ end
 disp("Finished Creating save dir")
 for i=1:size(groupcounts_of_branches,1)
     current_branch = groupcounts_of_branches{i,"Classification"};
-    current_branch_samples = table_to_plot(contains(table_to_plot{:,"Classification"},"Neuron","IgnoreCase",true),:);
+    current_branch_samples = table_to_plot(contains(table_to_plot{:,"Classification"},current_branch,"IgnoreCase",true),:);
     % dir_to_save_plots_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_plots_to);
     generic_dir_with_grades = "/home/lddavila/spike_gen_data/0_100Neuron300SecondRecordingWithLevel3Noise/initial_pass min z_score";
     generic_dir_with_outputs = '/home/lddavila/spike_gen_data/0_100Neuron300SecondRecordingWithLevel3Noise/initial_pass_results min z_score';

@@ -15,10 +15,74 @@ for i=1:size(only_neur_80_perc_ovlp_with_other_neur,1)
     disp([other_appearence_overlap_percentage.',other_appearences_classification.'])
     clc;
 end
+%% get the mean cluster waveform for every cluster
+table_of_mean_waveform = get_template_spike_for_clusters(graded_contamination_table,generic_dir_with_grades,generic_dir_with_outputs,false,dir_with_timestamps_and_rvals);
+%% plot the spikes of overlapping clusters
+clc;
+close all;
+for i=1:size(only_neur_80_perc_ovlp_with_other_neur,1)
+    current_tetrode = only_neur_80_perc_ovlp_with_other_neur{i,"Tetrode"};
+    current_cluster = only_neur_80_perc_ovlp_with_other_neur{i,"Cluster"};
+    current_z_score = only_neur_80_perc_ovlp_with_other_neur{i,"Z Score"};
 
+
+    current_overlap_percentages = only_neur_80_perc_ovlp_with_other_neur{i,"Other Appearence Info"}{1};
+    other_appearence_overlap_percentage = current_overlap_percentages("overlap percentages of other appearences");
+    other_appearences_classification = current_overlap_percentages("classification of other appearences");
+    other_appearences_cluster = current_overlap_percentages('cluster number of other appearences');
+    other_appearences_tetrode = current_overlap_percentages('tetrodes of other appearences');
+    other_appearences_z_score=current_overlap_percentages("Z score of other appearences");
+    figure;
+    subplot(size(other_appearences_classification,2)+1,1,1);
+
+    c1 = table_of_mean_waveform{:,"Cluster" }== current_cluster;
+    c2 = table_of_mean_waveform{:,"Z Score" }== current_z_score;
+    c3 =table_of_mean_waveform{:,"Tetrode" }== current_tetrode;
+    index_to_use = find(c1 & c2 & c3);
+    mean_waveform_of_cluster = table_of_mean_waveform{index_to_use,"Mean Waveform"}{1};
+    plot(mean_waveform_of_cluster)
+    title(sprintf('Master Z Score:%i Tetrode:%s Cluster: %i',current_z_score,current_tetrode,current_cluster))
+    for j=1:size(other_appearences_z_score,2)
+        subplot(size(other_appearences_classification,2)+1,1,j+1);
+        compare_tetrode =other_appearences_tetrode(j);
+        compare_z_score = other_appearences_z_score(j);
+        compare_cluster = other_appearences_cluster(j);
+
+        c1a = table_of_mean_waveform{:,"Cluster" }== str2double(compare_cluster);
+        c2b = table_of_mean_waveform{:,"Z Score" }==str2double(compare_z_score);
+        c3c =table_of_mean_waveform{:,"Tetrode" }== compare_tetrode;
+
+        index_of_compare_waveform= find(c1a & c2b & c3c);
+        compare_mean_waveform = table_of_mean_waveform{index_of_compare_waveform,"Mean Waveform"}{1};
+
+        title(sprintf('Master Z Score:%s Tetrode:%s Cluster: %s',compare_z_score,compare_tetrode,compare_cluster))
+        %disp([other_appearence_overlap_percentage.',other_appearences_classification.'])
+        plot(compare_mean_waveform)
+        clc;
+    end
+end
 %% plot by branches
 groupcounts_of_branches =groupcounts(only_neur_80_perc_ovlp_with_other_neur,"Classification");
-for i=1:
+dir_to_save_plots_to = "D:\cluster_neuronspikes\Data\neuron_plots_by_branches";
+if ~exist(dir_to_save_plots_to,"dir")
+    dir_to_save_plots_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_plots_to);
+end
+for i=1:size(groupcounts_of_branches,1)
+    current_branch = groupcounts_of_branches{i,"Classification"};
+    current_branch_samples = only_neur_80_perc_ovlp_with_other_neur(contains(only_neur_80_perc_ovlp_with_other_neur{:,"Classification"},"Neuron","IgnoreCase",true),:);
+    dir_to_save_plots_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_plots_to);
+    generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score";
+    generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score";
+
+    home_dir = cd(dir_to_save_plots_to);
+
+    current_unit_dir = "Branch "+current_branch+ " Plots";
+    mkdir(current_unit_dir);
+    cd(current_unit_dir);
+    plot_output_hpc(generic_dir_with_grades,generic_dir_with_outputs,current_branch_samples,false,[],[])
+    cd(dir_to_save_plots_to);
+end
+cd(home_dir);
 %% step 0b: make all the plots of 
 %% Step 1
 [graded_contamination_table,neurons_of_graded_cont_table,group_counts]=grade_the_results_of_cont_table(final_contamination_table,1:100);

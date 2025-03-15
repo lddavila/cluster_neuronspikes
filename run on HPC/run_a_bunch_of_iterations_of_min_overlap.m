@@ -15,8 +15,79 @@ for i=1:size(only_neur_80_perc_ovlp_with_other_neur,1)
     disp([other_appearence_overlap_percentage.',other_appearences_classification.'])
     clc;
 end
-%% get the array of template branches
+%% get the mean cluster waveform for every cluster
+generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score";
+generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score";
+current_recording = "0_100Neuron300SecondRecordingWithLevel3Noise";
+dir_with_timestamps_and_rvals = "D:\spike_gen_data\Recordings By Channel Precomputed\"+current_recording+"\initial_pass min z_score";
+table_of_mean_waveform = get_template_spike_for_clusters(graded_contamination_table,generic_dir_with_grades,generic_dir_with_outputs,false,dir_with_timestamps_and_rvals);
 
+%% get the euc dist between overlapping mean waveforms and non overlapping
+clc;
+[array_of_euc_dist_to_non_overlapping_clusters,array_of_euc_dist_to_overlapping_clusters] = get_euc_dist_between_temp_spike_wavesforms(false,table_of_all_overlap,50);
+%% plot the distributions of overlapping and non overlapping
+s = RandStream('mlfg6331_64'); 
+rand_sampled_array_of_non_overlapping_clusters = randsample(s,array_of_euc_dist_to_non_overlapping_clusters,size(array_of_euc_dist_to_overlapping_clusters,1));
+figure;
+histogram(rand_sampled_array_of_non_overlapping_clusters,'Normalization','probability');
+hold on;
+histogram(array_of_euc_dist_to_overlapping_clusters,'Normalization','probability');
+legend("Non Overlapping","Overlapping")
+%xlim([0,500])
+%% plot the spikes of overlapping clusters
+clc;
+close all;
+for i=1:size(only_neur_80_perc_ovlp_with_other_neur,1)
+    current_tetrode = only_neur_80_perc_ovlp_with_other_neur{i,"Tetrode"};
+    current_cluster = only_neur_80_perc_ovlp_with_other_neur{i,"Cluster"};
+    current_z_score = only_neur_80_perc_ovlp_with_other_neur{i,"Z Score"};
+    current_classification = only_neur_80_perc_ovlp_with_other_neur{i,"Classification"};
+
+    current_overlap_percentages = only_neur_80_perc_ovlp_with_other_neur{i,"Other Appearence Info"}{1};
+    other_appearence_overlap_percentage = current_overlap_percentages("overlap percentages of other appearences");
+    other_appearences_classification = current_overlap_percentages("classification of other appearences");
+    other_appearences_cluster = current_overlap_percentages('cluster number of other appearences');
+    other_appearences_tetrode = current_overlap_percentages('tetrodes of other appearences');
+    other_appearences_z_score=current_overlap_percentages("Z score of other appearences");
+    a = figure('Position',[917 121 120 855]);
+    subplot(size(other_appearences_classification,2)+1,1,1);
+
+    c1 = table_of_mean_waveform{:,"Cluster" }== current_cluster;
+    c2 = table_of_mean_waveform{:,"Z Score" }== current_z_score;
+    c3 =table_of_mean_waveform{:,"Tetrode" }== current_tetrode;
+    index_to_use = find(c1 & c2 & c3);
+    mean_waveform_of_cluster = table_of_mean_waveform{index_to_use,"Mean Waveform"}{1};
+    plot(mean_waveform_of_cluster)
+    title(sprintf('Master Classification: %s Z Score:%i Tetrode:%s Cluster: %i',current_classification,current_z_score,current_tetrode,current_cluster))
+    for j=1:size(other_appearences_z_score,2)
+        try
+        subplot(size(other_appearences_classification,2)+1,1,j+1);
+        compare_tetrode =other_appearences_tetrode(j);
+        compare_z_score = other_appearences_z_score(j);
+        compare_cluster = other_appearences_cluster(j);
+        compare_classification = other_appearences_classification(j);
+        compare_overlap_percentage = other_appearence_overlap_percentage(j);
+
+        c1a = table_of_mean_waveform{:,"Cluster" }== str2double(compare_cluster);
+        c2b = table_of_mean_waveform{:,"Z Score" }==str2double(compare_z_score);
+        c3c =table_of_mean_waveform{:,"Tetrode" }== compare_tetrode;
+
+        index_of_compare_waveform= find(c1a & c2b & c3c);
+        compare_mean_waveform = table_of_mean_waveform{index_of_compare_waveform,"Mean Waveform"}{1};
+        euc_dist = norm(compare_mean_waveform-mean_waveform_of_cluster);
+        plot(compare_mean_waveform)
+       
+        title(sprintf('Classification: %s Z Score:%s Tetrode:%s Cluster: %s Overlap:%s EucD:%f',compare_classification,compare_z_score,compare_tetrode,compare_cluster,compare_overlap_percentage,euc_dist))
+        %disp([other_appearence_overlap_percentage.',other_appearences_classification.'])
+        
+        clc;
+        catch
+            continue
+        end
+
+    end
+    close all;
+end
 %% plot by branches
 groupcounts_of_branches =groupcounts(only_neur_80_perc_ovlp_with_other_neur,"Classification");
 dir_to_save_plots_to = "D:\cluster_neuronspikes\Data\neuron_plots_by_branches";
