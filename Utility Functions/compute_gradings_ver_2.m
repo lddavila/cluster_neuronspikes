@@ -335,10 +335,10 @@ all_names_of_all_grades = ["lratio","cv","isi","incompleteness","mahal/isolation
         grades(k,44) = mean(z_score_of_rep_wire_of_compare_peaks,"all");
 
 
-        grades(k,45) = calculate_signal_to_noise_of_cluster(aligned,cluster_filter,1);
-        grades(k,46) = calculate_signal_to_noise_of_cluster(aligned,cluster_filter,2);
-        grades(k,47) = calculate_signal_to_noise_of_cluster(aligned,cluster_filter,3);
-        grades(k,48) = calculate_signal_to_noise_of_cluster(aligned,cluster_filter,4);
+        grades(k,45) = calculate_signal_to_noise_of_cluster_by_dim(aligned,cluster_filter,1);
+        grades(k,46) = calculate_signal_to_noise_of_cluster_by_dim(aligned,cluster_filter,2);
+        grades(k,47) = calculate_signal_to_noise_of_cluster_by_dim(aligned,cluster_filter,3);
+        grades(k,48) = calculate_signal_to_noise_of_cluster_by_dim(aligned,cluster_filter,4);
 
     end
 
