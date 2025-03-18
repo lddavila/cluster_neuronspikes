@@ -56,10 +56,10 @@ all_names_of_all_grades = ["lratio","cv","isi","incompleteness","mahal/isolation
     "mpc","# of singular cols", "avg spike duration","# of timestamps / duration of conifg", ...
     "has valley","skewness","cluster template matching","symmetry of the cluster's histogram",...
     "Cluster Amp Cat","Cluster Rep Wire Amp Category","likelihood of multi unit acticity","bhat dist to possibly mua clusters","Tightness of waveform based on euc dist",...
-    "Rep Wire tightness of waveform based on euc dist","do not use","do not use","Under/overpowered","circle based snr",...
-    "likeliness of burst","compare wire","2nd compare wire","avg cluster z score","SNR for 1st dimension","SNR for 2nd dimension","SNR for 3rd dimension","SNR for 4th dimension"];  
+    "Rep Wire tightness of waveform based on euc dist","do not use","do not use","Under/overpowered","Mean SNR",...
+    "likeliness of burst","compare wire","2nd compare wire","avg cluster z score","SNR for 1st dimension","SNR for 2nd dimension","SNR for 3rd dimension","SNR for 4th dimension","SNR based on best dimensions"];  
     num_clusters = length(clusters);
-    grades = nan(num_clusters, 48);
+    grades = nan(num_clusters, 49);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -339,6 +339,8 @@ all_names_of_all_grades = ["lratio","cv","isi","incompleteness","mahal/isolation
         grades(k,46) = calculate_signal_to_noise_of_cluster_by_dim(aligned,cluster_filter,2);
         grades(k,47) = calculate_signal_to_noise_of_cluster_by_dim(aligned,cluster_filter,3);
         grades(k,48) = calculate_signal_to_noise_of_cluster_by_dim(aligned,cluster_filter,4);
+
+        grades(k,49) = calculate_signal_to_noise_of_cluster_by_dims(aligned,cluster_filter,compare_wire,second_compare_wire);
 
     end
 
