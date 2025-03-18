@@ -11,8 +11,8 @@ table_of_best_rep_in_cell_format = cell(1,size(table_of_best_rep,1));
 for i=1:size(table_of_best_rep,1)
     table_of_best_rep_in_cell_format{i} = table_of_best_rep(i,:);
 end
-number_of_times_the_for_loop_will_run = length(table_of_best_rep_in_cell_format);
-parfor tetrode_counter=1:length(table_of_best_rep_in_cell_format)
+number_of_times_the_for_loop_will_run = size(table_of_best_rep,1);
+for tetrode_counter=1:length(table_of_best_rep_in_cell_format)
     % current_tetrode = list_of_tetrodes_to_check(tetrode_counter);
     try
         art_tetr_array = build_artificial_tetrode();
@@ -50,7 +50,7 @@ parfor tetrode_counter=1:length(table_of_best_rep_in_cell_format)
         end
 
 
-        disp(current_data{1,"Classification"}+" Finished "+string(tetrode_counter)+" /"+string(length(number_of_times_the_for_loop_will_run)))
+        disp(current_data{1,"Max Overlap Unit"}+" Finished "+string(tetrode_counter)+" /"+string(number_of_times_the_for_loop_will_run))
         % clc;
         current_clusters_category = table_of_cluster_classification{:,"category"};
         current_clusters_max_overlap_perc_with_unit =current_data{:,"Max Overlap % With Unit"} ;

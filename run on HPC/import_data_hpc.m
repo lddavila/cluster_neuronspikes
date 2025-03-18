@@ -10,7 +10,7 @@ try
         aligned = NaN;
     end
     load(fullfile(dir_with_outputs,current_tetrode+" reg_timestamps_of_spikes"),"reg_timestamps_of_the_spikes");
-    idx = extract_clusters_from_output(output(:,1),output,spikesort_config);
+    idx = extract_clusters_from_output(output(:,1),output);
 catch ME
     failed_to_load=true;
     disp(ME.identifier)

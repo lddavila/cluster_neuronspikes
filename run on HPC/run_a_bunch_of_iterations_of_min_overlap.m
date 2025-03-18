@@ -4,11 +4,91 @@ table_of_all_overlap = check_timestamp_overlap_between_clusters_hpc_ver_3(graded
 
 %% step 0a: update the table
 clc;
-only_neur_80_perc_ovlp_with_other_neur = update_table_of_other_appearences(table_of_all_overlap,["only neurons","overlap","only overlap with neurons"],final_contamination_table,[nan,80,nan]);
+updated_table_of_overlap = update_table_of_overlap(table_of_all_overlap,choose_best_config());
+%% get table of channels
+art_tetr_array = build_artificial_tetrode;
+table_of_channels = table(strcat("t",string(1:size(art_tetr_array,1))).',art_tetr_array,'VariableNames',["Tetrode","Channels"]);
+%% now get best configuration results with best 
+clc;
+ [table_of_best_representation,unit_appearences] = return_best_conf_for_cluster_ver_3(updated_table_of_overlap,timestamp_array,30,30);
+ %% make missing unit plots
+ min_unit_appearence_threshold = 30;
+ table_of_best_rep_no_negatives = table_of_best_representation(table_of_best_representation{:,"SNR"}>0,:);
+ table_of_best_rep_with_min_unit_app_thresh = table_of_best_rep_no_negatives(table_of_best_rep_no_negatives{:,"Max Overlap % With Unit"} >=min_unit_appearence_threshold,:);
+ unit_appearences_no_negatives = groupcounts(table_of_best_rep_with_min_unit_app_thresh,"Max Overlap Unit");
+ cd("D:\cluster_neuronspikes\run on HPC")
+ clc;
+ close all;
+ missing_units = setdiff(1:100,unit_appearences_no_negatives.("Max Overlap Unit"));
+ disp(missing_units)
+ dir_to_save_missing_units_to = "D:\cluster_neuronspikes\Data\Missing Units Plot";
+ for i=1:length(missing_units)
+     current_missing_unit = missing_units(i);
+     % c1 =contains(updated_table_of_overlap{:,"Classification"},"Neuron","IgnoreCase",true) ;
+     c2 = table_of_all_overlap{:,"Max Overlap Unit"}==current_missing_unit;
+     current_missing_unit_samples = table_of_all_overlap(c2,:);
+     dir_to_save_plots_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_missing_units_to);
+     generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score";
+     generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score";
+
+     home_dir = cd(dir_to_save_plots_to);
+
+     current_unit_dir = "Missing Unit "+string(current_missing_unit)+ " Plots";
+     mkdir(current_unit_dir);
+     cd(current_unit_dir);
+     plot_output_hpc_ver_2(generic_dir_with_grades,generic_dir_with_outputs,current_missing_unit_samples,false,[],[])
+     cd(dir_to_save_plots_to);
+ end
+ %% make overlap and accuracy bar plots
+ close all;
+ clc;
+ for i=1:size(table_of_best_representation,1)
+
+     unit_of_max_overlap = table_of_best_representation{i,"Max Overlap Unit"};
+
+     all_appearences_of_this_unit = table_of_best_representation(table_of_best_representation{:,"Max Overlap Unit"} == unit_of_max_overlap,:);
+     cluster =all_appearences_of_this_unit{:,"Cluster"};
+     z_score = all_appearences_of_this_unit{i,"Z Score"};
+     tetrode = all_appearences_of_this_unit{i,"Tetrode"};
+
+     
+     overlap_perc_with_unit = all_appearences_of_this_unit{:,"Max Overlap % With Unit"};
+     ts_of_cluster = timestamp_array{all_appearences_of_this_unit{:,"idx of its location in arrays_table_of_best_representation"}};
+
+     gt_of_max_overlap_unit = ground_truth_array{unit_of_max_overlap};
+     ts_of_max_overlap_unit = timestamps(gt_of_max_overlap_unit).';
+
+     tp_count = get_tp_count_given_a_tdelta_hpc(ts_of_max_overlap_unit,ts_of_cluster,0.004); %in both cluster and unit
+     fp_count = length(ts_of_cluster) - tp_count; %in cluster but not in unit
+     fn_count = length(ts_of_max_overlap_unit) - tp_count; %in unit but not in cluster
+
+     SNR = table_of_best_representation{i,"SNR"};
+
+     accuracy_score = (tp_count / (fn_count + tp_count + fp_count)) * 100;
+
+     
+
+     figure;
+     data = [overlap_perc_with_unit ;accuracy_score];
+     bar(["Overlap with Unit"," Accuracy"],data);
+     % legend("Overlap with unit","Accuracy of cluster");
+     title("Z Score:"+string(z_score)+" "+tetrode + " Cluster:"+string(cluster) +" SNR:"+ string(SNR));
+
+     ylim([0,100]);
+     close all;
+
+ end
+ %%
+ clc;
+ disp(unit_appearences)
+ disp(table_of_best_representation)
+ b = groupcounts(table_of_best_representation(table_of_best_representation{:,"Max Overlap % With Unit"} >=30,:),"Max Overlap Unit");
+ disp("Number of units not idefnitied:"+string(length(setdiff(1:100,b.("Max Overlap Unit")))))
+ disp("Number of reptitions:"+string(sum(b.GroupCount>1)))
 %% step 0a1: test to make sure that updating the min overlap threshold works
 clc;
-for i=1:size(only_neur_80_perc_ovlp_with_other_neur,1)
-    current_overlap_percentages = only_neur_80_perc_ovlp_with_other_neur{i,"Other Appearence Info"}{1};
+for i=1:size(updated_table_of_overlap,1)
+    current_overlap_percentages = updated_table_of_overlap{i,"Other Appearence Info"}{1};
     other_appearence_overlap_percentage = current_overlap_percentages("overlap percentages of other appearences");
     other_appearences_classification = current_overlap_percentages("classification of other appearences");
 
@@ -37,13 +117,13 @@ legend("Non Overlapping","Overlapping")
 %% plot the spikes of overlapping clusters
 clc;
 close all;
-for i=1:size(only_neur_80_perc_ovlp_with_other_neur,1)
-    current_tetrode = only_neur_80_perc_ovlp_with_other_neur{i,"Tetrode"};
-    current_cluster = only_neur_80_perc_ovlp_with_other_neur{i,"Cluster"};
-    current_z_score = only_neur_80_perc_ovlp_with_other_neur{i,"Z Score"};
-    current_classification = only_neur_80_perc_ovlp_with_other_neur{i,"Classification"};
+for i=1:size(updated_table_of_overlap,1)
+    current_tetrode = updated_table_of_overlap{i,"Tetrode"};
+    current_cluster = updated_table_of_overlap{i,"Cluster"};
+    current_z_score = updated_table_of_overlap{i,"Z Score"};
+    current_classification = updated_table_of_overlap{i,"Classification"};
 
-    current_overlap_percentages = only_neur_80_perc_ovlp_with_other_neur{i,"Other Appearence Info"}{1};
+    current_overlap_percentages = updated_table_of_overlap{i,"Other Appearence Info"}{1};
     other_appearence_overlap_percentage = current_overlap_percentages("overlap percentages of other appearences");
     other_appearences_classification = current_overlap_percentages("classification of other appearences");
     other_appearences_cluster = current_overlap_percentages('cluster number of other appearences');
@@ -89,14 +169,14 @@ for i=1:size(only_neur_80_perc_ovlp_with_other_neur,1)
     close all;
 end
 %% plot by branches
-groupcounts_of_branches =groupcounts(only_neur_80_perc_ovlp_with_other_neur,"Classification");
+groupcounts_of_branches =groupcounts(updated_table_of_overlap,"Classification");
 dir_to_save_plots_to = "D:\cluster_neuronspikes\Data\neuron_plots_by_branches";
 if ~exist(dir_to_save_plots_to,"dir")
     dir_to_save_plots_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_plots_to);
 end
 for i=1:size(groupcounts_of_branches,1)
     current_branch = groupcounts_of_branches{i,"Classification"};
-    current_branch_samples = only_neur_80_perc_ovlp_with_other_neur(contains(only_neur_80_perc_ovlp_with_other_neur{:,"Classification"},"Neuron","IgnoreCase",true),:);
+    current_branch_samples = updated_table_of_overlap(contains(updated_table_of_overlap{:,"Classification"},"Neuron","IgnoreCase",true),:);
     dir_to_save_plots_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_plots_to);
     generic_dir_with_grades = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score";
     generic_dir_with_outputs = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score";

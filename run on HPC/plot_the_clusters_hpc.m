@@ -1,6 +1,6 @@
 function [] = plot_the_clusters_hpc(channels_of_curr_tetr,idx,before_or_after,aligned,cluster_categories,name_of_tetrode,current_z_score,current_clust,grades_to_check,names_of_grades,current_grades,overlap_percentages,max_overlap_units)
 %plot all the configurations of the clusters
-figure('units','normalized','outerposition',[0 0 1 1]);
+figure('units','normalized','outerposition',[0 0 1 1],'Visible','off');
 panel_counter = 1;
 rep_dimensions = current_grades(:,42:43);
 
@@ -14,7 +14,8 @@ end
 sgtitle([name_of_tetrode+" Z Score:" + string(current_z_score) + " Neuron Clusters "+string(current_clust), ...
     "Neuron Clusters Overlap With Units:"+sprintf('%.2f%% \t ',overlap_percentages), ...
     "Neuron Clusters Max Overlap Units:"+sprintf('%.0f \t',max_overlap_units)])
-saveas(gcf,name_of_tetrode+" Z Score "+string(current_z_score)+" Cluster Plots.fig");
+%set(gcf,'visible','on');
+saveas(gcf,name_of_tetrode+" Z Score "+string(current_z_score)+" Cluster Plots.png");
 close all;
 
 % figure('units','normalized','outerposition',[0 0 1 1]);

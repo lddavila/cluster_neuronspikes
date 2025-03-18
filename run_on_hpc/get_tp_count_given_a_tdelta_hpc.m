@@ -3,8 +3,8 @@ function [number_of_true_positives] = get_tp_count_given_a_tdelta_hpc(gt_data,ts
 number_of_true_positives = 0;
 
 
-%gt_data =gpuArray(gt_data);
-%ts_of_cluster = gpuArray(ts_of_cluster);
+gt_data =gpuArray(gt_data);
+ts_of_cluster = gpuArray(ts_of_cluster);
 % for i=1:length(gt_data)
 %     current_gt_spike_ts = gt_data(i);
 %     diffs_between_gt_ts_and_clust_ts = abs(current_gt_spike_ts - ts_of_cluster);
@@ -19,7 +19,7 @@ number_of_true_positives = 0;
 % mat_rep_of_cluster = repelem(ts_of_cluster,length(gt_data),1);
 abs_diffs = abs(gt_data.' - ts_of_cluster);
 mat_of_within_time_delta = abs_diffs < time_delta;
-number_of_true_positives = sum(any(mat_of_within_time_delta,1));
+number_of_true_positives = gather(sum(any(mat_of_within_time_delta,1)));
 
 % toc
 end
