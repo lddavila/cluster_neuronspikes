@@ -41,12 +41,12 @@ config.DIR_TO_SAVE_RECLUSTERING_TO ="D:\spike_gen_data\Recordings By Channel Pre
 
 config.ON_HPC = true;
 config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC = [2 3 4 5 6 7];
-config.DIR_TO_SAVE_RECLUSTERING_TO_ON_HPC =fullfile(".","home","lddavila","Reclusted Passs 0_100_3","Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC) +" Channels");
-config.BLIND_PASS_DIR_PRECOMPUTED_ON_HPC = fullfile(".","home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise"); %the parent directory where the blind pass precomputed info is saved (things like spikes per channel and std per channel) 
-config.TIMESTAMP_FP_ON_HPC = fullfile(".","home","lddavila","timestamps","Recordings By Channel Timestamps","0_100Neuron300SecondRecordingWithLevel3Noise","timestamps.mat");
-config.DIR_WITH_OG_CHANNEL_RECORDINGS_ON_HPC = fullfile(".","home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise_og_recordings");
-config.DIR_WITH_CHANNEL_WISE_MEANS_AND_STDS_ON_HPC = fullfile(".","home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise","mean_and_std","mean_and_std.mat");
-config.GENERIC_GRADES_DIR_ON_HPC = fullfile(".","home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise","initial_pass min z_score"); % a generic file path which can be modified to access grades of various cluster configurations
-config.GENRIC_DIR_WITH_OUTPUTS_ON_HPC = fullfile(".","home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise","initial_pass_results min z_score"); %a generic file path which can be modified to access the results of clustering
+config.DIR_TO_SAVE_RECLUSTERING_TO_ON_HPC =fullfile("/home","lddavila","Reclusted Passs 0_100_3","Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC) +" Channels");
+config.BLIND_PASS_DIR_PRECOMPUTED_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise"); %the parent directory where the blind pass precomputed info is saved (things like spikes per channel and std per channel) 
+config.TIMESTAMP_FP_ON_HPC = fullfile("/home","lddavila","timestamps","Recordings By Channel Timestamps","0_100Neuron300SecondRecordingWithLevel3Noise","timestamps.mat");
+config.DIR_WITH_OG_CHANNEL_RECORDINGS_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise_og_recordings");
+config.DIR_WITH_CHANNEL_WISE_MEANS_AND_STDS_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise","mean_and_std","mean_and_std.mat");
+config.GENERIC_GRADES_DIR_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise","initial_pass min z_score"); % a generic file path which can be modified to access grades of various cluster configurations
+config.GENRIC_DIR_WITH_OUTPUTS_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise","initial_pass_results min z_score"); %a generic file path which can be modified to access the results of clustering
 
 end
