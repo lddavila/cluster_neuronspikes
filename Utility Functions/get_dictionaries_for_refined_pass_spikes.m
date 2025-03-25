@@ -45,12 +45,12 @@ timing_tetrode_dictionary("t"+string(refined_tetrode_idx)) = current_timing;
 spiking_channel_tetrode_dictionary("t"+string(refined_tetrode_idx)) = current_spiking_channels;
 spike_tetrode_dictionary_samples_format("t"+string(refined_tetrode_idx)) = spike_slices_in_samples_format;
 
-save(dictionaries_dir+"\t"+string(refined_tetrode_idx)+" tetrode_dictionary.mat","tetrode_dictionary");
-save(dictionaries_dir+"\t"+string(refined_tetrode_idx)+" spike_tetrode_dictonary.mat","spike_tetrode_dictionary")
-save(dictionaries_dir+"\t"+string(refined_tetrode_idx)+" timing_tetrode_dictionary.mat","timing_tetrode_dictionary")
-save(dictionaries_dir+"\t"+string(refined_tetrode_idx)+" channel_to_tetrode_dictionary.mat","channel_to_tetrode_dictionary")
-save(dictionaries_dir+"\t"+string(refined_tetrode_idx)+" spiking_channel_tetrode_dictionary.mat","spiking_channel_tetrode_dictionary")
-save(dictionaries_dir+"\t"+string(refined_tetrode_idx)+" spike_tetrode_dictionary_samples_format.mat","spike_tetrode_dictionary_samples_format");
+save(fullfile(dictionaries_dir,"t"+string(refined_tetrode_idx)+" tetrode_dictionary.mat"),"tetrode_dictionary");
+save(fullfile(dictionaries_dir,"t"+string(refined_tetrode_idx)+" spike_tetrode_dictonary.mat"),"spike_tetrode_dictionary")
+save(fullfile(dictionaries_dir,"t"+string(refined_tetrode_idx)+" timing_tetrode_dictionary.mat"),"timing_tetrode_dictionary")
+save(fullfile(dictionaries_dir,"t"+string(refined_tetrode_idx)+" channel_to_tetrode_dictionary.mat"),"channel_to_tetrode_dictionary")
+save(fullfile(dictionaries_dir,"t"+string(refined_tetrode_idx)+" spiking_channel_tetrode_dictionary.mat"),"spiking_channel_tetrode_dictionary")
+save(fullfile(dictionaries_dir,"t"+string(refined_tetrode_idx)+" spike_tetrode_dictionary_samples_format.mat"),"spike_tetrode_dictionary_samples_format");
 
 
 % disp("Completed Dictionary " + string(refined_tetrode_idx) + "/"+string(size(art_tetr_array,1)))
