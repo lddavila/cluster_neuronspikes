@@ -1,11 +1,16 @@
 function [updated_table_of_other_appearences] = update_table_of_overlap(old_table_of_other_appearences,config)
 updated_table_of_other_appearences = old_table_of_other_appearences;
+if config.UPDATE_GRADES
+    updated_table_of_other_appearences = update_grades_in_overlap_table(old_table_of_other_appearences,config);
+end
 if config.UPDATE_CLASSIFICATION
-    updated_table_of_other_appearences =update_cluster_classification(old_table_of_other_appearences,updated_table_of_other_appearences,config); %update the classification of the clusters if necessary
+    updated_table_of_other_appearences =update_cluster_classification(updated_table_of_other_appearences); %update the classification of the clusters if necessary
 end
 if config.ONLY_NEURONS
     updated_table_of_other_appearences(~contains(updated_table_of_other_appearences{:,"Classification"},"Neuron","IgnoreCase",true),:) = [];
 end
+
+
 
 %use this loop to cycle through each item in your table of overlap and
 %apply any conditions that are set in your config file

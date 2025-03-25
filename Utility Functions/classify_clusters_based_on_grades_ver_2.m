@@ -85,6 +85,10 @@ elseif grades(12) < 0.57
     else
         ccc = "MUA c2.end";
     end
+% elseif grades(49) > .9
+%     ccc = "Neuron Grade 5 by cicrcle SNR";
+% elseif grades(49) < -0.8
+%     ccc = "MUA by circle SNR";
 
     %current_cluster_category = "Neuron c2";
     % elseif grades(13) < 1 && grades(13) > 0.05

@@ -1,5 +1,5 @@
 function [spike_slices,time_slices,spiking_channels,spike_slices_in_samples_format] = get_slices_for_refined_tetrode(chan_of_art_tetrode,spike_windows,dir_with_chan_recordings,timing_matrix,number_of_dps_per_slice,scale_factor)
-
+disp("Beginning Spike Slicing")
 channels_data = cell(1,length(chan_of_art_tetrode));
 for i=1:length(chan_of_art_tetrode)
     current_channel = chan_of_art_tetrode(i);
@@ -19,25 +19,26 @@ number_of_cols_required = length(chan_of_art_tetrode);
 number_of_spikes_per_channel = zeros(1,length(chan_of_art_tetrode));
 for i=1:length(chan_of_art_tetrode)
     current_channel = chan_of_art_tetrode(i);
-    number_of_rows_required = number_of_rows_required+size(spike_windows{i}{current_channel},2);
-    number_of_spikes_per_channel(i) = size(spike_windows{i}{current_channel},2);
+    number_of_rows_required = number_of_rows_required+size(spike_windows{current_channel},2);
+    number_of_spikes_per_channel(i) = size(spike_windows{current_channel},2);
 end
 spike_windows_for_current_tetrode = zeros(number_of_rows_required,4);
 
 for i=1:length(chan_of_art_tetrode)
     current_channel = chan_of_art_tetrode(i);
     spike_windows_for_current_channel = zeros(size(spike_windows{i}{current_channel},2),4);
-    for j=1:size(spike_windows{i}{current_channel},2)
+    for j=1:size(spike_windows{current_channel},2)
         if isempty(spike_windows_for_current_channel)
             continue;
         end
-        if isempty(spike_windows{i}{current_channel}{j})
+        if isempty(spike_windows{current_channel}{j})
             continue;
         end
-        spike_windows_for_current_channel(j,1) = spike_windows{i}{current_channel}{j}(1);
-        spike_windows_for_current_channel(j,2) = spike_windows{i}{current_channel}{j}(2);
-        spike_windows_for_current_channel(j,3) = spike_windows{i}{current_channel}{j}(3);
-        spike_windows_for_current_channel(j,4) = spike_windows{i}{current_channel}{j}(4);
+        spike_windows_for_current_channel(j,1) = spike_windows{current_channel}{j}(1);
+        spike_windows_for_current_channel(j,2) = spike_windows{current_channel}{j}(2);
+        spike_windows_for_current_channel(j,3) = spike_windows{current_channel}{j}(3);
+        spike_windows_for_current_channel(j,4) = spike_windows{current_channel}{j}(4);
+        disp("get_slices_for_refined_tetrode.m Finished "+string(j)+"/"+string(size(spike_windows{current_channel},2)) +" getting spike windows for channel:"+string(i)+"/"+string(length(chan_of_art_tetrode)))
     end
     if isempty(spike_windows_for_current_channel)
         continue;
@@ -86,14 +87,17 @@ for i=1:size(sorted_spike_windows_for_current_tetrode,1)
     if window_beginning == window_end || length(timing_matrix(window_beginning:window_end-1)) <10
         continue;
     end
-    
+
     current_timing_slice = timing_matrix(window_beginning:window_end-1);
     time_slices(i,:) = current_timing_slice;
-    
+
     for j=1:length(chan_of_art_tetrode)
         spike_slices(j,i,:) = channels_data{j}(window_beginning:window_end-1);
         spike_slices_in_samples_format(:,j,i) = channels_data{j}(window_beginning:window_end-1);
     end
     spiking_channels{i} = current_window(3);
+    disp("get_slices_for_refined_tetrode.m Finished "+string(i)+"/"+string(size(sorted_spike_windows_for_current_tetrode,1)) +" getting time slices for channel:"+string(current_window(3)))
+
 end
+disp("Finished Spike Slicing")
 end
