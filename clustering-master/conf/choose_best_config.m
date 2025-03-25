@@ -21,7 +21,7 @@ config.ART_TETR_ARRAY = build_artificial_tetrode; %this is an array which tells 
                                                   %each row should correspond a grouping of channels you want to create
 
 config.MIN_IMPROV_THRESH = 0.1;
-config.SCALE_FACTOR = 1;
+config.SCALE_FACTOR = -1;
 
 
 config.NUM_DPTS_TO_SLICE = 60;

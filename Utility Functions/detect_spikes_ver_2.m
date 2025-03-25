@@ -2,9 +2,9 @@ function [spikes_matrix] = detect_spikes_ver_2(ordered_list_of_channels,dir_with
 spikes_matrix = cell(1,length(ordered_list_of_channels));
 for i=1:length(ordered_list_of_channels)
     current_channel = ordered_list_of_channels(i);
-    channel_data = importdata(dir_with_channel_recordings+"\"+current_channel+".mat");
+    channel_data = importdata(fullfile(dir_with_channel_recordings,current_channel+".mat"));
     channel_data = channel_data * scale_factor;
-    z_score_data = importdata(dir_with_z_scores+"\"+current_channel+".mat");
+    z_score_data = importdata(fullfile(dir_with_z_scores,current_channel+".mat"));
 
     channel_data(abs(z_score_data) < min_z_score) = 0;
 

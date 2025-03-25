@@ -60,7 +60,7 @@ else
 end
 % step 6; Get all the data points from the potential spikes
 if ~ismember("spike_windows min_z_score " + string(min_z_score) + " num dps " + string(num_dps),what_is_pre_computed)
-    spike_windows_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(precomputed_dir+"\spike_windows min_z_score " + string(min_z_score) + " num dps "+ string(num_dps));
+    spike_windows_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(precomputed_dir,"spike_windows min_z_score " + string(min_z_score) + " num dps "+ string(num_dps)));
     spike_windows = get_spike_windows_ver_2(ordered_list_of_channels,spikes_per_channel,min_z_score,num_dps,z_score_dir);
     has_been_computed = [has_been_computed,"spike_windows min_z_score" + string(min_z_score) + " num dps " + string(num_dps),what_is_pre_computed];
     %each array is made up of 4 numbers:

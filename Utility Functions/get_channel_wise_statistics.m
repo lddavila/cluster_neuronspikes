@@ -8,7 +8,10 @@ parfor i=1:length(ordered_list_of_channels)
     current_file = fullfile(dir_with_channel_data,current_channel+".mat");
     channel_data = importdata(current_file);
     channel_wise_mean(i) = mean(channel_data*scale_factor);
-    channel_wise_std(i) = std(channel_data,0 * scale_factor,"all");
+    channel_wise_std(i) = std(channel_data * scale_factor,0,"all"); %possible error in that I didn't multiply channel data by scale_factor when calculating std
+                                                                    %have fixed it now, but definitely check new iterations to ensure that this doesn't suddenly destory everything
+                                                                    %it should actually improve things if anything
+                                                              
 
     if save_z_score
         channel_wise_z_score_data = zscore(channel_data * scale_factor);

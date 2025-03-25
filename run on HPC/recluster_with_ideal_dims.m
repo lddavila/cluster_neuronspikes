@@ -47,9 +47,14 @@ for num_dims_to_use_counter=1:number_of_outer_iterations
             precomputed_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(config.DIR_TO_SAVE_RECLUSTERING_TO);
             dictionaries_dir = create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(precomputed_dir,"Ideal Dimension Dictionaries"));
         end
-        disp("Sucessfully set the directories for reclustering")
-        run_clustering_algorithm_on_refined_tetrodes_ver_2(dims_to_use,precomputed_dir,dictionaries_dir,i,config,z_score_to_use_for_reclustering);
-        disp("recluster_with_ideal_dims.m Finished "+string(i)+"/"+string(size(table_with_best_channels,1) * number_of_outer_iterations))
+        % disp("Sucessfully set the directories for reclustering")
+        if length(dims_to_use) ==possible_numbers_of_dimensions(num_dims_to_use_counter)
+            run_clustering_algorithm_on_refined_tetrodes_ver_2(dims_to_use,precomputed_dir,dictionaries_dir,i,config,z_score_to_use_for_reclustering);
+            disp("recluster_with_ideal_dims.m Finished "+string(i)+"/"+string(size(table_with_best_channels,1) * number_of_outer_iterations))
+        else
+            disp("Not Enogh dimensions skipping "+string(i))
+        end
+        
 
     end
 end
