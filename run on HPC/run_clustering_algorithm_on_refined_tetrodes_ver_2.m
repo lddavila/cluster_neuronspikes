@@ -5,7 +5,7 @@ channels_in_current_tetrode = ideal_dimensions;
 if config.ON_HPC
     timestamps = importdata(config.TIMESTAMP_FP_ON_HPC);
     load(config.DIR_WITH_CHANNEL_WISE_MEANS_AND_STDS_ON_HPC);
-    disp("Loading Spikes")
+    % disp("Loading Spikes")
     % disp(fullfile(config.BLIND_PASS_DIR_PRECOMPUTED_ON_HPC,"spike_windows min_z_score "+string(z_score_to_use_for_reclustering)+" num dps "+string(config.NUM_DPTS_TO_SLICE),"spike_windows.mat"));
     spike_windows_per_z_score = importdata(fullfile(config.BLIND_PASS_DIR_PRECOMPUTED_ON_HPC,"spike_windows min_z_score "+string(z_score_to_use_for_reclustering)+" num dps "+string(config.NUM_DPTS_TO_SLICE),"spike_windows.mat"));
     disp("Finished Loading Spikes")
@@ -14,7 +14,7 @@ if config.ON_HPC
 else
     timestamps = importdata(config.TIMESTAMP_FP);
     load(config.DIR_WITH_CHANNEL_WISE_MEANS_AND_STDS);
-    disp("Loading Spikes")
+    % disp("Loading Spikes")
     spike_windows_per_z_score = importdata(fullfile(config.BLIND_PASS_DIR_PRECOMPUTED,"spike_windows min_z_score "+string(z_score_to_use_for_reclustering)+" num dps "+string(config.NUM_DPTS_TO_SLICE),"spike_windows.mat"));
     disp("Finished Loading Spikes")
     get_dictionaries_for_refined_pass_spikes(channels_in_current_tetrode,spike_windows_per_z_score,config.DIR_WITH_OG_CHANNEL_RECORDINGS,timestamps,config.NUM_DPTS_TO_SLICE,config.SCALE_FACTOR,dictionaries_dir,refined_tetrode_idx)

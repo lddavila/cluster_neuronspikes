@@ -28,7 +28,7 @@ config.NUM_DPTS_TO_SLICE = 60;
 
 config.NUM_OF_STD_ABOVE_MEAN = 20;
 
-config.NUM_DIMS_TO_USE_FOR_RECLUSTERING = 4;
+config.NUM_DIMS_TO_USE_FOR_RECLUSTERING = 3;
 config.DIR_TO_SAVE_RECLUSTERING_TO ="D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING) +" Channels";
 config.SAVE_DIRECTORY = 'D:\cluster_neuronspikes\Data'; %where any important data will be saved to
 config.BLIND_PASS_DIR_PRECOMPUTED = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise"; %the parent directory where the blind pass precomputed info is saved (things like spikes per channel and std per channel) 
