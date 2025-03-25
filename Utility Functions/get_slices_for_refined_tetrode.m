@@ -3,7 +3,7 @@ disp("Beginning Spike Slicing")
 channels_data = cell(1,length(chan_of_art_tetrode));
 for i=1:length(chan_of_art_tetrode)
     current_channel = chan_of_art_tetrode(i);
-    current_channel_recording_file_name = dir_with_chan_recordings +"\c"+string(current_channel)+".mat";
+    current_channel_recording_file_name = fullfile(dir_with_chan_recordings,"c"+string(current_channel)+".mat");
     channels_data{i} = importdata(current_channel_recording_file_name);
     channels_data{i} = channels_data{i} * scale_factor;
 end
