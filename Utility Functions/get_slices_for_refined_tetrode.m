@@ -38,7 +38,7 @@ for i=1:length(chan_of_art_tetrode)
         spike_windows_for_current_channel(j,2) = spike_windows{current_channel}{j}(2);
         spike_windows_for_current_channel(j,3) = spike_windows{current_channel}{j}(3);
         spike_windows_for_current_channel(j,4) = spike_windows{current_channel}{j}(4);
-        disp("get_slices_for_refined_tetrode.m Finished "+string(j)+"/"+string(size(spike_windows{current_channel},2)) +" getting spike windows for channel:"+string(i)+"/"+string(length(chan_of_art_tetrode)))
+        % disp("get_slices_for_refined_tetrode.m Finished "+string(j)+"/"+string(size(spike_windows{current_channel},2)) +" getting spike windows for channel:"+string(i)+"/"+string(length(chan_of_art_tetrode)))
     end
     if isempty(spike_windows_for_current_channel)
         continue;
@@ -96,7 +96,7 @@ for i=1:size(sorted_spike_windows_for_current_tetrode,1)
         spike_slices_in_samples_format(:,j,i) = channels_data{j}(window_beginning:window_end-1);
     end
     spiking_channels{i} = current_window(3);
-    disp("get_slices_for_refined_tetrode.m Finished "+string(i)+"/"+string(size(sorted_spike_windows_for_current_tetrode,1)) +" getting time slices for channel:"+string(current_window(3)))
+    % disp("get_slices_for_refined_tetrode.m Finished "+string(i)+"/"+string(size(sorted_spike_windows_for_current_tetrode,1)) +" getting time slices for channel:"+string(current_window(3)))
 
 end
 disp("Finished Spike Slicing")
