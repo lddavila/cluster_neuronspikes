@@ -25,7 +25,7 @@ for i=1:length(list_of_refinement_passes)
     % disp(dir_with_output)
     % disp(names_of_files)
     % disp("++++++++++++++++++++++++++++++++++++++++")
-    parfor j=1:size(names_of_files,1)
+    for j=1:size(names_of_files,1)
         unformatted_tetrode_name = names_of_files(j);
         unformatted_split_tetrode_name = split(unformatted_tetrode_name," ");
         current_tetrode = unformatted_split_tetrode_name(1);
@@ -41,9 +41,7 @@ for i=1:length(list_of_refinement_passes)
 
             % fullfile(initial_tetrode_results_dir,"t"+string(refined_tetrode_idx)+"_z_score_"+z_score_to_use_for_reclustering+".txt")
 
-            name_of_grades = ["Tight","% Short ISI","Inc", "Temp Mat","Min Bhat","Skewness","TM Updated","Sym of Hist","Amp Category"];
-            relevant_grades = [2,3,4,8,9,28,29,30,31];
-            get_grades_for_ideal_dims_pass(dir_with_timestamps_and_rvals,dir_with_output,current_tetrode,dir_to_save_grades_to,config_og,current_z_score,0,relevant_grades,name_of_grades)
+            get_grades_for_ideal_dims_pass(dir_with_timestamps_and_rvals,dir_with_output,current_tetrode,dir_to_save_grades_to,config_og,current_z_score,0)
         end
         disp("grade_ideal_dims_pass_on_hpc.m Iteration"+string(i)+": "+string(j)+"/"+string(num_tetrodes)+" Finished")
     end
