@@ -20,6 +20,7 @@ for i=1:length(list_of_refinement_passes)
     disp("++++++++++++++++++++++")
     disp(dir_with_timestamps_and_rvals);
     disp(dir_with_output)
+    disp(list_of_tetrodes)
     disp("++++++++++++++++++++++++++++++++++++++++")
     for j=1:length(list_of_tetrodes)
         current_tetrode = list_of_tetrodes(j);
