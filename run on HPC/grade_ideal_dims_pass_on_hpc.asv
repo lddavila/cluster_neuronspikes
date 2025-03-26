@@ -12,29 +12,27 @@ for i=1:length(list_of_refinement_passes)
     dir_with_output = fullfile(current_gen_dir,"ideal_dims_pass_results Top "+string(list_of_dimensions_tried(i)) + " Channels");
     dir_with_timestamps_and_rvals = fullfile(current_gen_dir,"ideal_dims_pass Top "+string(list_of_dimensions_tried(i)) + " Channels");
     home_dir = cd(dir_with_output);
-    struct_of_names = dir("t*output*.mat");
-    table_of_names = struct2table(struct_of_names);
-    names_of_files = string(table_of_names{:,"name"});
-    
+    list_of_tetrodes_unformatted =strsplit(strtrim(string(ls("t*output*.mat"))),"\t");
+    list_of_tetrodes_formatted = strsplit(list_of_tetrodes_unformatted,"\t");
+    list_of_tetrodes_formatted = split(list_of_tetrodes_unformatted," ");
+    list_of_tetrodes = list_of_tetrodes_formatted(:,1);
 
     dir_to_save_grades_to = fullfile(current_gen_dir,"ideal_dims_pass Top "+string(list_of_dimensions_tried(i)) + " Channels Grades");
-    num_tetrodes = length(size(names_of_files,1));
-    % disp("++++++++++++++++++++++")
-    % disp(dir_with_timestamps_and_rvals);
-    % disp(dir_with_output)
-    % disp(names_of_files)
-    % disp("++++++++++++++++++++++++++++++++++++++++")
-    parfor j=1:size(names_of_files,1)
-        unformatted_tetrode_name = names_of_files(j);
-        unformatted_split_tetrode_name = split(unformatted_tetrode_name," ");
-        current_tetrode = unformatted_split_tetrode_name(1);
-        current_z_score_unformatted = strtrim(string(ls(current_tetrode+"_*.txt")));
+    num_tetrodes = length(list_of_tetrodes);
+    disp("++++++++++++++++++++++")
+    disp(dir_with_timestamps_and_rvals);
+    disp(dir_with_output)
+    disp(list_of_tetrodes)
+    disp("++++++++++++++++++++++++++++++++++++++++")
+    for j=1:length(list_of_tetrodes)
+        current_tetrode = list_of_tetrodes(j);
+        current_z_score_unformatted = strtrim(string(ls(fullfile(dir_with_output,current_tetrode+"*.txt"))));
         if length(current_z_score_unformatted) ~=1
             disp(current_z_score_unformatted);
             disp("Returned too many/few z score files, aborting, Should always return exactly 1");
         else
             current_z_score_formatted = split(current_z_score_unformatted,"_");
-            current_z_score = str2double(strrep(current_z_score_formatted(end),".txt",""));
+            current_z_score = str2double(current_z_score_formatted(end));
 
 
 
