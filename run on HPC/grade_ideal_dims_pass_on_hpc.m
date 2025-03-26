@@ -18,6 +18,7 @@ for i=1:length(list_of_refinement_passes)
     
 
     dir_to_save_grades_to = fullfile(current_gen_dir,"ideal_dims_pass Top "+string(list_of_dimensions_tried(i)) + " Channels Grades");
+    dir_to_save_grades_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_grades_to);
     num_tetrodes = length(size(names_of_files,1));
     % disp("++++++++++++++++++++++")
     % disp(dir_with_timestamps_and_rvals);
