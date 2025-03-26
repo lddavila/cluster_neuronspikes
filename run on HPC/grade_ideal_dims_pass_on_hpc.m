@@ -19,7 +19,7 @@ for i=1:length(list_of_refinement_passes)
 
     dir_to_save_grades_to = fullfile(current_gen_dir,"ideal_dims_pass Top "+string(list_of_dimensions_tried(i)) + " Channels Grades");
     dir_to_save_grades_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_grades_to);
-    num_tetrodes = length(size(names_of_files,1));
+    num_tetrodes = size(names_of_files,1);
     % disp("++++++++++++++++++++++")
     % disp(dir_with_timestamps_and_rvals);
     % disp(dir_with_output)
@@ -29,7 +29,7 @@ for i=1:length(list_of_refinement_passes)
         unformatted_tetrode_name = names_of_files(j);
         unformatted_split_tetrode_name = split(unformatted_tetrode_name," ");
         current_tetrode = unformatted_split_tetrode_name(1);
-        current_z_score_unformatted = strtrim(string(ls(current_tetrode+"_*.txt")));
+        current_z_score_unformatted = strtrim(string(ls(current_tetrode+"_z_score_*.txt")));
         if length(current_z_score_unformatted) ~=1
             disp(current_z_score_unformatted);
             disp("Returned too many/few z score files, aborting, Should always return exactly 1");

@@ -30,8 +30,9 @@ disp("Beginning Re clustering")
 %run_clustering_algorithm_on_desired_tetrodes_ver_3(list_of_desired_tetrodes,channel_wise_means,channel_wise_std,number_of_std_above_means,dir_with_channel_recordings,dictionaries_dir,inital_tetrode_dir,initial_tetrodes_results_dir)
 if config.ON_HPC
     try
-        [output_array,aligned_array,~] = run_clustering_algorithm_on_desired_tetrodes_ver_3("t"+string(refined_tetrode_idx),channel_wise_means,channel_wise_std,config.NUM_OF_STD_ABOVE_MEAN,config.DIR_WITH_OG_CHANNEL_RECORDINGS_ON_HPC,dictionaries_dir,initial_tetrode_dir,initial_tetrode_results_dir);
-        save(fullfile(initial_tetrode_results_dir,"t"+string(refined_tetrode_idx)+"_z_score_"+z_score_to_use_for_reclustering+".txt"))
+        % [output_array,aligned_array,~] = run_clustering_algorithm_on_desired_tetrodes_ver_3("t"+string(refined_tetrode_idx),channel_wise_means,channel_wise_std,config.NUM_OF_STD_ABOVE_MEAN,config.DIR_WITH_OG_CHANNEL_RECORDINGS_ON_HPC,dictionaries_dir,initial_tetrode_dir,initial_tetrode_results_dir);
+        % save(fullfile(initial_tetrode_results_dir,"t"+string(refined_tetrode_idx)+"_z_score_"+z_score_to_use_for_reclustering+".txt"))
+        save(fullfile(initial_tetrode_results_dir,"t"+string(refined_tetrode_idx)+"_channels_"+strjoin(string(channels_in_current_tetrode))+".txt"))
     catch ME
         disp("t"+string(refined_tetrode_idx) +"Failed Because of ")
         disp(ME.identifier)
