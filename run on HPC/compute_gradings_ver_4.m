@@ -63,7 +63,7 @@ all_names_of_all_grades = ["lratio","cv","isi","incompleteness","mahal/isolation
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
-    classification_of_grade = repelem("",num_clusters,1);
+    % classification_of_grade = repelem("",num_clusters,1);
     for k = 1:num_clusters
         % Set up cluster-specific vars
         cluster_filter = clusters{k};
@@ -363,9 +363,9 @@ all_names_of_all_grades = ["lratio","cv","isi","incompleteness","mahal/isolation
         grades{k,34} = min_bhat;
     end
 
-    for i=1:size(classification_of_grade,1)
-        classification_of_grade(i) = classify_clusters_based_on_grades(grades(i,:));
-    end
+    % for i=1:size(classification_of_grade,1)
+    %     classification_of_grade(i) = classify_clusters_based_on_grades(grades(i,:));
+    % end
 
 
 end
