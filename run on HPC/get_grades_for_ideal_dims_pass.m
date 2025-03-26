@@ -38,7 +38,7 @@ for i=1:length(list_of_tetrodes)
     % disp(pwd)
 
 
-    disp(string(min_z_score)+" Finished "+string(number_of_tetrodes));
+    % disp(string(min_z_score)+" Finished "+string(number_of_tetrodes));
 
 end
 cd(dir_to_begin_and_end_the_func_in);
