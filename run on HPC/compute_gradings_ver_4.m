@@ -349,7 +349,7 @@ all_names_of_all_grades = ["lratio","cv","isi","incompleteness","mahal/isolation
         dists = inf(num_clusters, 1);
         peaks = peaks';
         for c = 1:num_clusters
-            if c == k || grades(c,1) == 1
+            if c == k || grades{c,1} == 1
                 continue
             end
             other_cf = clusters{c};

@@ -16,8 +16,8 @@ for i=1:length(list_of_tetrodes)
         
         aligned_struct = load(fullfile(dir_with_results,current_tetrode+" aligned.mat"),"aligned");
         aligned = aligned_struct.aligned;
-        output_struct = load(fullfile(dir_with_results,current_tetrode+" output.mat"),"output");
-        output = output_struct.output;
+        % output_struct = load(fullfile(dir_with_results,current_tetrode+" output.mat"),"output");
+        % output = output_struct.output;
     catch
         disp("Failed To load trying the following")
         disp(fullfile(dir_with_timestamps_and_rvals,current_tetrode+".mat"))
