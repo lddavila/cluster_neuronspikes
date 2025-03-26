@@ -16,7 +16,12 @@ for i=1:length(list_of_refinement_passes)
     list_of_tetrodes = list_of_tetrodes_formatted(:,1);
 
     dir_to_save_grades_to = fullfile(current_gen_dir,"ideal_dims_pass Top "+string(list_of_dimensions_tried(i)) + " Channels Grades");
-    parfor j=1:length(list_of_tetrodes)
+    num_tetrodes = length(list_of_tetrodes);
+    disp("++++++++++++++++++++++")
+    disp(dir_with_timestamps_and_rvals);
+    disp(dir_with_output)
+    disp("++++++++++++++++++++++++++++++++++++++++")
+    for j=1:length(list_of_tetrodes)
         current_tetrode = list_of_tetrodes(j);
         current_z_score_unformatted = strtrim(string(ls(fullfile(dir_with_output,current_tetrode+"*.txt"))));
         if length(current_z_score_unformatted) ~=1
@@ -34,6 +39,7 @@ for i=1:length(list_of_refinement_passes)
             relevant_grades = [2,3,4,8,9,28,29,30,31];
             get_grades_for_ideal_dims_pass(dir_with_timestamps_and_rvals,dir_with_output,current_tetrode,dir_to_save_grades_to,config_og,current_z_score,0,relevant_grades,name_of_grades)
         end
+        disp("grade_ideal_dims_pass_on_hpc.m Iteration"+string(i)+": "+string(j)+"/"+string(num_tetrodes)+" Finished")
     end
 
 end
