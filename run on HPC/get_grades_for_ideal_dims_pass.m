@@ -34,7 +34,7 @@ for i=1:length(list_of_tetrodes)
     grades = struct("grades",grades);
 
     % disp(pwd)
-    save(current_tetrode+" Grades.mat","-fromstruct",grades);
+    save(current_tetrode+" Grades.mat",'grades');
     % disp(pwd)
     
     
