@@ -76,9 +76,9 @@ for i=1:size(list_of_dim_configs,2)
                     rows_to_add{k,"Cluster"} = k;
                     rows_to_add{k,"Z Score"} = current_z_score;
                     current_cluster_grades = grades(k,:);
-                    disp("++++++++++++++++")
-                    disp(grades)
-                    disp("++++++++++++++++")
+                    % disp("++++++++++++++++")
+                    % disp(grades)
+                    % disp("++++++++++++++++")
                     rows_to_add{k,"Classification"} = classify_clusters_based_on_grades_ver_3(current_cluster_grades);
                     current_cluster_ts = reg_timestamps_of_the_spikes(idx{k});
                     [array_of_overlap_with_unit,unit_of_max_overlap,max_overlap_percentage] = get_overlap_between_cluster_and_unit_as_percentage_ver_2(current_cluster_ts,ground_truth_array,timestamps,config.TIME_DELTA);

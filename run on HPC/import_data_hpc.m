@@ -5,12 +5,12 @@ try
     load(fullfile(dir_with_outputs,current_tetrode+" output.mat"),"output");
     load(fullfile(dir_with_outputs,current_tetrode+" aligned.mat"),"aligned");
     if ~refinement_pass
-        disp("reached the if condition")
+        % disp("reached the if condition")
         grades = load(fullfile(dir_with_grades,current_tetrode+" Grades.mat"),"grades");
         grades = grades.grades;
-        disp("finished if condition")
+        % disp("finished if condition")
     else
-        disp("entered else condition")
+        % disp("entered else condition")
         %this is an unforunate, but necessary step to restore grades to their correct format
         %the cell array grades_to_be_parsed has 1 row for each cluster and a col for each grade per cluster
         grades_2 = importdata(fullfile(dir_with_grades,current_tetrode+" Grades.mat"),"grades");
@@ -21,7 +21,7 @@ try
             end
         end
         
-        disp("finished else condition")
+        % disp("finished else condition")
         % aligned = NaN;
     end
     load(fullfile(dir_with_outputs,current_tetrode+" reg_timestamps_of_the_spikes.mat"),"reg_timestamps_of_the_spikes");
