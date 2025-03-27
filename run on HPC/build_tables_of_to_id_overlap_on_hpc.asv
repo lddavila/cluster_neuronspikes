@@ -20,9 +20,9 @@ for i=1:size(list_of_dim_configs,2)
     % mean_waveform_dir = fullfile(precomputed_dir,"ideal_dims_pass Top "+string(list_of_dim_configs(i))+ " Channels"); %contains some things which are needed to calculate mean waveform per cluster
 
     %step 4b is to load the gt and the timestamps of the recording into the space which will be important later
-    load(config.FP_TO_GT_FOR_RECORDING_ON_HPC);
+    ground_truth_array = importdata(config.FP_TO_GT_FOR_RECORDING_ON_HPC);
     disp("Successfully loaded ground truth")
-    load(config.TIMESTAMP_FP_ON_HPC);
+    timestamps = importdata(config.TIMESTAMP_FP_ON_HPC);
     disp("Sucessfully loaded timestamps of recordings")
 
     % step 4c is to get a list of all the tetrodes which appear in this configuration because it is variable
@@ -38,7 +38,7 @@ for i=1:size(list_of_dim_configs,2)
 
     table_of_all_info = cell2table(cell(0,11),'VariableNames',["Tetrode","Cluster","Z Score","Classification","Max Overlap % With Unit","Max Overlap Unit","overlap % with all units","grades","Mean Waveform","Timestamps of spikes","Channels"]);
 
-    for j=1:num_tetrodes
+    parfor j=1:num_tetrodes
         %step 4e is to get the tetrode names
         unformatted_tetrode_name = names_of_files(j);
         unformatted_split_tetrode_name = split(unformatted_tetrode_name," ");
@@ -59,8 +59,8 @@ for i=1:size(list_of_dim_configs,2)
             current_channels = str2double(current_channels);
 
             %step 4g is to get the grades, idx, ts for the current tetrode
-            [grades,~,aligned,reg_timestamps_of_the_spikes,idx,failed_to_load] = import_data_hpc(grades_dir,results_dir,current_tetrode,1);
-            disp("Successfully loaded data from clustering")
+            [grades,~,aligned,reg_timestamps_of_the_spikes,idx,failed_to_load] = import_data_hpc(grades_dir,results_dir,current_tetrode,true);
+            % disp("Successfully loaded data from clustering")
 
 
             if ~failed_to_load
@@ -76,12 +76,16 @@ for i=1:size(list_of_dim_configs,2)
                     rows_to_add{k,"Cluster"} = k;
                     rows_to_add{k,"Z Score"} = current_z_score;
                     current_cluster_grades = grades(k,:);
+                    % disp("++++++++++++++++")
+                    % disp(grades)
+                    % disp("++++++++++++++++")
                     rows_to_add{k,"Classification"} = classify_clusters_based_on_grades_ver_3(current_cluster_grades);
+                    current_cluster_ts = reg_timestamps_of_the_spikes(idx{k});
                     [array_of_overlap_with_unit,unit_of_max_overlap,max_overlap_percentage] = get_overlap_between_cluster_and_unit_as_percentage_ver_2(current_cluster_ts,ground_truth_array,timestamps,config.TIME_DELTA);
                     rows_to_add{k,"Max Overlap % With Unit"} = max_overlap_percentage;
                     rows_to_add{k,"Max Overlap Unit"} = unit_of_max_overlap;
                     rows_to_add{k,"overlap % with all units"} ={array_of_overlap_with_unit};
-                    rows_to_add{k,"grades"} = current_cluster_grades;
+                    rows_to_add{k,"grades"} = {current_cluster_grades};
                     cluster_filter = idx{k};
                     spikes = aligned(:, cluster_filter, :);
                     peaks = all_peaks(:, cluster_filter);
@@ -93,8 +97,8 @@ for i=1:size(list_of_dim_configs,2)
                     compare_wire = poss_wires(max_n);
                     mean_waveform = mean(shiftdim(spikes(compare_wire, :, :), 1));
                     mean_waveform = mean_waveform - mean(mean_waveform);
-                    rows_to_add{k,"Mean Waveform"} = mean_waveform;
-                    current_cluster_ts = reg_timestamps_of_the_spikes(idx{k});
+                    rows_to_add{k,"Mean Waveform"} = {mean_waveform};
+                    
                     rows_to_add{k,"Timestamps of spikes"} ={current_cluster_ts} ;                    
                     rows_to_add{k,"Channels"} = {current_channels};
                     

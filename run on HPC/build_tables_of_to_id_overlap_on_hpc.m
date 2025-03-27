@@ -20,9 +20,9 @@ for i=1:size(list_of_dim_configs,2)
     % mean_waveform_dir = fullfile(precomputed_dir,"ideal_dims_pass Top "+string(list_of_dim_configs(i))+ " Channels"); %contains some things which are needed to calculate mean waveform per cluster
 
     %step 4b is to load the gt and the timestamps of the recording into the space which will be important later
-    load(config.FP_TO_GT_FOR_RECORDING_ON_HPC);
+    ground_truth_array = importdata(config.FP_TO_GT_FOR_RECORDING_ON_HPC);
     disp("Successfully loaded ground truth")
-    load(config.TIMESTAMP_FP_ON_HPC);
+    timestamps = importdata(config.TIMESTAMP_FP_ON_HPC);
     disp("Sucessfully loaded timestamps of recordings")
 
     % step 4c is to get a list of all the tetrodes which appear in this configuration because it is variable
@@ -38,7 +38,7 @@ for i=1:size(list_of_dim_configs,2)
 
     table_of_all_info = cell2table(cell(0,11),'VariableNames',["Tetrode","Cluster","Z Score","Classification","Max Overlap % With Unit","Max Overlap Unit","overlap % with all units","grades","Mean Waveform","Timestamps of spikes","Channels"]);
 
-    for j=1:num_tetrodes
+    parfor j=1:num_tetrodes
         %step 4e is to get the tetrode names
         unformatted_tetrode_name = names_of_files(j);
         unformatted_split_tetrode_name = split(unformatted_tetrode_name," ");
