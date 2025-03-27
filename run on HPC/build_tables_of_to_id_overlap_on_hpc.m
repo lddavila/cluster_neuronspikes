@@ -109,17 +109,17 @@ for i=1:size(list_of_dim_configs,2)
         disp("build_tables_of_to_id_overlap_on_hpc.m Finished Iteration "+string(i)+" "+string(j)+"/"+string(num_tetrodes))
     end
     cd(home_dir)
-    number_of_rows = 1:size(table_of_all_info);
+    number_of_rows = 1:size(table_of_all_info,1);
     number_of_rows = number_of_rows.';
     table_of_all_info = [table_of_all_info,table(number_of_rows,'VariableNames',["idx of its location in arrays"])];
     save(fullfile(gen_dir,"table of all data for "+string(list_of_dim_configs(i))+".mat"),"table_of_all_info");
 
     min_overlap_percentage =1;
     timestamps_cluster_data = table_of_all_info.("Timestamps of spikes")(:);
-    table_of_other_appearences = check_timestamp_overlap_between_clusters_hpc_ver_3(table_of_all_info,timestamps_cluster_data,min_overlap_percentage,config);
+    table_of_other_appearences = check_timestamp_overlap_cleabetween_clusters_hpc_ver_3(table_of_all_info,timestamps_cluster_data,min_overlap_percentage,config);
     save(fullfile(gen_dir,"table of all data with overlap added for "+string(list_of_dim_configs(i))+" Dims.mat"),"table_of_other_appearences");
 
-    updated_table_of_overlap = update_table_of_overlap(table_of_all_overlap,config);
+    updated_table_of_overlap = update_table_of_overlap(table_of_other_appearences,config);
     save(fullfile(gen_dir,"table of all data with overlap added and updated for "+string(list_of_dim_configs(i))+" Dims.mat"),"updated_table_of_overlap");
 
     table_of_best_representation = return_best_conf_for_cluster_ver_3(updated_table_of_overlap,timestamps_cluster_data,5,config);
