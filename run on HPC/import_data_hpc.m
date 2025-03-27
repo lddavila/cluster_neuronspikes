@@ -19,6 +19,7 @@ try
             end
         end
         grades = grades_to_be_parsed;
+        disp("grades were apparently formatted correctly")
         % aligned = NaN;
     end
     load(fullfile(dir_with_outputs,current_tetrode+" reg_timestamps_of_the_spikes.mat"),"reg_timestamps_of_the_spikes");
