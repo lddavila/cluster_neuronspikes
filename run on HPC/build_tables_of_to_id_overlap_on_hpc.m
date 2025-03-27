@@ -116,7 +116,7 @@ for i=1:size(list_of_dim_configs,2)
 
     min_overlap_percentage =1;
     timestamps_cluster_data = table_of_all_info.("Timestamps of spikes")(:);
-    table_of_other_appearences = check_timestamp_overlap_cleabetween_clusters_hpc_ver_3(table_of_all_info,timestamps_cluster_data,min_overlap_percentage,config);
+    table_of_other_appearences = check_timestamp_overlap_between_clusters_hpc_ver_3(table_of_all_info,timestamps_cluster_data,min_overlap_percentage,config);
     save(fullfile(gen_dir,"table of all data with overlap added for "+string(list_of_dim_configs(i))+" Dims.mat"),"table_of_other_appearences");
 
     updated_table_of_overlap = update_table_of_overlap(table_of_other_appearences,config);
