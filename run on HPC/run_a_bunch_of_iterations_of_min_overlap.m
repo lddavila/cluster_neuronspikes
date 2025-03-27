@@ -1,6 +1,6 @@
 %% Step 0: Run the experimental overlap table
 clc;
-table_of_all_overlap = check_timestamp_overlap_between_cchecklusters_hpc_ver_3(graded_contamination_table,timestamp_array,1,0.004);
+table_of_all_overlap = check_timestamp_overlap_between_clusters_hpc_ver_3(graded_contamination_table,timestamp_array,1,0.004);
 
 %% step 0a: update the table
 clc;

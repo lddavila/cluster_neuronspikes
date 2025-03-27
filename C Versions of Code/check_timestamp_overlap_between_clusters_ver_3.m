@@ -11,7 +11,7 @@ function [table_of_other_appearences] = check_timestamp_overlap_between_clusters
 
 
 
-table_of_other_appearences = table(nan(size(table_of_neurons,1),1),nan(size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),'VariableNames',["Z Score","Cluster #","Overlap %","Other Appearences","Tetrode"]);
+table_of_other_appearences = table(nan(size(table_of_neurons,1),1),nan(size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),'VariableNames',["Z Score","Cluster","Overlap %","Other Appearences","Tetrode"]);
 iter_count = 1;
 for current_neuron_counter=1:size(table_of_neurons,1)
     current_neuron_tetrode = table_of_neurons{current_neuron_counter,2};
@@ -72,11 +72,11 @@ for current_neuron_counter=1:size(table_of_neurons,1)
         iter_count = iter_count+1;
     end
     %,'VariableNames',["Z Score","Cluster #","Overlap %","Other Appearences","Tetrode"]);
-    table_of_other_appearences{current_neuron_counter,1} = current_neuron_z_score;
-    table_of_other_appearences{current_neuron_counter,2} = current_neuron_cluster_number;
-    table_of_other_appearences{current_neuron_counter,3} = overlap_percentages_of_this_cluster;
-    table_of_other_appearences{current_neuron_counter,4} = other_appearences_of_this_cluster ;
-    table_of_other_appearences{current_neuron_counter,5} = other_tetrodes_where_cluster_appears ;
+    table_of_other_appearences{current_neuron_counter,"Other Z Score"} = current_neuron_z_score;
+    table_of_other_appearences{current_neuron_counter,"Other Cluster"} = current_neuron_cluster_number;
+    table_of_other_appearences{current_neuron_counter,"Other Overlap %"} = overlap_percentages_of_this_cluster;
+    table_of_other_appearences{current_neuron_counter,"Other Appearences"} = other_appearences_of_this_cluster ;
+    table_of_other_appearences{current_neuron_counter,"Other Tetrodes"} = other_tetrodes_where_cluster_appears ;
     
     
 end

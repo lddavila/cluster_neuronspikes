@@ -1,11 +1,10 @@
-function [table_of_other_appearences] = check_timestamp_overlap_between_clusters_hpc_ver_3(table_of_all_clusters,timestamps_cluster_data,min_overlap_percentage,time_delta)
+function [table_of_other_appearences] = check_timestamp_overlap_between_clusters_hpc_ver_3(table_of_all_clusters,timestamps_cluster_data,min_overlap_percentage,config)
 tic
 %this function uses timestamps of clusters across various configurations
 %(ie different tetrodes with the same/different z_scores as we all the same
 %tetrode with different z_score, it helps to think of this as vertical and
 %horizontal checking
-%table_of_neurons is a table of clusters which have been id'd as neurons by
-%previous step
+%table_of_all_clusters is a table of clusters 
 %now we can check which of the neurons are identified are repeitions of
 %each other
 %allows time delta
@@ -65,7 +64,9 @@ for current_neuron_counter=1:number_of_rows_in_table_of_neurons
         %reason to compare a cluster found on t1 to a cluster found on t50
         %cause they're so distant, I'll set the range to 10 before and
         %after the current tetrode number but even this might be excessive
-        if abs(compare_neuron_tetrode_number -current_neuron_tetrode_number) > 6
+        %in the case of the ideal dimssions pass we'll have much fewer clusters on tetrodes that may or may not be close to each other, so we skip this check
+        %we may need to create a smarter check if this results in excess computational time
+        if abs(compare_neuron_tetrode_number -current_neuron_tetrode_number) > 6 && config.IS_IDEAL_DIMS_PASS
             % iter_count = iter_count+1;
             continue;
         end
@@ -76,13 +77,13 @@ for current_neuron_counter=1:number_of_rows_in_table_of_neurons
         if index_of_larger==1
             %if the larger cluster is the compare neuron then we use the ts
             %of the current neuron as our compare
-            number_of_timestamps_in_common = find_number_of_true_positives_given_a_time_delta_hpc(current_neuron_ts,current_compare_neuron_ts,time_delta);
+            number_of_timestamps_in_common = find_number_of_true_positives_given_a_time_delta_hpc(current_neuron_ts,current_compare_neuron_ts,config.TIME_DELTA);
         elseif index_of_larger==2
             %if the larger cluster is the current_neuron then we use the ts
             %of the compare neuron as our compare
             %the logic behind this is that the first set of ts that are put
             %into the function will never be over counted 
-            number_of_timestamps_in_common = find_number_of_true_positives_given_a_time_delta_hpc(current_compare_neuron_ts,current_neuron_ts,time_delta);
+            number_of_timestamps_in_common = find_number_of_true_positives_given_a_time_delta_hpc(current_compare_neuron_ts,current_neuron_ts,config.TIME_DELTA);
         else
             number_of_timestamps_in_common=0;
         end
