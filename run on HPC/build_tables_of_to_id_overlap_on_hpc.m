@@ -60,7 +60,7 @@ for i=1:size(list_of_dim_configs,2)
 
             %step 4g is to get the grades, idx, ts for the current tetrode
             [grades,~,aligned,reg_timestamps_of_the_spikes,idx,failed_to_load] = import_data_hpc(grades_dir,results_dir,current_tetrode,true);
-            disp("Successfully loaded data from clustering")
+            % disp("Successfully loaded data from clustering")
 
 
             if ~failed_to_load
