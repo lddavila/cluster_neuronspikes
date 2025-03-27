@@ -26,8 +26,13 @@ function [table_of_best_representation] = return_best_conf_for_cluster_ver_3(tab
 
         table_of_other_appearences_grades = join(table_of_other_appearences,only_grades_col,"Keys",["Z Score","Tetrode","Cluster"]);
         table_of_other_appearence_idxs = join(table_of_other_appearences,only_idx_col,"Keys",["Z Score","Tetrode","Cluster"]);
-        grades_array = cell2mat(table_of_other_appearences_grades{:,"grades"});
-        snr = grades_array(:,40);
+        grades_array = table_of_other_appearences_grades(:,"grades");
+        snr = nan(size(table_of_other_appearences_grades,1),1);
+        for q=1:size(snr,1)
+            current_grades = grades_array{q,"grades"}{1};
+            snr(q) = current_grades{40};
+        end
+        % snr = grades_array(:,40);
         table_of_other_appearences.SNR = snr;
         table_of_other_appearences.("idx of its location in arrays") = table_of_other_appearence_idxs{:,"idx of its location in arrays"};
     end
