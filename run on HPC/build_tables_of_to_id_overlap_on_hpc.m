@@ -97,7 +97,7 @@ for i=1:size(list_of_dim_configs,2)
                     compare_wire = poss_wires(max_n);
                     mean_waveform = mean(shiftdim(spikes(compare_wire, :, :), 1));
                     mean_waveform = mean_waveform - mean(mean_waveform);
-                    rows_to_add{k,"Mean Waveform"} = mean_waveform;
+                    rows_to_add{k,"Mean Waveform"} = {mean_waveform};
                     
                     rows_to_add{k,"Timestamps of spikes"} ={current_cluster_ts} ;                    
                     rows_to_add{k,"Channels"} = {current_channels};
