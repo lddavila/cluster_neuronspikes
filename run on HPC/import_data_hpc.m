@@ -16,7 +16,7 @@ try
         grades_2 = importdata(fullfile(dir_with_grades,current_tetrode+" Grades.mat"),"grades");
         grades = cell(size(grades_2,1),size(grades_2,2));
         for i=1:size(grades_2,1)
-            for j=1:size(grade_2,2)
+            for j=1:size(grades_2,2)
                 grades{i,j} = grades_2(i,j).grades;
             end
         end
