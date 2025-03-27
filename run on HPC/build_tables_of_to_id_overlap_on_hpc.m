@@ -21,10 +21,13 @@ for i=1:size(list_of_dim_configs,2)
 
     %step 4b is to load the gt and the timestamps of the recording into the space which will be important later
     load(config.FP_TO_GT_FOR_RECORDING_ON_HPC);
+    disp("Successfully loaded ground truth")
     load(config.TIMESTAMP_FP_ON_HPC);
+    disp("Sucessfully loaded timestamps of recordings")
 
     % step 4c is to get a list of all the tetrodes which appear in this configuration because it is variable
     home_dir = cd(results_dir);
+    disp("Successfully changed directories")
     struct_of_names = dir("t*output*.mat");
     table_of_names = struct2table(struct_of_names);
     names_of_files = string(table_of_names{:,"name"});
@@ -56,7 +59,8 @@ for i=1:size(list_of_dim_configs,2)
             current_channels = str2double(current_channels);
 
             %step 4g is to get the grades, idx, ts for the current tetrode
-            [grades,~,aligned,reg_timestamps_of_the_spikes,idx,failed_to_load] = import_data_hpc(grades_dir,results_dir,current_tetrode,0)
+            [grades,~,aligned,reg_timestamps_of_the_spikes,idx,failed_to_load] = import_data_hpc(grades_dir,results_dir,current_tetrode,1);
+            disp("Successfully loaded data from clustering")
 
 
             if ~failed_to_load
@@ -64,7 +68,7 @@ for i=1:size(list_of_dim_configs,2)
                 % rows_to_add = cell2table(cell(size(grades,1),11),'VariableNames',["Tetrode","Cluster","Z Score","Classification","Max Overlap % With Unit","Max Overlap Unit","overlap % with all units","grades","Mean Waveform","Timestamps of spikes","Channels"]);
                 rows_to_add = table(repelem("",size(grades,1),1),nan(size(grades,1),1),nan(size(grades,1),1),repelem("",size(grades,1),1),nan(size(grades,1),1),nan(size(grades,1),1),cell(size(grades,1),1),cell(size(grades,1),1),cell(size(grades,1),1),cell(size(grades,1),1),cell(size(grades,1),1), ...
                     'VariableNames', ...
-                    ["Tetrode","Cluster","Z Score","Classification","Max Overlap % With Unit","Max Overlap Unit","overlap % with all units","grades","Mean Waveform","Timestamps of spikes","Channels"])
+                    ["Tetrode","Cluster","Z Score","Classification","Max Overlap % With Unit","Max Overlap Unit","overlap % with all units","grades","Mean Waveform","Timestamps of spikes","Channels"]);
                 all_peaks = get_peaks(aligned, true);
                 %step 4i is to populate the table
                 for k=1:size(rows_to_add,1)
