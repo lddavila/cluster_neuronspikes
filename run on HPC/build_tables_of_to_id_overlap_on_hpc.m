@@ -38,7 +38,7 @@ for i=1:size(list_of_dim_configs,2)
 
     table_of_all_info = cell2table(cell(0,11),'VariableNames',["Tetrode","Cluster","Z Score","Classification","Max Overlap % With Unit","Max Overlap Unit","overlap % with all units","grades","Mean Waveform","Timestamps of spikes","Channels"]);
 
-    for j=1:num_tetrodes
+    parfor j=1:num_tetrodes
         %step 4e is to get the tetrode names
         unformatted_tetrode_name = names_of_files(j);
         unformatted_split_tetrode_name = split(unformatted_tetrode_name," ");
