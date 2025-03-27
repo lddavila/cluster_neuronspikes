@@ -80,6 +80,7 @@ for i=1:size(list_of_dim_configs,2)
                     disp(grades)
                     disp("++++++++++++++++")
                     rows_to_add{k,"Classification"} = classify_clusters_based_on_grades_ver_3(current_cluster_grades);
+                    current_cluster_ts = reg_timestamps_of_the_spikes(idx{k});
                     [array_of_overlap_with_unit,unit_of_max_overlap,max_overlap_percentage] = get_overlap_between_cluster_and_unit_as_percentage_ver_2(current_cluster_ts,ground_truth_array,timestamps,config.TIME_DELTA);
                     rows_to_add{k,"Max Overlap % With Unit"} = max_overlap_percentage;
                     rows_to_add{k,"Max Overlap Unit"} = unit_of_max_overlap;
@@ -97,7 +98,7 @@ for i=1:size(list_of_dim_configs,2)
                     mean_waveform = mean(shiftdim(spikes(compare_wire, :, :), 1));
                     mean_waveform = mean_waveform - mean(mean_waveform);
                     rows_to_add{k,"Mean Waveform"} = mean_waveform;
-                    current_cluster_ts = reg_timestamps_of_the_spikes(idx{k});
+                    
                     rows_to_add{k,"Timestamps of spikes"} ={current_cluster_ts} ;                    
                     rows_to_add{k,"Channels"} = {current_channels};
                     
