@@ -13,7 +13,7 @@ try
         disp("entered else condition")
         %this is an unforunate, but necessary step to restore grades to their correct format
         %the cell array grades_to_be_parsed has 1 row for each cluster and a col for each grade per cluster
-        grades_2 = load(fullfile(dir_with_grades,current_tetrode+" Grades.mat"),"grades");
+        grades_2 = importdata(fullfile(dir_with_grades,current_tetrode+" Grades.mat"),"grades");
         grades = cell(size(grades_2,1),size(grades_2,2));
         for i=1:size(grades_2,1)
             for j=1:size(grade_2,2)
