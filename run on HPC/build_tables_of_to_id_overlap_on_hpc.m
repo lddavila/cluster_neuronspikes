@@ -59,7 +59,7 @@ for i=1:size(list_of_dim_configs,2)
             current_channels = str2double(current_channels);
 
             %step 4g is to get the grades, idx, ts for the current tetrode
-            [grades,~,aligned,reg_timestamps_of_the_spikes,idx,failed_to_load] = import_data_hpc(grades_dir,results_dir,current_tetrode,false);
+            [grades,~,aligned,reg_timestamps_of_the_spikes,idx,failed_to_load] = import_data_hpc(grades_dir,results_dir,current_tetrode,true);
             disp("Successfully loaded data from clustering")
 
 
