@@ -43,6 +43,7 @@ config.DIR_WITH_CHANNEL_WISE_MEANS_AND_STDS = "D:\spike_gen_data\Recordings By C
 config.GENERIC_GRADES_DIR = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass min z_score"; % a generic file path which can be modified to access grades of various cluster configurations
 config.GENRIC_DIR_WITH_OUTPUTS = "D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise\initial_pass_results min z_score"; %a generic file path which can be modified to access the results of clustering
 config.DIR_TO_SAVE_RECLUSTERING_TO ="D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING) +" Channels";
+config.GT_FP = "D:\spike_gen_data\Recording By Channel Ground Truth\0_100Neuron300SecondRecordingWithLevel3Noise.h5.mat";
 
 config.ON_HPC = true;
 config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC = [2 3 4 5 6 7];
@@ -54,4 +55,6 @@ config.DIR_WITH_CHANNEL_WISE_MEANS_AND_STDS_ON_HPC = fullfile("/home","lddavila"
 config.GENERIC_GRADES_DIR_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise","initial_pass min z_score"); % a generic file path which can be modified to access grades of various cluster configurations
 config.GENRIC_DIR_WITH_OUTPUTS_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise","initial_pass_results min z_score"); %a generic file path which can be modified to access the results of clustering
 config.FP_TO_GT_FOR_RECORDING_ON_HPC = fullfile("/home","lddavila","ground_truth","Recording By Channel Ground Truth","0_100Neuron300SecondRecordingWithLevel3Noise.h5.mat");
+
+config.MIN_UNIT_APPEARENCE_THRESHOLD = 30;
 end

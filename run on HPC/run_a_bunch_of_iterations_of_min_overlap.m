@@ -30,6 +30,9 @@ disp("Missing Units:" + strjoin(string(missing_units)));
 disp("Number of FP:" +string(sum(table_of_best_rep_no_negatives{:,"Max Overlap % With Unit"} <min_unit_appearence_threshold)))
 disp("Number of TP:" + string(size(table_of_best_rep_with_min_unit_app_thresh,1)));
 disp("Number of Times a unit was repeated:" + sum(unit_appearences_no_negatives{:,"GroupCount"}>1));
+%%
+clc;
+analyze_reclustering_results(choose_best_config(),"E:\HPC Data\Reclusted Passs 0_100_3");
 %% choose better dimensions
 clc;
 table_with_best_channels = determine_best_dimensions_of_data(table_of_best_rep_no_negatives,updated_table_of_overlap,choose_best_config());

@@ -1,4 +1,4 @@
-function grades = compute_gradings_ver_4(aligned, timestamps, tvals, clusters, config,debug)
+function grades = compute_gradings_ver_4(aligned, timestamps, tvals, clusters, config,debug,channels)
 %COMPUTE_GRADINGS Computes grades for each of the clusters.
 %   grades = COMPUTE_GRADINGS(aligned, timestamps, tvals, clusters) returns
 %   the grades for each of the clusters.
@@ -57,9 +57,9 @@ all_names_of_all_grades = ["lratio","cv","isi","incompleteness","mahal/isolation
     "has valley","skewness","cluster template matching","symmetry of the cluster's histogram",...
     "Cluster Amp Cat","Cluster Rep Wire Amp Category","likelihood of multi unit acticity","bhat dist to possibly mua clusters","Tightness of waveform based on euc dist",...
     "Rep Wire tightness of waveform based on euc dist","do not use","do not use","Under/overpowered","Mean SNR",...
-    "likeliness of burst","compare wire","2nd compare wire","avg cluster z score","SNR by dimensions","SNR based on best dimensions"];  
+    "likeliness of burst","compare wire","2nd compare wire","avg cluster z score","SNR by dimensions","SNR based on best dimensions", "Mean Spike Amplitude Per Channel","Mean Z Score Per Channel","Channels"];  
     num_clusters = length(clusters);
-    grades = cell(num_clusters, 46);
+    grades = cell(num_clusters, 48);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -339,6 +339,14 @@ all_names_of_all_grades = ["lratio","cv","isi","incompleteness","mahal/isolation
 
 
         grades{k,46} = calculate_signal_to_noise_of_cluster_by_dims(aligned,cluster_filter,compare_wire,second_compare_wire);
+
+        grades{k,47} = calculate_avg_spike_amp_per_channel(aligned,cluster_filter);
+
+        grades{k,48} = calculate_avg_z_score_per_channel(aligned,cluster_filter);
+
+        grades{k,49} = channels;
+
+
 
     end
 

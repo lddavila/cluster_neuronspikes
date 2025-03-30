@@ -30,18 +30,23 @@ for i=1:length(list_of_refinement_passes)
         unformatted_split_tetrode_name = split(unformatted_tetrode_name," ");
         current_tetrode = unformatted_split_tetrode_name(1);
         current_z_score_unformatted = strtrim(string(ls(current_tetrode+"_z_score_*.txt")));
-        if length(current_z_score_unformatted) ~=1
+        current_channels_unformatted = strtrim(string(ls(current_tetrode+"_channels_*.txt")));
+        if length(current_z_score_unformatted) ~=1 || length(current_channels_unformatted) ~=1
             disp(current_z_score_unformatted);
             disp("Returned too many/few z score files, aborting, Should always return exactly 1");
         else
             current_z_score_formatted = split(current_z_score_unformatted,"_");
             current_z_score = str2double(strrep(current_z_score_formatted(end),".txt",""));
-
+            
+            current_channels_formatted = split(current_channels_unformatted,"_");
+            current_channels =  strrep(current_channels_formatted(end),".txt","");
+            current_channels = split(current_channels," ");
+            channels = str2double(current_channels);
 
 
             % fullfile(initial_tetrode_results_dir,"t"+string(refined_tetrode_idx)+"_z_score_"+z_score_to_use_for_reclustering+".txt")
 
-            get_grades_for_ideal_dims_pass(dir_with_timestamps_and_rvals,dir_with_output,current_tetrode,dir_to_save_grades_to,config_og,current_z_score,0)
+            get_grades_for_ideal_dims_pass(dir_with_timestamps_and_rvals,dir_with_output,current_tetrode,dir_to_save_grades_to,config_og,current_z_score,0,channels)
         end
         disp("grade_ideal_dims_pass_on_hpc.m Iteration"+string(i)+": "+string(j)+"/"+string(num_tetrodes)+" Finished")
     end
