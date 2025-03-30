@@ -9,7 +9,6 @@ updated_table_of_overlap = update_table_of_overlap(table_of_all_overlap,choose_b
 art_tetr_array = build_artificial_tetrode;
 table_of_channels = table(strcat("t",string(1:size(art_tetr_array,1))).',art_tetr_array,'VariableNames',["Tetrode","Channels"]);
 updated_table_of_overlap = join(updated_table_of_overlap,table_of_channels,"Keys","Tetrode");
-%% now check how removing any config with only 4 channels affects counts
 
 %% now get best configuration results with best 
 clc;
