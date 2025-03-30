@@ -24,7 +24,11 @@ parfor i=1:length(list_of_tetrodes)
         grades = struct("grades",grades);
 
         % disp(pwd)
-        save(current_tetrode+" Grades.mat","-fromstruct",grades);
+        try
+            save(current_tetrode+" Grades.mat","-fromstruct",grades);
+        catch
+            disp("Saving failed again")
+        end
         % disp(pwd)
     catch
         disp("Failed To load trying the following")
