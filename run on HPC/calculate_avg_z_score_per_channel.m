@@ -6,7 +6,7 @@ cluster = data(peaks_in_cluster, :);
 
 for i=1:size(aligned,1)
     cluster_x = cluster(:, i);
-    mean_z_score(i) = zscore(cluster_x);
+    mean_z_score(i) = mean(zscore(cluster_x));
 end
 
 
