@@ -2,7 +2,7 @@ function [] = get_grades_for_nth_pass_of_clustering(dir_with_timestamps_and_rval
 
 dir_to_begin_and_end_the_func_in = cd(dir_to_save_grades_to);
 number_of_tetrodes = length(list_of_tetrodes);
-parfor i=1:length(list_of_tetrodes)
+for i=1:length(list_of_tetrodes)
     % disp("Made it into the for loop")
     current_tetrode = list_of_tetrodes(i);
     tetrode_number = split(current_tetrode,"t");
@@ -36,7 +36,7 @@ parfor i=1:length(list_of_tetrodes)
     grades = struct("grades",grades);
 
     % disp(pwd)
-    save(current_tetrode+" Grades.mat",grades);
+    save(current_tetrode+" Grades.mat","-fromstruct",grades);
     % disp(pwd)
     
     
