@@ -14,7 +14,7 @@ config.UPDATE_CLASSIFICATION = false; %when true every grade will be updated wit
 config.OVERLAP = 80; %the minimum percentage that clusters must overlap to be counted as the same cluster
 config.ONLY_OVERLAP_WITH_NEURONS =true; %when this is used return_best_config_of_cluster will only allow overlaps if the overlapping cluster is also a neuron 
 config.ONLY_NEURONS = true; %when set to true updated_table_of_other_appearences will only include neurons, when set to false it will also include clusters listed as MUA
-config.UPDATE_GRADES = false;
+config.UPDATE_GRADES = true;
 config.NUM_OF_UNITS = 100; %this tells you how many units are in the recording, it must be set if SIMULATED = true;
 config.SIMULATED = true; %when set to true, it indicates that your data is simulated and thus you MUST indicate the number of units
 config.ART_TETR_ARRAY = build_artificial_tetrode; %this is an array which tells you how to configure your channels, this should be changed when using a new probe with different channel numbers
