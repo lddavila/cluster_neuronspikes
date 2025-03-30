@@ -26,7 +26,12 @@ parfor i=1:length(list_of_tetrodes)
         % disp(pwd)
         try
             save(current_tetrode+" Grades.mat","-fromstruct",grades);
-        catch
+        catch ME
+            disp(ME.identifier)
+            disp(ME.message)
+            disp(ME.cause)
+            disp(ME.stack)
+            disp(ME.Correction)
             disp("Saving failed again")
         end
         % disp(pwd)
