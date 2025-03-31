@@ -24,7 +24,7 @@ parfor i=1:length(list_of_tetrodes)
         
         grade_struct = struct();
         for j=1:size(grades,1)
-            grade_struct.("Grade "+j) = grades(:,j);
+            grade_struct.("Grade_"+string(j)) = grades(:,j);
         end
         % disp(grades)
         %grades = struct("grades",grades);
