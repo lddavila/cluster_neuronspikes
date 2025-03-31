@@ -27,6 +27,7 @@ for i=1:length(list_of_tetrodes)
 
     % disp(pwd)
     % try
+    save(curent_tetrode+" Grades.mat",grades);
     save(current_tetrode+" Grades.mat","-fromstruct","grades");
     % catch ME
     %     disp(ME.identifier)
