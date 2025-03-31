@@ -57,10 +57,10 @@ all_names_of_all_grades = ["lratio","cv","isi","incompleteness","mahal/isolation
     "has valley","skewness","cluster template matching","symmetry of the cluster's histogram",...
     "Cluster Amp Cat","Cluster Rep Wire Amp Category","likelihood of multi unit acticity","bhat dist to possibly mua clusters","Tightness of waveform based on euc dist",...
     "Rep Wire tightness of waveform based on euc dist","do not use","do not use","Under/overpowered","Mean SNR",...
-    "likeliness of burst","compare wire","2nd compare wire","avg cluster z score","SNR by dimensions","SNR based on best dimensions", "Mean Spike Amplitude Per Channel","Mean Z Score Per Channel Cluster Only","Channels",
-    "Mean Z Score Per Channel all spikes in config"];  
+    "likeliness of burst","compare wire","2nd compare wire","avg cluster z score","SNR by dimensions","SNR based on best dimensions", "Mean Spike Amplitude Per Channel","Mean Z Score Per Channel","Channels",
+    "Mean Z Score "];  
     num_clusters = length(clusters);
-    grades = cell(num_clusters, 50);
+    grades = cell(num_clusters, 48);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -346,8 +346,6 @@ all_names_of_all_grades = ["lratio","cv","isi","incompleteness","mahal/isolation
         grades{k,48} = calculate_avg_z_score_per_channel(aligned,cluster_filter);
 
         grades{k,49} = channels;
-
-        grades{k,50} = calculate_avg_z_score_per_channel_without_clust_filt(aligned);
 
 
 

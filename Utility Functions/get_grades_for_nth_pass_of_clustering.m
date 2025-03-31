@@ -21,7 +21,9 @@ parfor i=1:length(list_of_tetrodes)
         output = output_struct.output;
         %compute_gradings_ver_4(aligned, timestamps, tvals, clusters, config,debug)
         grades = compute_gradings_ver_4(aligned, timestamps, r_tvals, cleaned_clusters, config,debug,channels_of_curr_tetr);
+        disp(grades)
         grades = struct("grades",grades);
+        
 
         % disp(pwd)
         try
