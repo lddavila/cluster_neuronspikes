@@ -43,11 +43,13 @@ parfor i=1:length(list_of_tetrodes)
         %     disp("Saving failed again")
         % end
         % disp(pwd)
-    catch
-        disp("Failed To load trying the following")
-        disp(fullfile(dir_with_timestamps_and_rvals,current_tetrode+".mat"))
-        disp(fullfile(dir_with_results,current_tetrode+" aligned.mat"))
-        disp(fullfile(dir_with_results,current_tetrode+" output.mat"))
+    catch ME
+        disp(ME.identifier)
+        disp(ME.message)
+        % disp("Failed To load trying the following")
+        % disp(fullfile(dir_with_timestamps_and_rvals,current_tetrode+".mat"))
+        % disp(fullfile(dir_with_results,current_tetrode+" aligned.mat"))
+        % disp(fullfile(dir_with_results,current_tetrode+" output.mat"))
 
         continue;
     end

@@ -5,7 +5,7 @@ table_with_best_channels = table(nan(size(table_of_best_representation,1),1), ..
     nan(size(table_of_best_representation,1),1), ...
     cell(size(table_of_best_representation,1),1), ...
     cell(size(table_of_best_representation,1),1) ...
-    ,'VariableNames',["Z Score","Tetrode","Cluster","Sorted Channels","Sorted Z Amp"]);
+    ,'VariableNames',["Z Score","Tetrode","Cluster","Sorted Channels","Sorted Amp"]);
 for i=1:size(table_of_best_representation,1)
 
     table_with_best_channels{i,"Tetrode"} = table_of_best_representation{i,"Tetrode"};
@@ -14,7 +14,9 @@ for i=1:size(table_of_best_representation,1)
 
     current_overlap_data_dict = table_of_best_representation{i,"Other Appearence Info"}{1};
     grades_of_current_best_rep = cell2mat(table_of_best_representation{i,"grades"});
-    snr_of_current_best_rep = grades_of_current_best_rep(45:48);
+
+
+    snr_of_current_best_rep = grades_of_current_best_rep;
     channels_of_current_best_rep = table_of_best_representation{i,"Channels_table_of_channels"};
     other_appearences_tetrodes = current_overlap_data_dict("tetrodes of other appearences");
     other_appearence_z_score = current_overlap_data_dict("Z score of other appearences");
