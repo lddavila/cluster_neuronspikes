@@ -1,4 +1,4 @@
-function [] = get_grades_for_ideal_dims_pass(dir_with_timestamps_and_rvals,dir_with_results,list_of_tetrodes,dir_to_save_grades_to,config,min_z_score,debug)
+function [] = get_grades_for_ideal_dims_pass(dir_with_timestamps_and_rvals,dir_with_results,list_of_tetrodes,dir_to_save_grades_to,config,channels)
 
 dir_to_begin_and_end_the_func_in = cd(dir_to_save_grades_to);
 number_of_tetrodes = length(list_of_tetrodes);
