@@ -23,7 +23,7 @@ parfor i=1:length(list_of_tetrodes)
         grades = compute_gradings_ver_4(aligned, timestamps, r_tvals, cleaned_clusters, config,debug,channels_of_curr_tetr);
         
         grade_struct = struct();
-        for j=1:size(grades,1)
+        for j=1:size(grades,2)
             grade_struct.("Grade_"+string(j)) = grades(:,j);
         end
         % disp(grades)
