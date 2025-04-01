@@ -30,7 +30,7 @@ for i=1:length(list_of_tetrodes)
     % load(dir_with_results+"\"+current_tetrode+" reg_timestamps.mat","reg_timestamps");
 
 
-    grades = compute_gradings_ver_4(aligned, timestamps, r_tvals, cleaned_clusters, config,channels);
+    grades = compute_gradings_ver_4(aligned, timestamps, r_tvals, cleaned_clusters, config,false,channels);
     grade_struct = struct();
         for j=1:size(grades,2)
             grade_struct.("Grade_"+string(j)) = grades(:,j);
