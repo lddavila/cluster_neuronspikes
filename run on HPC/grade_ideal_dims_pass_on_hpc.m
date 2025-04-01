@@ -25,7 +25,7 @@ for i=1:length(list_of_refinement_passes)
     % disp(dir_with_output)
     % disp(names_of_files)
     % disp("++++++++++++++++++++++++++++++++++++++++")
-    parfor j=1:size(names_of_files,1)
+    for j=1:size(names_of_files,1)
         unformatted_tetrode_name = names_of_files(j);
         unformatted_split_tetrode_name = split(unformatted_tetrode_name," ");
         current_tetrode = unformatted_split_tetrode_name(1);
