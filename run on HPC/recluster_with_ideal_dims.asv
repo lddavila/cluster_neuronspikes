@@ -24,7 +24,7 @@ for num_dims_to_use_counter=1:number_of_outer_iterations
         z_score_to_use_for_reclustering = current_data{1,"Z Score"};
         potent_new_dims = current_data{1,"Sorted Channels"}{1};
         snr_of_pot_dims = current_data{1,"Sorted Amp"}{1};
-        dims_to_use =potent_new_dims( find(snr_of_pot_dims >50,possible_numbers_of_dimensions(num_dims_to_use_counter)));
+        dims_to_use =potent_new_dims( find(snr_of_pot_dims >0,possible_numbers_of_dimensions(num_dims_to_use_counter)));
 
         % dims_already_used = false;
         % for j=1:size(already_used,2)
