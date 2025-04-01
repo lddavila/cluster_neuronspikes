@@ -4,6 +4,7 @@ table_of_all_overlap = check_timestamp_overlap_between_clusters_hpc_ver_3(graded
 
 %% step 0a: update the table
 clc;
+close all;
 updated_table_of_overlap = update_table_of_overlap(table_of_all_overlap,choose_best_config());
 %% get table of channels
 art_tetr_array = build_artificial_tetrode;
@@ -31,8 +32,10 @@ disp("Number of TP:" + string(size(table_of_best_rep_with_min_unit_app_thresh,1)
 disp("Number of Times a unit was repeated:" + sum(unit_appearences_no_negatives{:,"GroupCount"}>1));
 %%
 clc;
+close all;
 snr_based_reclustering_dir = "E:\HPC Data\Reclusted Passs 0_100_3 Based On SNR";
-analyze_reclustering_results(choose_best_config(),);
+amp_based_reclustering_dir = "E:\HPC Data\Reclustered Pass 0_100_3 Based on Amp";
+analyze_reclustering_results(choose_best_config(),amp_based_reclustering_dir);
 %% choose better dimensions
 clc;
 table_with_best_channels = determine_best_dimensions_of_data_using_average_amp(table_of_best_rep_no_negatives,updated_table_of_overlap,choose_best_config());
