@@ -45,8 +45,8 @@ for i=1:length(list_of_refinement_passes)
 
 
             % fullfile(initial_tetrode_results_dir,"t"+string(refined_tetrode_idx)+"_z_score_"+z_score_to_use_for_reclustering+".txt")
-
-            get_grades_for_ideal_dims_pass(dir_with_timestamps_and_rvals,dir_with_output,current_tetrode,dir_to_save_grades_to,config_og,current_z_score,0,channels)
+            %get_grades_for_ideal_dims_pass(dir_with_timestamps_and_rvals,dir_with_results,list_of_tetrodes,dir_to_save_grades_to,config,channels)
+            get_grades_for_ideal_dims_pass(dir_with_timestamps_and_rvals,dir_with_output,current_tetrode,dir_to_save_grades_to,config_og,channels)
         end
         disp("grade_ideal_dims_pass_on_hpc.m Iteration"+string(i)+": "+string(j)+"/"+string(num_tetrodes)+" Finished")
     end
