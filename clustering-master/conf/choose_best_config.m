@@ -55,6 +55,6 @@ config.DIR_WITH_CHANNEL_WISE_MEANS_AND_STDS_ON_HPC = fullfile("/home","lddavila"
 config.GENERIC_GRADES_DIR_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise","initial_pass min z_score"); % a generic file path which can be modified to access grades of various cluster configurations
 config.GENRIC_DIR_WITH_OUTPUTS_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise","initial_pass_results min z_score"); %a generic file path which can be modified to access the results of clustering
 config.FP_TO_GT_FOR_RECORDING_ON_HPC = fullfile("/home","lddavila","ground_truth","Recording By Channel Ground Truth","0_100Neuron300SecondRecordingWithLevel3Noise.h5.mat");
-
+config.FP_TO_TABLE_OF_BEST_CHANNELS = fullfile("/home","lddavila","data_from_local_server",'table_with_best_channels based on amplitude.mat');
 config.MIN_UNIT_APPEARENCE_THRESHOLD = 30;
 end

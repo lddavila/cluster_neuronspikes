@@ -1,7 +1,8 @@
-function [] = recluster_with_ideal_dims(table_with_best_channels,config)
+function [] = recluster_with_ideal_dims(config)
 if config.ON_HPC
     number_of_outer_iterations = length(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC);
     possible_numbers_of_dimensions = config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC;
+    table_with_best_channels = importdata(config.FP_TO_TABLE_OF_BEST_CHANNELS);
 else
     number_of_outer_iterations = length(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING);
     possible_numbers_of_dimensions =config.NUM_DIMS_TO_USE_FOR_RECLUSTERING;
