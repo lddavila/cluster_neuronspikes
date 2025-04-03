@@ -32,15 +32,15 @@ for tetrode_counter=1:length(table_of_best_rep_in_cell_format)
             dir_with_outputs = generic_dir_with_outputs;
         end
         [current_grades,~,aligned,~,idx_b4_filt] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,refinement_pass);
-        if any(isnan(current_grades))
-            continue;
-        end
+        % if any(isnan(current_grades))
+        %     continue;
+        % end
         table_of_cluster_classification = table(repelem("default value",size(current_grades,1),1),repelem("default value",size(current_grades,1),1),nan(size(current_grades,1),1),nan(size(current_grades,1),1),'VariableNames',["category","tetrode","cluster","z-score"]);
         % list_of_clusters = 1:length(idx_b4_filt);
         % idx_aft_filt = cell(1,length(idx_b4_filt));
         for cluster_counter=1:size(current_grades,1)
             current_cluster_grades = current_grades(cluster_counter,:);
-            current_cluster_category = classify_clusters_based_on_grades_ver_2(current_cluster_grades);
+            current_cluster_category = classify_clusters_based_on_grades_ver_3(current_cluster_grades);
             table_of_cluster_classification{cluster_counter,1} = current_cluster_category;
             table_of_cluster_classification{cluster_counter,2} = current_tetrode;
             table_of_cluster_classification{cluster_counter,3} = cluster_counter;

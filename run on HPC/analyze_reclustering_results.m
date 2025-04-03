@@ -5,7 +5,7 @@ filenames_of_best_configs =table_of_best_configs{:,"name"};
 ground_truth = importdata(config.GT_FP);
 timestamps = importdata(config.TIMESTAMP_FP);
 skip = false;
-for i=6:size(filenames_of_best_configs,1)
+for i=2:size(filenames_of_best_configs,1)
     current_filename = filenames_of_best_configs{i};
     table_of_best_representation = importdata(fullfile(dir_with_tables_of_best_rep,current_filename));
 
@@ -147,8 +147,9 @@ for i=6:size(filenames_of_best_configs,1)
             ylim([0,100]);
         end
 
-        number_of_dims = size(blind_pass_table{1,"Channels_table_of_channels"},2);
+        number_of_dims = size(blind_pass_table{1,"Channels"},2);
         sgtitle(["Blind Pass Unit: "+string(unit_of_max_overlap),"# Dims:"+string(number_of_dims)]);
+        pause
         close all;
 
     end

@@ -349,6 +349,10 @@ all_names_of_all_grades = ["lratio","cv","isi","incompleteness","mahal/isolation
 
         grades{k,50} = calculate_avg_z_score_per_channel_without_clust_filt(aligned);
 
+        grades{k,51} = grades{k,48}(compare_wire);
+        grades{k,52} = grades{k,50}(compare_wire);
+        grades{k,53} = grades{k,47}(compare_wire);
+
 
 
     end

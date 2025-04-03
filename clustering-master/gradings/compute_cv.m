@@ -1,4 +1,4 @@
-function cv = compute_cv(peaks)
+ccfunction cv = compute_cv(peaks)
 %COMPUTE_CV Computes the cv of the cluster's representative wire's peak
 %distribution.
 %   cv = COMPUTE_CV(peaks)

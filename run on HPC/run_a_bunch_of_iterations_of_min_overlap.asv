@@ -4,7 +4,29 @@ table_of_all_overlap = check_timestamp_overlap_between_clusters_hpc_ver_3(graded
 
 %% step 0a: update the table
 clc;
+close all;
 updated_table_of_overlap = update_table_of_overlap(table_of_all_overlap,choose_best_config());
+%% check correlation between accuracy, % of unit in the cluster, %of of cluster that belongs to the unit
+clc;
+plottable_grades = [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 25 28 29 30 33 34 35 36 40 41 44 45 46 47];
+%table_of_all_clusters is a updated_table_of_overlap when you set the config.ONLY_NEURONS=false;
+% plottable_grades = 1:50;
+[table_of_correlation,accuracy_array,percentage_of_unit_in_cluster,percentage_of_cluster_that_belongs_to_unit,grades_of_all_clusters] = check_correlation_between_grades_and_scoring_metrics(table_of_all_clusters,plottable_grades,timestamp_array,choose_best_config);
+%% plot the grades along x and y axis
+clc;
+close all;
+metrics_to_plot ={accuracy_array,percentage_of_unit_in_cluster,percentage_of_cluster_that_belongs_to_unit} ;
+names_of_metrics_to_plot = ["accuracy_r_vals", "accuracy_p_vals";"unit_spikes_in_clust_r_vals" "unit_spikes_in_clust_p_vals";"cluster_belong_to_unit_r_vals","cluster_belong_to_unit_p_vals"];
+for j=1:size(names_of_metrics_to_plot,1)
+    for i=1:size(table_of_correlation,1)
+        figure;
+        scatter(grades_of_all_clusters(:,i),metrics_to_plot{j});
+        xlabel(strrep(table_of_correlation{i,"grade_names"},"_","\_"));
+        ylabel(strrep(names_of_metrics_to_plot(j,1),"_","\_"))
+        title(strrep("r_val:" + string(table_of_correlation{i,names_of_metrics_to_plot(j,1)}) + " p_val:"+string(table_of_correlation{i,names_of_metrics_to_plot(j,2)}),"_","\_"))
+        close all;
+    end
+end
 %% get table of channels
 art_tetr_array = build_artificial_tetrode;
 table_of_channels = table(strcat("t",string(1:size(art_tetr_array,1))).',art_tetr_array,'VariableNames',["Tetrode","Channels"]);
@@ -29,12 +51,30 @@ disp("Missing Units:" + strjoin(string(missing_units)));
 disp("Number of FP:" +string(sum(table_of_best_rep_no_negatives{:,"Max Overlap % With Unit"} <min_unit_appearence_threshold)))
 disp("Number of TP:" + string(size(table_of_best_rep_with_min_unit_app_thresh,1)));
 disp("Number of Times a unit was repeated:" + sum(unit_appearences_no_negatives{:,"GroupCount"}>1));
+%% add timestamp col to blind pass table of best_channels
+table_with_best_channels.("Timestamps of spikes") = timestamp_array(table_with_best_channels{:,"idx of its location in arrays_table_of_best_representation"}).';
+%% analyze best configurations
+close all;
+clc;
+plottable_grades = [1:5];
+plottable_grades = [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 25 28 29 30 33 34 35 36 40 41 44 45 46 47];
+plottable_grades = [9];
+look_at_grades_of_best_identified({table_with_best_channels,array_of_best_rep_tables{1}},choose_best_config(),plottable_grades);
 %%
 clc;
-analyze_reclustering_results(choose_best_config(),"E:\HPC Data\Reclusted Passs 0_100_3");
+close all;
+snr_based_reclustering_dir = "E:\HPC Data\Reclusted Passs 0_100_3 Based On SNR";
+amp_based_reclustering_dir = "E:\HPC Data\Reclustered Pass 0_100_3 Based on Amp";
+table_of_best_configs = struct2table(dir(fullfile(amp_based_reclustering_dir,"*best*")));
+filenames_of_best_configs =table_of_best_configs{:,"name"};
+array_of_best_rep_tables = {};
+for i=1:size(filenames_of_best_configs,1)
+    array_of_best_rep_tables{end+1} = importdata(fullfile(amp_based_reclustering_dir,filenames_of_best_configs{i}));
+end
+%analyze_reclustering_results(choose_best_config(),amp_based_reclustering_dir,table_with_best_channels,timestamp_array);
 %% choose better dimensions
 clc;
-table_with_best_channels = determine_best_dimensions_of_data_(table_of_best_rep_no_negatives,updated_table_of_overlap,choose_best_config());
+table_with_best_channels = determine_best_dimensions_of_data_using_average_amp(table_of_best_rep_no_negatives,updated_table_of_overlap,choose_best_config());
 %% now check how tp/fn is affected when you remove any with only 4 channels
 clc;
 close all;
