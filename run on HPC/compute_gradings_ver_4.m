@@ -1,4 +1,4 @@
-function grades = compute_gradings_ver_4(aligned, timestamps, tvals, clusters, config,debug,channels)
+function grades = compute_gradings_ver_4(aligned, timestamps, tvals, clusters, config,debug,channels,dir_of_template_figures)
 %COMPUTE_GRADINGS Computes grades for each of the clusters.
 %   grades = COMPUTE_GRADINGS(aligned, timestamps, tvals, clusters) returns
 %   the grades for each of the clusters.
@@ -60,7 +60,7 @@ all_names_of_all_grades =["lratio","cv","short isi","incompleteness compare wire
     "likeliness of burst","compare wire","2nd compare wire","avg compare wire cluster z score","SNR by dimensions","SNR based on 2 Compare Wires", "Mean Spike Amplitude Per Channel","Mean Z Score Per Channel Cluster Only","Channels",...
     "Mean Z Score Per Channel all spikes in config","compare wire Mean z score Cluster Only","Compare Mean Z Score All Spikes In Config","Compare Wire Mean Amp"];  
     num_clusters = length(clusters);
-    grades = cell(num_clusters, 55);
+    grades = cell(num_clusters, 57);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -108,7 +108,7 @@ all_names_of_all_grades =["lratio","cv","short isi","incompleteness compare wire
         short_isi_len = config.params.GR_SHORT_ISI_LEN;
         short_isi = sum(isi < short_isi_len)/length(isi); % Fraction of ISI < short_isi_len
         grades{k, 3} = short_isi; %OG
-        
+        % run_grading_script_on_blind_pass
         
         % Theoretical fraction below threshold
         below_threshold = compute_incompleteness(compare_peaks, wire_thresh);
@@ -354,7 +354,7 @@ all_names_of_all_grades =["lratio","cv","short isi","incompleteness compare wire
         grades{k,53} = grades{k,47}(compare_wire);
 
         %grade 54 will be how like an elipse the cluster is
-        [grades{k,54},grades{k,55}] = plot_cluster_as_png_and_return_elipse_rating(compare_peaks,second_set_of_compare_peaks);
+        [grades{k,54},grades{k,55},grades{k,56},grades{k,57}] = plot_cluster_as_png_and_return_elipse_rating(compare_peaks,second_set_of_compare_peaks,dir_of_template_figures);
 
 
 

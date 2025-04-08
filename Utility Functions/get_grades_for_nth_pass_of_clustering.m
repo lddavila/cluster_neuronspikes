@@ -20,7 +20,12 @@ for i=1:length(list_of_tetrodes)
         output_struct = load(fullfile(dir_with_results,current_tetrode+" output.mat"),"output");
         output = output_struct.output;
         %compute_gradings_ver_4(aligned, timestamps, tvals, clusters, config,debug)
-        grades = compute_gradings_ver_4(aligned, timestamps, r_tvals, cleaned_clusters, config.spikesort,debug,channels_of_curr_tetr);
+        if config.ON_HPC
+            dir_of_template_shape_pngs = config.TEMPLATE_CLUSTER_FP_ON_HPC;
+        else
+            dir_of_template_shape_pngs = config.TEMPLATE_CLUSTER_FP;
+        end
+        grades = compute_gradings_ver_4(aligned, timestamps, r_tvals, cleaned_clusters, config.spikesort,debug,channels_of_curr_tetr,dir_of_template_shape_pngs);
         
         grade_struct = struct();
         for j=1:size(grades,2)

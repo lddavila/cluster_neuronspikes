@@ -5,7 +5,7 @@ cd(home_dir);
 
 % compute the grades for the blind pass
 config = spikesort_config; %load the config file;
-config = config.spikesort;
+% config = config.spikesort;
 debug = 0;
 varying_z_scores = [3,4,5,6,7,8,9];
 number_of_z_scores_to_check = length(varying_z_scores);
