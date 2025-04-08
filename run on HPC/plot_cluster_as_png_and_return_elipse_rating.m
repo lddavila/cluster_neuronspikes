@@ -27,6 +27,10 @@ for i=1:size(dir_of_template_figures,1)
     template_image = imread(dir_of_template_figures(i));
     gray_template_image = rgb2gray(template_image);
     template_binary_image = imbinarize(gray_template_image);
+    disp("Size of the cluster binary image")
+    disp(size(binary_image))
+    disp("Size of the template image")
+    disp(size(template_binary_image))
     pixels_in_common = sum(~binary_image & ~template_binary_image,"all");
     pixels_in_template_image = sum(~template_binary_image,"all");
     number_of_pixels_in_cluster_binary_image = sum(~binary_image,"all");

@@ -11,9 +11,9 @@ f =figure('Position',[2027         394         560         420]);
 fill(compare_wire_peaks(k),compare_wire_2_peaks(k),'k');
 
 axis off;
-saveas(f,"tempcluster"++".png");
+saveas(f,"tempcluster"+strjoin(string(channels))+".png");
 close all;
-the_cluster_image = imread("tempcluster.png");
+the_cluster_image = imread("tempcluster"+strjoin(string(channels))+".png");
 grayImage = rgb2gray(the_cluster_image);
 binary_image = imbinarize(grayImage);
 % figure;
@@ -27,6 +27,10 @@ for i=1:size(dir_of_template_figures,1)
     template_image = imread(dir_of_template_figures(i));
     gray_template_image = rgb2gray(template_image);
     template_binary_image = imbinarize(gray_template_image);
+    disp("Size of the cluster binary image")
+    disp(size(binary_image))
+    disp("Size of the cluster")
+    disp(size(template_binary_image))
     pixels_in_common = sum(~binary_image & ~template_binary_image,"all");
     pixels_in_template_image = sum(~template_binary_image,"all");
     number_of_pixels_in_cluster_binary_image = sum(~binary_image,"all");
@@ -74,7 +78,7 @@ end
 % lower_half = bin_counts(14:end,:);
 % circular_symmetry = upper_half - lower_half;
 
-delete('tempcluster.png')
+delete("tempcluster"+strjoin(string(channels))+".png")
 % get_grades_for_nth_pass_of_clustering(dir_with_timestamps_and_rvals,dir_with_output,list_of_tetrodes,dir_to_save_grades_to,config,varying_z_scores(2),debug,relevant_grades,name_of_grades)
 
 
