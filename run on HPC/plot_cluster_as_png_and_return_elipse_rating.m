@@ -1,4 +1,4 @@
-function [eccentricity,circularity,symmetry_score,circular_symmetry] = plot_cluster_as_png_and_return_elipse_rating(compare_wire_peaks,compare_wire_2_peaks,dir_of_template_figures)
+function [eccentricity,circularity,symmetry_score,circular_symmetry] = plot_cluster_as_png_and_return_elipse_rating(compare_wire_peaks,compare_wire_2_peaks,dir_of_template_figures,channels)
 
 %it seems as though circularity below 1.7 can indicate something bad
 eccentricity = NaN;
@@ -11,9 +11,9 @@ f =figure('Position',[2027         394         560         420]);
 fill(compare_wire_peaks(k),compare_wire_2_peaks(k),'k');
 
 axis off;
-saveas(f,"tempcluster.png");
+saveas(f,"tempcluster"+strjoin(string(channels))+".png");
 close all;
-the_cluster_image = imread("tempcluster.png");
+the_cluster_image = imread("tempcluster"+strjoin(string(channels))+".png");
 grayImage = rgb2gray(the_cluster_image);
 binary_image = imbinarize(grayImage);
 % figure;
@@ -40,9 +40,9 @@ for i=1:size(dir_of_template_figures,1)
     % imshow(template_binary_image);
     % disp("num pixels for template shape plot:"+string(size(template_binary_image)));
 end
-disp([[elipse_like_score,circularity].',array_of_names.'])
+% disp([[elipse_like_score,circularity].',array_of_names.'])
 [eccentricity,index] = max(elipse_like_score);
-disp("Best Elipse "+array_of_names(index)+" Score:"+string(eccentricity))
+% disp("Best Elipse "+array_of_names(index)+" Score:"+string(eccentricity))
 % figure('Position',[3077         367         560         420]);
 
 
@@ -50,9 +50,9 @@ disp("Best Elipse "+array_of_names(index)+" Score:"+string(eccentricity))
 % hold on;
 
 
-figure('Position',[ 2583         488         560         420]);
-h = histogram2(compare_wire_peaks,compare_wire_2_peaks,'Normalization','probability','NumBins',[26,26]);
-bin_counts = h.Values;
+% figure('Position',[ 2583         488         560         420]);
+% h = histogram2(compare_wire_peaks,compare_wire_2_peaks,'Normalization','probability','NumBins',[26,26]);
+% bin_counts = h.Values;
 
 % if index==1
 %     left_half = bin_counts(:,1:13);
@@ -74,7 +74,7 @@ bin_counts = h.Values;
 % lower_half = bin_counts(14:end,:);
 % circular_symmetry = upper_half - lower_half;
 
-delete('tempcluster.png')
+delete("tempcluster"+strjoin(string(channels))+".png")
 % get_grades_for_nth_pass_of_clustering(dir_with_timestamps_and_rvals,dir_with_output,list_of_tetrodes,dir_to_save_grades_to,config,varying_z_scores(2),debug,relevant_grades,name_of_grades)
 
 

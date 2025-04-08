@@ -354,7 +354,7 @@ all_names_of_all_grades =["lratio","cv","short isi","incompleteness compare wire
         grades{k,53} = grades{k,47}(compare_wire);
 
         %grade 54 will be how like an elipse the cluster is
-        [grades{k,54},grades{k,55},grades{k,56},grades{k,57}] = plot_cluster_as_png_and_return_elipse_rating(compare_peaks,second_set_of_compare_peaks,dir_of_template_figures);
+        [grades{k,54},grades{k,55},grades{k,56},grades{k,57}] = plot_cluster_as_png_and_return_elipse_rating(compare_peaks,second_set_of_compare_peaks,dir_of_template_figures,channels);
 
 
 
