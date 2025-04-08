@@ -3,7 +3,8 @@ function [eccentricity,circularity,symmetry_score,circular_symmetry] = plot_clus
 %it seems as though circularity below 1.7 can indicate something bad
 eccentricity = NaN;
 circularity = NaN;
-
+,symmetry_score
+circular_symmetry
 k = boundary(compare_wire_peaks.',compare_wire_2_peaks.',1);
 % hold on;
 f =figure('Position',[2027         394         560         420]);

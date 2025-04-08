@@ -3,7 +3,8 @@ function [eccentricity,circularity,symmetry_score,circular_symmetry] = plot_clus
 %it seems as though circularity below 1.7 can indicate something bad
 eccentricity = NaN;
 circularity = NaN;
-
+symmetry_score = NaN;
+circular_symmetry = NaN;
 k = boundary(compare_wire_peaks.',compare_wire_2_peaks.',1);
 % hold on;
 f =figure('Position',[2027         394         560         420]);
@@ -53,25 +54,25 @@ figure('Position',[ 2583         488         560         420]);
 h = histogram2(compare_wire_peaks,compare_wire_2_peaks,'Normalization','probability','NumBins',[26,26]);
 bin_counts = h.Values;
 
-if index==1
-    left_half = bin_counts(:,1:13);
-    right_half = bin_counts(:,14:end);
-    symmetry_score = left_half - right_half;
-elseif index==2
-    upper_triangular_densities = triu(bin_counts);
-    lower_triangular_densities = tril(bin_counts);
-    symmetry_score = sum(upper_triangular_densities - lower_triangular_densities,"all");
-elseif index==3
-    
-elseif index==4
-    upper_half = bin_counts(1:13,:);
-    lower_half = bin_counts(14:end,:);
-    symmetry_score = upper_half - lower_half;
-end
-
-upper_half = bin_counts(1:13,:);
-lower_half = bin_counts(14:end,:);
-circular_symmetry = upper_half - lower_half;
+% if index==1
+%     left_half = bin_counts(:,1:13);
+%     right_half = bin_counts(:,14:end);
+%     symmetry_score = left_half - right_half;
+% elseif index==2
+%     upper_triangular_densities = triu(bin_counts);
+%     lower_triangular_densities = tril(bin_counts);
+%     symmetry_score = sum(upper_triangular_densities - lower_triangular_densities,"all");
+% elseif index==3
+% 
+% elseif index==4
+%     upper_half = bin_counts(1:13,:);
+%     lower_half = bin_counts(14:end,:);
+%     symmetry_score = upper_half - lower_half;
+% end
+% 
+% upper_half = bin_counts(1:13,:);
+% lower_half = bin_counts(14:end,:);
+% circular_symmetry = upper_half - lower_half;
 
 delete('tempcluster.png')
 % get_grades_for_nth_pass_of_clustering(dir_with_timestamps_and_rvals,dir_with_output,list_of_tetrodes,dir_to_save_grades_to,config,varying_z_scores(2),debug,relevant_grades,name_of_grades)
