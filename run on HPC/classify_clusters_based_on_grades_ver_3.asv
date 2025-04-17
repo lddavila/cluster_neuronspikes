@@ -10,10 +10,10 @@ elseif grades{5} < 550
                 ccc = "Neruon c1.1.1.1";
             else
                 ccc = "MUA 1.1.1.end"; %OG
-                ccc = "Neuron 1.1.1.end";
+                ccc = "MUA"
             end
         else
-            ccc = "MUA 1.1.end"; 
+            ccc = "MUA 1.1.end"; %OG
         end
     elseif grades{6} > 2670
         if grades{1} >0 && grades{1} < 0.1

@@ -60,23 +60,28 @@ elseif grades(12) < 0.57
     elseif grades(8) > 0.194 && grades(8) < 0.58
         ccc = "Neuron c2.3";
     elseif grades(10) > 1.82 && grades(10) < 2.73
-        ccc = "Neuron c2.4";
+        ccc = "Neuron c2.4"; MUA
+        ccc = "MUA c2.4";
     elseif grades(13) > 0.144 && grades(13) < 0.354
-        ccc = "Neuron c2.5";
+        ccc = "Neuron c2.5";%
+        ccc = "MUA c2.5 Updated";
     elseif grades(14) <0.456
         ccc = "Neuron c2.6";
     elseif grades(16) > 0 && grades(16) < 0.05
         ccc = "Neuron c2.7";
     elseif grades(17) > 0 && grades(17) < 0.05
-        ccc = "Neuron c2.8";
+        ccc = "Neuron c2.8"; %OG
+        ccc = "MUA c2.8 Updated";
     elseif grades(18) > 0 && grades(18) < 0.05
         ccc = "Neuron c2.9";
     elseif grades(19) > 2.5 && grades(19) < 3.5
-        ccc = "Neuron c2.10";
+        ccc = "Neuron c2.10"; %OG
+        ccc = "MUA c2.10"; 
     elseif grades(20) <0.4
         ccc = "Neuron c2.11";
     elseif grades(21) < 200
-        ccc = "Neuron c2.12";
+        ccc = "Neuron c2.12"; %OG
+        ccc = "MUA c2.12";
     elseif grades(22) > 0.57 && grades(22) < 0.58
         ccc = "Neuron c2.13";
     elseif grades(23) < 0.2

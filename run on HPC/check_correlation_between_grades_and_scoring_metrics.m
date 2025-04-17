@@ -17,19 +17,19 @@ for i=1:size(table_of_all_clusters,1)
         if isempty(singular_grade)
             singular_grade = NaN;
             if i==1
-                grade_names = [grade_names;config.NAMES_OF_CURR_GRADES(array_of_grades_to_check_correlation_for(j))];
+                grade_names = [grade_names;string(array_of_grades_to_check_correlation_for(j))+":"+config.NAMES_OF_CURR_GRADES(array_of_grades_to_check_correlation_for(j))];
             end
         end
         if size(singular_grade,2)==1
             flattened_grades = [flattened_grades,singular_grade];
             if i==1
-                grade_names = [grade_names;config.NAMES_OF_CURR_GRADES(array_of_grades_to_check_correlation_for(j))];
+                grade_names = [grade_names;string(array_of_grades_to_check_correlation_for(j))+":"+config.NAMES_OF_CURR_GRADES(array_of_grades_to_check_correlation_for(j))];
             end
         else
             for k=1:size(singular_grade,2)
                 flattened_grades = [flattened_grades,singular_grade(k)];
                 if i==1
-                    grade_names = [grade_names;config.NAMES_OF_CURR_GRADES(array_of_grades_to_check_correlation_for(j))+"_"+string(k)];
+                    grade_names = [grade_names;string(array_of_grades_to_check_correlation_for(j))+"_"+string(k)+":"+config.NAMES_OF_CURR_GRADES(array_of_grades_to_check_correlation_for(j))];
                 end
             end
         end

@@ -3,7 +3,7 @@ updated_table_of_other_appearences = old_table_of_other_appearences;
 %use this loop to update the classification of each cluster in the category
 for i=1:size(updated_table_of_other_appearences,1)
     grades_of_current_cluster = old_table_of_other_appearences{i,"grades"}{1};
-    new_cluster_category = classify_clusters_based_on_grades_ver_2(grades_of_current_cluster);
+    new_cluster_category = classify_clusters_based_on_grades_ver_3(grades_of_current_cluster);
     updated_table_of_other_appearences{i,"Classification"} = new_cluster_category;
     disp("update_cluster_classification First Part Finished "+string(i)+"/"+size(updated_table_of_other_appearences,1));
 end

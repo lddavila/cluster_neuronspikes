@@ -3,10 +3,6 @@ function [ccc] = classify_clusters_based_on_grades_ver_2(grades)
 ccc = "";
 if grades(6) < 100
     ccc = "MUA underpowered";
-elseif grades(49) > .9
-    ccc = "Neuron Grade 5 by cicrcle SNR";
-elseif grades(49) < -0.5
-    ccc = "MUA by circle SNR";
 elseif grades(5) < 550
     if grades(2)> 0.0538 && grades(2) < 0.07
         if grades(1) > 0 && grades(1) < 0.05
@@ -66,17 +62,20 @@ elseif grades(12) < 0.57
     elseif grades(10) > 1.82 && grades(10) < 2.73
         ccc = "Neuron c2.4";
     elseif grades(13) > 0.144 && grades(13) < 0.354
-        ccc = "Neuron c2.5";
+        ccc = "Neuron c2.5";%
+        ccc = "MUA c2.5 Updated";
     elseif grades(14) <0.456
         ccc = "Neuron c2.6";
     elseif grades(16) > 0 && grades(16) < 0.05
         ccc = "Neuron c2.7";
     elseif grades(17) > 0 && grades(17) < 0.05
-        ccc = "Neuron c2.8";
+        ccc = "Neuron c2.8"; %OG
+        ccc = "MUA c2.8 Updated";
     elseif grades(18) > 0 && grades(18) < 0.05
         ccc = "Neuron c2.9";
     elseif grades(19) > 2.5 && grades(19) < 3.5
-        ccc = "Neuron c2.10";
+        ccc = "Neuron c2.10"; %OG
+        ccc = "MUA c2.10"; 
     elseif grades(20) <0.4
         ccc = "Neuron c2.11";
     elseif grades(21) < 200
@@ -89,6 +88,10 @@ elseif grades(12) < 0.57
     else
         ccc = "MUA c2.end";
     end
+% elseif grades(49) > .9
+%     ccc = "Neuron Grade 5 by cicrcle SNR";
+% elseif grades(49) < -0.8
+%     ccc = "MUA by circle SNR";
 
     %current_cluster_category = "Neuron c2";
     % elseif grades(13) < 1 && grades(13) > 0.05
