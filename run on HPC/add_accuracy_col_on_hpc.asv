@@ -4,12 +4,14 @@ ground_truth = config.FP_TO_GT_FOR_RECORDING_ON_HPC;
 timestamps = importdata(config.TIMESTAMP_FP_ON_HPC);
 
 accuracy_category = nan(size(table_of_clusters,1),1);
+sliced_max_overlap_unit = cell(size(table_of_clusters,1));
+sliced_ground_truth_indexes = cell(size(table_of_clusters,1));
 sliced_ground_truth_ts = cell(size(table_of_clusters,1));
 
 categories = linspace(1,100,number_of_categories);
 
 for i=1:size(table_of_clusters,1)
-    sliced_ground_truth_ts{i} = timestamps(ground_truth{table_of_clusters{i,"Max Overlap Unit"}});
+    sliced_ground_truth_ts{i} = timestamps(table_of_clusters{i,"Max Overlap Unit"}};
 end
 
 
