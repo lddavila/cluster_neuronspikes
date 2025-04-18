@@ -1,6 +1,6 @@
 function [table_of_clusters] = add_accuracy_col_on_hpc(ts_array,config,table_of_clusters,number_of_categories)
 accuracy_array = nan(size(table_of_clusters,1),1);
-ground_truth = config.FP_TO_GT_FOR_RECORDING_ON_HPC;
+ground_truth = importdata(config.FP_TO_GT_FOR_RECORDING_ON_HPC);
 timestamps = importdata(config.TIMESTAMP_FP_ON_HPC);
 
 accuracy_category = nan(size(table_of_clusters,1),1);
