@@ -18,7 +18,7 @@ end
 subset_of_data = uniquerows(updated_table_of_overlap(:,["Z Score","Tetrode"]));
 sliced_updated_table_of_overlap = cell(1,size(subset_of_data,1));
 sliced_channels_per_tetrode = cell(1,size(subset_of_data,1));
-dir_to_return_to = cd(dir_to_save_figures_to);
+dir_to_return_to
 for i=1:size(subset_of_data,1)
     current_z_score =subset_of_data{i,"Z Score"} ;
     current_tetrode = subset_of_data{i,"Tetrode"};
@@ -68,7 +68,7 @@ for i=1:length(sliced_updated_table_of_overlap)
   
         hold on
         
-        f = scatter(peaks(:, first_dimension), peaks(:, second_dimension), my_gray, 'o', 2);
+        f = scatter(peaks(:, first_dimension), peaks(:, second_dimension), my_gray, 'o', 2);;
 
         peaks_in_cluster = idx{c};
         if isempty(peaks_in_cluster)
@@ -87,15 +87,12 @@ for i=1:length(sliced_updated_table_of_overlap)
         close(f);
         RGB = imread(file_save_name);
         grayscaled_image =rgb2gray(RGB);
-        resized_and_gray_scaled_image = imresize(grayscaled_image,[224,224]);
+        resized_image = imresize(grayscaled_image,[224,224]);
         delete(file_save_name);
-        imshow(grayscaled_image)
-        imwrite(resized_and_gray_scaled_image,file_save_name);
 
 
     end
 
 
 end
-cd(dir_to_return_to);
 end
