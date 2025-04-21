@@ -28,7 +28,7 @@ total_num_iterations = first_for_loop_num_iters * second_for_loop_num_iters * th
 
 for i=1:size(number_of_accuracy_categories,2)
     number_of_accuracy_cats = number_of_accuracy_categories(i);
-    tic;
+    % tic;
     table_with_accuracy = add_accuracy_col_on_hpc(timestamp_array,spikesort_config,updated_table_of_overlap,number_of_accuracy_cats);
     accuracy_sub_array_num_layers = cell(length(number_of_layers),1);
     parfor j=1:size(number_of_layers,2)
@@ -36,6 +36,7 @@ for i=1:size(number_of_accuracy_categories,2)
         num_layers = number_of_layers(j);
         for k=1:size(num_of_neurons_per_layer,2)
             num_neurons = num_of_neurons_per_layer(k);
+            tic
             accuracy_score = grades_neural_network_on_hpc(table_with_accuracy,spikesort_config,num_neurons,num_layers);
             end_time = toc;
             current_iteration = ((i-1)*first_for_loop_num_iters)+((j-1)*second_for_loop_num_iters)+k;
