@@ -1,21 +1,24 @@
 function [] = create_cluster_plots_as_png_on_hpc()
 %add necessary files to path
-cd("..");
+home_dir = cd("..");
 addpath(genpath(pwd));
-
-%import the data
-updated_table_of_overlap = importdata(fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat"));
-disp("Finished loading the updated table of overlap")
-
-%set the directory where the pngs will be saved to 
+cd(home_dir);
+config = spikesort_config;
+%set the directory where the pngs will be saved to
 if config.ON_HPC
-    dir_to_save_figures_to = config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC; 
+    dir_to_save_figures_to = config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC;
+    %import the data
+    updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
+    disp("Finished loading the updated table of overlap")
 else
     dir_to_save_figures_to = config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO;
+    %import the data
+    updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
+    disp("Finished loading the updated table of overlap")
 end
 
 %slice the data for parallel processing
-subset_of_data = uniquerows(updated_table_of_overlap(:,["Z Score","Tetrode"]));
+subset_of_data = unique(updated_table_of_overlap(:,["Z Score","Tetrode"]),"rows","stable");
 sliced_updated_table_of_overlap = cell(1,size(subset_of_data,1));
 sliced_channels_per_tetrode = cell(1,size(subset_of_data,1));
 dir_to_return_to = cd(dir_to_save_figures_to);
@@ -30,19 +33,23 @@ for i=1:size(subset_of_data,1)
 end
 
 %create the figures
-for i=1:length(sliced_updated_table_of_overlap)
+parfor i=1:length(sliced_updated_table_of_overlap)
     current_data = sliced_updated_table_of_overlap{i};
     %ensure that all data in the current set have the same z score and tetrode
     %if it doesn't then return
-    if ~all(current_data(:,"Tetrode") == current_data{1,"Tetrode"}) || ~all(current_data(:,"Z Score") == current_data{1,"Z Score"})
+    if ~all(current_data{:,"Tetrode"} == current_data{1,"Tetrode"}) || ~all(current_data{:,"Z Score"} == current_data{1,"Z Score"})
         disp(current_data);
         error("every row of current_data doesn't have all have the same tetrode and z score");
     end
     current_tetrode = current_data{1,"Tetrode"};
     current_z_score = current_data{1,"Z Score"};
-    dir_with_grades = config.GENERIC_GRADES_DIR_ON_HPC+" "+string(current_z_score)+ " grades";
-    dir_with_outputs = config.GENRIC_DIR_WITH_OUTPUTS_ON_HPC+string(current_z_score);
-    
+    if config.ON_HPC
+        dir_with_grades = config.GENERIC_GRADES_DIR_ON_HPC+" "+string(current_z_score)+ " grades";
+        dir_with_outputs = config.GENRIC_DIR_WITH_OUTPUTS_ON_HPC+string(current_z_score);
+    else
+        dir_with_grades = config.GENERIC_GRADES_DIR +" "+string(current_z_score)+" grades";
+        dir_with_outputs = config.GENRIC_DIR_WITH_OUTPUTS +string(current_z_score);
+    end
     [grades,~,aligned,~,idx,failed_to_load] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,false);
 
     if failed_to_load
@@ -67,10 +74,10 @@ for i=1:length(sliced_updated_table_of_overlap)
         second_dimension = grades{j,43};
   
         hold on
-        
-        f = scatter(peaks(:, first_dimension), peaks(:, second_dimension), my_gray, 'o', 2);
+        f = figure;
+        scatter(peaks(:, first_dimension), peaks(:, second_dimension), 2,my_gray);
 
-        peaks_in_cluster = idx{c};
+        peaks_in_cluster = idx{j};
         if isempty(peaks_in_cluster)
             continue;
         end
@@ -78,8 +85,8 @@ for i=1:length(sliced_updated_table_of_overlap)
         cluster = peaks(peaks_in_cluster, :);
         cluster_x = cluster(:, first_dimension);
         cluster_y = cluster(:, second_dimension);
-
-        scatter(cluster_x, cluster_y, colors(j,:), 'o', 2)
+        hold on;
+        scatter(cluster_x, cluster_y, 2,colors(1,:))
         axis equal;
         axis off;
         file_save_name = "Z Score "+ string(current_z_score)+ " Tetrode "+current_tetrode+" Cluster "+string(j)+" Channels"+string(current_tetrode_channels(first_dimension))+ " and "+string(current_tetrode_channels(second_dimension))+".png";
@@ -89,7 +96,7 @@ for i=1:length(sliced_updated_table_of_overlap)
         grayscaled_image =rgb2gray(RGB);
         resized_and_gray_scaled_image = imresize(grayscaled_image,[224,224]);
         delete(file_save_name);
-        imshow(grayscaled_image)
+        %imshow(resized_and_gray_scaled_image)
         imwrite(resized_and_gray_scaled_image,file_save_name);
 
 
