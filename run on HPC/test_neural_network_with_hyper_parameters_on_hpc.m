@@ -2,7 +2,7 @@ function [] = test_neural_network_with_hyper_parameters_on_hpc()
 cd("..");
 addpath(genpath(pwd));
 number_of_accuracy_categories = [3 4 5 6 7 8 9 10];
-number_of_layers = 1:5:300;
+number_of_layers = 1:50:300;
 num_of_neurons_per_layer = [10 20 40 80 100];
 accuracy_array = cell(length(number_of_accuracy_categories),1);
 
@@ -10,8 +10,10 @@ timestamp_array = importdata(fullfile("/home","lddavila","data_from_local_server
 disp("Finished loading timestamp array")
 updated_table_of_overlap = importdata(fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat"));
 disp("Finished loading the updated table of overlap")
+currentDateTime = datetime('now', 'Format', 'yyyy-MM-dd HH:mm:ss');
 for i=1:size(number_of_accuracy_categories,2)
     number_of_accuracy_cats = number_of_accuracy_categories(i);
+    tic;
     table_with_accuracy = add_accuracy_col_on_hpc(timestamp_array,spikesort_config,updated_table_of_overlap,number_of_accuracy_cats);
     accuracy_sub_array_num_layers = cell(length(number_of_layers),1);
     parfor j=1:size(number_of_layers,2)
@@ -20,6 +22,8 @@ for i=1:size(number_of_accuracy_categories,2)
         for k=1:size(num_of_neurons_per_layer,2)
             num_neurons = num_of_neurons_per_layer(k);
             accuracy_sub_array_num_neurons{k} = grades_neural_network_on_hpc(table_with_accuracy,spikesort_config,num_neurons,num_layers);
+            end_time = seconds(toc);
+            disp("Projected end time:"+string(currentDateTime+end_time));
         end
         accuracy_sub_array_num_layers{j} = accuracy_sub_array_num_neurons;
     end
