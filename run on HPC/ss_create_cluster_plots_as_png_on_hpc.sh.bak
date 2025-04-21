@@ -4,4 +4,4 @@
 #SBATCH -o output.txt 
 #SBATCH -e error.txt 
 module load matlab/R2024b
-matlab -batch "test_neural_network_with_hyper_parameters_on_hpc();exit;"
+matlab -batch "create_cluster_plots_as_png_on_hpc();exit;"
