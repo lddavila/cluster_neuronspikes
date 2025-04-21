@@ -31,9 +31,9 @@ for i=1:size(subset_of_data,1)
     sliced_updated_table_of_overlap{i} = updated_table_of_overlap(c1 & c2,:);
     sliced_channels_per_tetrode{i} = config.ART_TETR_ARRAY(tetrode_number,:);
 end
-
+number_of_iterations = length(sliced_updated_table_of_overlap);
 %create the figures
-for i=1:length(sliced_updated_table_of_overlap)
+parfor i=1:length(sliced_updated_table_of_overlap)
     current_data = sliced_updated_table_of_overlap{i};
     %ensure that all data in the current set have the same z score and tetrode
     %if it doesn't then return
@@ -105,7 +105,7 @@ for i=1:length(sliced_updated_table_of_overlap)
 
 
     end
-
+    disp("Finished "+string(i)+"/"+string(number_of_iterations));
 
 end
 cd(dir_to_return_to);
