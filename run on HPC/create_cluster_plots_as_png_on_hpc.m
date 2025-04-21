@@ -60,6 +60,10 @@ parfor i=1:length(sliced_updated_table_of_overlap)
         disp(size(grades));
         disp("Current Data Size:")
         disp(size(current_data))
+        disp("dir_with_grades")
+        disp(dir_with_grades)
+        disp("dir_with_outputs")
+        disp(dir_with_outputs)
         error("Number of clusters found doesn't match expected number of clusters. Ensure you're using the right versions.")
     end
 
