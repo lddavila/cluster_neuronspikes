@@ -94,6 +94,10 @@ config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC = fullfile("/home","lddavila","d
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= fullfile("D:","cluster_neuronspikes","Data","Timestamp and table","overlap_table.mat");
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat");
 
+%
+config.DIR_TO_SAVE_ACC_RESULTS_TO = fullfile("D:","cluster_neuronspikes","Data","Grades NN Accuracy Results");
+config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = fullfile("/home","lddavila","data_to_be_copied_to_local_server","Grades NN Accuracy Results");
+
 
 % ORIGINAL BEGINS HERE
 
