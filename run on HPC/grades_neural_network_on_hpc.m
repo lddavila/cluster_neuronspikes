@@ -72,5 +72,5 @@ accuracy = sum(YPred == YTest)/numel(YTest);
 
 % figure
 % confusionchart(YTest,YPred)
-disp("Finished Training NN")
+% disp("Finished Training NN")
 end
