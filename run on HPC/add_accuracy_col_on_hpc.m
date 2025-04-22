@@ -1,6 +1,6 @@
 function [table_of_clusters] = add_accuracy_col_on_hpc(ts_array,config,table_of_clusters,number_of_categories)
 disp("Starting To Add Accuracy Category")
-accuracy_array = nan(size(table_of_clusters,1),1);
+% accuracy_array = nan(size(table_of_clusters,1),1);
 % ground_truth = importdata(config.FP_TO_GT_FOR_RECORDING_ON_HPC);
 % timestamps = importdata(config.TIMESTAMP_FP_ON_HPC);
 
@@ -16,7 +16,7 @@ for i=1:size(table_of_clusters,1)
 end
 
 
-parfor i=1:size(table_of_clusters,1)
+for i=1:size(table_of_clusters,1)
     % gt_ts = sliced_ground_truth_ts{i};
     % cluster_spike_ts = ts_array{i};
     % accuracy_array(i) = calculate_accuracy(gt_ts,{cluster_spike_ts},config) * 100;
