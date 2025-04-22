@@ -13,7 +13,7 @@ plottable_grades = [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 25
 %table_of_all_clusters is a updated_table_of_overlap when you set the config.ONLY_NEURONS=false;
 % plottable_grades = 1:size(spikesort_config().NAMES_OF_CURR_GRADES,2);
 % plottable_grades = 1:size(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST,2);
-[table_of_correlation,accuracy_array,percentage_of_unit_in_cluster,percentage_of_cluster_that_belongs_to_unit,grades_of_all_clusters] = check_correlation_between_grades_and_scoring_metrics(updated_table_of_overlap_all_clusters,plottable_grades,timestamp_array,spikesort_config);
+[table_of_correlation,accuracy_array,percentage_of_unit_in_cluster,percentage_of_cluster_that_belongs_to_unit,grades_of_all_clusters] = check_correlation_between_grades_and_scoring_metrics(updated_table_of_overlap,plottable_grades,timestamp_array,spikesort_config);
 %%
 disp(table_of_correlation)
 %% check correlation between accuracy, % of unit in the cluster, %of of cluster that belongs to the unit for only the cases classified as neurons
