@@ -56,17 +56,7 @@ parfor i=1:length(sliced_updated_table_of_overlap)
     if failed_to_load
         disp("Failed To Load");
     end
-    if size(grades,1)~= size(current_data,1)
-        disp("Current Grades Size:")
-        disp(size(grades));
-        disp("Current Data Size:")
-        disp(size(current_data))
-        disp("dir_with_grades")
-        disp(dir_with_grades)
-        disp("dir_with_outputs")
-        disp(dir_with_outputs)
-        error("Number of clusters found doesn't match expected number of clusters. Ensure you're using the right versions.")
-    end
+
 
     %now create the actual cluster plots
     % channels_of_curr_tetr = sliced_channels_per_tetrode{i};
