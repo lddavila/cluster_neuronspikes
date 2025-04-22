@@ -31,6 +31,6 @@ parfor i=1:size(table_of_clusters,1)
     % disp("add_accuracy_col Finished "+string(i)+"/"+string(size(table_of_clusters,1)));
 end
 disp("Finished Adding Accuracy Category")
-table_of_clusters.accuracy = accuracy_array;
+% table_of_clusters.accuracy = accuracy_array;
 table_of_clusters.accuracy_category = accuracy_category;
 end
