@@ -50,8 +50,9 @@ parfor i=1:length(sliced_updated_table_of_overlap)
         dir_with_grades = config.GENERIC_GRADES_DIR +" "+string(current_z_score)+" grades";
         dir_with_outputs = config.GENRIC_DIR_WITH_OUTPUTS +string(current_z_score);
     end
-    [grades,~,aligned,~,idx,failed_to_load] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,false);
+    [~,~,aligned,~,idx,failed_to_load] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,false);
 
+    grades = current_data{:,"grades"}{1};
     if failed_to_load
         disp("Failed To Load");
     end
@@ -74,8 +75,8 @@ parfor i=1:length(sliced_updated_table_of_overlap)
     my_gray = [0.5 0.5 0.5];
     current_tetrode_channels = sliced_channels_per_tetrode{i};
     for j=1:size(grades,1)
-        first_dimension = grades{j,42};
-        second_dimension = grades{j,43};
+        first_dimension = grades{j}{42};
+        second_dimension = grades{j}{43};
   
         hold on
         f = figure;
