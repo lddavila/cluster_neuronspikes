@@ -16,12 +16,12 @@ for i=1:size(table_of_clusters,1)
 end
 
 
-for i=1:size(table_of_clusters,1)
+parfor i=1:size(table_of_clusters,1)
     % gt_ts = sliced_ground_truth_ts{i};
     % cluster_spike_ts = ts_array{i};
     % accuracy_array(i) = calculate_accuracy(gt_ts,{cluster_spike_ts},config) * 100;
     current_data = sliced_table{i};
-    current_accuracy_score = current_data{i,"accuracy"};
+    current_accuracy_score = current_data{1,"accuracy"};
     for j=1:size(categories,2)
         if current_accuracy_score < categories(j)
             accuracy_category(i) = j-1;
