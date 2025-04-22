@@ -52,7 +52,7 @@ parfor i=1:length(sliced_updated_table_of_overlap)
     end
     [~,~,aligned,~,idx,failed_to_load] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,false);
 
-    grades = current_data{:,"grades"}{1};
+    grades = current_data{:,"grades"};
     if failed_to_load
         disp("Failed To Load");
     end
