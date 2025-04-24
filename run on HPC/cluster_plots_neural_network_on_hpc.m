@@ -57,7 +57,9 @@ for i=1:num_layers
     layers(end+1) = convolution2dLayer(3,filter_size,Padding="same");
     layers(end+1) = batchNormalizationLayer;
     layers(end+1) = reluLayer;
-    layers(end+1) = maxPooling2dLayer(2,Stride=2);
+    if i<5
+        layers(end+1) = maxPooling2dLayer(2,Stride=2);
+    end
 end
 
 % convolution2dLayer(3,16,Padding="same")
