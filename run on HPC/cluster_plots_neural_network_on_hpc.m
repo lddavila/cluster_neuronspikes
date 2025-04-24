@@ -43,7 +43,7 @@ num_classes = size(class_names,1);
 
 layers = [
     imageInputLayer(input_size)
-    
+
     convolution2dLayer(3,8,Padding="same")
     batchNormalizationLayer
     reluLayer
@@ -59,58 +59,61 @@ for i=1:num_layers
     layers(end+1) = reluLayer;
     layers(end+1) = maxPooling2dLayer(2,Stride=2);
 end
-    
-    % convolution2dLayer(3,16,Padding="same")
-    % batchNormalizationLayer
-    % reluLayer
-    % 
-    % maxPooling2dLayer(2,Stride=2)
-    % 
-    % convolution2dLayer(3,32,Padding="same")
-    % batchNormalizationLayer
-    % reluLayer
-    % 
-    % maxPooling2dLayer(2,Stride=2)
-    % 
-    % convolution2dLayer(3,64,Padding="same")
-    % batchNormalizationLayer
-    % reluLayer
-    % 
-    % maxPooling2dLayer(2,Stride=2)
-    % 
-    % convolution2dLayer(3,128,Padding="same")
-    % batchNormalizationLayer
-    % reluLayer
-    % 
-    % maxPooling2dLayer(2,Stride=2)
-    % 
-    % convolution2dLayer(3,256,Padding="same")
-    % batchNormalizationLayer
-    % reluLayer
-    % 
-    % maxPooling2dLayer(2,Stride=2)
-    % 
-    % convolution2dLayer(3,512,Padding="same")
-    % batchNormalizationLayer
-    % reluLayer
-    % 
-    % maxPooling2dLayer(2,Stride=2)
-    
-    layers(end+1) = fullyConnectedLayer(num_classes);
-    layers(end+1)=softmaxLayer;
 
-options = trainingOptions("sgdm", ...
-    InitialLearnRate=0.01, ...
-    MaxEpochs=20, ...
-    Shuffle="every-epoch", ...
-    ValidationData=imds_validation, ...
-    ValidationFrequency=30, ...
-    Plots="training-progress", ...
-    Metrics="accuracy", ...
-    Verbose=true);
+% convolution2dLayer(3,16,Padding="same")
+% batchNormalizationLayer
+% reluLayer
+%
+% maxPooling2dLayer(2,Stride=2)
+%
+% convolution2dLayer(3,32,Padding="same")
+% batchNormalizationLayer
+% reluLayer
+%
+% maxPooling2dLayer(2,Stride=2)
+%
+% convolution2dLayer(3,64,Padding="same")
+% batchNormalizationLayer
+% reluLayer
+%
+% maxPooling2dLayer(2,Stride=2)
+%
+% convolution2dLayer(3,128,Padding="same")
+% batchNormalizationLayer
+% reluLayer
+%
+% maxPooling2dLayer(2,Stride=2)
+%
+% convolution2dLayer(3,256,Padding="same")
+% batchNormalizationLayer
+% reluLayer
+%
+% maxPooling2dLayer(2,Stride=2)
+%
+% convolution2dLayer(3,512,Padding="same")
+% batchNormalizationLayer
+% reluLayer
+%
+% maxPooling2dLayer(2,Stride=2)
 
-net = trainnet(imds_train,layers,'crossentropy',options);
-accuracy = testnet(net,imds_validation,"accuracy");
+layers(end+1) = fullyConnectedLayer(num_classes);
+layers(end+1)=softmaxLayer;
 
+try
+    options = trainingOptions("sgdm", ...
+        InitialLearnRate=0.01, ...
+        MaxEpochs=20, ...
+        Shuffle="every-epoch", ...
+        ValidationData=imds_validation, ...
+        ValidationFrequency=30, ...
+        Plots="training-progress", ...
+        Metrics="accuracy", ...
+        Verbose=true);
+
+    net = trainnet(imds_train,layers,'crossentropy',options);
+    accuracy = testnet(net,imds_validation,"accuracy");
+catch
+    accuracy = NaN;
+end
 
 end
