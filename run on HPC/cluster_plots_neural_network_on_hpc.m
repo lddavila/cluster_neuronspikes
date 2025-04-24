@@ -47,6 +47,10 @@ layers = [
     convolution2dLayer(3,8,Padding="same")
     batchNormalizationLayer
     reluLayer
+    maxPooling2dLayer(2,Stride=2)
+    convolution2dLayer(3,16,Padding="same")
+    batchNormalizationLayer
+    reluLayer
     maxPooling2dLayer(2,Stride=2)];
 
 for i=1:num_layers
