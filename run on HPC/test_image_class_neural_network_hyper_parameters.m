@@ -4,7 +4,7 @@ addpath(genpath(pwd));
 cd(home_dir);
 number_of_accuracy_categories = [3 4 5 6 7 8 9 10];
 number_of_layers = 1:15:300;
-filter_sizes = [8 16 32 64 128 256 512];
+filter_sizes = [32 64 128 256 512];
 accuracy_array = cell(length(number_of_accuracy_categories),1);
 config = spikesort_config;
 
