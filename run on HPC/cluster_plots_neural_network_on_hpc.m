@@ -106,13 +106,19 @@ try
         Shuffle="every-epoch", ...
         ValidationData=imds_validation, ...
         ValidationFrequency=30, ...
-        Plots="training-progress", ...
         Metrics="accuracy", ...
-        Verbose=true);
+        Verbose=false);
 
     net = trainnet(imds_train,layers,'crossentropy',options);
     accuracy = testnet(net,imds_validation,"accuracy");
-catch
+catch ME
+    disp("num layers")
+    disp(string(num_layers))
+    disp("filter size")
+    disp(string(filter_size))
+    disp(ME.identifier)
+    disp(ME.message)
+    disp(ME.cause)
     accuracy = NaN;
 end
 

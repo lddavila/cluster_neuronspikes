@@ -10,15 +10,22 @@ config = spikesort_config;
 
 if config.ON_HPC
     dir_to_save_accuracy_cat_to = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
+    timestamp_array = importdata(fullfile("/home","lddavila","data_from_local_server","Timestamp and table","timestamp_array.mat"));
+    disp("Finished loading timestamp array")
+    updated_table_of_overlap = importdata(fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat"));
+    disp("Finished loading the updated table of overlap")
 else
+    timestamp_array = importdata(fullfile("D:\cluster_neuronspikes\Data\Timestamp and table","timestamp_array.mat"));
+    disp("Finished loading timestamp array")
+    updated_table_of_overlap = importdata(fullfile("D:\cluster_neuronspikes\Data\Timestamp and table","overlap_table.mat"));
+    disp("Finished loading the updated table of overlap")
     dir_to_save_accuracy_cat_to = config.DIR_TO_SAVE_ACC_RESULTS_TO;
 end
 
 
-timestamp_array = importdata(fullfile("/home","lddavila","data_from_local_server","Timestamp and table","timestamp_array.mat"));
-disp("Finished loading timestamp array")
-updated_table_of_overlap = importdata(fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat"));
-disp("Finished loading the updated table of overlap")
+
+
+
 % currentDateTime = datetime('now', 'Format', 'yyyy-MM-dd HH:mm:ss');
 cd(dir_to_save_accuracy_cat_to);
 first_for_loop_num_iters = size(number_of_accuracy_categories,2);
@@ -42,7 +49,7 @@ for i=1:size(number_of_accuracy_categories,2)
             % disp("Projected end time:"+string(currentDateTime+end_time));
             disp("Finished "+string(current_iteration)+"/"+string(total_num_iterations));
             disp("The last iteration took "+string(end_time)+" seconds")
-            name_to_save_under = "accuracy score "+string(accuracy_score)+" number of acc cats " +string(number_of_accuracy_cats)+" num layers "+string(num_layers)+ " filter size "+string(current_filter_size)+ ".txt";
+            name_to_save_under = "accuracy score "+num2str(accuracy_score)+" number of acc cats " +string(number_of_accuracy_cats)+" num layers "+string(num_layers)+ " filter size "+string(current_filter_size)+ ".txt";
             fileID = fopen(name_to_save_under,'w');
             fclose(fileID);
         end
