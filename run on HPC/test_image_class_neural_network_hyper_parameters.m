@@ -1,10 +1,10 @@
-function [] = test_neural_network_with_hyper_parameters_on_hpc()
+function [] = test_image_class_neural_network_hyper_parameters()
 home_dir =cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
 number_of_accuracy_categories = [3 4 5 6 7 8 9 10];
-number_of_layers = 1:50:300;
-filter_sizes = [];
+number_of_layers = 1:15:300;
+filter_sizes = [8 16 32 64 128 256 512];
 accuracy_array = cell(length(number_of_accuracy_categories),1);
 config = spikesort_config;
 
@@ -25,7 +25,6 @@ first_for_loop_num_iters = size(number_of_accuracy_categories,2);
 second_for_loop_num_iters =size(number_of_layers,2);
 third_for_loop_num_iters = size(filter_sizes,2);
 total_num_iterations = first_for_loop_num_iters * second_for_loop_num_iters * third_for_loop_num_iters;
-
 for i=1:size(number_of_accuracy_categories,2)
     number_of_accuracy_cats = number_of_accuracy_categories(i);
     % tic;
@@ -35,15 +34,15 @@ for i=1:size(number_of_accuracy_categories,2)
         accuracy_sub_array_num_neurons = cell(length(filter_sizes),1);
         num_layers = number_of_layers(j);
         for k=1:size(filter_sizes,2)
-            num_neurons = filter_sizes(k);
+            current_filter_size = filter_sizes(k);
             tic
-            accuracy_score = grades_neural_network_on_hpc(table_with_accuracy,spikesort_config,num_neurons,num_layers);
+            accuracy_score = cluster_plots_neural_network_on_hpc(table_with_accuracy,spikesort_config,num_layers,current_filter_size);
             end_time = toc;
             current_iteration = ((i-1)*first_for_loop_num_iters)+((j-1)*second_for_loop_num_iters)+k;
             % disp("Projected end time:"+string(currentDateTime+end_time));
             disp("Finished "+string(current_iteration)+"/"+string(total_num_iterations));
             disp("The last iteration took "+string(end_time)+" seconds")
-            name_to_save_under = "accuracy score "+string(accuracy_score)+"number of acc cats " +string(number_of_accuracy_cats)+" num layers "+string(num_layers)+ " num neurons per layer"+string(num_neurons)+ ".txt";
+            name_to_save_under = "accuracy score "+string(accuracy_score)+" number of acc cats " +string(number_of_accuracy_cats)+" num layers "+string(num_layers)+ " filter size "+string(current_filter_size)+ ".txt";
             fileID = fopen(name_to_save_under,'w');
             fclose(fileID);
         end
@@ -52,6 +51,4 @@ for i=1:size(number_of_accuracy_categories,2)
     accuracy_array{i} = accuracy_sub_array_num_layers;
     % disp("Finished accuracy cats "+string(i)+"/"+string(size(number_of_accuracy_cats,2)))
 end
-% save("accuracy_array.mat","accuracy_array");
-cd(home_dir);
 end
