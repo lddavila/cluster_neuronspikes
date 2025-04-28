@@ -28,7 +28,7 @@ for i=1:size(imds.Files,1)
     end
     array_of_accuracy_cats(i) = table_of_clusters{c1 & c2 & c3,"accuracy_category"};
 end
-disp("Finished Assigning Accuracy Category To Images")
+% disp("Finished Assigning Accuracy Category To Images")
 imds.Labels = categorical(array_of_accuracy_cats);
 
 tbl_of_cat_counts = countEachLabel(imds);

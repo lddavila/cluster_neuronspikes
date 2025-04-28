@@ -3,7 +3,7 @@ home_dir =cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
 number_of_accuracy_categories = [4 5 6 7 8 9 10];
-number_of_layers = 3:1:100;
+number_of_layers = 1:1:25;
 filter_sizes = [32 64 128 256 512];
 accuracy_array = cell(length(number_of_accuracy_categories),1);
 config = spikesort_config;
