@@ -43,7 +43,7 @@ for i=1:size(number_of_accuracy_categories,2)
             % disp("Projected end time:"+string(currentDateTime+end_time));
             disp("Finished "+string(current_iteration)+"/"+string(total_num_iterations));
             disp("The last iteration took "+string(end_time)+" seconds")
-            name_to_save_under = "accuracy score "+string(accuracy_score)+"number of acc cats " +string(number_of_accuracy_cats)+" num layers "+string(num_layers)+ " num neurons per layer"+string(num_neurons);
+            name_to_save_under = "accuracy score "+string(accuracy_score)+"number of acc cats " +string(number_of_accuracy_cats)+" num layers "+string(num_layers)+ " num neurons per layer"+string(num_neurons)+ " grades nn";
             fileID = fopen(name_to_save_under+ ".txt",'w');
             fclose(fileID);
             net_struct = struct();
