@@ -1,4 +1,4 @@
-function [accuracy] = grades_neural_network_on_hpc(table_of_clusters,config,num_neurons_per_layer,num_layers)
+function [accuracy,net,layers] = grades_neural_network_on_hpc(table_of_clusters,config,num_neurons_per_layer,num_layers)
 % disp("Beginning NN Training")
 table_of_clusters(isnan(table_of_clusters{:,"accuracy_category"}),:) = [];
 [grade_names,all_grades]= flatten_grades_cell_array(table_of_clusters{:,"grades"},config);
