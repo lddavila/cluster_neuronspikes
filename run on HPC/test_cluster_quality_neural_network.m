@@ -26,7 +26,7 @@ for i=1:size(number_of_accuracy_categories,2)
         for k=1:size(filter_sizes,2)
             current_filter_size = filter_sizes(k);
             tic
-            [accuracy_score,net,~] = classify_clusters_neural_network_on_hpc(table_with_accuracy,spikesort_config,num_layers,current_filter_size);
+            [accuracy_score,net,~] = classify_clusters_neural_network_on_hpc(config,num_layers,current_filter_size);
             end_time = toc;
             current_iteration = ((i-1)*first_for_loop_num_iters)+((j-1)*second_for_loop_num_iters)+k;
             % disp("Projected end time:"+string(currentDateTime+end_time));
