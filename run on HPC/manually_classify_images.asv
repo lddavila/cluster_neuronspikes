@@ -1,9 +1,0 @@
-function [last_image_done] = manually_classify_images(dir_with_images)
-all_files = strtrim(string(ls(dir_with_images+"\*.png")));
-last_image_done =0;
-for i=1:size(all_files,1)
-    current_file = all_files(i);
-    imshow(fullfile(dir_with_images,current_file));
-    last_image_done = last_image_done+1;
-end
-end
