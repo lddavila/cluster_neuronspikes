@@ -99,7 +99,7 @@ config.DIR_TO_SAVE_ACC_RESULTS_TO = fullfile("D:","cluster_neuronspikes","Data",
 config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = fullfile("/home","lddavila","data_to_be_copied_to_local_server","david_categorization_nn_results");
 
 config.DIR_WITH_NUMBER_BASED_IMAGES = fullfile("D:","cluster_neuronspikes","Data","Cluster Plots Sorted Into Number Categories");
-% config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = fullfile();
+config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Cluster Plots Sorted Into Number Categories");
 %config.FP_TO_ACC_PREDICTING_NN = fullfile("D:","cluster_neuronspikes","Trained NN");
 %config.FP_TO_ACC_PREDICTING_NN_ON_HPC = fullfile();
 
