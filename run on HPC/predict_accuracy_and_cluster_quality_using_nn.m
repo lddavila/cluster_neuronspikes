@@ -1,12 +1,19 @@
-function [accuracy_pred,quality_pred] = predict_accuracy_and_cluster_quality_using_nn(first_dimension,second_dimension,peaks,config,j,channels)
+function [accuracy_pred,quality_pred] = predict_accuracy_and_cluster_quality_using_nn(first_dimension,second_dimension,peaks,config,peaks_in_cluster)
 colors = distinguishable_colors(1); %will always use the same colors
 my_gray = [0.5 0.5 0.5];
-current_tetrode_channels = channels;
 hold on
 f = figure;
-scatter(peaks(:, first_dimension), peaks(:, second_dimension), 2,my_gray);
 
-peaks_in_cluster = idx{j};
+%to ensure that the peaks have the same dimension we ensure that the numer of rows is greater than number of cols
+%this should always be true because it's impossible to have more wires than spikes
+%if it isn't the case then we transpose it so that it is
+if size(peaks,1) < size(peaks,2)
+    peaks = peaks.';
+end
+scatter(peaks(:, first_dimension), peaks(:, second_dimension), 2,my_gray);
+%for the above scatter to work the number of cols in peaks must correspond to the number of wires in the current tetrode
+
+
 if isempty(peaks_in_cluster)
     accuracy_pred = NaN;
     quality_pred = NaN;
@@ -14,22 +21,30 @@ if isempty(peaks_in_cluster)
 end
 
 if config.ON_HPC
-
+    accuracy_nn = importdata(config.FP_TO_ACC_PREDICTING_NN_ON_HPC);
+    accuracy_nn = accuracy_nn.net;
+    quality_nn = importdata(config.FP_TO_QUALITY_PREDICTING_NN_ON_HPC);
+    quality_nn = quality_nn.net;
 else
     accuracy_nn = importdata(config.FP_TO_ACC_PREDICTING_NN);
     accuracy_nn = accuracy_nn.net;
     quality_nn = importdata(config.FP_TO_QUALITY_PREDICTING_NN);
     quality_nn = quality_nn.net;
 end
-peaks_in_cluster(peaks_in_cluster > size(aligned,2)) = [];
+peaks_in_cluster(peaks_in_cluster > size(peaks,1)) = [];
 cluster = peaks(peaks_in_cluster, :);
-cluster_x = cluster(:, first_dimension);
-cluster_y = cluster(:, second_dimension);
+cluster_x = cluster(:, first_dimension); %column should correspond to the rep wire
+cluster_y = cluster(:, second_dimension); %column should correspond to the second rep wire
 hold on;
 scatter(cluster_x, cluster_y, 2,colors(1,:))
 axis equal;
 axis off;
-file_save_name = "Z Score "+ string(current_z_score)+ " Tetrode "+current_tetrode+" Cluster "+string(j)+" Channels"+string(current_tetrode_channels(first_dimension))+ " and "+string(current_tetrode_channels(second_dimension))+".png";
+
+randomized_temp_file_number_sequence = randi(1e9, 1, 10);
+
+file_save_name = strjoin(string(randomized_temp_file_number_sequence))+".png"; %this file will be deleted 
+% so we just randomly generate 10 numbers between 1 and billion and use this as a file name to avoid a multi threaded process accidentally 
+%reading the same file 
 saveas(f,file_save_name);
 close(f);
 RGB = imread(file_save_name);
