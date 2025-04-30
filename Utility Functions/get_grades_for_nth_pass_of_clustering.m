@@ -26,7 +26,7 @@ parfor i=1:length(list_of_tetrodes)
         else
             dir_of_template_shape_pngs = config.TEMPLATE_CLUSTER_FP;
         end
-        grades = compute_gradings_ver_4(aligned, timestamps, r_tvals, cleaned_clusters, config.spikesort,debug,channels_of_curr_tetr,dir_of_template_shape_pngs);
+        grades = compute_gradings_ver_4(aligned, timestamps, r_tvals, cleaned_clusters, config.spikesort,debug,channels_of_curr_tetr,dir_of_template_shape_pngs,config);
         
         grade_struct = struct();
         for j=1:size(grades,2)

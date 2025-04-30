@@ -1,4 +1,4 @@
-function grades = compute_gradings_ver_4(aligned, timestamps, tvals, clusters, config,debug,channels,dir_of_template_figures)
+function grades = compute_gradings_ver_4(aligned, timestamps, tvals, clusters, config,debug,channels,dir_of_template_figures,config_struct)
 %COMPUTE_GRADINGS Computes grades for each of the clusters.
 %   grades = COMPUTE_GRADINGS(aligned, timestamps, tvals, clusters) returns
 %   the grades for each of the clusters.
@@ -60,7 +60,7 @@ all_names_of_all_grades =["lratio","cv","short isi","incompleteness compare wire
     "likeliness of burst","compare wire","2nd compare wire","avg compare wire cluster z score","SNR by dimensions","SNR based on 2 Compare Wires", "Mean Spike Amplitude Per Channel","Mean Z Score Per Channel Cluster Only","Channels",...
     "Mean Z Score Per Channel all spikes in config","compare wire Mean z score Cluster Only","Compare Mean Z Score All Spikes In Config","Compare Wire Mean Amp"];  
     num_clusters = length(clusters);
-    grades = cell(num_clusters, 57);
+    grades = cell(num_clusters, 59);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -359,7 +359,25 @@ all_names_of_all_grades =["lratio","cv","short isi","incompleteness compare wire
         grades{k,53} = grades{k,47}(compare_wire);
 
         %grade 54 will be how like an elipse the cluster is
+        %grade 54 will be a measure of how circular a cluster is
+        %grade 56 and 57 aren't used
         [grades{k,54},grades{k,55},grades{k,56},grades{k,57}] = plot_cluster_as_png_and_return_elipse_rating(compare_peaks,second_set_of_compare_peaks,dir_of_template_figures,channels);
+
+        %grade 58 will be a prediction of the cluster's accuracy based on an image of the cluster which uses a neural network trained on a dataset
+        %it will be 
+            %0 for less than 1 percent accuracy
+            %1 for between 1 and 50 accuracy
+            %2 for between 50 and 100 accuracy
+        
+       %grade 59 will be a prediction of cluster quality ranging from 0-5 with based on an image of the cluster 
+            %0 for clusters that have a very strange abstract shape or clusters that are so sparse they can't be seen
+            %1 for clusters that are just MUA
+            %2 for clusters that are barely separating from MUA i.e. pregnancy plots
+            %3 for clusters that are in the right area, but do not fully encapsulate the actual cluster
+            %4 clusters that arein the right area, have identified the whole cluster (vacuumed up all spikesin the region) but still has a tail
+            % all the qualities of 4 plus no tail
+
+            [grades{k,58},grades{k,59}] = predict_accuracy_and_cluster_quality_using_nn(compare_wire,second_compare_wire,all_peaks,config_struct,k,channels);
 
 
 
