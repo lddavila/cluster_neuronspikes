@@ -1,10 +1,11 @@
-function [accuracy] = cluster_plots_neural_network_on_hpc(table_of_clusters,config,num_layers,filter_size)
+function [accuracy,net,layers] = cluster_plots_neural_network_on_hpc(table_of_clusters,config,num_layers,filter_size)
 % disp("Beginning NN Training")
 table_of_clusters(isnan(table_of_clusters{:,"accuracy_category"}),:) = [];
 if config.ON_HPC
     imds = imageDatastore(config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC);
 else
     imds = imageDatastore(config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO);
+    spikesort_config
 end
 
 %find the appropriate accuracy category for each of the images
