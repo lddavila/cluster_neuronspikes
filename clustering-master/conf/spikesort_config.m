@@ -85,7 +85,7 @@ config.NAMES_OF_CURR_GRADES =["lratio","cv","short isi","incompleteness compare 
     "Prediction of accuracy based on image","prediction of cluster quality based on image "];
 
 %config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [2 23 54 12 36 18 13 17 16 14 5 40 55 46 25];
-config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17 16 14 5 56 58 59];
+config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17 16 14 5 58 59];
 % config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17 16 14 5 ];
 config.IDXS_OF_GRADES_THAT_ARE_BETTER_SMALLER = [2 23 54 12 36 18 13 17 16 14 5 8 11 19 46 51 52];
 
