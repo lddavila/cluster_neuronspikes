@@ -2,7 +2,7 @@ function [accuracy,net,layers] = classify_clusters_neural_network_on_hpc(config,
 % disp("Beginning NN Training")
 % table_of_clusters(isnan(table_of_clusters{:,"accuracy_category"}),:) = [];
 if config.ON_HPC
-    imds = imageDatastore(config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC);
+    imds = imageDatastore(config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC,IncludeSubfolders=true,LabelSource="foldernames");
 else
     imds = imageDatastore(config.DIR_WITH_NUMBER_BASED_IMAGES,IncludeSubfolders=true,LabelSource="foldernames");
     spikesort_config
