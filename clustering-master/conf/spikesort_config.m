@@ -103,7 +103,7 @@ config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = fullfile("/home","lddavila","data_f
 
 
 config.FP_TO_ACC_PREDICTING_NN = fullfile("D:","cluster_neuronspikes","Accuracy Based Neural Network","accuracy score 81.3078 number of acc cats 3 num layers 18 filter size 32.mat");
-config.FP_TO_ACC_PREDICTING_NN_ON_HPC = fullfile("/home","lddavila","cluster_neuronspikes","Accuracy Based Neural Network");
+config.FP_TO_ACC_PREDICTING_NN_ON_HPC = fullfile("/home","lddavila","cluster_neuronspikes","Accuracy Based Neural Network","accuracy score 81.3078 number of acc cats 3 num layers 18 filter size 32.mat");
 
 config.FP_TO_QUALITY_PREDICTING_NN = fullfile("D:","cluster_neuronspikes","David Trained NN","accuracy score 65.3465 number of acc cats 5 num layers 18 filter size 64.mat");
 config.FP_TO_QUALITY_PREDICTING_NN_ON_HPC = fullfile("/home","lddavila","cluster_neuronspikes","David Trained NN","accuracy score 65.3465 number of acc cats 5 num layers 18 filter size 64.mat");
