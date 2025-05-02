@@ -98,10 +98,10 @@ config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data
 %
 config.WHICH_NEURAL_NET = "mua_or_not";
 config.DIR_TO_SAVE_ACC_RESULTS_TO = fullfile("D:","cluster_neuronspikes","Data","Cluster Plots NN Accracy Results");
-config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = fullfile("/home","lddavila","data_to_be_copied_to_local_server","mua_or_not_nn_results");
+config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = fullfile("/home","lddavila","data_to_be_copied_to_local_server","expand_or_dont_nn_results");
 
 config.DIR_WITH_NUMBER_BASED_IMAGES = fullfile("D:\cluster_neuronspikes\Data\MUA Or Not");
-config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = "/home/lddavila/data_from_local_server/mua_or_not_class_images";
+config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = "/home/lddavila/data_from_local_server/Expand Or Dont";
 
 
 config.FP_TO_ACC_PREDICTING_NN = fullfile("D:","cluster_neuronspikes","Accuracy Based Neural Network","accuracy score 81.3078 number of acc cats 3 num layers 18 filter size 32.mat");
