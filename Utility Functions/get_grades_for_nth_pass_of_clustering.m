@@ -10,7 +10,7 @@ parfor i=1:length(list_of_tetrodes)
     tetrode_number = str2double(tetrode_number(2));
     array_of_tetrodes = build_artificial_tetrode();
     channels_of_curr_tetr = array_of_tetrodes(tetrode_number,:);
-    % try
+    try
         ts_r_tvals_cc_struct = load(fullfile(dir_with_timestamps_and_rvals,current_tetrode+".mat"),"timestamps","r_tvals","cleaned_clusters");
         timestamps = ts_r_tvals_cc_struct.timestamps;
         r_tvals = ts_r_tvals_cc_struct.r_tvals;
@@ -38,16 +38,16 @@ parfor i=1:length(list_of_tetrodes)
 
         save(current_tetrode+" Grades.mat",'-fromstruct',grade_struct);
 
-    % catch ME
-    %     disp(ME.identifier)
-    %     disp(ME.message)
-    %     % disp("Failed To load trying the following")
-    %     % disp(fullfile(dir_with_timestamps_and_rvals,current_tetrode+".mat"))
-    %     % disp(fullfile(dir_with_results,current_tetrode+" aligned.mat"))
-    %     % disp(fullfile(dir_with_results,current_tetrode+" output.mat"))
-    % 
-    %     continue;
-    % end
+    catch ME
+        disp(ME.identifier)
+        disp(ME.message)
+        % disp("Failed To load trying the following")
+        % disp(fullfile(dir_with_timestamps_and_rvals,current_tetrode+".mat"))
+        % disp(fullfile(dir_with_results,current_tetrode+" aligned.mat"))
+        % disp(fullfile(dir_with_results,current_tetrode+" output.mat"))
+
+        continue;
+    end
     disp(string(min_z_score)+" Finished "+string(i)+"/"+string(number_of_tetrodes));
 
 end
