@@ -33,7 +33,7 @@ for i=1:size(subset_of_data,1)
 end
 number_of_iterations = length(sliced_updated_table_of_overlap);
 %create the figures
-for i=1:length(sliced_updated_table_of_overlap)
+parfor i=1:length(sliced_updated_table_of_overlap)
     current_data = sliced_updated_table_of_overlap{i};
     %ensure that all data in the current set have the same z score and tetrode
     %if it doesn't then return
