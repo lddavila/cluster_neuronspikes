@@ -78,7 +78,7 @@ parfor i=1:length(sliced_updated_table_of_overlap)
         cluster_x = cluster(:, first_dimension);
         cluster_y = cluster(:, second_dimension);
 
-        n = 10; %number of standard deviations, theres no one right standard deviation, but this one seems to be good for my purposes
+        n = config.NUM_STDS_AROUND_CLUSTER; %number of standard deviations, theres no one right standard deviation, but this one seems to be good for my purposes
 
         cluster_x_mean = mean(cluster_x,'all');
         cluster_x_std = std(cluster_x);

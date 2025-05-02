@@ -1,4 +1,4 @@
-function [accuracy_pred,quality_pred,mua_or_not_pred] = predict_accuracy_and_cluster_quality_using_nn(first_dimension,second_dimension,peaks,config,peaks_in_cluster)
+function [accuracy_pred,quality_pred] = predict_accuracy_and_cluster_quality_using_nn(first_dimension,second_dimension,peaks,config,peaks_in_cluster)
 colors = distinguishable_colors(1); %will always use the same colors
 my_gray = [0.5 0.5 0.5];
 hold on
@@ -25,14 +25,14 @@ if config.ON_HPC
     accuracy_nn = accuracy_nn.net;
     quality_nn = importdata(config.FP_TO_QUALITY_PREDICTING_NN_ON_HPC);
     quality_nn = quality_nn.net;
-    mua_or_not_nn = importdata(config.FP_TO_MUA_OR_NOT_PREDICTING_NN_ON_HPC);
+    mua_or_not_nn = importdata(config.FP_TO_MUA_OR_NOT_PREDICTING_NN);
     mua_or_not_nn = mua_or_not_nn.net;
 else
     accuracy_nn = importdata(config.FP_TO_ACC_PREDICTING_NN);
     accuracy_nn = accuracy_nn.net;
     quality_nn = importdata(config.FP_TO_QUALITY_PREDICTING_NN);
     quality_nn = quality_nn.net;
-    mua_or_not_nn = importdata(config.FP_TO_MUA_OR_NOT_PREDICTING_NN);
+    mua_or_not_nn = importdata(config.FP_TO_MUA_OR_NOT_PREDICTING_NN_ON_HPC);
     mua_or_not_nn = mua_or_not_nn.net;
 end
 peaks_in_cluster(peaks_in_cluster > size(peaks,1)) = [];
@@ -64,7 +64,7 @@ quality_pred = quality_pred-1;
 
 mua_or_not_class = predict(mua_or_not_nn,single(resized_and_gray_scaled_image));
 [~,mua_or_not_pred] = max(mua_or_not_class);
-mua_or_not_pred = mua_or_not_pred-1;
+mual_or_not_pred = 
 delete(file_save_name);
 %imshow(resized_and_gray_scaled_image)
 % imwrite(resized_and_gray_scaled_image,file_save_name);
