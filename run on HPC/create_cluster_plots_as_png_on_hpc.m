@@ -33,7 +33,7 @@ for i=1:size(subset_of_data,1)
 end
 number_of_iterations = length(sliced_updated_table_of_overlap);
 %create the figures
-parfor i=1:length(sliced_updated_table_of_overlap)
+for i=1:length(sliced_updated_table_of_overlap)
     current_data = sliced_updated_table_of_overlap{i};
     %ensure that all data in the current set have the same z score and tetrode
     %if it doesn't then return
@@ -52,6 +52,7 @@ parfor i=1:length(sliced_updated_table_of_overlap)
     end
     [~,~,aligned,~,idx,failed_to_load] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,false);
 
+
     grades = current_data{:,"grades"};
     if failed_to_load
         disp("Failed To Load");
@@ -65,21 +66,49 @@ parfor i=1:length(sliced_updated_table_of_overlap)
     my_gray = [0.5 0.5 0.5];
     current_tetrode_channels = sliced_channels_per_tetrode{i};
     for j=1:size(grades,1)
-        first_dimension = grades{j}{42};
-        second_dimension = grades{j}{43};
-  
-        hold on
-        f = figure;
-        scatter(peaks(:, first_dimension), peaks(:, second_dimension), 2,my_gray);
-
         peaks_in_cluster = idx{j};
         if isempty(peaks_in_cluster)
             continue;
         end
+        first_dimension = grades{j}{42};
+        second_dimension = grades{j}{43};
+
         peaks_in_cluster(peaks_in_cluster > size(aligned,2)) = [];
         cluster = peaks(peaks_in_cluster, :);
         cluster_x = cluster(:, first_dimension);
         cluster_y = cluster(:, second_dimension);
+
+        n = 10; %number of standard deviations, theres no one right standard deviation, but this one seems to be good for my purposes
+
+        cluster_x_mean = mean(cluster_x,'all');
+        cluster_x_std = std(cluster_x);
+        n_stds_right_of_cluster = cluster_x_mean+ (n*cluster_x_std);
+        n_std_left_of_cluster = cluster_x_mean - (n*cluster_x_std);
+
+        cluster_y_mean = mean(cluster_y,"all");
+        cluster_y_std = std(cluster_y);
+        n_stds_above_cluster = cluster_y_mean+ (n*cluster_y_std);
+        n_std_below_cluster = cluster_y_mean - (n*cluster_y_std);
+
+
+        c1 = peaks(:,first_dimension) < n_stds_right_of_cluster & peaks(:,first_dimension) > n_std_left_of_cluster;
+        c2 = peaks(:,second_dimension) < n_stds_above_cluster & peaks(:,second_dimension) > n_std_below_cluster;
+
+        if config.WHAT_KIND_OF_CLUSTER_PLOT_TO_MAKE=="all"
+            data = peaks;
+        elseif config.WHAT_KIND_OF_CLUSTER_PLOT_TO_MAKE=="limited"
+            data = peaks(c1 & c2,:);
+        else
+            disp("Invalid value in config.WHAT_KIND_OF_CLUSTER_PLOT_TO_MAKE");
+            disp("Produced by create_cluster_plots_as_png_on_hpc.m");
+            error("thrown by create_cluster_plots_as_png_on_hpc.m");
+        end
+        hold on
+        f = figure;
+        scatter(data(:, first_dimension), data(:, second_dimension), 2,my_gray);
+
+
+
         hold on;
         scatter(cluster_x, cluster_y, 2,colors(1,:))
         axis equal;
@@ -91,7 +120,7 @@ parfor i=1:length(sliced_updated_table_of_overlap)
         grayscaled_image =rgb2gray(RGB);
         resized_and_gray_scaled_image = imresize(grayscaled_image,[224,224]);
         delete(file_save_name);
-        %imshow(resized_and_gray_scaled_image)
+        imshow(resized_and_gray_scaled_image)
         imwrite(resized_and_gray_scaled_image,file_save_name);
 
 

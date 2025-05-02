@@ -89,8 +89,8 @@ config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17
 % config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17 16 14 5 ];
 config.IDXS_OF_GRADES_THAT_ARE_BETTER_SMALLER = [2 23 54 12 36 18 13 17 16 14 5 8 11 19 46 51 52];
 
-config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO =fullfile("D:","cluster_neuronspikes","Data","cluster_plot_pngs");
-config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC = fullfile("/home","lddavila","data_to_be_copied_to_local_server","cluster_plot_pngs");
+config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO =fullfile("D:","cluster_neuronspikes","Data","limited_cluster_plots_pngs");
+config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC = fullfile("/home","lddavila","data_to_be_copied_to_local_server","limited_cluster_plots_pngs");
 
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= fullfile("D:","cluster_neuronspikes","Data","Timestamp and table","overlap_table.mat");
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat");
@@ -109,7 +109,9 @@ config.FP_TO_ACC_PREDICTING_NN_ON_HPC = fullfile("/home","lddavila","cluster_neu
 config.FP_TO_QUALITY_PREDICTING_NN = fullfile("D:","cluster_neuronspikes","David Trained NN","accuracy score 65.3465 number of acc cats 5 num layers 18 filter size 64.mat");
 config.FP_TO_QUALITY_PREDICTING_NN_ON_HPC = fullfile("/home","lddavila","cluster_neuronspikes","David Trained NN","accuracy score 65.3465 number of acc cats 5 num layers 18 filter size 64.mat");
 
-
+config.WHAT_KIND_OF_CLUSTER_PLOT_TO_MAKE = "limited"; %used by create_cluster_plots_as_png_on_hpc 
+                                               %'all' - will print every spike per tetrode configuration and the cluster in black
+                                               %'limited' - will print the cluster and every spike within 6 standard deviations of the cluster mean 
 
 % ORIGINAL BEGINS HERE
 
