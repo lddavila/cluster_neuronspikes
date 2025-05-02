@@ -110,6 +110,13 @@ config.FP_TO_ACC_PREDICTING_NN_ON_HPC = fullfile("/home","lddavila","cluster_neu
 config.FP_TO_QUALITY_PREDICTING_NN = fullfile("D:","cluster_neuronspikes","David Trained NN","accuracy score 65.3465 number of acc cats 5 num layers 18 filter size 64.mat");
 config.FP_TO_QUALITY_PREDICTING_NN_ON_HPC = fullfile("/home","lddavila","cluster_neuronspikes","David Trained NN","accuracy score 65.3465 number of acc cats 5 num layers 18 filter size 64.mat");
 
+config.FP_TO_MUA_OR_NOT_PREDICTING_NN ="D:\cluster_neuronspikes\mua_or_not_NN\accuracy score 95.0739 num layers 27 filter size 64 mua_or_not.mat" ;
+config.FP_TO_MUA_OR_NOT_PREDICTING_NN_ON_HPC =;
+
+config.FP_TO_EXPAND_OR_DONT_NN ="D:\cluster_neuronspikes\expand_or_dont_NN\accuracy score 94.5545 num layers 22 filter size 256 mua_or_not.mat" ;
+config.FP_TO_EXPAND_OR_DONT_NN_ON_HPC = ;
+
+
 config.WHAT_KIND_OF_CLUSTER_PLOT_TO_MAKE = "limited"; %used by create_cluster_plots_as_png_on_hpc 
                                                %'all' - will print every spike per tetrode configuration and the cluster in black
                                                %'limited' - will print the cluster and every spike within 6 standard deviations of the cluster mean 
