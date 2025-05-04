@@ -17,7 +17,7 @@ end
 
 % timestamp_array = importdata(fullfile("/home","lddavila","data_from_local_server","Timestamp and table","timestamp_array.mat"));
 % disp("Finished loading timestamp array")
-updated_table_of_overlap = importdata(fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat"));
+updated_table_of_overlap = importdata(fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table_with_only_neurons_as_identified_by_nn.mat"));
 disp("Finished loading the updated table of overlap")
 % currentDateTime = datetime('now', 'Format', 'yyyy-MM-dd HH:mm:ss');
 cd(dir_to_save_accuracy_cat_to);
