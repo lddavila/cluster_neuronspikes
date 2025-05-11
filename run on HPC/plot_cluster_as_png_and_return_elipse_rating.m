@@ -11,6 +11,7 @@ f =figure('Position',[2027         394         560         420]);
 fill(compare_wire_peaks(k),compare_wire_2_peaks(k),'k');
 
 axis off;
+randomized_temp_file_number_sequence = randi(1e9, 1, 10);
 file_save_name = strjoin(string(randomized_temp_file_number_sequence))+".png"; %this file will be deleted
 % so we just randomly generate 10 numbers between 1 and billion and use this as a file name to avoid a multi threaded process accidentally
 %reading the same file
