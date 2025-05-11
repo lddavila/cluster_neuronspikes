@@ -17,7 +17,7 @@ file_save_name = strjoin(string(randomized_temp_file_number_sequence))+".png"; %
 %reading the same file
 saveas(f,file_save_name+".png");
 close all;
-the_cluster_image = imread("tempcluster"+strjoin(string(channels))+".png");
+the_cluster_image = imread(file_save_name);
 grayImage = rgb2gray(the_cluster_image);
 binary_image = imbinarize(grayImage);
 % figure;
