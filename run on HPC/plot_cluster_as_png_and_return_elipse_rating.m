@@ -11,7 +11,10 @@ f =figure('Position',[2027         394         560         420]);
 fill(compare_wire_peaks(k),compare_wire_2_peaks(k),'k');
 
 axis off;
-saveas(f,"tempcluster"+strjoin(string(channels))+".png");
+file_save_name = strjoin(string(randomized_temp_file_number_sequence))+".png"; %this file will be deleted
+% so we just randomly generate 10 numbers between 1 and billion and use this as a file name to avoid a multi threaded process accidentally
+%reading the same file
+saveas(f,file_save_name+".png");
 close all;
 the_cluster_image = imread("tempcluster"+strjoin(string(channels))+".png");
 grayImage = rgb2gray(the_cluster_image);
@@ -78,7 +81,7 @@ end
 % lower_half = bin_counts(14:end,:);
 % circular_symmetry = upper_half - lower_half;
 
-delete("tempcluster"+strjoin(string(channels))+".png")
+delete(file_save_name+".png")
 % get_grades_for_nth_pass_of_clustering(dir_with_timestamps_and_rvals,dir_with_output,list_of_tetrodes,dir_to_save_grades_to,config,varying_z_scores(2),debug,relevant_grades,name_of_grades)
 
 
