@@ -1,5 +1,5 @@
 function [] = get_grades_for_nth_pass_of_clustering(dir_with_timestamps_and_rvals,dir_with_results,list_of_tetrodes,dir_to_save_grades_to,config,min_z_score,debug,relevant_grades,name_of_relevant_grades)
-%run_grading_script_on_blind_pass
+% run_grading_script_on_blind_pass
 dir_to_begin_and_end_the_func_in = cd(dir_to_save_grades_to);
 number_of_tetrodes = length(list_of_tetrodes);
 draw_elipse_templates;

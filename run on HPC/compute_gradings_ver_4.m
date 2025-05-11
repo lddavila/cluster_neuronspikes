@@ -325,7 +325,7 @@ all_names_of_all_grades =["lratio","cv","short isi","incompleteness compare wire
 
         %grade 41 will be some kind of measure of likeliness of a bursting
         %neuron
-        grades{k,41} = check_for_burst(ts,spikes,debug);
+        grades{k,41} = NaN;%OGcheck_for_burst(ts,spikes,debug);
 
         %the wire with the highest amp of peaks
         grades{k,42} = compare_wire;

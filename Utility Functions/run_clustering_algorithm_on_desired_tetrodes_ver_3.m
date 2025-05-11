@@ -15,6 +15,9 @@ for i=1:length(list_of_desired_tetrodes)
     spike_tetrode_dictionary = spike_tetrode_dictionary.spike_tetrode_dictionary;
     timing_tetrode_dictionary =load(fullfile(dictionaries_dir,current_tetrode+" timing_tetrode_dictionary.mat"),"timing_tetrode_dictionary");
     timing_tetrode_dictionary =timing_tetrode_dictionary.timing_tetrode_dictionary;
+    sorted_spike_windows_dictionary = load(fullfile(dictionaries_dir,current_tetrode+" sorted_spike_windows.mat"),"sorted_spike_windows_for_current_tetrode_dictionary");
+    sorted_spike_windows_dictionary = sorted_spike_windows_dictionary.sorted_spike_windows_for_current_tetrode_dictionary;
+    sorted_spike_windows = sorted_spike_windows_dictionary(current_tetrode);
 
 
 
@@ -54,7 +57,8 @@ for i=1:length(list_of_desired_tetrodes)
 
 
     % try
-    [output,aligned,reg_timestamps,reg_timestamps_of_the_spikes] = run_spikesort_ntt_core_ver4(raw,timestamps_for_current_tetrode,good_spike_idx,ir,tvals,filenames,config,channels_in_current_tetrode,i);
+    %OG [output,aligned,reg_timestamps,reg_timestamps_of_the_spikes] = run_spikesort_ntt_core_ver4(raw,timestamps_for_current_tetrode,good_spike_idx,ir,tvals,filenames,config,channels_in_current_tetrode,i,sorted_spike_windows,initial_tetrodes_results_dir);
+    [output,aligned,reg_timestamps,reg_timestamps_of_the_spikes] = run_spikesort_ntt_core_ver4(raw,timestamps_for_current_tetrode,good_spike_idx,ir,tvals,filenames,config,channels_in_current_tetrode,i,sorted_spike_windows,initial_tetrodes_results_dir);
     %   - the first column contains the timestamps of the spikes in seconds
     %   - the second column contains the cluster classification of the spikes
     %       E.g., a value of '3' means that the spike belongs to cluster 3.

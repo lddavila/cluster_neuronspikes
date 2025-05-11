@@ -1,4 +1,4 @@
-function [] = plot_ground_truth(ground_truth,number_of_units_to_plot)
+function [] = plot_ground_truth(ground_truth,number_of_units_to_plot,timestamps)
 figure;
 y_coordinater = 2;
 y_values = [1, 2];
@@ -9,6 +9,7 @@ for i=1:number_of_units_to_plot
         y_values = [y_values(1)-y_coordinater,y_values(2)-y_coordinater];
     end
     x_values = sort([ground_truth{i},ground_truth{i}]);
+    x_values = [timestamps(x_values)];
     x_values = [-1,-1, x_values];
     
    % line(x_values.',y_values(2:end-1).');
@@ -21,6 +22,7 @@ for i=1:number_of_units_to_plot
         hold on;
     end
     
-    title("All Neurons")
+    title("Neuron Ground Truth")
+    xlabel("Time (in seconds)")
     
 end

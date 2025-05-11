@@ -36,10 +36,11 @@ parfor i=1:size(art_tetr_array,1)
     spiking_channel_tetrode_dictionary = containers.Map('KeyType','char','ValueType','any');
     channels_in_current_tetrode = art_tetr_array(i,:);
     tetrode_dictionary("t"+string(i)) = channels_in_current_tetrode;
+    sorted_spike_windows_for_current_tetrode_dictionary = containers.Map('KeyType','char','ValueType','any');
     for j=1:length(channels_in_current_tetrode)
         channel_to_tetrode_dictionary("c"+string(channels_in_current_tetrode(j))) = i;
     end
-    [current_slice,current_timing,current_spiking_channels,spike_slices_in_samples_format] = get_slices_per_artificial_tetrode_ver_2(channels_in_current_tetrode,spike_windows,dir_with_chan_recordings,timestamps,number_of_dps_per_slice,scale_factor);
+    [current_slice,current_timing,current_spiking_channels,spike_slices_in_samples_format,sorted_spike_windows_for_current_tetrode] = get_slices_per_artificial_tetrode_ver_2(channels_in_current_tetrode,spike_windows,dir_with_chan_recordings,timestamps,number_of_dps_per_slice,scale_factor);
 
 
 
@@ -47,6 +48,8 @@ parfor i=1:size(art_tetr_array,1)
     timing_tetrode_dictionary("t"+string(i)) = current_timing;
     spiking_channel_tetrode_dictionary("t"+string(i)) = current_spiking_channels;
     spike_tetrode_dictionary_samples_format("t"+string(i)) = spike_slices_in_samples_format;
+    sorted_spike_windows_for_current_tetrode_dictionary("t"+string(i)) = sorted_spike_windows_for_current_tetrode;
+    
 
     tetrode_dictionary = struct("tetrode_dictionary",tetrode_dictionary);
     spike_tetrode_dictionary = struct("spike_tetrode_dictionary",spike_tetrode_dictionary);
@@ -54,6 +57,8 @@ parfor i=1:size(art_tetr_array,1)
     channel_to_tetrode_dictionary = struct("channel_to_tetrode_dictionary",channel_to_tetrode_dictionary);
     spiking_channel_tetrode_dictionary = struct("spiking_channel_tetrode_dictionary",spiking_channel_tetrode_dictionary);
     spike_tetrode_dictionary_samples_format = struct("spike_tetrode_dictionary_samples_format",spike_tetrode_dictionary_samples_format);
+    sorted_spike_windows_for_current_tetrode_dictionary = struct("sorted_spike_windows_for_current_tetrode_dictionary",sorted_spike_windows_for_current_tetrode_dictionary);
+    
 
     save(fullfile(dictionaries_dir,"t"+string(i)+" tetrode_dictionary.mat"),"-fromstruct",tetrode_dictionary);
     save(fullfile(dictionaries_dir,"t"+string(i)+" spike_tetrode_dictonary.mat"),"-fromstruct",spike_tetrode_dictionary)
@@ -61,6 +66,7 @@ parfor i=1:size(art_tetr_array,1)
     save(fullfile(dictionaries_dir,"t"+string(i)+" channel_to_tetrode_dictionary.mat"),"-fromstruct",channel_to_tetrode_dictionary)
     save(fullfile(dictionaries_dir,"t"+string(i)+" spiking_channel_tetrode_dictionary.mat"),"-fromstruct",spiking_channel_tetrode_dictionary)
     save(fullfile(dictionaries_dir,"t"+string(i)+" spike_tetrode_dictionary_samples_format.mat"),"-fromstruct",spike_tetrode_dictionary_samples_format);
+    save(fullfile(dictionaries_dir,"t"+string(i)+" sorted_spike_windows.mat"),"-fromstruct",sorted_spike_windows_for_current_tetrode_dictionary);
 
     
     disp("get_dictionaries_of_all_spikes_ver_3.m finished " + string(i) )

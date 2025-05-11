@@ -129,6 +129,9 @@ for i=1:1.5
     %the fourth is the original the peak of the spike according to find_peaks
 
 end
+
+%% find which peaks are max along the channels 
+spike_windows_dir = "E:\Steven\2024-11-26_15-42-34__Steven Precomputed 1\spike_windows_2";
 %% run the find peaks using minimum z score instead of amplitude and getting the datapoints
 clc;
 close all;
@@ -188,6 +191,11 @@ for i=1:length(list_of_channels)
     display_the_spike_traces_and_examples(dir_with_channel_recordings,timestamps,list_of_channels,bit_volts);
 end
 
+%% find the highest amplitude spikes
+%load('E:\Steven\2024-11-26_15-42-34__Steven Precomputed 1\spike_windows\spike_windows.mat')
+dir_with_channel_recordings  = "E:\Steven\2024-11-26_15-42-34__Steven Precomputed 1\average butterworth";
+list_of_channels = strcat("c",string(1:384));
+spikes_sorted_by_amplitude = find_highest_amp_spikes_in_recording(spike_windows,dir_with_channel_recordings,list_of_channels);
 
 %% EXAMPLE CHANNEL run the figure generation of cut spikes
 clc;
