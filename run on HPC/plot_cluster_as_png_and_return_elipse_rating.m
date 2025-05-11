@@ -15,7 +15,7 @@ randomized_temp_file_number_sequence = randi(1e9, 1, 10);
 file_save_name = strjoin(string(randomized_temp_file_number_sequence))+".png"; %this file will be deleted
 % so we just randomly generate 10 numbers between 1 and billion and use this as a file name to avoid a multi threaded process accidentally
 %reading the same file
-saveas(f,file_save_name+".png");
+saveas(f,file_save_name);
 close all;
 the_cluster_image = imread(file_save_name);
 grayImage = rgb2gray(the_cluster_image);
@@ -82,7 +82,7 @@ end
 % lower_half = bin_counts(14:end,:);
 % circular_symmetry = upper_half - lower_half;
 
-delete(file_save_name+".png")
+delete(file_save_name)
 % get_grades_for_nth_pass_of_clustering(dir_with_timestamps_and_rvals,dir_with_output,list_of_tetrodes,dir_to_save_grades_to,config,varying_z_scores(2),debug,relevant_grades,name_of_grades)
 
 
