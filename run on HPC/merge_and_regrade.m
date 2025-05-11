@@ -38,10 +38,10 @@ for i=1:size(sliced_table_of_other_appearences,1)
 end
 disp("Finished Slicing")
 
-
+draw_elipse_templates;
 number_of_iterations = size(table_of_overlapping_neurons,1);
 new_accuracies_and_grades = cell(size(table_of_overlapping_neurons,1),1);
-parfor i=1:size(table_of_overlapping_neurons,1)
+for i=1:size(table_of_overlapping_neurons,1)
 
     current_overlap_data = sliced_table_of_other_appearences{i};
     if isempty(current_overlap_data)

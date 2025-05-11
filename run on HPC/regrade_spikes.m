@@ -1,5 +1,5 @@
 function [grades_for_current_combo,new_accuracy,different_max_overlap_unit_flag] = regrade_spikes(combinable_spikes_ts,idx_cell_array,aligned_cell_array,channels_per_cluster,spike_og_locs_cell_array,config,t_vals_cell_array,max_overlap_units)
-draw_elipse_templates;
+
 if ~all(max_overlap_units==max_overlap_units(1))
     different_max_overlap_unit_flag = "*";
 else
