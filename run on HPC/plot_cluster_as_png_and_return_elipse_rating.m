@@ -28,6 +28,7 @@ binary_image = imbinarize(grayImage);
 elipse_like_score = nan(1,4);
 array_of_names = ["horizonal","left to right negative","left_to_right_positive","vertical","circle"];
 for i=1:size(dir_of_template_figures,1)
+    disp(dir_of_template_figures(i))
     template_image = imread(dir_of_template_figures(i));
     gray_template_image = rgb2gray(template_image);
     template_binary_image = imbinarize(gray_template_image);
