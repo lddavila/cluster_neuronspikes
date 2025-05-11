@@ -7,9 +7,10 @@ end
 [timestamps_of_merged_spikes,spike_slices,channels_in_current_tetrode,t_vals,timestamps] =recut_spikes(channels_per_cluster,spike_og_locs_cell_array,idx_cell_array,config,t_vals_cell_array);
 if config.ON_HPC
     ground_truth_array = importdata(config.FP_TO_GT_FOR_RECORDING_ON_HPC);
+    dir_with_channel_recordings = config.DIR_WITH_OG_CHANNEL_RECORDINGS_ON_HPC;
 else
     ground_truth_array = importdata(config.GT_FP);
-
+    dir_with_channel_recordings = config.DIR_WITH_OG_CHANNEL_RECORDINGS;
 end
 ground_truth_idxs = ground_truth_array{max_overlap_units(1)};
 
@@ -17,7 +18,7 @@ gt_ts = timestamps(ground_truth_idxs); %the timestamps of the unit that the curr
 cluster_ts = timestamps_of_merged_spikes; %the timestamps of the spikes of the current cluster (in seconds)
 new_accuracy=NaN;
 wire_filter = find_live_wires(spike_slices);
-ir = calculate_input_range_for_raw_by_channel_ver_3(channels_in_current_tetrode,config.DIR_WITH_OG_CHANNEL_RECORDINGS);
+ir = calculate_input_range_for_raw_by_channel_ver_3(channels_in_current_tetrode,dir_with_channel_recordings);
 r_raw = spike_slices(wire_filter, :, :);
 r_ir = ir(wire_filter);
 r_tvals = t_vals(wire_filter);
