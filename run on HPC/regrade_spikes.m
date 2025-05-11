@@ -5,8 +5,12 @@ else
     different_max_overlap_unit_flag = "";
 end
 [timestamps_of_merged_spikes,spike_slices,channels_in_current_tetrode,t_vals,timestamps] =recut_spikes(channels_per_cluster,spike_og_locs_cell_array,idx_cell_array,config,t_vals_cell_array);
+if config.ON_HPC
+    ground_truth_array = importdata(config.FP_TO_GT_FOR_RECORDING_ON_HPC);
+else
+    ground_truth_array = importdata(config.GT_FP);
 
-ground_truth_array = importdata(config.GT_FP);
+end
 ground_truth_idxs = ground_truth_array{max_overlap_units(1)};
 
 gt_ts = timestamps(ground_truth_idxs); %the timestamps of the unit that the current cluster has the most overlap with (in seconds)

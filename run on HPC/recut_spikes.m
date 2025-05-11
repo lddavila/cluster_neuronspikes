@@ -17,10 +17,12 @@ end
 %timing_matrix = importdata(config.TIMESTAMP_FP);
 if config.ON_HPC
     timing_matrix = importdata(config.TIMESTAMP_FP_ON_HPC);
+    dir_with_recordings = config.DIR_WITH_OG_CHANNEL_RECORDINGS_ON_HPC;
 else
     timing_matrix = importdata(config.TIMESTAMP_FP);
+    dir_with_recordings = config.DIR_WITH_OG_CHANNEL_RECORDINGS;
 end
 
-[spike_slices,time_slices,~,~,~] =get_slices_per_artificial_tetrode_ver_2(chan_of_art_tetrode,spike_windows,config.DIR_WITH_OG_CHANNEL_RECORDINGS,timing_matrix,config.NUM_DPTS_TO_SLICE,config.SCALE_FACTOR);
+[spike_slices,time_slices,~,~,~] =get_slices_per_artificial_tetrode_ver_2(chan_of_art_tetrode,spike_windows,dir_with_recordings,timing_matrix,config.NUM_DPTS_TO_SLICE,config.SCALE_FACTOR);
 timestamps_of_merged_spikes = time_slices(:,31);
 end
