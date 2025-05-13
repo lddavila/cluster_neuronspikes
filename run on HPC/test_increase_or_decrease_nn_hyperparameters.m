@@ -50,7 +50,7 @@ total_num_iterations = first_for_loop_num_iters * second_for_loop_num_iters * th
 which_nn = config.WHICH_NEURAL_NET;
 for i=1:size(number_of_accuracy_categories,2)
     % tic
-    for j=1:size(number_of_layers,2)
+    parfor j=1:size(number_of_layers,2)
         num_layers = number_of_layers(j);
         for k=1:size(filter_sizes,2)
             num_neurons = filter_sizes(k);
