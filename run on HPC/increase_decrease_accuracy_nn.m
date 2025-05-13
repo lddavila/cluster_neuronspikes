@@ -1,15 +1,5 @@
-function [accuracy,net,layers] = increase_decrease_accuracy_nn(table_of_increase_or_decrease,config,num_neurons_per_layer,num_layers)
+function [accuracy,net,layers] = increase_decrease_accuracy_nn(data_to_put_into_neural_network,config,num_neurons_per_layer,num_layers)
 % disp("Beginning NN Training")
-table_of_increase_or_decrease(isnan(table_of_increase_or_decrease{:,"accuracy_category"}),:) = [];
-[grade_names,all_grades_for_primary]= flatten_grades_cell_array(table_of_increase_or_decrease{:,"grades_before_1"},config);
-[~,all_grades_for_secondary]= flatten_grades_cell_array(table_of_increase_or_decrease{:,"grades_before_2"},config);
-[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
-
-accuracy_category = table_of_increase_or_decrease{:,"accuracy_category"};
-
-
-data_to_put_into_neural_network = array2table([all_grades_for_primary(:,indexes_of_grades_were_looking_for),all_grades_for_secondary(:,indexes_of_grades_were_looking_for),accuracy_category]);
-data_to_put_into_neural_network = convertvars(data_to_put_into_neural_network,data_to_put_into_neural_network.Properties.VariableNames(end),"categorical");
 
 label_name = data_to_put_into_neural_network.Properties.VariableNames(end);
 

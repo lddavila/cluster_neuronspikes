@@ -18,16 +18,27 @@ end
 
 
 disp("Finished loading the updated table of overlap")
-accuracy_array_as_table = array2table(accuracy_array,'VariableNames',["grades_before_1","grades_before_2","grades_after","accuracy"]);
-accuracy_category = nan(size(accuracy_array_as_table,1),1);
-for i=1:size(accuracy_array_as_table,1)
-    if accuracy_array_as_table{i,"accuracy"}{1} >0
+table_of_increase_or_decrease = array2table(accuracy_array,'VariableNames',["grades_before_1","grades_before_2","grades_after","accuracy"]);
+accuracy_category = nan(size(table_of_increase_or_decrease,1),1);
+for i=1:size(table_of_increase_or_decrease,1)
+    if table_of_increase_or_decrease{i,"accuracy"}{1} >0
         accuracy_category(i) =1;
     else
         accuracy_category(i) = 0;
     end
 end
-accuracy_array_as_table.("accuracy_category") = accuracy_category;
+table_of_increase_or_decrease.("accuracy_category") = accuracy_category;
+
+table_of_increase_or_decrease(isnan(table_of_increase_or_decrease{:,"accuracy_category"}),:) = [];
+[grade_names,all_grades_for_primary]= flatten_grades_cell_array(table_of_increase_or_decrease{:,"grades_before_1"},config);
+[~,all_grades_for_secondary]= flatten_grades_cell_array(table_of_increase_or_decrease{:,"grades_before_2"},config);
+[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
+
+accuracy_category = table_of_increase_or_decrease{:,"accuracy_category"};
+
+
+data_to_put_into_neural_network = array2table([all_grades_for_primary(:,indexes_of_grades_were_looking_for),all_grades_for_secondary(:,indexes_of_grades_were_looking_for),accuracy_category]);
+data_to_put_into_neural_network = convertvars(data_to_put_into_neural_network,data_to_put_into_neural_network.Properties.VariableNames(end),"categorical");
 
 
 cd(dir_to_save_accuracy_cat_to);
@@ -43,7 +54,7 @@ for i=1:size(number_of_accuracy_categories,2)
         for k=1:size(filter_sizes,2)
             num_neurons = filter_sizes(k);
             tic
-            [accuracy_score,net,~]= increase_decrease_accuracy_nn(accuracy_array_as_table,spikesort_config,num_neurons,num_layers);
+            [accuracy_score,net,~]= increase_decrease_accuracy_nn(data_to_put_into_neural_network,spikesort_config,num_neurons,num_layers);
             end_time = toc;
             current_iteration = ((i-1)*first_for_loop_num_iters)+((j-1)*second_for_loop_num_iters)+k;
             % disp("Projected end time:"+string(currentDateTime+end_time));
