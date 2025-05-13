@@ -50,7 +50,7 @@ total_num_iterations = first_for_loop_num_iters * second_for_loop_num_iters * th
 which_nn = config.WHICH_NEURAL_NET;
 for i=1:size(number_of_accuracy_categories,2)
     % tic
-    for j=1:size(number_of_layers,2)
+    parfor j=1:size(number_of_layers,2)
         num_layers = number_of_layers(j);
         for k=1:size(filter_sizes,2)
             num_neurons = filter_sizes(k);
@@ -61,7 +61,7 @@ for i=1:size(number_of_accuracy_categories,2)
             % disp("Projected end time:"+string(currentDateTime+end_time));
             disp("Finished "+string(current_iteration)+"/"+string(total_num_iterations));
             disp("The last iteration took "+string(end_time)+" seconds")
-            name_to_save_under = "accuracy score "+string(accuracy_score)+"number of acc cats " +string(number_of_accuracy_cats)+" num layers "+string(num_layers)+ " num neurons per layer"+string(num_neurons)+ " "+which_nn;
+            name_to_save_under = "accuracy score "+string(accuracy_score)+" num layers "+string(num_layers)+ " num neurons per layer"+string(num_neurons)+ " "+which_nn;
             fileID = fopen(name_to_save_under+ ".txt",'w');
             fclose(fileID);
             net_struct = struct();
