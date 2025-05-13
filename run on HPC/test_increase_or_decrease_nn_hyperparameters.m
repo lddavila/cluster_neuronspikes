@@ -33,6 +33,7 @@ table_of_increase_or_decrease(isnan(table_of_increase_or_decrease{:,"accuracy_ca
 [grade_names,all_grades_for_primary]= flatten_grades_cell_array(table_of_increase_or_decrease{:,"grades_before_1"},config);
 [~,all_grades_for_secondary]= flatten_grades_cell_array(table_of_increase_or_decrease{:,"grades_before_2"},config);
 [indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
+disp("Finished Grade Flattening")
 
 accuracy_category = table_of_increase_or_decrease{:,"accuracy_category"};
 
