@@ -94,13 +94,13 @@ config.IDXS_OF_GRADES_THAT_ARE_BETTER_SMALLER = [2 23 54 12 36 18 13 17 16 14 5 
 config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO =fullfile("D:","cluster_neuronspikes","Data","limited_cluster_plots_pngs");
 config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC = fullfile("/home","lddavila","data_to_be_copied_to_local_server","limited_cluster_plots_pngs");
 
-config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= fullfile("D:","cluster_neuronspikes","Data","Timestamp and table","overlap_table.mat");
+config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\Timestamp and table\cell_array_of_increasing_decreasing_nn.mat";
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat");
 
 %
-config.WHICH_NEURAL_NET = "grades neural network";
-config.DIR_TO_SAVE_ACC_RESULTS_TO = fullfile("D:","cluster_neuronspikes","Data","Cluster Plots NN Accracy Results");
-config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/home/lddavila/data_to_be_copied_to_local_server/combining_spikes_results";
+config.WHICH_NEURAL_NET = "accuracy increase or decrease nn";
+config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\Increase Decrease Accuracy NN Results";
+config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/home/lddavila/data_to_be_copied_to_local_server/increase_decrease_nn_results";
 
 config.DIR_WITH_NUMBER_BASED_IMAGES = fullfile("D:\cluster_neuronspikes\Data\MUA Or Not");
 config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = "/home/lddavila/data_from_local_server/Expand Or Dont";
