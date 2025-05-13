@@ -95,7 +95,7 @@ config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO =fullfile("D:","cluster_neuronspikes","
 config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC = fullfile("/home","lddavila","data_to_be_copied_to_local_server","limited_cluster_plots_pngs");
 
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\Timestamp and table\cell_array_of_increasing_decreasing_nn.mat";
-config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat");
+config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","cell_array_of_increasing_decreasing_nn.mat");
 
 %
 config.WHICH_NEURAL_NET = "accuracy increase or decrease nn";
