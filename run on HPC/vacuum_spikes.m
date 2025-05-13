@@ -29,6 +29,9 @@ for i=1:size(table_of_neurons_to_vacuum,1)
     dir_with_outputs = gen_output_dir +string(current_z_score);
 
     [~,~,aligned,reg_timestamps_of_the_spikes,idx,failed_to_load] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,0);
+    if failed_to_load
+        error("vacuum_spikes.m Couldnt load row"+string(i)+" of table_of_neurons_to_vacuum");
+    end
 
     current_cluster_idxs = idx{current_cluster};
 
@@ -49,6 +52,7 @@ for i=1:size(table_of_neurons_to_vacuum,1)
     end
 
     cell_array_of_accuracy_increases{i,1} = current_accuracy;
+    cell_array_of_accuracy_increases{i,2} = current_grades;
     for j=1:size(num_stds_to_try,2)
         above_cluster_range = cluster_center + (cluster_std * num_stds_to_try(j));
         below_cluster_range = cluster_center - (cluster_std * num_stds_to_try(j));
@@ -64,8 +68,6 @@ for i=1:size(table_of_neurons_to_vacuum,1)
         combined_spikes = union(spikes_to_vacuum,current_cluster_idxs);
         new_ts = reg_timestamps_of_the_spikes(combined_spikes);
 
-
-
         gt_ts_idx = all_gt_idx{current_max_overlap_unit};
         gt_ts = timestamps(gt_ts_idx);
         new_accuracy = calculate_accuracy(gt_ts,{new_ts},config);
@@ -73,7 +75,10 @@ for i=1:size(table_of_neurons_to_vacuum,1)
 
         
         cell_array_of_accuracy_increases{i,j+2} = new_accuracy;
+        disp("vacuum_spikes.m Finished iteration "+string(i)+"|"+string(j)+"/"+string(size(num_stds_to_try)));
     end
+
+    disp("vacuum_spikes.m Finished "+string(i)+"/"+string(size(table_of_neurons_to_vacuum,1)))
 
 end
 end
