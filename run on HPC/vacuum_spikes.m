@@ -6,6 +6,7 @@ else
     gen_grades_dir = config.GENERIC_GRADES_DIR;
     gen_output_dir = config.GENRIC_DIR_WITH_OUTPUTS;
 end
+cell_array_of_accuracy_increases = cell(size(table_of_neurons_to_vacuum,1),4);
 for i=1:size(table_of_neurons_to_vacuum,1)
     current_z_score = table_of_neurons_to_vacuum{i,"Z Score"};
     current_tetrode = table_of_neurons_to_vacuum{i,"Tetrode"};
@@ -33,6 +34,15 @@ for i=1:size(table_of_neurons_to_vacuum,1)
     %calculate cluster center
     cluster_center = mean(cluster_peaks,2);
     cluster_std = std(cluster_peaks,0,2);
+
+    if ~current_expand_or_dont
+        continue;
+    end
+
+    above_cluster_range = cluster_center + (cluster_std * config.NUM_STDS_AROUND_CLUSTER);
+    below_cluster_range = cluster_center - (cluster_std * config.NUM_STDS_AROUND_CLUSTER);
+
+    
 
     
 
