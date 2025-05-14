@@ -126,7 +126,7 @@ config.NUM_STDS_AROUND_CLUSTER = 10; % used by create_cluster_plots_as_png_on_hp
                                      % cuts a window around cluster which is this many standard deviations around the cluster mean (x and y)
 
 
-config.USE_SNR_DIMS = true;
+config.USE_SNR_DIMS = false;
 
 % ORIGINAL BEGINS HERE
 

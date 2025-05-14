@@ -4,4 +4,4 @@
 #SBATCH -o output_1.txt 
 #SBATCH -e error_1.txt 
 module load matlab/R2024b
-matlab -batch "test_increase_or_decrease_nn_hyperparameters();exit;"
+matlab -batch "run_vacuum_spikes_test_on_cluster();exit;"
