@@ -1,0 +1,14 @@
+function [] = run_vacuum_spikes_test_on_cluster()
+if config.ON_HPC
+    dir_to_save_results_to =config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC ;
+    table_of_neurons_to_vacuum = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC) ;
+else
+    dir_to_save_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO;
+    table_of_neurons_to_vacuum = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
+end
+[cell_array_of_accuracy_increases] = vacuum_spikes(table_of_neurons_to_vacuum,config);
+home_dir = cd(dir_to_save_results_to);
+save("cell_array_of_accuracy_increases.mat","cell_array_of_accuracy_increases");
+cd(home_dir)
+
+end

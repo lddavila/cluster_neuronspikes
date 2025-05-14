@@ -59,7 +59,7 @@ config.GENRIC_DIR_WITH_OUTPUTS = "D:\spike_gen_data\Recordings By Channel Precom
 config.DIR_TO_SAVE_RECLUSTERING_TO ="D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING) +" Channels";
 config.GT_FP = "D:\spike_gen_data\Recording By Channel Ground Truth\0_100Neuron300SecondRecordingWithLevel3Noise.h5.mat";
 
-config.ON_HPC = true;
+config.ON_HPC = false;
 config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC = [2 3 4 5 6 7];
 config.DIR_TO_SAVE_RECLUSTERING_TO_ON_HPC =fullfile("/home","lddavila","Reclusted Passs 0_100_3","Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC) +" Channels");
 config.BLIND_PASS_DIR_PRECOMPUTED_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise"); %the parent directory where the blind pass precomputed info is saved (things like spikes per channel and std per channel)
@@ -94,8 +94,8 @@ config.IDXS_OF_GRADES_THAT_ARE_BETTER_SMALLER = [2 23 54 12 36 18 13 17 16 14 5 
 config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO =fullfile("D:","cluster_neuronspikes","Data","limited_cluster_plots_pngs");
 config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC = fullfile("/home","lddavila","data_to_be_copied_to_local_server","limited_cluster_plots_pngs");
 
-config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\Timestamp and table\cell_array_of_increasing_decreasing_nn.mat";
-config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","cell_array_of_increasing_decreasing_nn.mat");
+config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\Timestamp and table\overlap_table.mat";
+config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat");
 
 %
 config.WHICH_NEURAL_NET = "accuracy increase or decrease nn";
@@ -124,6 +124,9 @@ config.WHAT_KIND_OF_CLUSTER_PLOT_TO_MAKE = "limited"; %used by create_cluster_pl
                                                %'limited' - will print the cluster and every spike within 6 standard deviations of the cluster mean 
 config.NUM_STDS_AROUND_CLUSTER = 10; % used by create_cluster_plots_as_png_on_hpc;
                                      % cuts a window around cluster which is this many standard deviations around the cluster mean (x and y)
+
+
+config.USE_SNR_DIMS = true;
 
 % ORIGINAL BEGINS HERE
 
