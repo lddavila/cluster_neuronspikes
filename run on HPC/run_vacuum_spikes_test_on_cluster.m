@@ -16,6 +16,7 @@ else
     dir_to_save_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO;
     table_of_neurons_to_vacuum = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
 end
+disp("Finished importing data")
 [cell_array_of_accuracy_increases] = vacuum_spikes(table_of_neurons_to_vacuum,config);
 home_dir = cd(dir_to_save_results_to);
 save("cell_array_of_accuracy_increases "+string_to_add+".mat","cell_array_of_accuracy_increases");
