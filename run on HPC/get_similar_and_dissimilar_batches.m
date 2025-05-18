@@ -1,102 +1,60 @@
-function [] = get_similar_and_dissimilar_batches(dir_with_sorted_items,config,dir_to_save_similar_and_dissimilar,names_of_classes,batch_size)
-    function [pair_image_1,pair_image_2,pair_label] = get_twin_batches(dir_with_sorted_items,names_of_classes,batch_size,config)
-        pair_image_1 = cell(batch_size,1);
-        pair_image_2 = cell(batch_size,1);
-        pair_label = nan(batch_size,1);
-        for i=1:batch_size
-            random_first_class = randi(numel(names_of_classes)-1);
-            random_second_class = randi(numel(names_of_classes)-1);
-            if random_second_class==random_first_class
-                pair_label(i) = 1;
-            else
-                pair_label(i)= 0;
-            end
-            list_of_first_class_files = strtrim(string(ls(fullfile(dir_with_sorted_items,string(random_first_class),"*.png"))));
-            list_of_sec_class_files = strtrim(string(ls(fullfile(dir_with_sorted_items,string(random_second_class),"*.png"))));
-            pair_image_1{i} = imread(fullfile(dir_with_sorted_items,string(random_first_class),list_of_first_class_files(randi(numel(list_of_first_class_files)))));
-            pair_image_2{i} = imread(fullfile(dir_with_sorted_items,string(random_second_class),list_of_sec_class_files(randi(numel(list_of_sec_class_files)))));
+function [X_1,X_2,pair_labels] = get_similar_and_dissimilar_batches(dir_with_sorted_items,config,mini_batch_size)
 
-            if config.DEBUG_DAVID
-                figure
-                subplot(1,2,1)
-                imshow(pair_image_1{i});
-                title(random_first_class)
-                subplot(1,2,2)
-                imshow(pair_image_2{i});
-                title(random_second_class);
-                close all;
+
+
+    function [X_1,X_2,pair_labels] = get_twin_batch(imds,mini_batch_size)
+        pair_labels = zeros(1,mini_batch_size);
+        img_size = size(readimage(imds,1));
+        X_1 = zeros([img_size 1 mini_batch_size],"single");
+        X_2 = zeros([img_size 1 mini_batch_size],"single");
+
+        for i=1:mini_batch_size
+            choice = rand(1);
+
+            if choice < 0.5
+                [pair_idx_1,pair_idx_2,pair_labels(i)] = get_similar_pair(imds.Labels) ;
+            else
+                [pair_idx_1,pair_idx_2,pair_labels(i)] = get_dissimilar_pair(imds.Labels);
             end
+            X_1(:,:,:,i) = imds.readimage(pair_idx_1);
+            X_2(:,:,:,i) = imds.readimage(pair_idx_2);
         end
     end
 
-    function [net,fc_params] = get_neural_network()
-        layers = [
-            imageInputLayer([105 105 1],Normalization="none")
-            convolution2dLayer(10,64,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal")
-            reluLayer
-            maxPooling2dLayer(2,Stride=2)
-            convolution2dLayer(7,128,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal")
-            reluLayer
-            maxPooling2dLayer(2,Stride=2)
-            convolution2dLayer(4,128,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal")
-            reluLayer
-            maxPooling2dLayer(2,Stride=2)
-            convolution2dLayer(5,256,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal")
-            reluLayer
-            fullyConnectedLayer(4096,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal")];
-
-        net = dlnetwork(layers);
-
-        fc_weights = dlarray(0.01*randn(1,4096));
-        fc_bias = dlarray(0.01*randn(1,1));
-
-        fc_params = struct(...
-            "FcWeights",fc_weights,...
-            "FcBias",fc_bias);
+    function [pair_idx_1,pair_idx_2,pair_label] = get_similar_pair(class_label)
+        classes = unique(class_label);
+        class_choice = randi(numel(classes));
+        idxs = find(class_label == classes(class_choice));
+        pair_idx_choice = randperm(numel(idxs),2);
+        pair_idx_1 = idxs(pair_idx_choice(1));
+        pair_idx_2 = idxs(pair_idx_choice(2));
+        pair_label = 1;
 
     end
-    function Y = forward_twin(net,fcParams,X1,X2)
-        % forward_twin accepts the network and pair of training images, and
-        % returns a prediction of the probability of the pair being similar (closer
-        % to 1) or dissimilar (closer to 0). Use forwardTwin during training.
+    function [pair_idx_1,pair_idx_2,pair_label] = get_dissimilar_pair(class_label)
+        classes = unique(class_label);
+        classes_choice = randperm(numel(classes),2);
 
-        % Pass the first image through the twin subnetwork
-        Y1 = forward(net,X1);
-        Y1 = sigmoid(Y1);
+        idxs_1 = find(class_label==classes(classes_choice(1)));
+        idxs_2 = find(class_label==classes(classes_choice(2)));
 
-        % Pass the second image through the twin subnetwork
-        Y2 = forward(net,X2);
-        Y2 = sigmoid(Y2);
-
-        % Subtract the feature vectors
-        Y = abs(Y1 - Y2);
-
-        % Pass the result through a fullyconnect operation
-        Y = fullyconnect(Y,fcParams.FcWeights,fcParams.FcBias);
-
-        % Convert to probability between 0 and 1.
-        Y = sigmoid(Y);
-
+        pair_idx_1_choice = randi(numel(idxs_1));
+        pair_idx_2_choice = randi(numel(idxs_2));
+        pair_idx_1 = idxs_1(pair_idx_1_choice);
+        pair_idx_2 = idxs_2(pair_idx_2_choice);
+        pair_label = 0;
     end
-    function [loss,gradients_subnet,gradients_params] = model_loss(net,fc_params,X1,X2,pair_labels)
-
-        % Pass the image pair through the network.
-        Y = forwardTwin(net,fc_params,X1,X2);
-
-        % Calculate binary cross-entropy loss.
-        loss = crossentropy(Y,pair_labels,ClassificationMode="multilabel");
-
-        % Calculate gradients of the loss with respect to the network learnable
-        % parameters.
-        [gradients_subnet,gradients_params] = dlgradient(loss,net.Learnables,fcParams);
-
+imds_train = imageDatastore(dir_with_sorted_items,IncludeSubfolders=true,LabelSource="foldernames");
+% imds_train.Files = strtrim(string(imds_train.Files));
+if config.DEBUG_DAVID
+    idx = randperm(numel(imds_train.Files),8);
+    for p=1:numel(idx)
+        subplot(4,2,p)
+        imshow(readimage(imds_train,idx(p)));
+        title(imds_train.Labels(idx(p)),Interpreter="none");
     end
-[net,fc_params] = get_neural_network;
-[pair_image_1,pair_image_2,pair_label] = get_twin_batches(dir_with_sorted_items,names_of_classes,batch_size,config);
+end
+close all;
+ [X_1,X_2,pair_labels] = get_twin_batch(imds_train,mini_batch_size);
 
-Y = forward_twin(net,fc_params,pair_image_1,pair_image_2);
-
-
-disp("Number of Similar Images:"+string(sum(pair_label)))
-disp("Number of dissimilar Images:"+string(sum(pair_label==0)))
 end
