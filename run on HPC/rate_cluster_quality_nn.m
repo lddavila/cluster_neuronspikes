@@ -1,5 +1,5 @@
 function [average_accuracy,net] = rate_cluster_quality_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grad_decay_sq,dir_with_training,dir_with_test,config,num_accuracy_tests,accuracy_batch_size,num_layers,num_neurons)
-    function [net,fc_params] = get_neural_network(num_layers,num_neurons)
+    function [net,fc_params] = get_neural_network(num_layers)
         layers = [
             imageInputLayer([224 224 1],Normalization="none")
             convolution2dLayer(10,64,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal")
@@ -12,8 +12,16 @@ function [average_accuracy,net] = rate_cluster_quality_nn(number_of_its,mini_bat
             reluLayer
             maxPooling2dLayer(2,Stride=2)
             convolution2dLayer(5,256,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal")
-            reluLayer
-            fullyConnectedLayer(4096,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal")];
+            reluLayer];
+
+        for w=1:num_layers
+
+            layers(end+1) = convolution2dLayer(3,10,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal");
+            layers(end+1) = batchNormalizationLayer;
+            layers(end+1) = reluLayer;
+        end
+
+        layers(end+1) = fullyConnectedLayer(4096,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal");
 
         net = dlnetwork(layers);
 
@@ -106,7 +114,7 @@ end
 start = tic;
 iteration = 0;
 
-[net,fc_params] = get_neural_network();
+[net,fc_params] = get_neural_network(num_layers,num_neurons);
 
 while iteration < number_of_its
     iteration = iteration+1;
