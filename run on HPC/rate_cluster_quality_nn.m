@@ -114,7 +114,7 @@ end
 start = tic;
 iteration = 0;
 
-[net,fc_params] = get_neural_network(num_layers,num_neurons);
+[net,fc_params] = get_neural_network(num_layers);
 
 while iteration < number_of_its
     iteration = iteration+1;
