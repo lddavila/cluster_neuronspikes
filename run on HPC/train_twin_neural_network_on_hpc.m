@@ -26,17 +26,19 @@ size_of_number_of_layers = size(number_of_layers_to_try,2);
 learning_rates_to_try = [6e-5, 6e-4,6e-3, 6e-2, 6e-1];
 cd(dir_to_save_results_to);
 number_of_permutations_to_try = size(learning_rates_to_try,2) * size(number_of_layers_to_try,2);
-parfor i=1:size(number_of_layers_to_try,2)
+for i=1:size(number_of_layers_to_try,2)
     layers = number_of_layers_to_try(i);
     neurons = 1;
     for k=1:size(learning_rates_to_try,2)
         learning_rate = learning_rates_to_try(k);
+        save_name = sprintf("accuracy score %0.2f number of layers %d number of neurons %d learning rate %0.6f %s",average_accuracy,layers,neurons,learning_rate,which_nn);
+        disp(save_name)
         [average_accuracy,net]= rate_cluster_quality_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grady_dec_sq,dir_with_train,dir_with_test,spikesort_config,num_accuracy_tests,accuracy_batch_size,layers,neurons);
 
         current_iteration = ((i-1)*size(size_of_number_of_layers,2)) +k ;
         disp("train_twin_neural_network_on_hpc.m Finished "+string(current_iteration)+"/"+string(number_of_permutations_to_try))
 
-        save_name = sprintf("accuracy score %0.2f number of layers %d number of neurons %d learning rate %0.6f %s",average_accuracy,layers,neurons,learning_rate,which_nn);
+        
         net_as_struct = struct("net",net);
         file_id = fopen(save_name+".txt",'w');
         fclose(file_id);
