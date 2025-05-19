@@ -47,13 +47,13 @@ for i=1:size(all_items,1)
         current_file_name = files_in_current_path(j);
         disp(fullfile(file_path_to_read,current_file_name))
         disp(fullfile(dir_to_save_train,string(all_items{i,"name"}),current_file_name))
-        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_train,string(all_items{i,"name"}),current_file_name))
+        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_train,string(all_items{i,"name"}),string(training_file_idxs(j))))
         
     end
 
     for j=1:size(test_file_idxs,2)
         current_file_name = files_in_current_path(j);
-        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_test,string(all_items{i,"name"}),current_file_name))
+        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_test,string(all_items{i,"name"}),string(test_file_idxs(j))))
     end
 
     
