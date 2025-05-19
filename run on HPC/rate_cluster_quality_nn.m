@@ -1,4 +1,4 @@
-function [average_accuracy,net] = rate_cluster_quality_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grad_decay_sq,dir_with_training,dir_with_test,config,num_accuracy_tests,accuracy_batch_size,num_layers,num_neurons)
+function [average_accuracy,net] = rate_cluster_quality_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grad_decay_sq,dir_with_training,dir_with_test,config,num_accuracy_tests,accuracy_batch_size,num_layers,num_neurons,which_loop)
     function [net,fc_params] = get_neural_network(num_layers)
         layers = [
             imageInputLayer([224 224 1],Normalization="none")
@@ -117,6 +117,7 @@ iteration = 0;
 [net,fc_params] = get_neural_network(num_layers);
 
 while iteration < number_of_its
+    tic;
     iteration = iteration+1;
     [X_1,X_2,pair_labels] = get_similar_and_dissimilar_batches(dir_with_training,config,mini_batch_size);
     if canUseGPU
@@ -142,6 +143,9 @@ while iteration < number_of_its
         recordMetrics(monitor,iteration,Loss = loss);
         monitor.Progress = 100 * iteration/number_of_its;
     end
+    disp("rate_cluster_quality_nn.m "+which_loop+" Finished "+string(iteration)+"/"+string(number_of_its))
+    elapsedTime = toc;
+    fprintf('Elapsed time: %.2f seconds\n', elapsedTime);
 end
 
 accuracy = zeros(1,num_accuracy_tests);
