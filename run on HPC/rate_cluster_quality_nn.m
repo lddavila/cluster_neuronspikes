@@ -141,6 +141,7 @@ while iteration < number_of_its || loss < 1e-6 || difference_in_last_two_losses 
         last_loss = current_loss;
         current_loss = loss;
         difference_in_last_two_losses = abs(current_loss - last_loss);
+        fprintf("Difference in last 2 losses: %.6f\n",difference_in_last_two_losses)
     end
 
     %update the twin subnetwork parameters
@@ -158,6 +159,7 @@ while iteration < number_of_its || loss < 1e-6 || difference_in_last_two_losses 
     elapsedTime = toc;
     fprintf('Elapsed time: %.2f seconds\n', elapsedTime);
     fprintf("Loss: %.6f\n",loss);
+    
 end
 
 accuracy = zeros(1,num_accuracy_tests);
