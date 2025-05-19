@@ -39,7 +39,7 @@ learning_rates_to_try = [6e-5, 6e-4,6e-3, 6e-2, 6e-1];
 cd(dir_to_save_results_to);
 number_of_permutations_to_try = size(learning_rates_to_try,2) * size(number_of_layers_to_try,2);
 for p=1:size(number_of_accuracy_cats_to_try,2)
-    dir_to_save_sorted_images_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(parent_save_dir,"Cluster Images Sorted into "+string(number_of_accuracy_cats_to_try(p))+" accuracy categories"));
+    dir_to_save_sorted_images_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(parent_save_dir,"C_I with "+string(number_of_accuracy_cats_to_try(p))+" acc cats"));
     disp("Starting Resorting Images")
     resort_cluster_pngs_into_accuracy_caegory_folders(dir_with_og_cluster_plots,dir_to_save_sorted_images_to,number_of_accuracy_cats_to_try(p),table_of_clusters);
     disp("Finished Resorting Images")
