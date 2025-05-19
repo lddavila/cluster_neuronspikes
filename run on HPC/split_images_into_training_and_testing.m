@@ -35,7 +35,7 @@ for i=1:size(all_items,1)
     end
 
     if ~exist(fullfile(dir_to_save_train,string(all_items{i,"name"})),"dir")
-        disp();
+        %disp();
         create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(dir_to_save_train,string(all_items{i,"name"})));
     end
 
