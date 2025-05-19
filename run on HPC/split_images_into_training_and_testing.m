@@ -20,7 +20,7 @@ for i=1:size(all_items,1)
 
     file_path_to_read = fullfile(og_dir,all_items{i,"name"});
 
-    files_in_current_path = strtrim(string(ls(file_path_to_read+"\*"+data_ext)));
+    files_in_current_path = strtrim(string(ls(fullfile(file_path_to_read,"*"+data_ext))));
 
     number_of_training_files = round(how_much_training * size(files_in_current_path,1));
     number_of_test_files = size(files_in_current_path,1) - number_of_training_files;
