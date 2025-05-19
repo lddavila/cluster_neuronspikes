@@ -116,7 +116,11 @@ iteration = 0;
 
 [net,fc_params] = get_neural_network(num_layers);
 loss = Inf;
-while iteration < number_of_its || loss < 1e-6
+last_loss = Inf;
+current_loss = Inf;
+difference_in_last_two_losses = Inf;
+while iteration < number_of_its || loss < 1e-6 || difference_in_last_two_losses < 1e-2
+   
     tic;
     iteration = iteration+1;
     [X_1,X_2,pair_labels] = get_similar_and_dissimilar_batches(dir_with_training,config,mini_batch_size);
@@ -131,6 +135,13 @@ while iteration < number_of_its || loss < 1e-6
     %evaluate loss and gradients
 
     [loss,gradients_subnet,gradients_params] = dlfeval(@model_loss,net,fc_params,X_1,X_2,pair_labels);
+    if iteration <1
+        current_loss = loss;
+    else
+        last_loss = current_loss;
+        current_loss = loss;
+        difference_in_last_two_losses = abs(current_loss - last_loss);
+    end
 
     %update the twin subnetwork parameters
     [net,trailing_avg_subnet,trailing_avg_sq_subnet] = adamupdate(net,gradients_subnet,trailing_avg_subnet,trailing_avg_sq_subnet,iteration,learning_rate,grad_decay,grad_decay_sq);
