@@ -1,5 +1,5 @@
-function [average_accuracy,net] = rate_cluster_quality_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grad_decay_sq,dir_with_training,dir_with_test,config,num_accuracy_tests,accuracy_batch_size,num_layers,num_neurons)
-    function [net,fc_params] = get_neural_network(num_layers,num_neurons)
+function [average_accuracy,net] = rate_cluster_quality_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grad_decay_sq,dir_with_training,dir_with_test,config,num_accuracy_tests,accuracy_batch_size,num_layers,num_neurons,which_loop)
+    function [net,fc_params] = get_neural_network(num_layers)
         layers = [
             imageInputLayer([224 224 1],Normalization="none")
             convolution2dLayer(10,64,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal")
@@ -16,16 +16,12 @@ function [average_accuracy,net] = rate_cluster_quality_nn(number_of_its,mini_bat
 
         for w=1:num_layers
 
-            layers(end+1) = convolution2dLayer(3,filter_size,Padding="same");
+            layers(end+1) = convolution2dLayer(3,10,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal",Padding="same");
             layers(end+1) = batchNormalizationLayer;
             layers(end+1) = reluLayer;
-            if i<2
-                layers(end+1) = maxPooling2dLayer(2,Stride=2);
-
-            end
         end
 
-        layers(end+1) = fullyConnectedLayer(4096,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal")];
+        layers(end+1) = fullyConnectedLayer(4096,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal");
 
         net = dlnetwork(layers);
 
@@ -115,12 +111,19 @@ end
 
 
 
-start = tic;
+
 iteration = 0;
 
-[net,fc_params] = get_neural_network(num_layers,num_neurons);
+[net,fc_params] = get_neural_network(num_layers);
+loss = Inf;
+last_loss = Inf;
+current_loss = Inf;
+difference_in_last_two_losses = Inf;
 
-while iteration < number_of_its
+
+while iteration < number_of_its && loss > 1e-6 && difference_in_last_two_losses > 1e-3
+   
+    tic;
     iteration = iteration+1;
     [X_1,X_2,pair_labels] = get_similar_and_dissimilar_batches(dir_with_training,config,mini_batch_size);
     if canUseGPU
@@ -134,6 +137,14 @@ while iteration < number_of_its
     %evaluate loss and gradients
 
     [loss,gradients_subnet,gradients_params] = dlfeval(@model_loss,net,fc_params,X_1,X_2,pair_labels);
+    if iteration <1
+        current_loss = loss;
+    else
+        last_loss = current_loss;
+        current_loss = loss;
+        difference_in_last_two_losses = abs(current_loss - last_loss);
+        % fprintf("Difference in last 2 losses: %.6f\n",difference_in_last_two_losses);
+    end
 
     %update the twin subnetwork parameters
     [net,trailing_avg_subnet,trailing_avg_sq_subnet] = adamupdate(net,gradients_subnet,trailing_avg_subnet,trailing_avg_sq_subnet,iteration,learning_rate,grad_decay,grad_decay_sq);
@@ -146,6 +157,18 @@ while iteration < number_of_its
         recordMetrics(monitor,iteration,Loss = loss);
         monitor.Progress = 100 * iteration/number_of_its;
     end
+    % disp("rate_cluster_quality_nn.m "+which_loop+" Finished "+string(iteration)+"/"+string(number_of_its))
+    % elapsedTime = toc;
+    % fprintf('Elapsed time: %.2f seconds\n', elapsedTime);
+    % fprintf("Loss: %.6f\n",loss);
+    
+end
+
+if iteration < 10000 
+    disp("rate_cluster_quality_nn.m "+which_loop+" Finished early on iteration "+string(iteration)+"/"+string(number_of_its))
+    disp("Loss:"+string(loss))
+    dis
+else
 end
 
 accuracy = zeros(1,num_accuracy_tests);
@@ -160,12 +183,12 @@ for i=1:num_accuracy_tests
         X_1 = gpuArray(X_1);
         X_2 = gpuArray(X_2);
     end
-    Y = predict_twin(net,fc_params,X_1,X_2);
-    Y = gather(extractdata(Y));
-    Y = round(Y);
+    Y_ACCURACY = predict_twin(net,fc_params,X_1,X_2);
+    Y_ACCURACY = gather(extractdata(Y_ACCURACY));
+    Y_ACCURACY = round(Y_ACCURACY);
 
 
-    accuracy(i) = sum(Y==pair_labels_acc)/accuracy_batch_size;
+    accuracy(i) = sum(Y_ACCURACY==pair_labels_acc)/accuracy_batch_size;
 end
 
 average_accuracy = mean(accuracy)*100;

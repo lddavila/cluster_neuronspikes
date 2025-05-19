@@ -1,4 +1,4 @@
-function [] = split_images_into_training_and_testing(og_dir,dir_to_save_train,dir_to_save_test,how_much_training,data_ext)
+function [dir_to_save_test,dir_to_save_train] = split_images_into_training_and_testing(og_dir,dir_to_save_train,dir_to_save_test,how_much_training,data_ext)
 rng(0);
 if how_much_training >1 || how_much_training<0
     error("how_much_training should be a value between 0 and 1")
@@ -34,11 +34,11 @@ for i=1:size(all_items,1)
         error("mismatch in split_images_into_training_and_testing.m number of testing doesn't match expected")
     end
 
-    if ~exist(fullfile(dir_to_save_train,all_items{i,"name"}),"dir")
+    if ~exist(fullfile(dir_to_save_train,string(all_items{i,"name"})),"dir")
         create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(dir_to_save_train,all_items{i,"name"}));
     end
 
-    if ~exist(fullfile(dir_to_save_test,all_items{i,"name"}),"dir")
+    if ~exist(fullfile(dir_to_save_test,string(all_items{i,"name"})),"dir")
         create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(dir_to_save_test,all_items{i,"name"}));
     end
 

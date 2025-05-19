@@ -59,7 +59,7 @@ config.GENRIC_DIR_WITH_OUTPUTS = "D:\spike_gen_data\Recordings By Channel Precom
 config.DIR_TO_SAVE_RECLUSTERING_TO ="D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING) +" Channels";
 config.GT_FP = "D:\spike_gen_data\Recording By Channel Ground Truth\0_100Neuron300SecondRecordingWithLevel3Noise.h5.mat";
 
-config.ON_HPC =true;
+config.ON_HPC =false;
 config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC = [2 3 4 5 6 7];
 config.DIR_TO_SAVE_RECLUSTERING_TO_ON_HPC =fullfile("/home","lddavila","Reclusted Passs 0_100_3","Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC) +" Channels");
 config.BLIND_PASS_DIR_PRECOMPUTED_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise"); %the parent directory where the blind pass precomputed info is saved (things like spikes per channel and std per channel)
@@ -133,6 +133,9 @@ config.twin_nn_training_data_on_hpc = "/home/lddavila/data_from_local_server/tra
 
 config.twin_nn_test_data = "D:\cluster_neuronspikes\Data\Cluster Plots Sorted Into Number Categories Test";
 config.twin_nn_test_data_on_hpc = "/home/lddavila/data_from_local_server/test_twin_nn_data";
+
+config.parent_save_dir = "D:\cluster_neuronspikes\Data";
+config.parent_save_dir_ON_HPC = '/home/lddavila/data_to_be_copied_to_local_server';
 
 % ORIGINAL BEGINS HERE
 

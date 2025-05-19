@@ -32,9 +32,8 @@ for i=1:size(number_of_layers_to_try,2)
     neurons = 1;
     for k=1:size(learning_rates_to_try,2)
         learning_rate = learning_rates_to_try(k);
-        status_name = sprintf("number of layers %d number of neurons %d learning rate %0.6f %s",layers,neurons,learning_rate,which_nn);
-        disp(status_name)
-        [average_accuracy,net]= rate_cluster_quality_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grady_dec_sq,dir_with_train,dir_with_test,spikesort_config,num_accuracy_tests,accuracy_batch_size,layers,neurons,k);
+        fprintf("number of layers %d number of neurons %d learning rate %0.6f %s",layers,neurons,learning_rate,which_nn);
+        [average_accuracy,net]= rate_cluster_quality_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grady_dec_sq,dir_with_train,dir_with_test,spikesort_config,num_accuracy_tests,accuracy_batch_size,layers,neurons,[i,k]);
 
         current_iteration = ((i-1)*size(size_of_number_of_layers,2)) +k ;
         disp("train_twin_neural_network_on_hpc.m Finished "+string(current_iteration)+"/"+string(number_of_permutations_to_try))

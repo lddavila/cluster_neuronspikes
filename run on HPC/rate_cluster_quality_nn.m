@@ -121,7 +121,7 @@ current_loss = Inf;
 difference_in_last_two_losses = Inf;
 
 
-while iteration < number_of_its && loss > 1e-6 && difference_in_last_two_losses > 1e-2
+while iteration < number_of_its && loss > 1e-6 && difference_in_last_two_losses > 1e-3
    
     tic;
     iteration = iteration+1;
@@ -143,7 +143,7 @@ while iteration < number_of_its && loss > 1e-6 && difference_in_last_two_losses 
         last_loss = current_loss;
         current_loss = loss;
         difference_in_last_two_losses = abs(current_loss - last_loss);
-        fprintf("Difference in last 2 losses: %.6f\n",difference_in_last_two_losses);
+        % fprintf("Difference in last 2 losses: %.6f\n",difference_in_last_two_losses);
     end
 
     %update the twin subnetwork parameters
@@ -157,11 +157,18 @@ while iteration < number_of_its && loss > 1e-6 && difference_in_last_two_losses 
         recordMetrics(monitor,iteration,Loss = loss);
         monitor.Progress = 100 * iteration/number_of_its;
     end
-    disp("rate_cluster_quality_nn.m "+which_loop+" Finished "+string(iteration)+"/"+string(number_of_its))
-    elapsedTime = toc;
-    fprintf('Elapsed time: %.2f seconds\n', elapsedTime);
-    fprintf("Loss: %.6f\n",loss);
+    % disp("rate_cluster_quality_nn.m "+which_loop+" Finished "+string(iteration)+"/"+string(number_of_its))
+    % elapsedTime = toc;
+    % fprintf('Elapsed time: %.2f seconds\n', elapsedTime);
+    % fprintf("Loss: %.6f\n",loss);
     
+end
+
+if iteration < 10000 
+    disp("rate_cluster_quality_nn.m "+strjoin(string(which_loop)," ")+" Finished early on iteration "+string(iteration)+"/"+string(number_of_its));
+    disp("Loss:"+string(loss));
+    disp("Difference between in between last two losses:"+string(difference_in_last_two_losses));
+
 end
 
 accuracy = zeros(1,num_accuracy_tests);
