@@ -111,12 +111,12 @@ end
 
 
 
-start = tic;
+
 iteration = 0;
 
 [net,fc_params] = get_neural_network(num_layers);
-
-while iteration < number_of_its
+loss = Inf;
+while iteration < number_of_its || loss < 1e-6
     tic;
     iteration = iteration+1;
     [X_1,X_2,pair_labels] = get_similar_and_dissimilar_batches(dir_with_training,config,mini_batch_size);
@@ -146,6 +146,7 @@ while iteration < number_of_its
     disp("rate_cluster_quality_nn.m "+which_loop+" Finished "+string(iteration)+"/"+string(number_of_its))
     elapsedTime = toc;
     fprintf('Elapsed time: %.2f seconds\n', elapsedTime);
+    fprintf("Loss: %.6f\n",loss);
 end
 
 accuracy = zeros(1,num_accuracy_tests);
@@ -160,12 +161,12 @@ for i=1:num_accuracy_tests
         X_1 = gpuArray(X_1);
         X_2 = gpuArray(X_2);
     end
-    Y = predict_twin(net,fc_params,X_1,X_2);
-    Y = gather(extractdata(Y));
-    Y = round(Y);
+    Y_ACCURACY = predict_twin(net,fc_params,X_1,X_2);
+    Y_ACCURACY = gather(extractdata(Y_ACCURACY));
+    Y_ACCURACY = round(Y_ACCURACY);
 
 
-    accuracy(i) = sum(Y==pair_labels_acc)/accuracy_batch_size;
+    accuracy(i) = sum(Y_ACCURACY==pair_labels_acc)/accuracy_batch_size;
 end
 
 average_accuracy = mean(accuracy)*100;
