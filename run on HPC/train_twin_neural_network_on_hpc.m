@@ -21,12 +21,13 @@ grad_decay = 0.9;
 grady_dec_sq = 0.99;
 
 number_of_layers_to_try = 1:1:50;
+number_of_layers_to_try = 20:1:50;
 size_of_number_of_layers = size(number_of_layers_to_try,2);
 
 learning_rates_to_try = [6e-5, 6e-4,6e-3, 6e-2, 6e-1];
 cd(dir_to_save_results_to);
 number_of_permutations_to_try = size(learning_rates_to_try,2) * size(number_of_layers_to_try,2);
-parfor i=1:size(number_of_layers_to_try,2)
+for i=1:size(number_of_layers_to_try,2)
     layers = number_of_layers_to_try(i);
     neurons = 1;
     for k=1:size(learning_rates_to_try,2)

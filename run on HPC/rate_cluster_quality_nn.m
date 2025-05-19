@@ -16,7 +16,7 @@ function [average_accuracy,net] = rate_cluster_quality_nn(number_of_its,mini_bat
 
         for w=1:num_layers
 
-            layers(end+1) = convolution2dLayer(3,10,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal");
+            layers(end+1) = convolution2dLayer(3,10,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal",Padding="same");
             layers(end+1) = batchNormalizationLayer;
             layers(end+1) = reluLayer;
         end
