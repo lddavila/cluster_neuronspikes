@@ -119,7 +119,7 @@ loss = Inf;
 last_loss = Inf;
 current_loss = Inf;
 difference_in_last_two_losses = Inf;
-while iteration < number_of_its || loss < 1e-6 || difference_in_last_two_losses < 1e-2
+while iteration < number_of_its || loss > 1e-6 || difference_in_last_two_losses > 1e-2
    
     tic;
     iteration = iteration+1;
@@ -141,7 +141,7 @@ while iteration < number_of_its || loss < 1e-6 || difference_in_last_two_losses 
         last_loss = current_loss;
         current_loss = loss;
         difference_in_last_two_losses = abs(current_loss - last_loss);
-        fprintf("Difference in last 2 losses: %.6f\n",difference_in_last_two_losses)
+        fprintf("Difference in last 2 losses: %.6f\n",difference_in_last_two_losses);
     end
 
     %update the twin subnetwork parameters

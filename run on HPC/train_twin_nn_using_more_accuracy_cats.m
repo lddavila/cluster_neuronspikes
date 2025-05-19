@@ -7,6 +7,7 @@ which_nn = config.WHICH_NEURAL_NET;
 if config.ON_HPC
     dir_with_train = config.twin_nn_training_data_on_hpc;
     dir_with_test = config.twin_nn_test_data_on_hpc;
+    table_of_clusters = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
     dir_to_save_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
     dir_with_og_cluster_plots = config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC ;
 else
@@ -14,6 +15,7 @@ else
     dir_with_test = config.twin_nn_test_data;
     dir_to_save_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO;
     dir_with_og_cluster_plots = config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO;
+    table_of_clusters = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
 end
 
 num_accuracy_tests = 100;
