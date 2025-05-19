@@ -44,8 +44,8 @@ for p=1:size(number_of_accuracy_cats_to_try,2)
     resort_cluster_pngs_into_accuracy_caegory_folders(dir_with_og_cluster_plots,dir_to_save_sorted_images_to,number_of_accuracy_cats_to_try(p),table_of_clusters);
     disp("Finished Resorting Images")
 
-    dir_to_save_train = fullfile(parent_save_dir,"Train "+string(number_of_accuracy_cats_to_try(p))+" accuracy categories");
-    dir_to_save_test = fullfile(parent_save_dir,"Test "+string(number_of_accuracy_cats_to_try(p))+" accuracy categories");
+    dir_to_save_train = fullfile(parent_save_dir,"Tn "+string(number_of_accuracy_cats_to_try(p))+" acc cats");
+    dir_to_save_test = fullfile(parent_save_dir,"Tt "+string(number_of_accuracy_cats_to_try(p))+" acc cats");
 
     disp("Starting Splitting Training and Testing Data")
     [dir_to_save_test,dir_to_save_train] = split_images_into_training_and_testing(dir_to_save_sorted_images_to,dir_to_save_train,dir_to_save_test,0.8,".png");
