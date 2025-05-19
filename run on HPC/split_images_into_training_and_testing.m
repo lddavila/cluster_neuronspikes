@@ -14,11 +14,11 @@ if ~exist(dir_to_save_train,"dir")
 end
 
 for i=1:size(all_items,1)
-    if ~all_items{i,"isdir"} ||all_items{i,"name"} == "." || all_items{i,"name"} == ".."
+    if ~all_items{i,"isdir"} ||string(all_items{i,"name"}) == "." || string(all_items{i,"name"}) == ".."
        continue;
     end
 
-    file_path_to_read = fullfile(og_dir,all_items{i,"name"});
+    file_path_to_read = fullfile(og_dir,string(all_items{i,"name"}));
 
     files_in_current_path = strtrim(string(ls(fullfile(file_path_to_read,"*"+data_ext))));
 
@@ -35,24 +35,25 @@ for i=1:size(all_items,1)
     end
 
     if ~exist(fullfile(dir_to_save_train,string(all_items{i,"name"})),"dir")
-        create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(dir_to_save_train,all_items{i,"name"}));
+        disp();
+        create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(dir_to_save_train,string(all_items{i,"name"})));
     end
 
     if ~exist(fullfile(dir_to_save_test,string(all_items{i,"name"})),"dir")
-        create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(dir_to_save_test,all_items{i,"name"}));
+        create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(dir_to_save_test,string(all_items{i,"name"})));
     end
 
     for j=1:size(training_file_idxs,2)
         current_file_name = files_in_current_path(j);
         disp(fullfile(file_path_to_read,current_file_name))
-        disp(fullfile(dir_to_save_train,all_items{i,"name"},current_file_name))
-        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_train,all_items{i,"name"},current_file_name))
+        disp(fullfile(dir_to_save_train,string(all_items{i,"name"}),current_file_name))
+        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_train,string(all_items{i,"name"}),current_file_name))
         
     end
 
     for j=1:size(test_file_idxs,2)
         current_file_name = files_in_current_path(j);
-        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_test,all_items{i,"name"},current_file_name))
+        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_test,string(all_items{i,"name"}),current_file_name))
     end
 
     
