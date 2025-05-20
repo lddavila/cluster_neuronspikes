@@ -27,7 +27,7 @@ parfor i=1:size(table_of_data_to_plot,1)
        end
     end
     file_to_copy_into = create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(dir_to_save_sorted_pngs_into,string(category_file_to_sort_into)));
-    new_loc = fullfile(file_to_copy_into,file_to_trans);
+    new_loc = fullfile(file_to_copy_into,string(i));
 
     copyfile(og_place,new_loc);
     % disp("resort_cluster_pngs_into_accuracy_category_folders.m Finished "+string(i)+"/"+string(num_its))
