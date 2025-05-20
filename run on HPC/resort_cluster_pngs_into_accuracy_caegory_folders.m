@@ -7,7 +7,7 @@ end
 
 accuracy_cats_bounds = linspace(1,100,number_of_accuracy_categories);
 num_its = size(table_of_data_to_plot,1);
-parfor i=1:size(table_of_data_to_plot,1)
+for i=1:size(table_of_data_to_plot,1)
     current_data = sliced_table{i};
     current_z_score = current_data{1,"Z Score"};
     current_tetrode = current_data{1,"Tetrode"};
