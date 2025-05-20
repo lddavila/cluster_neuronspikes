@@ -50,7 +50,7 @@ for p=1:size(number_of_accuracy_cats_to_try,2)
     disp("Starting Splitting Training and Testing Data")
     [dir_to_save_test,dir_to_save_train] = split_images_into_training_and_testing(dir_to_save_sorted_images_to,dir_to_save_train,dir_to_save_test,0.8,".png");
     disp("Finished Splitting Training and Testing Data")
-    for i=1:size(number_of_layers_to_try,2)
+    parfor i=1:size(number_of_layers_to_try,2)
         layers = number_of_layers_to_try(i);
         neurons = 1;
         for k=1:size(learning_rates_to_try,2)
