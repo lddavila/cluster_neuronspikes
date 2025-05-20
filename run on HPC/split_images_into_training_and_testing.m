@@ -20,7 +20,9 @@ for i=1:size(all_items,1)
 
     file_path_to_read = fullfile(og_dir,string(all_items{i,"name"}));
 
-    files_in_current_path = strtrim(string(ls(fullfile(file_path_to_read,"*"+data_ext))));
+    files_in_table = struct2table(dir(fullfile(file_path_to_read,"*"+data_ext)));
+
+    files_in_current_path = string(files_in_table{:,"name"});
 
     number_of_training_files = round(how_much_training * size(files_in_current_path,1));
     number_of_test_files = size(files_in_current_path,1) - number_of_training_files;
@@ -47,15 +49,15 @@ for i=1:size(all_items,1)
         current_file_name = files_in_current_path(j);
         disp("##############");
         disp(fullfile(file_path_to_read,current_file_name));
-        disp(fullfile(dir_to_save_train,string(all_items{i,"name"}),string(training_file_idxs(j))))
+        disp(fullfile(dir_to_save_train,string(all_items{i,"name"}),current_file_name))
         disp("#################")
-        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_train,string(all_items{i,"name"}),string(training_file_idxs(j))+".png"))
+        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_train,string(all_items{i,"name"}),current_file_name))
         
     end
 
     for j=1:size(test_file_idxs,2)
         current_file_name = files_in_current_path(j);
-        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_test,string(all_items{i,"name"}),string(test_file_idxs(j))))
+        copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_test,string(all_items{i,"name"}),current_file_name))
     end
 
     
