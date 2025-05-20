@@ -47,10 +47,7 @@ for i=1:size(all_items,1)
 
     for j=1:size(training_file_idxs,2)
         current_file_name = files_in_current_path(j);
-        disp("##############");
-        disp(fullfile(file_path_to_read,current_file_name));
-        disp(fullfile(dir_to_save_train,string(all_items{i,"name"}),current_file_name))
-        disp("#################")
+  
         copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_train,string(all_items{i,"name"}),current_file_name))
         
     end
