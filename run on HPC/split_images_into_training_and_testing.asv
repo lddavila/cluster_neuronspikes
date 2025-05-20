@@ -56,6 +56,6 @@ for i=1:size(all_items,1)
         copyfile(fullfile(file_path_to_read,current_file_name),fullfile(dir_to_save_test,string(all_items{i,"name"}),current_file_name))
     end
 
-    disp("split_imageS_into_training_and_testing.m Finished "+string(i)+"/"+string(size(all_items,1)))
+    disp("split_imageS_into_training_and_testing.m Finished "+string(i)+"/"+string(size()))
 end
 end
