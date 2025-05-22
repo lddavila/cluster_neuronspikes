@@ -59,7 +59,7 @@ config.GENRIC_DIR_WITH_OUTPUTS = "D:\spike_gen_data\Recordings By Channel Precom
 config.DIR_TO_SAVE_RECLUSTERING_TO ="D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING) +" Channels";
 config.GT_FP = "D:\spike_gen_data\Recording By Channel Ground Truth\0_100Neuron300SecondRecordingWithLevel3Noise.h5.mat";
 
-config.ON_HPC =true;
+config.ON_HPC =false;
 config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC = [2 3 4 5 6 7];
 config.DIR_TO_SAVE_RECLUSTERING_TO_ON_HPC =fullfile("/home","lddavila","Reclusted Passs 0_100_3","Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC) +" Channels");
 config.BLIND_PASS_DIR_PRECOMPUTED_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise"); %the parent directory where the blind pass precomputed info is saved (things like spikes per channel and std per channel)
@@ -141,7 +141,8 @@ config.parent_save_dir_ON_HPC = '/home/lddavila/data_to_be_copied_to_local_serve
 config.USE_WHAT_FOR_CHOOSE_BETTER = "images"; %used by train_pick_better_between_2_nn.m
                                         %only valid inputs are the following 4 strings : "images","grades", "all" "template wave form"
                                         
-                                        
+config.FP_TO_TWIN_NN_PREDICTOR = "D:\cluster_neuronspikes\twin_cluster_quality_nn\accuracy score 60.10 number of layers 2 number of neurons 1 learning rate 0.000060 number of accuracy cats 5 twin_nn using more accuracy cats.mat";
+config.FP_TO_TWIN_NN_PREDICTOR_ON_HPC = "";
 
 % ORIGINAL BEGINS HERE
 

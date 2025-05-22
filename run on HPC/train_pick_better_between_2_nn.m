@@ -35,10 +35,13 @@ data_samples_to_use =possible_pairs_to_use(random_idxs_to_train_on,:);
 %get the images for each pair 
 image_data_to_use = cell(num_data_samples_to_create,2);
 accuracies = nan(num_data_samples_to_create,2);
+template_waveform_array = cell(num_data_samples_to_create,2);
 for i=1:num_data_samples_to_create
     img_1_idx = data_samples_to_use(i,1);
     img_2_idx = data_samples_to_use(i,2);
     image_1_grades = table_of_clusters{img_1_idx,"grades"}{1};
+    template_waveform_array{i,1} = table_of_clusters{img_1_idx,"Mean Waveform"}{1};
+    template_waveform_array{i,2} = table_of_clusters{img_2_idx,"Mean Waveform"}{1};
 
     image_2_channels = image_1_grades{49};
     image_1_dim_1 = image_2_channels(image_1_grades{42});
@@ -70,34 +73,25 @@ for i=1:num_data_samples_to_create
 
     image_2_accuracy = table_of_clusters{img_2_idx,"accuracy"};
 
-    image_1 = imread(fullfile(dir_with_og_cluster_plots,image_2_string));
-    % figure;
-    % imshow(image_1);
-    % figure;
-    % image_1 = imresize(image_1,[100,100]);
-    % imshow(image_1);
-    image_2 = imread(fullfile(dir_with_og_cluster_plots,image_1_string));
-    % image_2 = imread(image_2,[100,100]);
+    image_2 = imread(fullfile(dir_with_og_cluster_plots,image_2_string));
+    image_1 = imread(fullfile(dir_with_og_cluster_plots,image_1_string));
+
 
     image_data_to_use{i,1} = normalize(image_1,"range");
     image_data_to_use{i,2} = normalize(image_2,"range");
     accuracies(i,1) = image_1_accuracy;
     accuracies(i,2) = image_2_accuracy;
+
+
+end
+flattened_image_data = nan(num_data_samples_to_create,size(reshape(image_data_to_use{1,1},1,[]),2)*2);
+for i=1:size(flattened_image_data,1)
+    flattened_image_data(i,:) = [reshape(image_data_to_use{i,1},1,[]),reshape(image_data_to_use{i,2},1,[])];
 end
 
-%flatten the images
-flattened_data = nan(size(accuracies,1),size(reshape(image_data_to_use{1,1},1,[]),2)*2);
-for i=1:size(accuracies,1)
-    img_1 = reshape(image_data_to_use{i,1},1,[]);
-    img_2 = reshape(image_data_to_use{i,1},1,[]); 
-    flattened_data(i,:) = [img_1,img_2];
-end
 
-disp("Finished importing Image Data")
-parfor num_layers=num_layers_to_try
-    for num_neurons=num_neurons_to_try
 
-    end
-end
+
+
 
 end

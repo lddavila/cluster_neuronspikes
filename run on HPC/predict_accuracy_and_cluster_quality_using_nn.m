@@ -27,6 +27,7 @@ if config.ON_HPC
     quality_nn = quality_nn.net;
     mua_or_not_nn = importdata(config.FP_TO_MUA_OR_NOT_PREDICTING_NN_ON_HPC);
     mua_or_not_nn = mua_or_not_nn.net;
+    cluster_quality_accuracy = importdata();
 else
     accuracy_nn = importdata(config.FP_TO_ACC_PREDICTING_NN);
     accuracy_nn = accuracy_nn.net;
