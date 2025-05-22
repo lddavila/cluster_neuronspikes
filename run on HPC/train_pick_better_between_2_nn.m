@@ -74,10 +74,10 @@ for i=1:num_data_samples_to_create
     % figure;
     % imshow(image_1);
     % figure;
-    image_1 = imresize(image_1,[100,100]);
+    % image_1 = imresize(image_1,[100,100]);
     % imshow(image_1);
     image_2 = imread(fullfile(dir_with_og_cluster_plots,image_1_string));
-    image_2 = imread(image_2,[100,100]);
+    % image_2 = imread(image_2,[100,100]);
 
     image_data_to_use{i,1} = normalize(image_1,"range");
     image_data_to_use{i,2} = normalize(image_2,"range");
@@ -88,7 +88,9 @@ end
 %flatten the images
 flattened_data = nan(size(accuracies,1),size(reshape(image_data_to_use{1,1},1,[]),2)*2);
 for i=1:size(accuracies,1)
-    
+    img_1 = reshape(image_data_to_use{i,1},1,[]);
+    img_2 = reshape(image_data_to_use{i,1},1,[]); 
+    flattened_data(i,:) = [img_1,img_2];
 end
 
 disp("Finished importing Image Data")
