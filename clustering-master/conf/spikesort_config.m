@@ -95,7 +95,7 @@ config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO ="D:\cluster_neuronspikes\Data\100_by_1
 config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC ="/home/lddavila/data_to_be_copied_to_local_server/100_by_100_cluster_pngs";
 
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\Timestamp and table\overlap_table_with_only_neurons_as_identified_by_nn.mat";
-config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table_with_only_neurons_as_identified_by_nn.mat");
+config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat");
 
 %
 config.WHICH_NEURAL_NET = "twin_nn using more accuracy cats";
