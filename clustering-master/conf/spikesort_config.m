@@ -59,7 +59,7 @@ config.GENRIC_DIR_WITH_OUTPUTS = "D:\spike_gen_data\Recordings By Channel Precom
 config.DIR_TO_SAVE_RECLUSTERING_TO ="D:\spike_gen_data\Recordings By Channel Precomputed\0_100Neuron300SecondRecordingWithLevel3Noise Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING) +" Channels";
 config.GT_FP = "D:\spike_gen_data\Recording By Channel Ground Truth\0_100Neuron300SecondRecordingWithLevel3Noise.h5.mat";
 
-config.ON_HPC =true;
+config.ON_HPC =false;
 config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC = [2 3 4 5 6 7];
 config.DIR_TO_SAVE_RECLUSTERING_TO_ON_HPC =fullfile("/home","lddavila","Reclusted Passs 0_100_3","Refinement Pass " + string(config.NUM_DIMS_TO_USE_FOR_RECLUSTERING_ON_HPC) +" Channels");
 config.BLIND_PASS_DIR_PRECOMPUTED_ON_HPC = fullfile("/home","lddavila","spike_gen_data","0_100Neuron300SecondRecordingWithLevel3Noise"); %the parent directory where the blind pass precomputed info is saved (things like spikes per channel and std per channel)
@@ -91,16 +91,16 @@ config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17
 % config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17 16 14 5 ];
 config.IDXS_OF_GRADES_THAT_ARE_BETTER_SMALLER = [2 23 54 12 36 18 13 17 16 14 5 8 11 19 46 51 52];
 
-config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO =fullfile("D:","cluster_neuronspikes","Data","limited_cluster_plots_pngs");
-config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC = fullfile("/home","lddavila","data_to_be_copied_to_local_server","limited_cluster_plots_pngs");
+config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO ="D:\cluster_neuronspikes\Data\100_by_100_cluster_pngs";
+config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC ="/home/lddavila/data_to_be_copied_to_local_server/100_by_100_cluster_pngs";
 
-config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\Timestamp and table\overlap_table.mat";
-config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table.mat");
+config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\Timestamp and table\overlap_table_with_only_neurons_as_identified_by_nn.mat";
+config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table_with_only_neurons_as_identified_by_nn.mat");
 
 %
 config.WHICH_NEURAL_NET = "twin_nn using more accuracy cats";
-config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\twin_nn_results";
-config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/home/lddavila/data_to_be_copied_to_local_server/new_twin_nn_results";
+config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\choose_better_nn_results";
+config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/home/lddavila/data_to_be_copied_to_local_server/choose_better_nn";
 
 config.DIR_WITH_NUMBER_BASED_IMAGES = fullfile("D:\cluster_neuronspikes\Data\MUA Or Not");
 config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = "/home/lddavila/data_from_local_server/Expand Or Dont";
@@ -119,7 +119,7 @@ config.FP_TO_EXPAND_OR_DONT_NN ="D:\cluster_neuronspikes\expand_or_dont_NN\accur
 config.FP_TO_EXPAND_OR_DONT_NN_ON_HPC = "/home/lddavila/cluster_neuronspikes/expand_or_dont_NN/accuracy score 94.5545 num layers 22 filter size 256 mua_or_not.mat";
 
 
-config.WHAT_KIND_OF_CLUSTER_PLOT_TO_MAKE = "limited"; %used by create_cluster_plots_as_png_on_hpc 
+config.WHAT_KIND_OF_CLUSTER_PLOT_TO_MAKE = "all"; %used by create_cluster_plots_as_png_on_hpc 
                                                %'all' - will print every spike per tetrode configuration and the cluster in black
                                                %'limited' - will print the cluster and every spike within 6 standard deviations of the cluster mean 
 config.NUM_STDS_AROUND_CLUSTER = 10; % used by create_cluster_plots_as_png_on_hpc;
@@ -136,6 +136,12 @@ config.twin_nn_test_data_on_hpc = "/home/lddavila/data_from_local_server/test_tw
 
 config.parent_save_dir = "D:\cluster_neuronspikes\Data";
 config.parent_save_dir_ON_HPC = '/home/lddavila/data_to_be_copied_to_local_server';
+
+
+config.USE_WHAT_FOR_CHOOSE_BETTER = "images"; %used by train_pick_better_between_2_nn.m
+                                        %only valid inputs are the following 4 strings : "images","grades", "all" "template wave form"
+                                        
+                                        
 
 % ORIGINAL BEGINS HERE
 

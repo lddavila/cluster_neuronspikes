@@ -118,7 +118,7 @@ parfor i=1:length(sliced_updated_table_of_overlap)
         close(f);
         RGB = imread(file_save_name);
         grayscaled_image =rgb2gray(RGB);
-        resized_and_gray_scaled_image = imresize(grayscaled_image,[224,224]);
+        resized_and_gray_scaled_image = imresize(grayscaled_image,[100,100]);
         delete(file_save_name);
         imshow(resized_and_gray_scaled_image)
         imwrite(resized_and_gray_scaled_image,file_save_name);
