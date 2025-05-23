@@ -60,7 +60,7 @@ for p=1:size(number_of_accuracy_cats_to_try,2)
             learning_rate = learning_rates_to_try(k);
             % fprintf("number of layers %d number of neurons %d learning rate %0.6f %s",layers,neurons,learning_rate,which_nn);
             tic;
-            [average_accuracy,net,fc_params]= pick_better_between_2_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grady_dec_sq,dir_to_save_train,dir_to_save_test,spikesort_config,num_accuracy_tests,accuracy_batch_size,layers,neurons,[p,i,k]);
+            [average_accuracy,net,fc_params]= pick_better_between_2_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grady_dec_sq,dir_to_save_train,dir_to_save_test,spikesort_config,num_accuracy_tests,accuracy_batch_size,layers,neurons,[p,i,k],table_of_clusters);
             elapsed_time = toc;
             current_iteration = ((i-1)*size(size_of_number_of_layers,2)) +k ;
             disp("train_twin_neural_network_on_hpc.m Finished "+string(current_iteration)+"/"+string(number_of_permutations_to_try))
