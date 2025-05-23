@@ -56,7 +56,7 @@ parfor i=1:size(number_of_layers_to_try,2)
         disp("train_twin_neural_network_on_hpc.m Finished "+string(current_iteration)+"/"+string(number_of_permutations_to_try))
         fprintf('Elapsed time: %.2f seconds\n', elapsed_time);
 
-        save_name = sprintf("accuracy score %0.2f number of layers %d number of neurons %d learning rate %0.6f number of accuracy cats %d %s",average_accuracy,layers,neurons,learning_rate,number_of_accuracy_cats_to_try(p),which_nn);
+        save_name = sprintf("accuracy score %0.2f number of layers %d number of neurons %d learning rate %0.6f %s",average_accuracy,layers,neurons,learning_rate,which_nn);
         net_as_struct = struct();
         net_as_struct.net = net;
         net_as_struct.fc_params = fc_params;
