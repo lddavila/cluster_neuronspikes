@@ -16,7 +16,9 @@ else
     parent_save_dir = config.parent_save_dir;
 end
 
-
+if ~exist(dir_to_save_results_to,"dir")
+    dir_to_save_results_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_results_to);
+end
 
 
 num_accuracy_tests = 100;
@@ -37,7 +39,7 @@ size_of_number_of_layers = size(number_of_layers_to_try,2);
 
 learning_rates_to_try = [6e-5, 6e-4,6e-3, 6e-2, 6e-1];
 cd(dir_to_save_results_to);
-number_of_permutations_to_try = size(learning_rates_to_try,2) * size(number_of_layers_to_try,2) * number_of_accuracy_cats_to_try;
+number_of_permutations_to_try = size(learning_rates_to_try,2) * size(number_of_layers_to_try,2) * size(number_of_accuracy_cats_to_try,2);
 
 for p=1:size(number_of_accuracy_cats_to_try,2)
     dir_to_save_sorted_images_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(parent_save_dir,"C_I with "+string(number_of_accuracy_cats_to_try(p))+" acc cats"));
@@ -58,7 +60,7 @@ for p=1:size(number_of_accuracy_cats_to_try,2)
             learning_rate = learning_rates_to_try(k);
             % fprintf("number of layers %d number of neurons %d learning rate %0.6f %s",layers,neurons,learning_rate,which_nn);
             tic;
-            [average_accuracy,net,fc_params]= rate_cluster_quality_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grady_dec_sq,dir_to_save_train,dir_to_save_test,spikesort_config,num_accuracy_tests,accuracy_batch_size,layers,neurons,[p,i,k]);
+            [average_accuracy,net,fc_params]= pick_better_between_2_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grady_dec_sq,dir_to_save_train,dir_to_save_test,spikesort_config,num_accuracy_tests,accuracy_batch_size,layers,neurons,[p,i,k]);
             elapsed_time = toc;
             current_iteration = ((i-1)*size(size_of_number_of_layers,2)) +k ;
             disp("train_twin_neural_network_on_hpc.m Finished "+string(current_iteration)+"/"+string(number_of_permutations_to_try))
