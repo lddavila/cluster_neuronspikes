@@ -156,7 +156,7 @@ while iteration < number_of_its && loss > 1e-6 %&& difference_in_last_two_losses
         recordMetrics(monitor,iteration,Loss = loss);
         monitor.Progress = 100 * iteration/number_of_its;
     end
-    % disp("rate_cluster_quality_nn.m "+which_loop+" Finished "+string(iteration)+"/"+string(number_of_its))
+    disp("rate_cluster_quality_nn.m "+strjoin(string(which_loop)," ")+" Finished "+string(iteration)+"/"+string(number_of_its))
     % elapsedTime = toc;
     % fprintf('Elapsed time: %.2f seconds\n', elapsedTime);
     % fprintf("Loss: %.6f\n",loss);
