@@ -21,7 +21,7 @@ end
 
 num_accuracy_tests = 100;
 accuracy_batch_size = 10;
-number_of_its = 10000;
+number_of_its = 1000;
 mini_batch_size = 180;
 grad_decay = 0.9;
 grady_dec_sq = 0.99;
