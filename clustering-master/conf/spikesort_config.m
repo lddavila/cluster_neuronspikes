@@ -92,14 +92,14 @@ config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17
 config.IDXS_OF_GRADES_THAT_ARE_BETTER_SMALLER = [2 23 54 12 36 18 13 17 16 14 5 8 11 19 46 51 52];
 
 config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO ="D:\cluster_neuronspikes\Data\100_by_100_cluster_pngs";
-config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC ="/home/lddavila/data_to_be_copied_to_local_server/100_by_100_cluster_pngs";
+config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC ="/home/lddavila/data_to_be_copied_to_local_server/limited_cluster_plots_pngs";
 
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\Timestamp and table\overlap_table_with_only_neurons_as_identified_by_nn.mat";
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table_with_only_neurons_as_identified_by_nn.mat");
 
 %
-config.WHICH_NEURAL_NET = "twin_nn choose better";
-config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\choose_better_nn_results";
+config.WHICH_NEURAL_NET = "twin_nn accuracy classes";
+config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\05_23_twin_accuracy_classes";
 config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/home/lddavila/data_to_be_copied_to_local_server/05_23_choose_better_twin_nn_results";
 
 config.DIR_WITH_NUMBER_BASED_IMAGES = fullfile("D:\cluster_neuronspikes\Data\MUA Or Not");

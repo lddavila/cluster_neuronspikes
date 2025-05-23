@@ -37,7 +37,7 @@ if config.ON_HPC
     quality_pred_nn_struct = importdata(config.FP_TO_TWIN_NN_PREDICTOR_ON_HPC);
     
 else
-    quality_pred_nn_struct = importdata(config.FP_TO_ACC_PREDICTING_NN);
+    quality_pred_nn_struct = importdata(config.FP_TO_TWIN_NN_PREDICTOR);
 end
 
 quality_nn = quality_pred_nn_struct.net;
