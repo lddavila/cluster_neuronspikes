@@ -100,7 +100,7 @@ config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data
 %
 config.WHICH_NEURAL_NET = "twin_nn using more accuracy cats";
 config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\choose_better_nn_results";
-config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/home/lddavila/data_to_be_copied_to_local_server/choose_better_nn";
+config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/home/lddavila/data_to_be_copied_to_local_server/05_22_correct_twin_nn_results";
 
 config.DIR_WITH_NUMBER_BASED_IMAGES = fullfile("D:\cluster_neuronspikes\Data\MUA Or Not");
 config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = "/home/lddavila/data_from_local_server/Expand Or Dont";
