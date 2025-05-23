@@ -47,6 +47,7 @@ parfor i=1:size(number_of_layers_to_try,2)
     layers = number_of_layers_to_try(i);
     neurons = 1;
     for k=1:size(learning_rates_to_try,2)
+        disp(pwd)
         learning_rate = learning_rates_to_try(k);
         % fprintf("number of layers %d number of neurons %d learning rate %0.6f %s",layers,neurons,learning_rate,which_nn);
         tic;
