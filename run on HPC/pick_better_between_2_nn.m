@@ -1,4 +1,4 @@
-function [average_accuracy,net,fc_params] = pick_better_between_2_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grad_decay_sq,dir_with_training,dir_with_test,config,num_accuracy_tests,accuracy_batch_size,num_layers,num_neurons,which_loop,cluster_table)
+function [average_accuracy,net,fc_params] = pick_better_between_2_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grad_decay_sq,dir_with_cluster_plots,config,num_accuracy_tests,accuracy_batch_size,num_layers,num_neurons,which_loop,cluster_table)
     function [net,fc_params] = get_neural_network(num_layers)
         layers = [
             imageInputLayer([100 100 1],Normalization="none")
@@ -124,7 +124,7 @@ while iteration < number_of_its && loss > 1e-6 && difference_in_last_two_losses 
    
     tic;
     iteration = iteration+1;
-    [X_1,X_2,pair_labels] = get_higher_lower_accuracy_image_pairs(dir_with_training,config,mini_batch_size,cluster_table);
+    [X_1,X_2,pair_labels] = get_higher_lower_accuracy_image_pairs(dir_with_cluster_plots,config,mini_batch_size,cluster_table);
     if canUseGPU
         X_1 = gpuArray(dlarray(X_1,"SSCB"));
         X_2 = gpuArray(dlarray(X_2,"SSCB"));
@@ -173,7 +173,7 @@ end
 accuracy = zeros(1,num_accuracy_tests);
 
 for i=1:num_accuracy_tests
-    [X_1,X_2,pair_labels_acc] = get_similar_and_dissimilar_batches(dir_with_test,config,accuracy_batch_size);
+    [X_1,X_2,pair_labels_acc] = get_higher_lower_accuracy_image_pairs(dir_with_cluster_plots,config,accuracy_batch_size,cluster_table);
 
     X_1 = dlarray(X_1,"SSCB");
     X_2 = dlarray(X_2,"SSCB");
