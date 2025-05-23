@@ -1,7 +1,7 @@
 function [average_accuracy,net] = rate_cluster_quality_nn(number_of_its,mini_batch_size,learning_rate,grad_decay,grad_decay_sq,dir_with_training,dir_with_test,config,num_accuracy_tests,accuracy_batch_size,num_layers,num_neurons,which_loop)
     function [net,fc_params] = get_neural_network(num_layers)
         layers = [
-            imageInputLayer([224 224 1],Normalization="none")
+            imageInputLayer([100 100 1],Normalization="none")
             convolution2dLayer(10,64,WeightsInitializer="narrow-normal",BiasInitializer="narrow-normal")
             reluLayer
             maxPooling2dLayer(2,Stride=2)
