@@ -33,7 +33,7 @@ number_of_accuracy_cats_to_try = 5:1:10;
 
 
 
-number_of_layers_to_try = 1:1:10;
+number_of_layers_to_try = 2:1:10;
 %number_of_layers_to_try = 20:1:50;
 size_of_number_of_layers = size(number_of_layers_to_try,2);
 
