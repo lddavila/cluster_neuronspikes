@@ -381,6 +381,8 @@ all_names_of_all_grades =["lratio","cv","short isi","incompleteness compare wire
 
             grades{k,61} = predict_expand_or_not(compare_wire,second_compare_wire,all_peaks,config_struct,cluster_filter);
 
+            grades{k,62} = predict_accuracy_using_twin_nn(compare_wire,second_compare_wire,all_peaks,config_struct,cluster_filter);
+
 
     end
 

@@ -1,4 +1,18 @@
 function [accuracy_pred,quality_pred,mua_or_not_pred] = predict_accuracy_and_cluster_quality_using_nn(first_dimension,second_dimension,peaks,config,peaks_in_cluster)
+
+    function Y = predict_twin(net,fc_params,X_1,X_2)
+        Y_1 = predict(net,X_1);
+        Y_1 = sigmoid(Y_1);
+
+        Y_2 = predict(net,X_2);
+        Y_2 = sigmoid(Y_2);
+
+        Y = abs(Y_1 - Y_2);
+
+        Y = fullyconnect(Y,fc_params.FcWeights,fc_params.FcBias);
+
+        Y = sigmoid(Y);
+    end
 colors = distinguishable_colors(1); %will always use the same colors
 my_gray = [0.5 0.5 0.5];
 hold on
@@ -46,9 +60,9 @@ axis off;
 
 randomized_temp_file_number_sequence = randi(1e9, 1, 10);
 
-file_save_name = strjoin(string(randomized_temp_file_number_sequence))+".png"; %this file will be deleted 
-% so we just randomly generate 10 numbers between 1 and billion and use this as a file name to avoid a multi threaded process accidentally 
-%reading the same file 
+file_save_name = strjoin(string(randomized_temp_file_number_sequence))+".png"; %this file will be deleted
+% so we just randomly generate 10 numbers between 1 and billion and use this as a file name to avoid a multi threaded process accidentally
+%reading the same file
 saveas(f,file_save_name);
 close(f);
 RGB = imread(file_save_name);
@@ -67,6 +81,6 @@ mua_or_not_class = predict(mua_or_not_nn,single(resized_and_gray_scaled_image));
 mua_or_not_pred = mua_or_not_pred-1;
 delete(file_save_name);
 %imshow(resized_and_gray_scaled_image)
-% imwrite(resized_and_gray_scaled_image,file_save_name);
+%imwrite(resized_and_gray_scaled_image,file_save_name);
 
 end
