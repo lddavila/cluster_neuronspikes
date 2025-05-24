@@ -144,6 +144,8 @@ config.USE_WHAT_FOR_CHOOSE_BETTER = "images"; %used by train_pick_better_between
 config.FP_TO_TWIN_NN_PREDICTOR = "D:\cluster_neuronspikes\twin_cluster_quality_nn\accuracy score 60.10 number of layers 2 number of neurons 1 learning rate 0.000060 number of accuracy cats 5 twin_nn using more accuracy cats.mat";
 config.FP_TO_TWIN_NN_PREDICTOR_ON_HPC = "/home/lddavila/cluster_neuronspikes/twin_cluster_quality_nn/accuracy score 60.10 number of layers 2 number of neurons 1 learning rate 0.000060 number of accuracy cats 5 twin_nn using more accuracy cats.mat";
 
+config.DIR_TO_ACC_CAT_IMAGES = "D:\cluster_neuronspikes\accuracy_category_clusters";
+config.DIR_TO_ACC_CAT_IMAGES_ON_HPC = "";
 % ORIGINAL BEGINS HERE
 
 % Prints extra output
