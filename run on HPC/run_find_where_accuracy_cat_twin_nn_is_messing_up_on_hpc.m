@@ -6,7 +6,7 @@ config = spikesort_config();
 if config.ON_HPC()
     table_of_all_clusters = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
 else
-    table_of_all_clusters = import(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
+    table_of_all_clusters = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
 end
 num_accuracy_cats = 5;
 number_of_samples = 100;
