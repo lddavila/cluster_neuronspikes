@@ -1,0 +1,16 @@
+function [] = run_find_where_accuracy_cat_twin_nn_is_messing_up_on_hpc()
+home_dir = cd("..");
+addpath(genpath(pwd));
+cd(home_dir);
+config = spikeso
+if config.ON_HPC()
+    table_of_all_clusters = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
+else
+    table_of_all_clusters = import(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
+end
+num_accuracy_cats = 5;
+number_of_samples = 100;
+
+find_where_accuracy_cat_twin_nn_is_messing_up(table_of_all_clusters,config,num_accuracy_cats,number_of_samples);
+file_to_save_to = fullfile();
+end
