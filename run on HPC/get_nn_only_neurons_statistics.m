@@ -1,5 +1,5 @@
 function [table_of_stats,unit_appearences_table] = get_nn_only_neurons_statistics(table_of_neurons,dir_to_save_results_to,min_accuracy,config)
-
+get_table_of_all_clusters_from_blind_pass();
 clc;
 sliced_table = cell(size(table_of_neurons,1),1);
 

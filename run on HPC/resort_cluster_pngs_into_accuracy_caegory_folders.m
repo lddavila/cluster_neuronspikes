@@ -5,7 +5,8 @@ for i=1:size(table_of_data_to_plot,1)
     sliced_table{i}= table_of_data_to_plot(i,:);
 end
 
-accuracy_cats_bounds = linspace(1,100,number_of_accuracy_categories);
+accuracy_cats_bounds = linspace(1,100,number_of_accuracy_categories); %% OG line
+accuracy_cats_counts = [50,100]; %manual modification
 num_its = size(table_of_data_to_plot,1);
 parfor i=1:size(table_of_data_to_plot,1)
     current_data = sliced_table{i};
@@ -36,6 +37,6 @@ parfor i=1:size(table_of_data_to_plot,1)
     new_loc = fullfile(file_to_copy_into,file_to_trans);
 
     copyfile(og_place,new_loc);
-    % disp("resort_cluster_pngs_into_accuracy_category_folders.m Finished "+string(i)+"/"+string(num_its))
+    disp("resort_cluster_pngs_into_accuracy_category_folders.m Finished "+string(i)+"/"+string(num_its))
 end
 end

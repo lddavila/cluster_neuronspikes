@@ -6,8 +6,13 @@ end
 if config.UPDATE_CLASSIFICATION
     updated_table_of_other_appearences =update_cluster_classification(updated_table_of_other_appearences); %update the classification of the clusters if necessary
 end
-if config.ONLY_NEURONS
-    updated_table_of_other_appearences(~contains(updated_table_of_other_appearences{:,"Classification"},"Neuron","IgnoreCase",true),:) = [];
+
+if ~config.IDENTIFY_NEURONS_USING_NN
+    if config.ONLY_NEURONS
+        updated_table_of_other_appearences(~contains(updated_table_of_other_appearences{:,"Classification"},"Neuron","IgnoreCase",true),:) = [];
+    end
+else
+
 end
 
 

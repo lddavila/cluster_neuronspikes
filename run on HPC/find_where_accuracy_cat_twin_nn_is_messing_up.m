@@ -1,0 +1,116 @@
+function [data_to_turn_into_conf_matrix] = find_where_accuracy_cat_twin_nn_is_messing_up(table_of_all_clusters,config,num_accuracy_cats,number_of_samples)
+
+    function [accuracy_cat,index] = get_accuracy_cat(accuracy_category_bins,letter_grades,current_accuracy)
+        accuracy_cat = '';
+        index = NaN;
+        for j=1:size(accuracy_category_bins,2)
+            if current_accuracy <= accuracy_category_bins(j)
+                accuracy_cat = letter_grades(j);
+                index = j;
+                break;
+            end
+        end
+
+    end
+    function [image_string] = get_image_string(current_row)
+        %Z Score 3 Tetrode t1 Cluster 1 Channels1 and 97
+        image_string = "";
+        current_grades = current_row{1,"grades"}{1};
+        channels = current_grades{49};
+        dim_1 = channels(current_grades{42});
+        dim_2 = channels(current_grades{43});
+        image_string = "Z Score "+string(current_row{1,"Z Score"}) +" Tetrode "+current_row{1,"Tetrode"} +" Cluster "+string(current_row{1,"Cluster"})+" Channels"+string(dim_1)+" and "+string(dim_2)+".png";
+    end
+
+
+
+    function [predicted_accuracy_cat] = get_comparison_score_against_all_images(dir_with_comparison_images,net,fc_params,imds_1,k)
+        list_of_files = struct2table(dir(dir_with_comparison_images));
+        imgSize = size(readimage(imds_1,1));
+        X_1 = zeros([imgSize 1 1],"single");
+        X_1(:,:,:,1) = imds_1.readimage(1);
+        mean_similarity_score_per_class = size(list_of_files,1)-2; %-2 for the "." and ".." directories
+        for i=1:size(list_of_files,1)
+            if string(list_of_files{i,"name"}) == "."||string(list_of_files{i,"name"}) == ".."
+                continue;
+            end
+            dir_of_current_cat = fullfile(string(list_of_files{i,"folder"}),string(list_of_files{i,"name"}));
+            all_files_of_current_cat = struct2table(dir(dir_of_current_cat));
+            all_files_of_current_cat(all_files_of_current_cat{:,"name"}=="." |all_files_of_current_cat{:,"name"}=="..",:) = [];
+            
+            rand_samples = randi(size(all_files_of_current_cat,2),30,1);
+            all_files_of_current_cat = all_files_of_current_cat(rand_samples,:);
+
+            array_of_similarity_scores_for_current_class =nan(size(all_files_of_current_cat,1)-2,1); %-2 to account for the . and ..
+            
+            parfor j=1:size(all_files_of_current_cat,1)
+                % tic;
+                location_of_current_compare_image = fullfile(dir_of_current_cat,string(all_files_of_current_cat{j,"name"}));
+                imds_2 = imageDatastore(location_of_current_compare_image);
+                X_2 = zeros([imgSize 1 1],"single");
+                X_2(:,:,:,1) = imds_2.readimage(1);
+                temp_y = predict_twin(net,fc_params,X_1,X_2);
+                array_of_similarity_scores_for_current_class(j) = gather(extractdata(temp_y));
+                % elapsed_time = toc;
+                % fprintf("find_where_accuracy_cat_twin_nn_is_messing_up.m Finished iteration k:%d i:%d j:%d / %d \n",k,i,j,k*i*j)
+                % disp("Elapsed Time: "+string(elapsed_time));
+            end
+            mean_similarity_score_per_class(i-2) = mean(array_of_similarity_scores_for_current_class,"all");
+            
+
+        end
+
+        [max_mean_similarity_score,index_of_max_mean_similarity_score] = max(mean_similarity_score_per_class);
+
+        predicted_accuracy_cat = index_of_max_mean_similarity_score;
+    end
+
+
+rng(0);
+
+possible_combinations = 1:size(table_of_all_clusters,1);
+accuracy_category_bins = linspace(1,100,num_accuracy_cats);
+letter_grades = ["F","D","C","B","A"];
+idxs_of_rand_samples = randi(size(possible_combinations,2),number_of_samples,1);
+actual_samples = possible_combinations(idxs_of_rand_samples);
+dir_of_images = config.DIR_WITH_LIMITED_CLUSTER_PLOTS;
+
+if config.ON_HPC
+    quality_pred_nn_struct = importdata(config.FP_TO_TWIN_NN_PREDICTOR_ON_HPC);
+    dir_with_comparison_images = config.DIR_TO_ACC_CAT_IMAGES_ON_HPC;
+
+else
+    quality_pred_nn_struct = importdata(config.FP_TO_TWIN_NN_PREDICTOR);
+    dir_with_comparison_images = config.DIR_TO_ACC_CAT_IMAGES;
+end
+quality_nn = quality_pred_nn_struct.net;
+quality_fc_params = quality_pred_nn_struct.fc_params;
+
+data_to_turn_into_conf_matrix = zeros(size(letter_grades,2),size(letter_grades,2));
+
+for k=1:size(actual_samples,2)
+    img_1_idx = actual_samples(k);
+    image_1_row = table_of_all_clusters(img_1_idx,:);
+    [image_1_actual_grade,index]= get_accuracy_cat(accuracy_category_bins,letter_grades,image_1_row{1,"accuracy"});
+
+
+    image_1_string = fullfile(dir_of_images,get_image_string(image_1_row));
+
+
+    img_1_ds = imageDatastore(image_1_string);
+
+    predicted_grade =get_comparison_score_against_all_images(dir_with_comparison_images,quality_nn,quality_fc_params,img_1_ds,k);
+
+    
+    data_to_turn_into_conf_matrix(index,predicted_grade) = data_to_turn_into_conf_matrix(index,predicted_grade)+1;
+    fprintf('%s Finished %d / %d \n',"find_where_accuracy_cat_twin_nn_is_messing_up.m",k,size(actual_samples,2));
+end
+
+
+
+
+
+
+
+
+end
