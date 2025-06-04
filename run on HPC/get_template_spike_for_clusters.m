@@ -41,8 +41,8 @@ for i=1:size(unique_rows_of_best_rep,1)
         dir_with_grades = generic_dir_of_grades;
         dir_with_outputs = generic_dir_of_outputs;
     end
-    [current_grades,~,aligned,~,idx_b4_filt] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,refinement_pass);
-    if any(isnan(current_grades))
+    [~,~,aligned,~,idx_b4_filt,failed_to_load] = import_data_hpc(dir_with_grades,dir_with_outputs,current_tetrode,refinement_pass);
+    if failed_to_load
         continue;
     end
 

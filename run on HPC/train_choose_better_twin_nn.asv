@@ -17,13 +17,12 @@ else
     parent_save_dir = config.parent_save_dir;
     table_of_already_done = config.FP_TO_ALREADY_DONE;
 end
-disp("Finished Loading Data")
 
 if ~exist(dir_to_save_results_to,"dir")
     dir_to_save_results_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_results_to);
 end
 
-disp("Finished Creating Save Directory")
+
 num_accuracy_tests = 100;
 accuracy_batch_size = 10;
 number_of_its = 1000;
@@ -42,8 +41,6 @@ size_of_number_of_layers = size(number_of_layers_to_try,2);
 
 learning_rates_to_try = [6e-5, 6e-4,6e-3, 6e-2, 6e-1];
 cd(dir_to_save_results_to);
-disp("Moved Into Save Dir")
-disp(pwd);
 number_of_permutations_to_try = size(learning_rates_to_try,2) * size(number_of_layers_to_try,2) * size(number_of_accuracy_cats_to_try,2);
 
 
@@ -52,11 +49,10 @@ parfor i=1:size(number_of_layers_to_try,2)
     layers = number_of_layers_to_try(i);
     neurons = 1;
     for k=1:size(learning_rates_to_try,2)
-        % disp(pwd)
+        disp(pwd)
         learning_rate = learning_rates_to_try(k);
         check_if_already_done = sprintf("number of layers %d number of neurons %d learning rate %0.6f %s",layers,neurons,learning_rate,which_nn);
         if any(contains(string(table_of_already_done{:,"name"}),check_if_already_done))
-            disp("Current Neural Network Already Trained, moving to next one.")
             continue;
         end
         tic;

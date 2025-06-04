@@ -99,15 +99,15 @@ config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17
 config.IDXS_OF_GRADES_THAT_ARE_BETTER_SMALLER = [2 23 54 12 36 18 13 17 16 14 5 8 11 19 46 51 52];
 
 config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO ="D:\cluster_neuronspikes\Data\limited_cluster_plots_pngs";
-config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC ="/home/lddavila/data_to_be_copied_to_local_server/limited_cluster_plots_pngs";
+config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC ="/scratch/lddavila/data_from_local_machine/100_by_100_cluster_pngs";
 
-config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\Timestamp and table\overlap_table_with_only_neurons_as_identified_by_nn.mat";
-config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = fullfile("/home","lddavila","data_from_local_server","Timestamp and table","overlap_table_with_only_neurons_as_identified_by_nn.mat");
+config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\final_overlap_table\final_table_with_overlap_only_neurons.mat";
+config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/lddavila/data_from_local_machine/final_overlap_table/final_table_with_overlap_only_neurons.mat";
 
 %
-config.WHICH_NEURAL_NET = "twin_nn 2 accuracy classes";
-config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\05_26_twin_accuracy_2_categories";
-config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/home/lddavila/data_to_be_copied_to_local_server/05_30_2025_2_accuracy_cats";
+config.WHICH_NEURAL_NET = "twin_nn choose better";
+config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\06_01_merge_or_dont_based_on_waveform_nn";
+config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_01_2025_choose_better_nn_results";
 
 config.DIR_WITH_NUMBER_BASED_IMAGES = fullfile("D:\cluster_neuronspikes\Data\MUA Or Not");
 config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = "/home/lddavila/data_from_local_server/Expand Or Dont";
@@ -142,7 +142,7 @@ config.twin_nn_test_data = "D:\cluster_neuronspikes\Data\Cluster Plots Sorted In
 config.twin_nn_test_data_on_hpc = "/home/lddavila/data_from_local_server/test_twin_nn_data";
 
 config.parent_save_dir = "D:\cluster_neuronspikes\Data";
-config.parent_save_dir_ON_HPC = '/home/lddavila/data_to_be_copied_to_local_server';
+config.parent_save_dir_ON_HPC = '/scratch/lddavila/data_to_copy_to_local_machine';
 
 
 config.USE_WHAT_FOR_CHOOSE_BETTER = "images"; %used by train_pick_better_between_2_nn.m
@@ -157,6 +157,9 @@ config.DIR_TO_ACC_CAT_IMAGES_ON_HPC = "";
 config.IDENTIFY_NEURONS_USING_NN = true;
 
 config.DEFAULT_CLUSTERING_Z_SCORES = [3 4 5 6 7 8 9];
+
+config.FP_TO_ALREADY_DONE = "D:\cluster_neuronspikes\Data\Already Done Neural Networks\already_done_twin_nn_choose_better.mat";
+config.FP_TO_ALREADY_DONE_ON_HPC= "";
 
 % ORIGINAL BEGINS HERE
 
