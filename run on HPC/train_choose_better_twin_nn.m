@@ -41,9 +41,9 @@ number_of_layers_to_try = 1:1:40;
 size_of_number_of_layers = size(number_of_layers_to_try,2);
 
 learning_rates_to_try = [6e-5, 6e-4,6e-3, 6e-2, 6e-1];
-cd(dir_to_save_results_to);
-disp("Moved Into Save Dir")
-disp(pwd);
+% cd(dir_to_save_results_to);
+% disp("Moved Into Save Dir")
+% disp(pwd);
 number_of_permutations_to_try = size(learning_rates_to_try,2) * size(number_of_layers_to_try,2) * size(number_of_accuracy_cats_to_try,2);
 
 
@@ -72,7 +72,7 @@ parfor i=1:size(number_of_layers_to_try,2)
         net_as_struct.fc_params = fc_params;
         file_id = fopen(save_name+".txt",'w');
         fclose(file_id);
-        save(save_name+".mat","-fromstruct",net_as_struct);
+        save(fullfile(dir_to_save_results_to,save_name+".mat"),"-fromstruct",net_as_struct);
         disp("Finished saving")
 
     end
