@@ -48,7 +48,7 @@ number_of_permutations_to_try = size(learning_rates_to_try,2) * size(number_of_l
 
 
 
-parfor i=1:size(number_of_layers_to_try,2)
+for i=1:size(number_of_layers_to_try,2)
     layers = number_of_layers_to_try(i);
     neurons = 1;
     for k=1:size(learning_rates_to_try,2)
