@@ -9,13 +9,13 @@ if config.ON_HPC
     dir_to_save_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
     dir_with_og_cluster_plots = config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC ;
     parent_save_dir = config.parent_save_dir_ON_HPC;
-    table_of_already_done =config.FP_TO_ALREADY_DONE_ON_HPC;
+    table_of_already_done = importdata(config.FP_TO_ALREADY_DONE_ON_HPC);
 else
     dir_to_save_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO;
     dir_with_og_cluster_plots = config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO;
     table_of_clusters = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
     parent_save_dir = config.parent_save_dir;
-    table_of_already_done = config.FP_TO_ALREADY_DONE;
+    table_of_already_done = importdata(config.FP_TO_ALREADY_DONE);
 end
 disp("Finished Loading Data")
 
@@ -48,7 +48,7 @@ number_of_permutations_to_try = size(learning_rates_to_try,2) * size(number_of_l
 
 
 
-for i=1:size(number_of_layers_to_try,2)
+parfor i=1:size(number_of_layers_to_try,2)
     layers = number_of_layers_to_try(i);
     neurons = 1;
     for k=1:size(learning_rates_to_try,2)
