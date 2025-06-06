@@ -16,6 +16,9 @@ if ~exist(dir_to_save_results_to,"dir")
     dir_to_save_results_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_results_to);
 end
 
+number_of_layers = 1:1:50;
+filter_sizes = [5 10 15 20 25 30 35 40 50];
+
 %flatten the mean waveforms
 array_of_mean_waveforms_without_acc_cat = cell2mat(table_of_clusters{:,"Mean Waveform"});
 num_accuracy_categories_to_try = [3,4,5,6,7,8,9];
