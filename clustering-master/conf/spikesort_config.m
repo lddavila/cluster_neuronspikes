@@ -163,7 +163,7 @@ config.FP_TO_ALREADY_DONE_ON_HPC= "/scratch/lddavila/data_from_local_machine/Alr
 
 
 config.FP_TO_MERGABLE_OR_NOT_NN = "D:\cluster_neuronspikes\merge_or_dont_nn_based_on_waveforms\accuracy score 0.88584 num layers 8 num neurons per layer50 merge_or_dont_nn.mat";
-config.FP_TO_MERGABLE_OR_NOT_NN_ON_HPC = "";
+config.FP_TO_MERGABLE_OR_NOT_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/merge_or_dont_nn_based_on_waveforms/accuracy score 0.88584 num layers 8 num neurons per layer50 merge_or_dont_nn.mat";
 
 config.DIR_TO_SAVE_UPDATED_CLUSTER_TABLE_TO = fullfile(config.parent_save_dir,"updated_cluster_table");
 config.DIR_TO_SAVE_UPDATED_CLUSTER_TABLE_TO_ON_HPC = fullfile(config.parent_save_dir_ON_HPC,"updated_cluster_table");
