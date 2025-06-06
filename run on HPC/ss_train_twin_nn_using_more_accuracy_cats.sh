@@ -1,6 +1,6 @@
 #!/bin/bash 
 #SBATCH -n 40
-#SBATCH -p general 
+#SBATCH -p large 
 #SBATCH -o output_1.txt 
 #SBATCH -e error_1.txt 
 module load matlab/R2024b
