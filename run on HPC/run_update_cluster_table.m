@@ -1,6 +1,7 @@
 function [] = run_update_cluster_table()
 home_dir = cd("..");
 addpath(genpath(pwd));
+config = spikesort_config();
 if config.ON_HPC
     cluster_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
     dir_to_save_updated_table_to = config.DIR_TO_SAVE_UPDATED_CLUSTER_TABLE_TO_ON_HPC;
