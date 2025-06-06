@@ -4,4 +4,4 @@
 #SBATCH -o output.txt 
 #SBATCH -e error.txt 
 module load matlab/R2024b
-matlab -batch "run_return_best_conf_for_cluster_ver_5_using_nn();exit;"
+matlab -batch "train_twin_nn_using_more_accuracy_cats();exit;"
