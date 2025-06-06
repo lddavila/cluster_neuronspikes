@@ -107,7 +107,7 @@ config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/lddavila/data_from_loca
 %
 config.WHICH_NEURAL_NET = "twin_nn_2_accuracy_cats_choose_better";
 config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\06_04_choose_better_mean_waveform_results_equalize_proportion";
-config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_05_2025_choose_better_2_acc_cats";
+config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_05_2025_accuracy_cats_using_me";
 
 config.DIR_WITH_NUMBER_BASED_IMAGES = fullfile("D:\cluster_neuronspikes\Data\MUA Or Not");
 config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = "/home/lddavila/data_from_local_server/Expand Or Dont";
@@ -168,7 +168,8 @@ config.FP_TO_MERGABLE_OR_NOT_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes
 config.DIR_TO_SAVE_UPDATED_CLUSTER_TABLE_TO = fullfile(config.parent_save_dir,"updated_cluster_table");
 config.DIR_TO_SAVE_UPDATED_CLUSTER_TABLE_TO_ON_HPC = fullfile(config.parent_save_dir_ON_HPC,"updated_cluster_table");
 
-config.FP_
+config.FP_TO_CHOOSE_BETTER_NN = "D:\cluster_neuronspikes\choose_better_nn\accuracy score 0.71695 num layers 1 num neurons per layer40 mean waveform choose better_equalize_proportions.txt";
+config.FP_TO_CHOOSE_BETTER_NN_ON_HPC = "";
 % ORIGINAL BEGINS HERE
 
 % Prints extra output
