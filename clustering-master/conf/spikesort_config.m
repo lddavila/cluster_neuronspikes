@@ -35,7 +35,7 @@ config.UPDATE_CLASSIFICATION = false; %when true every grade will be updated wit
 config.OVERLAP = 80; %the minimum percentage that clusters must overlap to be counted as the same cluster
 config.ONLY_OVERLAP_WITH_NEURONS =true; %when this is used return_best_config_of_cluster will only allow overlaps if the overlapping cluster is also a neuron
 config.ONLY_NEURONS = false; %when set to true updated_table_of_other_appearences will only include neurons, when set to false it will also include clusters listed as MUA
-config.UPDATE_GRADES = true;
+config.UPDATE_GRADES = false;
 config.NUM_OF_UNITS = 100; %this tells you how many units are in the recording, it must be set if SIMULATED = true;
 config.SIMULATED = true; %when set to true, it indicates that your data is simulated and thus you MUST indicate the number of units
 config.ART_TETR_ARRAY = build_artificial_tetrode; %this is an array which tells you how to configure your channels, this should be changed when using a new probe with different channel numbers
@@ -105,8 +105,8 @@ config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\final_overl
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/lddavila/data_from_local_machine/final_overlap_table/final_table_with_overlap_only_neurons.mat";
 
 %
-config.WHICH_NEURAL_NET = "twin_nn choose better";
-config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\05_23_choose_better_twin_nn_results";
+config.WHICH_NEURAL_NET = "mean waveform choose better_equalize_proportions";
+config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\06_04_choose_better_mean_waveform_results_equalize_proportion";
 config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_01_2025_choose_better_nn_results";
 
 config.DIR_WITH_NUMBER_BASED_IMAGES = fullfile("D:\cluster_neuronspikes\Data\MUA Or Not");
@@ -161,6 +161,12 @@ config.DEFAULT_CLUSTERING_Z_SCORES = [3 4 5 6 7 8 9];
 config.FP_TO_ALREADY_DONE = "D:\cluster_neuronspikes\Data\Already Done Neural Networks\already_done_twin_nn_choose_better.mat";
 config.FP_TO_ALREADY_DONE_ON_HPC= "/scratch/lddavila/data_from_local_machine/Already Done Neural Networks/already_done_twin_nn_choose_better.mat";
 
+
+config.FP_TO_MERGABLE_OR_NOT_NN = "D:\cluster_neuronspikes\merge_or_dont_nn_based_on_waveforms\accuracy score 0.88584 num layers 8 num neurons per layer50 merge_or_dont_nn.mat";
+config.FP_TO_MERGABLE_OR_NOT_NN_ON_HPC = "";
+
+config.DIR_TO_SAVE_UPDATED_CLUSTER_TABLE_TO = fullfile(config.parent_save_dir,"updated_cluster_table");
+config.DIR_TO_SAVE_UPDATED_CLUSTER_TABLE_TO_ON_HPC = fullfile(config.parent_save_dir_ON_HPC,"updated_cluster_table");
 % ORIGINAL BEGINS HERE
 
 % Prints extra output
