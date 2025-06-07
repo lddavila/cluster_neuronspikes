@@ -18,39 +18,55 @@ parfor i=1:length(list_of_tetrodes)
         timestamps = ts_r_tvals_cc_struct.timestamps;
         r_tvals = ts_r_tvals_cc_struct.r_tvals;
         cleaned_clusters = ts_r_tvals_cc_struct.cleaned_clusters;
-
-        aligned_struct = load(aligned_fp,"aligned");
-        aligned = aligned_struct.aligned;
-        output_struct = load(output_fp,"output");
-        output = output_struct.output;
-        %compute_gradings_ver_4(aligned, timestamps, tvals, clusters, config,debug)
-        if config.ON_HPC
-            dir_of_template_shape_pngs = config.TEMPLATE_CLUSTER_FP_ON_HPC;
-        else
-            dir_of_template_shape_pngs = config.TEMPLATE_CLUSTER_FP;
-        end
-        grades = compute_gradings_ver_4(aligned, timestamps, r_tvals, cleaned_clusters, config.spikesort,debug,channels_of_curr_tetr,dir_of_template_shape_pngs,config);
-
-        grade_struct = struct();
-        for j=1:size(grades,2)
-            grade_struct.("Grade_"+string(j)) = grades(:,j);
-        end
-
-
-
-
-        save(current_tetrode+" Grades.mat",'-fromstruct',grade_struct);
-
-    catch ME
-        disp(ME.identifier);
-        disp(ME.message);
-        disp("Failed to load one of the following");
+    catch
+        disp("failed to load");
         disp(ts_and_r_vals_fp);
-        disp(aligned_fp);
-        disp(output_fp);
-
         continue;
     end
+    try
+        aligned_struct = load(aligned_fp,"aligned");
+        aligned = aligned_struct.aligned;
+    catch
+        disp("failed to load");
+        disp(aligned_fp);
+        continue;
+    end
+    try
+        output_struct = load(output_fp,"output");
+        output = output_struct.output;
+    catch
+        disp("failed to load");
+        disp(output_fp);
+        continue;
+    end
+    %compute_gradings_ver_4(aligned, timestamps, tvals, clusters, config,debug)
+    if config.ON_HPC
+        dir_of_template_shape_pngs = config.TEMPLATE_CLUSTER_FP_ON_HPC;
+    else
+        dir_of_template_shape_pngs = config.TEMPLATE_CLUSTER_FP;
+    end
+    grades = compute_gradings_ver_4(aligned, timestamps, r_tvals, cleaned_clusters, config.spikesort,debug,channels_of_curr_tetr,dir_of_template_shape_pngs,config);
+
+    grade_struct = struct();
+    for j=1:size(grades,2)
+        grade_struct.("Grade_"+string(j)) = grades(:,j);
+    end
+
+
+
+
+    save(current_tetrode+" Grades.mat",'-fromstruct',grade_struct);
+
+
+    disp(ME.identifier);
+    disp(ME.message);
+    disp("Failed to load one of the following");
+    disp(ts_and_r_vals_fp);
+    disp(aligned_fp);
+    disp(output_fp);
+
+    continue;
+
     disp(string(min_z_score)+" Finished "+string(i)+"/"+string(number_of_tetrodes));
 
 end
