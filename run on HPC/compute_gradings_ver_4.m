@@ -377,7 +377,8 @@ all_names_of_all_grades =["lratio","cv","short isi","incompleteness compare wire
             %4 clusters that arein the right area, have identified the whole cluster (vacuumed up all spikesin the region) but still has a tail
             % all the qualities of 4 plus no tail
 
-            [grades{k,58},grades{k,59},grades{k,60}] = predict_accuracy_and_cluster_quality_using_nn(compare_wire,second_compare_wire,all_peaks,config_struct,cluster_filter);
+            grades{59} = 0;
+            [grades{k,58},~,grades{k,60}] = predict_accuracy_and_cluster_quality_using_nn(compare_wire,second_compare_wire,all_peaks,config_struct,cluster_filter);
 
             grades{k,61} = predict_expand_or_not(compare_wire,second_compare_wire,all_peaks,config_struct,cluster_filter);
 

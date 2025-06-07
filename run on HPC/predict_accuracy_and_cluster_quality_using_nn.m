@@ -1,18 +1,6 @@
 function [accuracy_pred,quality_pred,mua_or_not_pred] = predict_accuracy_and_cluster_quality_using_nn(first_dimension,second_dimension,peaks,config,peaks_in_cluster)
-
-    function Y = predict_twin(net,fc_params,X_1,X_2)
-        Y_1 = predict(net,X_1);
-        Y_1 = sigmoid(Y_1);
-
-        Y_2 = predict(net,X_2);
-        Y_2 = sigmoid(Y_2);
-
-        Y = abs(Y_1 - Y_2);
-
-        Y = fullyconnect(Y,fc_params.FcWeights,fc_params.FcBias);
-
-        Y = sigmoid(Y);
-    end
+quality_pred = NaN;
+   
 colors = distinguishable_colors(1); %will always use the same colors
 my_gray = [0.5 0.5 0.5];
 hold on
@@ -30,22 +18,17 @@ scatter(peaks(:, first_dimension), peaks(:, second_dimension), 2,my_gray);
 
 if isempty(peaks_in_cluster)
     accuracy_pred = NaN;
-    quality_pred = NaN;
     return
 end
 
 if config.ON_HPC
     accuracy_nn = importdata(config.FP_TO_ACC_PREDICTING_NN_ON_HPC);
     accuracy_nn = accuracy_nn.net;
-    quality_nn = importdata(config.FP_TO_QUALITY_PREDICTING_NN_ON_HPC);
-    quality_nn = quality_nn.net;
     mua_or_not_nn = importdata(config.FP_TO_MUA_OR_NOT_PREDICTING_NN_ON_HPC);
     mua_or_not_nn = mua_or_not_nn.net;
 else
     accuracy_nn = importdata(config.FP_TO_ACC_PREDICTING_NN);
     accuracy_nn = accuracy_nn.net;
-    quality_nn = importdata(config.FP_TO_QUALITY_PREDICTING_NN);
-    quality_nn = quality_nn.net;
     mua_or_not_nn = importdata(config.FP_TO_MUA_OR_NOT_PREDICTING_NN);
     mua_or_not_nn = mua_or_not_nn.net;
 end
@@ -72,9 +55,9 @@ pred_accuracy_class = predict(accuracy_nn,single(resized_and_gray_scaled_image))
 [~,accuracy_pred] = max(pred_accuracy_class);
 accuracy_pred = accuracy_pred-1;
 
-pred_quality_class = predict(quality_nn,single(resized_and_gray_scaled_image));
-[~,quality_pred] = max(pred_quality_class);
-quality_pred = quality_pred-1;
+% pred_quality_class = predict(quality_nn,single(resized_and_gray_scaled_image));
+% [~,quality_pred] = max(pred_quality_class);
+% quality_pred = quality_pred-1;
 
 mua_or_not_class = predict(mua_or_not_nn,single(resized_and_gray_scaled_image));
 [~,mua_or_not_pred] = max(mua_or_not_class);
