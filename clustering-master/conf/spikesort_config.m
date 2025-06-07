@@ -174,7 +174,7 @@ config.FP_TO_CHOOSE_BETTER_NN = "D:\cluster_neuronspikes\choose_better_nn\accura
 config.FP_TO_CHOOSE_BETTER_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/choose_better_nn/accuracy score 0.71695 num layers 1 num neurons per layer40 mean waveform choose better_equalize_proportions.mat";
 
 config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN = "D:\cluster_neuronspikes\accuracy_category_based_on_mean_waveform_nn\accuracy score 0.69231num accuracy cats 3 num layers 2 num neurons per layer30 accuracy_category_based_on_mean_waveform.mat";
-config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN_ON_HPC = "";
+config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/accuracy_category_based_on_mean_waveform_nn/accuracy score 0.69231num accuracy cats 3 num layers 2 num neurons per layer30 accuracy_category_based_on_mean_waveform.mat";
 
 config.DIR_TO_SAVE_RESULTS_TO = "Results of choose best";
 
