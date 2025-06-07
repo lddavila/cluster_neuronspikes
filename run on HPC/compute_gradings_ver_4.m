@@ -60,7 +60,7 @@ all_names_of_all_grades =["lratio","cv","short isi","incompleteness compare wire
     "likeliness of burst","compare wire","2nd compare wire","avg compare wire cluster z score","SNR by dimensions","SNR based on 2 Compare Wires", "Mean Spike Amplitude Per Channel","Mean Z Score Per Channel Cluster Only","Channels",...
     "Mean Z Score Per Channel all spikes in config","compare wire Mean z score Cluster Only","Compare Mean Z Score All Spikes In Config","Compare Wire Mean Amp"];  
     num_clusters = length(clusters);
-    grades = cell(num_clusters, 62);
+    grades = cell(num_clusters, 63);
     total_raw_spikes = 1:size(aligned, 2);
     all_peaks = get_peaks(aligned, true);
     temp = load('template.mat');
@@ -381,8 +381,14 @@ all_names_of_all_grades =["lratio","cv","short isi","incompleteness compare wire
 
             grades{k,61} = predict_expand_or_not(compare_wire,second_compare_wire,all_peaks,config_struct,cluster_filter);
 
-            grades{k,62} = predict_accuracy_using_twin_nn(compare_wire,second_compare_wire,all_peaks,config_struct,cluster_filter);
+            if length(cluster_filter) > 1
+                grades{k,62} = predict_accuracy_cat_using_nn(config,mean_waveform);
+            else
+                grades{k,62} = 0;
+            end
+            %NO LONGER USED predict_accuracy_using_twin_nn(compare_wire,second_compare_wire,all_peaks,config_struct,cluster_filter);
 
+           
 
     end
 

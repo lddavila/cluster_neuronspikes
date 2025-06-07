@@ -91,10 +91,10 @@ config.NAMES_OF_CURR_GRADES =["lratio","cv","short isi","incompleteness compare 
     "Compare Wire tightness of waveform based on euc dist","do not use","do not use","Under/overpowered","Mean SNR",...
     "likeliness of burst","compare wire","2nd compare wire","avg compare wire cluster z score","SNR by dimensions","SNR based on 2 Compare Wires", "Mean Spike Amplitude Per Channel","Mean Z Score Per Channel Cluster Only","Channels",...
     "Mean Z Score Per Channel all spikes in config","compare wire Mean z score Cluster Only","Compare Mean Z Score All Spikes In Config","Compare Wire Mean Amp","Elipse Temp Match","Circle Temp Match","do not use","do not use",...
-    "Prediction of accuracy based on image","prediction of cluster quality based on image","MUA or Not","Expand Or Dont","Cluster Quality Twin NN"];
+    "Prediction of accuracy based on image","prediction of cluster quality based on image","MUA or Not","Expand Or Dont","accuracy category prediction using mean waveform"];
 
 %config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [2 23 54 12 36 18 13 17 16 14 5 40 55 46 25];
-config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17 16 14 5 58 59 60 61];
+config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17 16 14 5 58 59 60 61 62];
 % config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17 16 14 5 ];
 config.IDXS_OF_GRADES_THAT_ARE_BETTER_SMALLER = [2 23 54 12 36 18 13 17 16 14 5 8 11 19 46 51 52];
 
@@ -171,6 +171,8 @@ config.DIR_TO_SAVE_UPDATED_CLUSTER_TABLE_TO_ON_HPC = fullfile(config.parent_save
 config.FP_TO_CHOOSE_BETTER_NN = "D:\cluster_neuronspikes\choose_better_nn\accuracy score 0.71695 num layers 1 num neurons per layer40 mean waveform choose better_equalize_proportions.mat";
 config.FP_TO_CHOOSE_BETTER_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/choose_better_nn/accuracy score 0.71695 num layers 1 num neurons per layer40 mean waveform choose better_equalize_proportions.mat";
 
+config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN = "D:\cluster_neuronspikes\accuracy_category_based_on_mean_waveform_nn\accuracy score 0.69231num accuracy cats 3 num layers 2 num neurons per layer30 accuracy_category_based_on_mean_waveform.mat";
+config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN_ON_HPC = "";
 
 config.DIR_TO_SAVE_RESULTS_TO = "Results of choose best";
 
