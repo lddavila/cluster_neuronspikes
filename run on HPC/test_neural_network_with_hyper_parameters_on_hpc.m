@@ -52,7 +52,7 @@ for i=1:size(number_of_accuracy_categories,2)
             fclose(fileID);
             net_struct = struct();
             net_struct.Layers = net.Layers;
-            net_struct.Connections = net.Connections
+            net_struct.Connections = net.Connections;
             net_struct.net = net;
             save(name_to_save_under+".mat","-fromstruct",net_struct)
         end
