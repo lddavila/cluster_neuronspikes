@@ -4,7 +4,7 @@ addpath(genpath(pwd));
 cd(home_dir);
 
 % compute the grades for the blind pass
-config = spikesort_config; %load the config file;
+config = spikesort_config(); %load the config file;
 % config = config.spikesort;
 debug = 0;
 varying_z_scores = [3,4,5,6,7,8,9];

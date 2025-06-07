@@ -30,6 +30,8 @@ config.DEBUG = false;
 
 
 
+
+
 config.MAX_EUC_DIST = 50; %serves as an upper bound of euclidean distance between cluster template wave forms to check when merging clusters
 config.UPDATE_CLASSIFICATION = false; %when true every grade will be updated with the latest classification using classify_clusters_based_on_grades_ver_3
 config.OVERLAP = 80; %the minimum percentage that clusters must overlap to be counted as the same cluster
