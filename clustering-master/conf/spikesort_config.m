@@ -20,11 +20,11 @@ config.TEMPLATE_CLUSTER_FP =[fullfile("D:","cluster_neuronspikes","Shape Templat
     fullfile("D:","cluster_neuronspikes","Shape Template PNGs","Vertical Elipse.png")
     fullfile("D:","cluster_neuronspikes","Shape Template PNGs","circle.png")] ;
 
-config.TEMPLATE_CLUSTER_FP_ON_HPC =[fullfile("/home","lddavila","cluster_neuronspikes","Shape Template PNGs","Horizontal Elipse.png")
-    fullfile("/home","lddavila","cluster_neuronspikes","Shape Template PNGs","Left To Right Negative Elipse.png")
-    fullfile("/home","lddavila","cluster_neuronspikes","Shape Template PNGs","Left To Right Positive Elipse.png")
-    fullfile("/home","lddavila","cluster_neuronspikes","Shape Template PNGs","Vertical Elipse.png")
-    fullfile("/home","lddavila","cluster_neuronspikes","Shape Template PNGs","circle.png")];
+config.TEMPLATE_CLUSTER_FP_ON_HPC =[fullfile("/scratch/lddavila/cluster_neuronspikes","Shape Template PNGs","Horizontal Elipse.png")
+    fullfile("/scratch/lddavila/cluster_neuronspikes","Shape Template PNGs","Left To Right Negative Elipse.png")
+    fullfile("/scratch/lddavila/cluster_neuronspikes","Shape Template PNGs","Left To Right Positive Elipse.png")
+    fullfile("/scratch/lddavila/cluster_neuronspikes","Shape Template PNGs","Vertical Elipse.png")
+    fullfile("/scratch/lddavila/cluster_neuronspikes","Shape Template PNGs","circle.png")];
 % Prints extra output
 config.DEBUG = false;
 
