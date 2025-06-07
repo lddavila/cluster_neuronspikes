@@ -34,7 +34,7 @@ for i=1:size(number_of_accuracy_categories,2)
     % tic;
     table_with_accuracy = add_accuracy_col_on_hpc([],spikesort_config(),updated_table_of_overlap,number_of_accuracy_cats);
     accuracy_sub_array_num_layers = cell(length(number_of_layers),1);
-    disp(table_with_accuracy,"grades");
+    disp(table_with_accuracy{:,"grades"});
     for j=1:size(number_of_layers,2)
         accuracy_sub_array_num_neurons = cell(length(filter_sizes),1);
         num_layers = number_of_layers(j);
