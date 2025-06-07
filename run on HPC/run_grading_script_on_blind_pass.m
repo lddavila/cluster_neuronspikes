@@ -10,10 +10,11 @@ debug = 0;
 varying_z_scores = [3,4,5,6,7,8,9];
 number_of_z_scores_to_check = length(varying_z_scores);
 if config.ON_HPC
-    home_dir = cd(config.parent_save_dir_ON_HPC);
+    parent_dir_to_save_grades_to =config.parent_save_dir_ON_HPC;
 else
-    home_dir = cd(config.parent_save_dir);
+    parent_dir_to_save_grades_to = config.parent_save_dir;
 end
+home_dir =parent_dir_to_save_grades_to;
 dir_all_new_grades_will_be_saved_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(fullfile(parent_dir_to_save_grades_to,name_of_recording));
 cd(dir_all_new_grades_will_be_saved_to);
 for i=1:length(varying_z_scores)
