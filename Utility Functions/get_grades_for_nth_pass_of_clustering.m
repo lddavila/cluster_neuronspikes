@@ -58,15 +58,6 @@ parfor i=1:length(list_of_tetrodes)
     save(current_tetrode+" Grades.mat",'-fromstruct',grade_struct);
 
 
-    disp(ME.identifier);
-    disp(ME.message);
-    disp("Failed to load one of the following");
-    disp(ts_and_r_vals_fp);
-    disp(aligned_fp);
-    disp(output_fp);
-
-    continue;
-
     disp(string(min_z_score)+" Finished "+string(i)+"/"+string(number_of_tetrodes));
 
 end

@@ -107,9 +107,9 @@ config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\final_overl
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/lddavila/data_from_local_machine/final_overlap_table/overlap_table_updated_with_nn_ts_and_euc_dist_test.mat";
 
 %
-config.WHICH_NEURAL_NET = "accuracy_category_based_on_mean_waveform";
+config.WHICH_NEURAL_NET = "accuracy_category_based_on_all_new_grades";
 config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\06_04_choose_better_mean_waveform_results_equalize_proportion";
-config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_05_2025_accuracy_cats_using_mean_waveform";
+config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_06_2025_all_new_grades_nn";
 
 config.DIR_WITH_NUMBER_BASED_IMAGES = fullfile("D:\cluster_neuronspikes\Data\MUA Or Not");
 config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = "/home/lddavila/data_from_local_server/Expand Or Dont";
