@@ -107,7 +107,7 @@ config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\final_overl
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/lddavila/data_from_local_machine/final_overlap_table/overlap_table_updated_with_nn_ts_and_euc_dist_test.mat";
 
 %
-config.WHICH_NEURAL_NET = "accuracy_category_based_on_all_new_grades";
+config.WHICH_NEURAL_NET = "accuracy_category_removed_new_grades_only_neurons";
 config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\06_04_choose_better_mean_waveform_results_equalize_proportion";
 config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_08_2025_test_neuron_only_nn_remove_new_waveform_grade";
 
