@@ -12,7 +12,7 @@ num_samples = 1000000;
 
 if config.ON_HPC
     dir_to_save_accuracy_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
-    updated_table_of_overlap = importdata();
+    updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
 else
     dir_to_save_accuracy_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO;
     updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);

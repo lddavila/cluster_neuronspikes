@@ -1,0 +1,75 @@
+function [] = train_mean_waveform_acc_cat_with_grades_nn_output()
+home_dir =cd("..");
+addpath(genpath(pwd));
+cd(home_dir);
+number_of_accuracy_categories = [3 4 5 6 7 8 9 10];
+number_of_layers = 1:1:50;
+filter_sizes = [5 10 15 20 25 30 35 40 50];
+accuracy_array = cell(length(number_of_accuracy_categories),1);
+config = spikesort_config;
+
+num_samples = 1000000;
+
+if config.ON_HPC
+    dir_to_save_accuracy_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
+    updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
+    predict_acc_cat_nn_struct =importdata(config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN_ON_HPC) ;
+else
+    dir_to_save_accuracy_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO;
+    updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
+    predict_acc_cat_nn_struct = importdata(config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN);
+end
+
+acc_cat_predicting_nn = predict_acc_cat_nn_struct.net;
+
+if ~exist(dir_to_save_accuracy_results_to,"dir")
+    create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_accuracy_results_to);
+end
+
+disp("Finished loading the updated table of overlap")
+
+
+
+
+cd(dir_to_save_accuracy_results_to);
+first_for_loop_num_iters = size(number_of_accuracy_categories,2);
+second_for_loop_num_iters =size(number_of_layers,2);
+third_for_loop_num_iters = size(filter_sizes,2);
+total_num_iterations = first_for_loop_num_iters * second_for_loop_num_iters * third_for_loop_num_iters;
+which_nn = config.WHICH_NEURAL_NET;
+
+table_with_accuracy = add_accuracy_col_on_hpc([],spikesort_config(),updated_table_of_overlap,3);
+
+
+mean_waveform_array = cell2mat(table_with_accuracy{:,"Mean Waveform"});
+col_of_probabilities = nan(size(mean_waveform_array,1))
+
+
+data_for_nn =array2table([mean_waveform_array,,table_with_accuracy{:,"accuracy_category"}]) ;
+disp("Finished Loading Samples Into Table")
+
+
+
+for j=1:size(number_of_layers,2)
+    num_layers = number_of_layers(j);
+    for k=1:size(filter_sizes,2)
+        num_neurons = filter_sizes(k);
+        beginning_time = tic;
+        [accuracy_score,net,~]= merge_or_dont_nn(data_for_nn,spikesort_config,num_neurons,num_layers);
+        end_time = toc(beginning_time);
+
+        disp("The last iteration took "+string(end_time)+" seconds")
+        name_to_save_under = "accuracy score "+string(accuracy_score)+" num layers "+string(num_layers)+ " num neurons per layer"+string(num_neurons)+ " "+which_nn;
+        fileID = fopen(name_to_save_under+ ".txt",'w');
+        fclose(fileID);
+        net_struct = struct();
+        net_struct.Layers = net.Layers;
+        net_struct.Connections = net.Connections;
+        net_struct.net = net;
+        save(name_to_save_under+".mat","-fromstruct",net_struct)
+        
+    end
+end
+
+cd(home_dir);
+end
