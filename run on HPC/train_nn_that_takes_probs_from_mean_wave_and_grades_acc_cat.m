@@ -13,18 +13,22 @@ config = spikesort_config;
 if config.ON_HPC
     dir_to_save_accuracy_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
     updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
-    predict_acc_cat_nn_struct =importdata(config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN_ON_HPC) ;
+    predict_acc_cat_nn_struct_using_grades =importdata(config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN_ON_HPC) ;
+    predict_acc_cat_nn_using_mean_waveform = importdata(config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN_ON_HPC);
 else
     dir_to_save_accuracy_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO;
     updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
-    predict_acc_cat_nn_struct = importdata(config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN);
+    predict_acc_cat_nn_struct_using_grades = importdata(config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN);
+    predict_acc_cat_nn_using_mean_waveform = importdata(config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN);
 end
 
-acc_cat_predicting_nn = predict_acc_cat_nn_struct.net;
-
+acc_cat_predicting_nn_using_grades = predict_acc_cat_nn_struct_using_grades.net;
+acc_cat_predicting_nn_using_mean_waveform = predict_acc_cat_nn_using_mean_waveform.net;
 if ~exist(dir_to_save_accuracy_results_to,"dir")
     create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_accuracy_results_to);
 end
+
+
 
 disp("Finished loading the updated table of overlap")
 
@@ -40,7 +44,7 @@ table_with_accuracy = add_accuracy_col_on_hpc([],spikesort_config(),updated_tabl
 
 
 mean_waveform_array = cell2mat(table_with_accuracy{:,"Mean Waveform"});
-col_of_probabilities = nan(size(mean_waveform_array,1),3);
+col_of_probabilities = nan(size(mean_waveform_array,1),6);
 [grade_names,all_grades] = flatten_grades_cell_array(table_with_accuracy{:,"grades"},config);
 
 [indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
@@ -48,11 +52,12 @@ col_of_probabilities = nan(size(mean_waveform_array,1),3);
 ordered_grades_array =all_grades(:,indexes_of_grades_were_looking_for);
 
 for i=1:size(mean_waveform_array,1)
-    col_of_probabilities(i,:) = predict(acc_cat_predicting_nn,ordered_grades_array(i,:));
+    col_of_probabilities(i,1:3) = predict(acc_cat_predicting_nn_using_grades,ordered_grades_array(i,:));
+    col_of_probabilities(i,4:6) = predict(acc_cat_predicting_nn_using_mean_waveform,mean_waveform_array(i,:));
 end
 
 
-data_for_nn =array2table([mean_waveform_array,col_of_probabilities,table_with_accuracy{:,"accuracy_category"}]) ;
+data_for_nn =array2table([col_of_probabilities,table_with_accuracy{:,"accuracy_category"}]) ;
 disp("Finished Loading Samples Into Table")
 
 

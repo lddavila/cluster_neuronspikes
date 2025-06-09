@@ -57,7 +57,7 @@ disp("Finished Loading Samples Into Table")
 
 
 
-parfor j=1:size(number_of_layers,2)
+for j=1:size(number_of_layers,2)
     num_layers = number_of_layers(j);
     for k=1:size(filter_sizes,2)
         num_neurons = filter_sizes(k);

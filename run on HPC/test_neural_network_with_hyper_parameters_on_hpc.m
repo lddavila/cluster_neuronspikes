@@ -13,8 +13,10 @@ config = spikesort_config;
 
 if config.ON_HPC
     dir_to_save_accuracy_cat_to = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
+    updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
 else
     dir_to_save_accuracy_cat_to = config.DIR_TO_SAVE_ACC_RESULTS_TO;
+    updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
 end
 
 if ~exist(dir_to_save_accuracy_cat_to,"dir")
@@ -23,7 +25,7 @@ end
 % get_grades_for_nth_pass_of_clustering
 % timestamp_array = importdata(fullfile("/home","lddavila","data_from_local_server","Timestamp and table","timestamp_array.mat"));
 % disp("Finished loading timestamp array")
-updated_table_of_overlap = importdata("/scratch/lddavila/data_from_local_machine/final_overlap_table/overlap_table_updated_with_new_grades.mat");
+
 disp("Finished loading the updated table of overlap")
 % currentDateTime = datetime('now', 'Format', 'yyyy-MM-dd HH:mm:ss');
 cd(dir_to_save_accuracy_cat_to);
@@ -38,7 +40,7 @@ for i=1:size(number_of_accuracy_categories,2)
     table_with_accuracy = add_accuracy_col_on_hpc([],spikesort_config(),updated_table_of_overlap,number_of_accuracy_cats);
     accuracy_sub_array_num_layers = cell(length(number_of_layers),1);
     % disp(table_with_accuracy{:,"grades"});
-    parfor j=1:size(number_of_layers,2)
+    for j=1:size(number_of_layers,2)
         accuracy_sub_array_num_neurons = cell(length(filter_sizes),1);
         num_layers = number_of_layers(j);
         for k=1:size(filter_sizes,2)
