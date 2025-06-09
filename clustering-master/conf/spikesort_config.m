@@ -96,7 +96,7 @@ config.NAMES_OF_CURR_GRADES =["lratio","cv","short isi","incompleteness compare 
     "Prediction of accuracy based on image","prediction of cluster quality based on image","MUA or Not","Expand Or Dont","accuracy category prediction using mean waveform","Unused"];
 
 %config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [2 23 54 12 36 18 13 17 16 14 5 40 55 46 25];
-config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST =   [2 40 54 55 46 23 12 36 18 13 25 17 16 14 5 58 60 61 62]; %removed accuracy category grade (62)
+config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST =   [2 40 54 55 46 23 12 36 18 13 25 17 16 14 5 58 60 61]; %removed accuracy category grade (62)
 % config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17 16 14 5 ];
 config.IDXS_OF_GRADES_THAT_ARE_BETTER_SMALLER = [2 23 54 12 36 18 13 17 16 14 5 8 11 19 46 51 52];
 
