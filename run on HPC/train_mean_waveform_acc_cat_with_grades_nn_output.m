@@ -2,22 +2,22 @@ function [] = train_mean_waveform_acc_cat_with_grades_nn_output()
 home_dir =cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
-number_of_accuracy_categories = [3 4 5 6 7 8 9 10];
+
 number_of_layers = 1:1:50;
 filter_sizes = [5 10 15 20 25 30 35 40 50];
-accuracy_array = cell(length(number_of_accuracy_categories),1);
+
 config = spikesort_config;
 
-num_samples = 1000000;
+
 
 if config.ON_HPC
     dir_to_save_accuracy_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
     updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
-    predict_acc_cat_nn_struct =importdata(config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN_ON_HPC) ;
+    predict_acc_cat_nn_struct =importdata(config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN_ON_HPC) ;
 else
     dir_to_save_accuracy_results_to = config.DIR_TO_SAVE_ACC_RESULTS_TO;
     updated_table_of_overlap = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
-    predict_acc_cat_nn_struct = importdata(config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN);
+    predict_acc_cat_nn_struct = importdata(config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN);
 end
 
 acc_cat_predicting_nn = predict_acc_cat_nn_struct.net;
@@ -32,10 +32,8 @@ disp("Finished loading the updated table of overlap")
 
 
 cd(dir_to_save_accuracy_results_to);
-first_for_loop_num_iters = size(number_of_accuracy_categories,2);
-second_for_loop_num_iters =size(number_of_layers,2);
-third_for_loop_num_iters = size(filter_sizes,2);
-total_num_iterations = first_for_loop_num_iters * second_for_loop_num_iters * third_for_loop_num_iters;
+
+
 which_nn = config.WHICH_NEURAL_NET;
 
 table_with_accuracy = add_accuracy_col_on_hpc([],spikesort_config(),updated_table_of_overlap,3);
@@ -43,8 +41,14 @@ table_with_accuracy = add_accuracy_col_on_hpc([],spikesort_config(),updated_tabl
 
 mean_waveform_array = cell2mat(table_with_accuracy{:,"Mean Waveform"});
 col_of_probabilities = nan(size(mean_waveform_array,1),3);
+[grade_names,all_grades] = flatten_grades_cell_array(table_with_accuracy{:,"grades"},config);
+
+[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
+
+ordered_grades_array =all_grades(:,indexes_of_grades_were_looking_for);
+
 for i=1:size(mean_waveform_array,1)
-    col_of_probabilities(i,:) = predict(acc_cat_predicting_nn,mean_waveform_array(i,:));
+    col_of_probabilities(i,:) = predict(acc_cat_predicting_nn,ordered_grades_array(i,:));
 end
 
 
@@ -53,7 +57,7 @@ disp("Finished Loading Samples Into Table")
 
 
 
-for j=1:size(number_of_layers,2)
+parfor j=1:size(number_of_layers,2)
     num_layers = number_of_layers(j);
     for k=1:size(filter_sizes,2)
         num_neurons = filter_sizes(k);

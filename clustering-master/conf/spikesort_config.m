@@ -96,7 +96,7 @@ config.NAMES_OF_CURR_GRADES =["lratio","cv","short isi","incompleteness compare 
     "Prediction of accuracy based on image","prediction of cluster quality based on image","MUA or Not","Expand Or Dont","accuracy category prediction using mean waveform","Unused"];
 
 %config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [2 23 54 12 36 18 13 17 16 14 5 40 55 46 25];
-config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17 16 14 5 58 60 61]; %removed accuracy category grade (62)
+config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST =   [2 40 54 55 46 23 12 36 18 13 25 17 16 14 5 58 60 61]; %removed accuracy category grade (62)
 % config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST = [40 54 55 46 23 12 36 18 13 25 17 16 14 5 ];
 config.IDXS_OF_GRADES_THAT_ARE_BETTER_SMALLER = [2 23 54 12 36 18 13 17 16 14 5 8 11 19 46 51 52];
 
@@ -109,7 +109,7 @@ config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/lddavila/data_from_loca
 %
 config.WHICH_NEURAL_NET = "predict_accuracy_category_with_mean_waveform_and_grades_nn_output";
 config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\06_04_choose_better_mean_waveform_results_equalize_proportion";
-config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_08_2025_grades_nn_output_to_mean_waveform_nn";
+config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_09_2025_grades_nn_output_to_mean_waveform_nn";
 
 config.DIR_WITH_NUMBER_BASED_IMAGES = fullfile("D:\cluster_neuronspikes\Data\MUA Or Not");
 config.DIR_WITH_NUMBER_BASED_IMAGES_ON_HPC = "/home/lddavila/data_from_local_server/Expand Or Dont";
@@ -178,8 +178,8 @@ config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN_ON_HPC = "/scratch/lddavila/
 
 config.DIR_TO_SAVE_RESULTS_TO = "Results of choose best";
 
-config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN  = "D:\cluster_neuronspikes\Predict_accuracy_cat_using_grades_nn\accuracy score 0.86647number of acc cats 3 num layers 6 num neurons per layer35 grades neural network.mat";
-config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN = "/scratch/lddavila/cluster_neuronspikes/Predict_accuracy_cat_using_grades_nn/accuracy score 0.86647number of acc cats 3 num layers 6 num neurons per layer35 grades neural network.mat";
+config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN  = "D:\cluster_neuronspikes\Predict_accuracy_cat_using_grades_nn\accuracy score 0.86357number of acc cats 3 num layers 6 num neurons per layer40 grades neural network.mat";
+config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/Predict_accuracy_cat_using_grades_nn/accuracy score 0.86357number of acc cats 3 num layers 6 num neurons per layer40 grades neural network.mat";
 
 % ORIGINAL BEGINS HERE
 
