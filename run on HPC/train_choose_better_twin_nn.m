@@ -30,7 +30,7 @@ number_of_its = 1000;
 mini_batch_size = 180;
 grad_decay = 0.9;
 grady_dec_sq = 0.99;
-number_of_accuracy_cats_to_try = 5:1:10;
+number_of_accuracy_cats_to_try = 3:1:10;
 
 
 

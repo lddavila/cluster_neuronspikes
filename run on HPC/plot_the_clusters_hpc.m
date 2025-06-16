@@ -15,7 +15,8 @@ sgtitle([name_of_tetrode+" Z Score:" + string(current_z_score) + " Neuron Cluste
     "Neuron Clusters Overlap With Units:"+sprintf('%.2f%% \t ',overlap_percentages), ...
     "Neuron Clusters Max Overlap Units:"+sprintf('%.0f \t',max_overlap_units)])
 set(gcf,'visible','on');
-saveas(gcf,name_of_tetrode+" Z Score "+string(current_z_score)+" Cluster Plots.png");
+saveas(gcf,name_of_tetrode+" Z Score "+string(current_z_score)+" Cluster Plots.svg");
+set(gcf, 'Renderer', 'painters');
 % close all;
 
 % figure('units','normalized','outerposition',[0 0 1 1]);

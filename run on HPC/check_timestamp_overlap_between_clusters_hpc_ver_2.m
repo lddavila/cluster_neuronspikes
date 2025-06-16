@@ -11,7 +11,7 @@ tic
 %allows time delta
 
 
-% check_timestamp_overlap_between_clusters_ver_3
+check_timestamp_overlap_between_clusters_hpc_ver_3
 
 
 number_of_rows_in_table_of_neurons = size(table_of_neurons,1);

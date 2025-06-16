@@ -260,7 +260,7 @@ for i=1:1.5
     current_spike_windows = spike_windows;
     dir_with_og_idx = "E:\Steven\2024-11-26_15-42-34__Steven Artifact Removed Recordings "+string(i);
     time_to_start_plotting_spikes_at = 1; %in seconds
-    single_plot = false;
+    single_plot = true;
     how_many_spikes = 20;
     how_many_to_cut = 4;
     plot_individual_spikes_plus_neighbors(dir_with_channel_recordings,current_spike_windows,list_of_channels,time_to_start_plotting_spikes_at,how_many_to_cut);
@@ -269,9 +269,9 @@ end
 %% EXAMPLE PLOTS: plot continuous recording over specified interval
 clc;
 close all;
-channels_to_use = strcat("c",string([30 31 32 33 34 35 36]));
+channels_to_use = strcat("c",string([30 31 32 33]));
 dir_with_raw_recordings ="E:\Steven\2024-11-26_15-42-34__Steven Precomputed 1\average butterworth";
-time_bounds = [1400,1400.25];
+time_bounds = [1,1.5];
 original_data_size = 52891792;
 dir_with_og_indexes = "E:\Steven\2024-11-26_15-42-34__Steven 1 Raw Recordings Indexes Without artifacts";
 display_the_spike_traces_over_specified_interval_and_channels(dir_with_raw_recordings,channels_to_use,dir_with_og_indexes,time_bounds,original_data_size);

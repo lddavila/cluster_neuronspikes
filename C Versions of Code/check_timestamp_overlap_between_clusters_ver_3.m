@@ -13,6 +13,7 @@ function [table_of_other_appearences] = check_timestamp_overlap_between_clusters
 
 table_of_other_appearences = table(nan(size(table_of_neurons,1),1),nan(size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),repelem("",size(table_of_neurons,1),1),'VariableNames',["Z Score","Cluster","Overlap %","Other Appearences","Tetrode"]);
 iter_count = 1;
+
 for current_neuron_counter=1:size(table_of_neurons,1)
     current_neuron_tetrode = table_of_neurons{current_neuron_counter,2};
     current_neuron_tetrode_number = str2double(strrep(current_neuron_tetrode,"t",""));
