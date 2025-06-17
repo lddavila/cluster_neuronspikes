@@ -107,7 +107,7 @@ config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\final_overl
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/lddavila/data_from_local_machine/final_overlap_table/final_table_with_overlap_only_neurons.mat";
 
 %
-config.WHICH_NEURAL_NET = "twin_choose_better";
+config.WHICH_NEURAL_NET = "complex merge checker";
 config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\06_04_choose_better_mean_waveform_results_equalize_proportion";
 config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_09_2025_twin_nn_tests";
 
@@ -176,7 +176,7 @@ config.FP_TO_CHOOSE_BETTER_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/c
 config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN = "D:\cluster_neuronspikes\accuracy_category_based_on_mean_waveform_nn\accuracy score 0.69231num accuracy cats 3 num layers 2 num neurons per layer30 accuracy_category_based_on_mean_waveform.mat";
 config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/accuracy_category_based_on_mean_waveform_nn/accuracy score 0.69231num accuracy cats 3 num layers 2 num neurons per layer30 accuracy_category_based_on_mean_waveform.mat";
 
-config.DIR_TO_SAVE_RESULTS_TO = "overlap matrix of only neurons";
+config.DIR_TO_SAVE_RESULTS_TO = "06_16_2025_complex_merge_nn";
 
 config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN  = "D:\cluster_neuronspikes\Predict_accuracy_cat_using_grades_nn\accuracy score 0.86357number of acc cats 3 num layers 6 num neurons per layer40 grades neural network.mat";
 config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/Predict_accuracy_cat_using_grades_nn/accuracy score 0.86357number of acc cats 3 num layers 6 num neurons per layer40 grades neural network.mat";
