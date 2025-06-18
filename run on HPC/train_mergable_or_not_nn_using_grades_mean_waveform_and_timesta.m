@@ -33,12 +33,14 @@ disp("Finished Getting Mean Waveform Array")
 
 %get the overlap percentage
 
+
 disp("Finished getting overlap percentage array")
 
 %get indexes of combinations
 rng(0);
 all_possible_combos = nchoosek(1:size(blind_pass_table,1),2);
 random_indexes = randi(size(all_possible_combos,1),num_samples,1);
+random_sample_indexes = all_possible_combos(random_indexes,:);
 
 
 %get the combinable or not col
@@ -50,6 +52,7 @@ data_for_nn = [mean_waveform_array(all_possible_combos(random_indexes,1),:),...
     mean_waveform_array(all_possible_combos(random_indexes,2),:),...
     grades_array(all_possible_combos(random_indexes,1),:),...
     grades_array(all_possible_combos(random_indexes,2),:),...
+    random_sample_indexes,...
     combinable_or_not_col];
 
 s = RandStream('mlfg6331_64');
@@ -70,10 +73,18 @@ disp("Finished Data Assembly")
 number_of_layers = 1:1:50;
 filter_sizes = [5 10 15 20 25 30 35 40 50];
 
-table_of_nn_data = array2table(shuffled_data_for_nn);
+
+
+remaining_idxs = shuffled_data_for_nn(:,[end-2,end-1]);
+shuffled_data_for_nn(:,end-2:end-1) = [];
+ 
+
+overlap_col = get_overlap_percentage_for_nn_training_data(blind_pass_table,remaining_idxs,config);
+
+table_of_nn_data = array2table([shuffled_data_for_nn(:,1:end-1),overlap_col,shuffled_data_for_nn(:,end)]);
+
+home_dir = cd(dir_to_save_results_to);
 % train the neural networks
-
-
 for j=1:size(number_of_layers,2)
     num_layers = number_of_layers(j);
     for k=1:size(filter_sizes,2)
@@ -95,7 +106,7 @@ for j=1:size(number_of_layers,2)
     end
 end
 
-
+cd(home_dir);
 
 
 
