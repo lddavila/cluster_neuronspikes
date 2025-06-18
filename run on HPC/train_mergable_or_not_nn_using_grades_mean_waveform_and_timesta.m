@@ -10,7 +10,7 @@ if config.ON_HPC
     parent_save_dir = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
 else
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
-    parent_save_dir = config.parent_save_dir;
+    parent_save_dir = config.parent_save_dir_ON_HPC;
 end
 disp("Finished Loading Data")
 dir_to_save_results_to = fullfile(parent_save_dir,config.DIR_TO_SAVE_RESULTS_TO);
@@ -31,7 +31,7 @@ mean_waveform_array = cell2mat(blind_pass_table{:,"Mean Waveform"});
 
 disp("Finished Getting Mean Waveform Array")
 
-%get the overlap percentage
+
 
 
 disp("Finished getting overlap percentage array")
@@ -78,7 +78,7 @@ filter_sizes = [5 10 15 20 25 30 35 40 50];
 remaining_idxs = shuffled_data_for_nn(:,[end-2,end-1]);
 shuffled_data_for_nn(:,end-2:end-1) = [];
  
-
+%get the overlap percentage
 overlap_col = get_overlap_percentage_for_nn_training_data(blind_pass_table,remaining_idxs,config);
 
 table_of_nn_data = array2table([shuffled_data_for_nn(:,1:end-1),overlap_col,shuffled_data_for_nn(:,end)]);
