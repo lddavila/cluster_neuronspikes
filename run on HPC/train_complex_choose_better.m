@@ -83,9 +83,9 @@ overlap_col = get_overlap_percentage_for_nn_training_data(blind_pass_table,remai
 disp("Finished getting overlap percentage array")
 
 % get the sizes of both accuracy cols
-first_size_col = cellfun(@size, blind_pass_table{remaining_idxs(:,1),"timestamps"}, 'UniformOutput', false);
-sec_size_col = cellfun(@size, blind_pass_table{remaining_idxs(:,2),"timestamps"}, 'UniformOutput', false);
-table_of_nn_data = array2table([shuffled_data_for_nn(:,1:end-1),overlap_col,first_size_col,sec_size_col,shuffled_data_for_nn(:,end)]);
+first_size_col = cell2mat(cellfun(@size, blind_pass_table{remaining_idxs(:,1),"timestamps"}, 'UniformOutput', false));
+sec_size_col = cell2mat(cellfun(@size, blind_pass_table{remaining_idxs(:,2),"timestamps"}, 'UniformOutput', false));
+table_of_nn_data = array2table([shuffled_data_for_nn(:,1:end-1),overlap_col,first_size_col(:,1),sec_size_col(:,1),shuffled_data_for_nn(:,end)]);
 
 home_dir = cd(dir_to_save_results_to);
 % train the neural networks
