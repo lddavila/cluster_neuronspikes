@@ -1,5 +1,5 @@
-function [] = train_mergable_or_not_nn_using_grades_mean_waveform_and_timesta()
-num_samples = 1000000;
+function [] = train_predict_accuracy_increases_through_merges()
+num_samples = 100000;
 home_dir = cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
@@ -7,7 +7,7 @@ config = spikesort_config();
 which_nn = config.WHICH_NEURAL_NET;
 if config.ON_HPC
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
-    parent_save_dir = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
+    parent_save_dir = config.parent_save_dir_ON_HPC;
 else
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
     parent_save_dir = config.parent_save_dir;
@@ -34,7 +34,7 @@ disp("Finished Getting Mean Waveform Array")
 
 
 
-disp("Finished getting overlap percentage array")
+
 
 %get indexes of combinations
 rng(0);
@@ -43,14 +43,13 @@ random_indexes = randi(size(all_possible_combos,1),num_samples,1);
 random_sample_indexes = all_possible_combos(random_indexes,:);
 
 
-%get the combinable or not col
-% combinable_or_not_col = zeros(size(random_indexes,1),1);
-combinable_or_not_col = blind_pass_table{all_possible_combos(random_indexes,1),"Max Overlap Unit"}==blind_pass_table{all_possible_combos(random_indexes,2),"Max Overlap Unit"};
+%get the is left better col
+combinable_or_not_col = get_merge_increase_in_accuracy_col(blind_pass_table,config,random_sample_indexes);
 
 % assemble the neural network data
 data_for_nn = [mean_waveform_array(all_possible_combos(random_indexes,1),:),...
-    mean_waveform_array(all_possible_combos(random_indexes,2),:),...
     grades_array(all_possible_combos(random_indexes,1),:),...
+    mean_waveform_array(all_possible_combos(random_indexes,2),:),...
     grades_array(all_possible_combos(random_indexes,2),:),...
     random_sample_indexes,...
     combinable_or_not_col];
@@ -80,12 +79,17 @@ shuffled_data_for_nn(:,end-2:end-1) = [];
  
 %get the overlap percentage
 overlap_col = get_overlap_percentage_for_nn_training_data(blind_pass_table,remaining_idxs,config);
+disp("Finished getting overlap percentage array")
 
-table_of_nn_data = array2table([shuffled_data_for_nn(:,1:end-1),overlap_col,shuffled_data_for_nn(:,end)]);
+% get the sizes of both accuracy cols
+first_size_col = cell2mat(cellfun(@size, blind_pass_table{remaining_idxs(:,1),"timestamps"}, 'UniformOutput', false));
+sec_size_col = cell2mat(cellfun(@size, blind_pass_table{remaining_idxs(:,2),"timestamps"}, 'UniformOutput', false));
+table_of_nn_data = array2table([shuffled_data_for_nn(:,1:end-1),overlap_col,first_size_col(:,1),sec_size_col(:,1),shuffled_data_for_nn(:,end)]);
 
 home_dir = cd(dir_to_save_results_to);
 % train the neural networks
-for j=1:size(number_of_layers,2)
+disp(pwd)
+parfor j=1:size(number_of_layers,2)
     num_layers = number_of_layers(j);
     for k=1:size(filter_sizes,2)
         num_neurons = filter_sizes(k);

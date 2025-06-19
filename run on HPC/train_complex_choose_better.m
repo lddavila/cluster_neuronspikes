@@ -1,5 +1,5 @@
 function [] = train_complex_choose_better()
-num_samples = 100000;
+num_samples = 100;
 home_dir = cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
@@ -45,7 +45,7 @@ random_sample_indexes = all_possible_combos(random_indexes,:);
 
 %get the is left better col
 
-combinable_or_not_col = blind_pass_table{all_possible_combos(random_indexes,1),"accuracy"}>blind_pass_table{all_possible_combos(random_indexes,2),"accuracy"};
+left_is_better_col = blind_pass_table{all_possible_combos(random_indexes,1),"accuracy"}>blind_pass_table{all_possible_combos(random_indexes,2),"accuracy"};
 
 % assemble the neural network data
 data_for_nn = [mean_waveform_array(all_possible_combos(random_indexes,1),:),...
@@ -53,7 +53,7 @@ data_for_nn = [mean_waveform_array(all_possible_combos(random_indexes,1),:),...
     mean_waveform_array(all_possible_combos(random_indexes,2),:),...
     grades_array(all_possible_combos(random_indexes,2),:),...
     random_sample_indexes,...
-    combinable_or_not_col];
+    left_is_better_col];
 
 s = RandStream('mlfg6331_64');
 
