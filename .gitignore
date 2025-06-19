@@ -16,3 +16,6 @@
 
 #ignore .txt files
 *.txt
+
+#ignore chunks
+*.dat

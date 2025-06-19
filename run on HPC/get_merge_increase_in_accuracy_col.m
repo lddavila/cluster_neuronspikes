@@ -1,7 +1,11 @@
 function [col_of_merge_increases_accuracy] = get_merge_increase_in_accuracy_col(blind_pass_table,config,indexes_to_check)
-
-ground_truth = importdata(config.GT_FP);
-timestamps = importdata(config.TIMESTAMP_FP);
+if config.ON_HPC
+    ground_truth = importdata(config.FP_TO_GT_FOR_RECORDING_ON_HPC);
+    timestamps = importdata(config.TIMESTAMP_FP_ON_HPC);
+else
+    ground_truth = importdata(config.GT_FP);
+    timestamps = importdata(config.TIMESTAMP_FP);
+end
 number_of_times_that_you_merged = 0;
 number_of_merges_that_resulted_in_increases = 0;
 
@@ -54,7 +58,7 @@ for index_counter=1:size(indexes_to_check,1)
         col_of_merge_increases_accuracy(index_counter) = 1;
     end
     number_of_times_that_you_merged = number_of_times_that_you_merged+1;
-    
+
     print_status_iter_message("get_merge_increase_in_accuracy_col.m",index_counter,size(indexes_to_check,1))
 
 end

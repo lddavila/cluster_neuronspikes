@@ -1,4 +1,5 @@
 function [] = analyze_cell_array_of_overlapping_clusters(array_of_overlapping_clusters,config,table_of_unmerged_clusters)
+
 list_of_units = 1:config.NUM_OF_UNITS;
 cluster_groups_that_dont_meet_convergence = {};
 for i=1:size(array_of_overlapping_clusters,2)
