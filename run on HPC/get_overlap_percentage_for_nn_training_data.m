@@ -38,7 +38,9 @@ parfor i=1:size(lower_triangular_indexes,1)
         number_of_timestamps_in_common=0;
     end
     array_of_overlap_percentages = [array_of_overlap_percentages;(number_of_timestamps_in_common / smaller_cluster_size) * 100];
-    print_status_iter_message("get_overlap_percentage_for_nn_training_data.m",i,num_iters)
+    if mod(i,1000) == 0
+        print_status_iter_message("get_overlap_percentage_for_nn_training_data.m",i,num_iters)
+    end
 end
 
 

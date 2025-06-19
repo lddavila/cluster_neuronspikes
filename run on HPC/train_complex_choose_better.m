@@ -10,7 +10,7 @@ if config.ON_HPC
     parent_save_dir = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
 else
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
-    parent_save_dir = config.parent_save_dir_ON_HPC;
+    parent_save_dir = config.parent_save_dir;
 end
 disp("Finished Loading Data")
 dir_to_save_results_to = fullfile(parent_save_dir,config.DIR_TO_SAVE_RESULTS_TO);
