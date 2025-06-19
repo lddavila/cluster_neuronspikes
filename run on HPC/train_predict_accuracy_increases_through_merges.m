@@ -1,5 +1,5 @@
 function [] = train_predict_accuracy_increases_through_merges()
-num_samples = 100000;
+num_samples = 1000000;
 home_dir = cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
