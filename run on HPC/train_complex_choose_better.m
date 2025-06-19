@@ -1,5 +1,5 @@
 function [] = train_complex_choose_better()
-num_samples = 1000000;
+num_samples = 100000;
 home_dir = cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
