@@ -5,14 +5,17 @@ timestamps = importdata(config.TIMESTAMP_FP);
 number_of_times_that_you_merged = 0;
 number_of_merges_that_resulted_in_increases = 0;
 
-col_of_merge_increases_accuracy = zeros(1,size(indexes_to_check,1));
+col_of_merge_increases_accuracy = zeros(size(indexes_to_check,1),1);
 
-for index_counter=1:size(indexes_to_check,1)
+
+
+parfor index_counter=1:size(indexes_to_check,1)
     j = indexes_to_check(index_counter,1);
     k = indexes_to_check(index_counter,2);
-    if col_of_merge_;
-        continue
-    end
+    % if blind_pass_table{j,"Max Overlap Unit"} ~= blind_pass_table{k,"Max Overlap Unit"}
+    %     number_of_times_that_you_merged = number_of_times_that_you_merged+1;
+    %     continue
+    % end
     current_cluster_ts = blind_pass_table{j,"timestamps"}{1};
     current_cluster_tetrode = blind_pass_table{j,"Tetrode"};
     current_cluster_z_score = blind_pass_table{j,"Z Score"};
@@ -54,7 +57,7 @@ for index_counter=1:size(indexes_to_check,1)
     end
     number_of_times_that_you_merged = number_of_times_that_you_merged+1;
     
-    % print_status_iter_message("get_merge_increase_in_accuracy_col.m",index_counter,size(indexes_to_check,1))
+    print_status_iter_message("get_merge_increase_in_accuracy_col.m",index_counter,size(indexes_to_check,1))
 
 end
 fprintf("Increase Ratio: %d/%d\n",number_of_merges_that_resulted_in_increases,number_of_times_that_you_merged);

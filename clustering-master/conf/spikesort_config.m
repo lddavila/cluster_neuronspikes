@@ -107,7 +107,7 @@ config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\final_overl
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/lddavila/data_from_local_machine/final_overlap_table/final_table_with_overlap_only_neurons.mat";
 
 %
-config.WHICH_NEURAL_NET = "complex choose better";
+config.WHICH_NEURAL_NET = "complex predict merge result";
 config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\06_04_choose_better_mean_waveform_results_equalize_proportion";
 config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_09_2025_twin_nn_tests";
 
