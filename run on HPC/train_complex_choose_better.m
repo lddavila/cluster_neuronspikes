@@ -7,7 +7,7 @@ config = spikesort_config();
 which_nn = config.WHICH_NEURAL_NET;
 if config.ON_HPC
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
-    parent_save_dir = config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC;
+    parent_save_dir = config.parent_save_dir_ON_HPC;
 else
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
     parent_save_dir = config.parent_save_dir;

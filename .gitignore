@@ -13,3 +13,6 @@
 /Reclustered Pass
 /tests
 /Upper Bound 10 Data
+
+#ignore .txt files
+*.txt
