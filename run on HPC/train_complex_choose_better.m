@@ -90,7 +90,7 @@ table_of_nn_data = array2table([shuffled_data_for_nn(:,1:end-1),overlap_col,firs
 home_dir = cd(dir_to_save_results_to);
 % train the neural networks
 disp(pwd)
-parfor j=1:size(number_of_layers,2)
+for j=1:size(number_of_layers,2)
     num_layers = number_of_layers(j);
     for k=1:size(filter_sizes,2)
         num_neurons = filter_sizes(k);

@@ -7,7 +7,7 @@ else
 end
 nn = nn_struct.net;
 tp = 0;
-for i=21:size(array_of_overlapping_clusters,2)
+for i=30:size(array_of_overlapping_clusters,2)
     current_data = array_of_overlapping_clusters{i};
     [predicted_max_value_index,current_data_sorted_by_max_accuracy ]= bubble_sort_overlapping_clusters(current_data,config,nn);
     current_data_sorted_by_max_accuracy =current_data_sorted_by_max_accuracy(:,["Z Score","Tetrode","Cluster","Max Overlap Unit","accuracy"]) ;
