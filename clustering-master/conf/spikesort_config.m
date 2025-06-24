@@ -107,7 +107,7 @@ config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\final_overl
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/lddavila/data_from_local_machine/final_overlap_table/final_table_with_overlap_only_neurons.mat";
 
 %
-config.WHICH_NEURAL_NET = "complex predict merge result";
+config.WHICH_NEURAL_NET = "complex choose better";
 config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\06_04_choose_better_mean_waveform_results_equalize_proportion";
 config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_09_2025_twin_nn_tests";
 
@@ -124,7 +124,7 @@ config.FP_TO_QUALITY_PREDICTING_NN_ON_HPC = fullfile("/home","lddavila","cluster
 config.FP_TO_MUA_OR_NOT_PREDICTING_NN ="D:\cluster_neuronspikes\mua_or_not_NN\accuracy score 95.0739 num layers 27 filter size 64 mua_or_not.mat" ;
 config.FP_TO_MUA_OR_NOT_PREDICTING_NN_ON_HPC ="/home/lddavila/cluster_neuronspikes/mua_or_not_NN/accuracy score 95.0739 num layers 27 filter size 64 mua_or_not.mat";
 
-config.FP_TO_EXPAND_OR_DONT_NN ="D:\cluster_neuronspikes\expand_or_dont_NN\accuracy score 94.5545 num layers 22 filter size 256 mua_or_not.mat" ;
+config.FP_TO_EXPAND_OR_DONT_NN ="D:\cluster_neuronspikes\expand_or_dont_NN\accuracy score 94.5545 num layers 22 filter size 256 expand_or_dont.mat" ;
 config.FP_TO_EXPAND_OR_DONT_NN_ON_HPC = "/home/lddavila/cluster_neuronspikes/expand_or_dont_NN/accuracy score 94.5545 num layers 22 filter size 256 mua_or_not.mat";
 
 
@@ -176,16 +176,19 @@ config.FP_TO_CHOOSE_BETTER_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/c
 config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN = "D:\cluster_neuronspikes\accuracy_category_based_on_mean_waveform_nn\accuracy score 0.69231num accuracy cats 3 num layers 2 num neurons per layer30 accuracy_category_based_on_mean_waveform.mat";
 config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/accuracy_category_based_on_mean_waveform_nn/accuracy score 0.69231num accuracy cats 3 num layers 2 num neurons per layer30 accuracy_category_based_on_mean_waveform.mat";
 
-config.DIR_TO_SAVE_RESULTS_TO = "06_19_2025_predict_accuracy_increases";
+config.DIR_TO_SAVE_RESULTS_TO = "06_23_2025_complex_choose_better";
 
 config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN  = "D:\cluster_neuronspikes\Predict_accuracy_cat_using_grades_nn\accuracy score 0.86357number of acc cats 3 num layers 6 num neurons per layer40 grades neural network.mat";
 config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/Predict_accuracy_cat_using_grades_nn/accuracy score 0.86357number of acc cats 3 num layers 6 num neurons per layer40 grades neural network.mat";
 
-config.FP_TO_COMPLEX_MERGE_OR_DONT_NN = "D:\cluster_neuronspikes\Data\06_17_2025_complex_merge_nn_with_overlap\accuracy score 0.99235 num layers 1 num neurons per layer10 complex merge checker.mat";
+config.FP_TO_COMPLEX_MERGE_OR_DONT_NN = "D:\cluster_neuronspikes\Data\06_17_2025_complex_merge_nn_with_overlap\accuracy score 0.99367 num layers 1 num neurons per layer15 complex merge checker.mat";
 config.FP_TO_COMPLEX_MERGE_OR_DONT_NN_ON_HPC = "";
 
 config.DIR_TO_STATUS_FILE = "";
 config.FP_TO_STATUS_FILE = "";
+
+config.FP_TO_COMPLEX_CHOOSE_BETTER_NN = "D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\06_18_2025_complex_choose_better\accuracy score 0.85031 num layers 13 num neurons per layer10 complex choose better.mat";
+config.FP_TO_COMPLEX_CHOOSE_BETTER_NN_ON_HPC = "";
 % ORIGINAL BEGINS HERE
 
 % Prints extra output
