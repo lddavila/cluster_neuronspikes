@@ -188,7 +188,7 @@ config.DIR_TO_STATUS_FILE = "";
 config.FP_TO_STATUS_FILE = "";
 
 config.FP_TO_COMPLEX_CHOOSE_BETTER_NN = "D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\06_18_2025_complex_choose_better\accuracy score 0.85031 num layers 13 num neurons per layer10 complex choose better.mat";
-config.FP_TO_COMPLEX_CHOOSE_BETTER_NN_ON_HPC =  "/scratch/cnheaton/data_from_local_machine/06_18_2025_complex_choose_better/accuracy score 0.85031 num layers 13 num neurons per layer10 complex choose better.mat'";
+config.FP_TO_COMPLEX_CHOOSE_BETTER_NN_ON_HPC =  "/scratch/cnheaton/data_from_local_machine/06_18_2025_complex_choose_better/accuracy score 0.85031 num layers 13 num neurons per layer10 complex choose better.mat";
 % ORIGINAL BEGINS HERE
 
 % Prints extra output
