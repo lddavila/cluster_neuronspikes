@@ -94,6 +94,7 @@ for j=1:size(number_of_layers,2)
     num_layers = number_of_layers(j);
     for k=1:size(filter_sizes,2)
         num_neurons = filter_sizes(k);
+        disp("About to begin Training");
         beginning_time = tic;
         [accuracy_score,net,~]= merge_or_dont_nn(table_of_nn_data,spikesort_config,num_neurons,num_layers);
         end_time = toc(beginning_time);
