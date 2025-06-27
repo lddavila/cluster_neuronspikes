@@ -12,6 +12,90 @@ else
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
     parent_save_dir = config.parent_save_dir;
 end
+
+already_done_architectures = [    5 5;
+    2 5 ;
+    9 5 ;
+    1 5 ;
+    3 5 ;
+    4 5 ;
+    7 5 ;
+    8 5 ;
+    6 5 ;
+    1 15 ;
+    2 10 ;
+    1 10 ;
+    2 30 ;
+    4 10 ;
+    3 10 ;
+    2 35 ;
+    2 15 ;
+    6 10 ;
+    1 30 ;
+    3 30 ;
+    3 15 ;
+    1 25 ;
+    1 50 ;
+    7 10 ;
+    3 25 ;
+    1 40 ;
+    5 10 ;
+    1 35 ;
+    2 25 ;
+    2 20 ;
+    8 15 ;
+    9 10 ;
+    4 15 ;
+    3 20 ;
+    8 10 ;
+    4 30 ;
+    1 20 ;
+    2 50 ;
+    2 40 ;
+    8 30 ;
+    5 15 ;
+    4 20 ;
+    7 15 ;
+    5 20 ;
+    5 30 ;
+    9 30 ;
+    9 15 ;
+    3 35 ;
+    9 20 ;
+    7 30 ;
+    5 25 ;
+    8 20 ;
+    4 35 ;
+    6 15 ;
+    7 20 ;
+    8 25 ;
+    4 40 ;
+    6 25 ;
+    6 20 ;
+    5 50 ;
+    6 30 ;
+    3 40 ;
+    9 25 ;
+    9 35 ;
+    4 25 ;
+    8 35 ;
+    3 50 ;
+    7 25 ;
+    8 50 ;
+    6 35 ;
+    5 35 ;
+    6 40 ;
+    7 35 ;
+    4 50 ;
+    7 40 ;
+    5 40 ;
+    9 50 ;
+    8 40 ;
+    6 50 ;
+    9 40 ;
+    7 50
+    ];
+
 disp("Finished Loading Data")
 dir_to_save_results_to = fullfile(parent_save_dir,config.DIR_TO_SAVE_RESULTS_TO);
 if ~exist(dir_to_save_results_to,"dir")
@@ -77,7 +161,7 @@ filter_sizes = [5 10 15 20 25 30 35 40 50];
 
 remaining_idxs = shuffled_data_for_nn(:,[end-2,end-1]);
 shuffled_data_for_nn(:,end-2:end-1) = [];
- 
+
 %get the overlap percentage
 overlap_col = get_overlap_percentage_for_nn_training_data(blind_pass_table,remaining_idxs,config);
 disp("Finished getting overlap percentage array")
@@ -92,8 +176,13 @@ home_dir = cd(dir_to_save_results_to);
 disp(pwd)
 for j=1:size(number_of_layers,2)
     num_layers = number_of_layers(j);
-    for k=1:size(filter_sizes,2)
+    parfor k=1:size(filter_sizes,2)
+
         num_neurons = filter_sizes(k);
+        already_done_row = [num_layers,num_neurons ];
+        if any(ismember(already_done_architectures,already_done_row,'rows'))
+            continue;
+        end
         disp("About to begin Training");
         beginning_time = tic;
         [accuracy_score,net,~]= merge_or_dont_nn(table_of_nn_data,spikesort_config,num_neurons,num_layers);
