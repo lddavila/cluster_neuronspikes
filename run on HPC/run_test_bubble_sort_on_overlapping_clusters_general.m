@@ -10,6 +10,6 @@ else
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
 end
 disp("Finished importing data")
-blind_pass_table = blind_pass_table(1:1000,:);
+blind_pass_table = blind_pass_table(1:3000,:);
 test_bubble_sort_choose_better_on_array_of_overlapping_clusters({blind_pass_table},config,"/scratch/cnheaton/data_to_copy_to_local_machine/06_25_2025_general_choose_better_test");
 end
