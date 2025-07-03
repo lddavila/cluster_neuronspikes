@@ -115,6 +115,7 @@ for i=1:size(accuracy_differences_to_try,1)
     disp(pwd);
     pieces_to_remove = ["accuracy score ","num layers ","num neurons per layer"," ",which_nn_base,".mat"];
     already_done_nn = get_nn_architectures_to_skip(pwd,pieces_to_remove);
+    all_accuracies = [];
     for j=1:size(number_of_layers,2)
         num_layers = number_of_layers(j);
         parfor k=1:size(filter_sizes,2)
@@ -141,7 +142,16 @@ for i=1:size(accuracy_differences_to_try,1)
             net_struct.net = net;
             save(name_to_save_under+".mat","-fromstruct",net_struct)
 
+            all_accuracies = [all_accuracies;accuracy_score ];
+            if accuracy_score>=.99
+                continue;
+            end
+
         end
+        if any(all_accuracies>=.99)
+            break;
+        end
+
     end
 
     cd(home_dir);
