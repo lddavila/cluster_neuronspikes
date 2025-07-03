@@ -64,7 +64,7 @@ for i=1:size(accuracy_differences_to_try,1)
 
     if size(original_indexes,1) > max_num_samples
         randomly_selected_indexes = randi(size(original_indexes,1),max_num_samples,1);
-        original_indexes = original_indexes(randomly_selected_indexes);
+        original_indexes = original_indexes(randomly_selected_indexes,:);
     end
     disp("Finished Sampling Examples")
 
