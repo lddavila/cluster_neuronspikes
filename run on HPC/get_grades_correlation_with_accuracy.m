@@ -1,7 +1,7 @@
 function [correlation_with_accuracy_table] = get_grades_correlation_with_accuracy(blind_pass_table,config)
 
 % update_grades_in_overlap_table
-[grade_names,all_grades]= flatten_grades_cell_array(blind_pass_table{:,"grades"},config);
+[grade_names,all_grades]= flatten_grades_cell_array_fixed(blind_pass_table{:,"grades"},config);
 [indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
 grades_array = all_grades(:,indexes_of_grades_were_looking_for);
 
@@ -14,7 +14,7 @@ for i=1:size(grades_array,2)
     correlation_with_accuracy_table{i,"p-value"} = p(1,2);
 end
 
-correlation_with_accuracy_table = sortrows(correlation_with_accuracy_table,"r");
+% correlation_with_accuracy_table = sortrows(correlation_with_accuracy_table,"r");
 
 
 disp(correlation_with_accuracy_table)
