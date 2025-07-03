@@ -113,20 +113,15 @@ for i=1:size(accuracy_differences_to_try,1)
 
     home_dir = cd(dir_to_save_results_to);
     disp(pwd);
-    pieces_to_remove = ["accuracy score ","num layers ","num neurons per layer"," ",which_nn_base,".mat"];
-    already_done_nn = get_nn_architectures_to_skip(pwd,pieces_to_remove);
+    % pieces_to_remove = ["accuracy score ","num layers ","num neurons per layer"," ",which_nn_base,".mat"];
+    % already_done_nn = get_nn_architectures_to_skip(pwd,pieces_to_remove);
     all_accuracies = [];
     for j=1:size(number_of_layers,2)
         num_layers = number_of_layers(j);
         parfor k=1:size(filter_sizes,2)
 
             num_neurons = filter_sizes(k);
-            already_done_row = [num_layers,num_neurons ];
-            if ~isempty(already_done_nn)
-                if any(ismember(already_done_nn,[number_of_accuracy_cats,num_layers,num_neurons],'rows' ))
-                    continue;
-                end
-            end
+            % already_done_row = [num_layers,num_neurons ];
             disp("About to begin Training");
             beginning_time = tic;
             [accuracy_score,net,~]= merge_or_dont_nn(table_of_nn_data,spikesort_config,num_neurons,num_layers);
