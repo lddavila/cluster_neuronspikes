@@ -118,7 +118,7 @@ for i=1:size(accuracy_differences_to_try,1)
     all_accuracies = [];
     for j=1:size(number_of_layers,2)
         num_layers = number_of_layers(j);
-        parfor k=1:size(filter_sizes,2)
+        for k=1:size(filter_sizes,2)
 
             num_neurons = filter_sizes(k);
             % already_done_row = [num_layers,num_neurons ];
@@ -138,7 +138,7 @@ for i=1:size(accuracy_differences_to_try,1)
             save(name_to_save_under+".mat","-fromstruct",net_struct)
 
             all_accuracies = [all_accuracies;accuracy_score ];
-            if accuracy_score>=.99
+            if any(all_accuracies>=.99)
                 continue;
             end
 
