@@ -139,7 +139,7 @@ for i=1:size(accuracy_differences_to_try,1)
 
             all_accuracies = [all_accuracies;accuracy_score ];
             if any(all_accuracies>=.99)
-                continue;
+                break;
             end
 
         end
