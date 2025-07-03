@@ -1,0 +1,18 @@
+function [correlation_with_accuracy_table] = get_grades_correlation_with_accuracy(blind_pass_table,config)
+[grade_names,all_grades]= flatten_grades_cell_array(blind_pass_table{:,"grades"},config);
+[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
+grades_array = all_grades(:,indexes_of_grades_were_looking_for);
+
+correlation_with_accuracy_table = table((config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)).',nan(size(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST,2)),nan(),'VariableNames',["grade","r","p-value"]);
+
+for i=1:size(grades_array,2)
+    [r,p] = corrcoef(current_grade_instances,percentage_of_unit_in_cluster);
+end
+
+
+
+if r(1,2) ==r(2,1) && p(1,2)==p(2,1)
+    unit_spikes_in_clust_r_vals(i)=r(1,2);
+    unit_spikes_in_clust_p_vals(i)=p(1,2);
+end
+end

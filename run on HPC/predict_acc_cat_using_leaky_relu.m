@@ -1,11 +1,11 @@
-function [accuracy,net,layers] = grades_neural_network_on_hpc(table_of_clusters,config,num_neurons_per_layer,num_layers)
-% disp("Beginning NN Training")
-table_of_clusters(isnan(table_of_clusters{:,"accuracy_category"}),:) = [];
-[grade_names,all_grades]= flatten_grades_cell_array(table_of_clusters{:,"grades"},config);
-[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
+function [accuracy,net,layers] = predict_acc_cat_using_leaky_relu(features,num_neurons_per_layer,num_layers)
 
-accuracy_category = table_of_clusters{:,"accuracy_category"};
-data_to_put_into_neural_network = array2table([all_grades(:,indexes_of_grades_were_looking_for),accuracy_category]);
+
+
+data_to_put_into_neural_network = features;
+
+
+
 data_to_put_into_neural_network = convertvars(data_to_put_into_neural_network,data_to_put_into_neural_network.Properties.VariableNames(end),"categorical");
 
 label_name = data_to_put_into_neural_network.Properties.VariableNames(end);
@@ -19,7 +19,7 @@ label_name = data_to_put_into_neural_network.Properties.VariableNames(end);
 
 class_names = categories(data_to_put_into_neural_network{:,label_name});
 num_classes = length(class_names);
-num_features = length(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST);
+num_features = size(features,2)-1;
 
 number_of_observations = size(data_to_put_into_neural_network,1);
 number_of_training_observations = floor(0.7 * number_of_observations);
@@ -45,12 +45,20 @@ testing_data = data_to_put_into_neural_network(idx_of_testing_data,:);
 
 layers = [featureInputLayer(num_features)];
 for i=1:num_layers
-    layers = [layers,fullyConnectedLayer(num_neurons_per_layer),reluLayer];
+    layers = [layers,fullyConnectedLayer(num_neurons_per_layer),leakyReluLayer];
 end
 layers = [layers,fullyConnectedLayer(num_classes),...
     softmaxLayer];
 mini_batch_size = 32;
 
+
+options = trainingOptions("adam", ...
+    MiniBatchSize=mini_batch_size, ...
+    Shuffle="every-epoch", ...
+    ValidationData=validation_data, ...
+    Metrics="accuracy", ...
+    Verbose=true, ...
+    maxEpochs=50);
 
 options = trainingOptions("adam", ...
     MiniBatchSize=mini_batch_size, ...
@@ -73,4 +81,5 @@ accuracy = sum(YPred == YTest)/numel(YTest);
 % figure
 % confusionchart(YTest,YPred)
 % disp("Finished Training NN")
+close all;
 end

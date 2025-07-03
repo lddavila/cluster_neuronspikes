@@ -5,9 +5,9 @@ cd(home_dir);
 number_of_accuracy_categories = [3 4 5 6 7 8 9 10]; %og line
 number_of_accuracy_categories = [3];
 number_of_layers = 1:1:50;
-number_of_layers = [6];
+% number_of_layers = [6];
 filter_sizes = [5 10 15 20 25 30 35 40 50];
-filter_sizes = [35];
+% filter_sizes = [35];
 accuracy_array = cell(length(number_of_accuracy_categories),1);
 config = spikesort_config;
 
