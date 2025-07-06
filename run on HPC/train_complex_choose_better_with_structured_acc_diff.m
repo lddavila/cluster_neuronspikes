@@ -137,7 +137,7 @@ for i=1:size(accuracy_differences_to_try,1)
             net_struct.net = net;
             save(name_to_save_under+".mat","-fromstruct",net_struct)
 
-            all_accuracies = [all_accuracies;accuracy_score ];
+            all_accuracies = [all_accuracies;accuracy_score];
             if any(all_accuracies>=.9)
                 break;
             end

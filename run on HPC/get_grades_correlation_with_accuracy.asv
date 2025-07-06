@@ -1,18 +1,25 @@
 function [correlation_with_accuracy_table] = get_grades_correlation_with_accuracy(blind_pass_table,config)
-[grade_names,all_grades]= flatten_grades_cell_array(blind_pass_table{:,"grades"},config);
+
+% update_grades_in_overlap_table
+[grade_names,all_grades]= flatten_grades_cell_array_fixed(blind_pass_table{:,"grades"},config);
 [indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
-grades_array = all_grades(:,indexes_of_grades_were_looking_for);
 
-correlation_with_accuracy_table = table((config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)).',nan(size(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST,2)),nan(),'VariableNames',["grade","r","p-value"]);
-
+[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES));
+grades_array = all_grades;
+[grades_array,missing_row_boolean] = rmmissing(grades_array);
+correlation_with_accuracy_table = table(grade_names,nan(size(grade_names,1),1),nan(size(grade_names,1),1),'VariableNames',["grade","r","p-value"]);
+accuracy = blind_pass_table{:,"accuracy"};
+accuracy(~missing_row_boolean)
 for i=1:size(grades_array,2)
-    [r,p] = corrcoef(current_grade_instances,percentage_of_unit_in_cluster);
+    disp(i)
+    current_grade = grades_array(:,i);
+    [r,p] = corrcoef(current_grade,accuracy);
+    correlation_with_accuracy_table{i,"r"} = r(1,2);
+    correlation_with_accuracy_table{i,"p-value"} = p(1,2);
 end
 
+correlation_with_accuracy_table = sortrows(correlation_with_accuracy_table,"r");
 
 
-if r(1,2) ==r(2,1) && p(1,2)==p(2,1)
-    unit_spikes_in_clust_r_vals(i)=r(1,2);
-    unit_spikes_in_clust_p_vals(i)=p(1,2);
-end
+disp(correlation_with_accuracy_table)
 end
