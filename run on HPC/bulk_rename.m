@@ -31,7 +31,7 @@ for i=1:size(file_paths,1)
     sub_dir = split_file_path{end};
     copyfile(fullfile(filepath,original_name+ext),fullfile(file_to_save_renamed_files_to,sub_dir,name+ext));
     
-
+    print_status_iter_message("bulk_rename.m",i,size(file_paths,1));
 end
 
 end
