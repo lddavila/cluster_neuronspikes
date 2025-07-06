@@ -1,5 +1,6 @@
 function [] = train_complex_choose_better_with_structured_acc_diff()
 accuracy_differences_to_try = [100 90;90 80;70 60;60 50;30 20;20 10;10 5; 2 1];
+accuracy_differences_to_try = [50 40; 5 1];
 
 max_num_samples = 10000;
 home_dir = cd("..");

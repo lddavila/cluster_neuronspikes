@@ -192,6 +192,11 @@ config.FP_TO_COMPLEX_CHOOSE_BETTER_NN_ON_HPC =  "/scratch/cnheaton/data_from_loc
 
 config.FP_TO_PRE_RANKED_TABLE = "D:\cluster_neuronspikes\Data\06_25_2025_general_choose_better_test\1.xlsx";
 
+config.FPS_OF_STRUCTURED_CHOOSE_BETTER_NEURAL_NETS= [];
+
+config.FPS_OF_STRUCTURED_CHOOSE_BETTER_NEURAL_NETS_ON_HPC= [];
+
+
 % ORIGINAL BEGINS HERE
 
 % Prints extra output
