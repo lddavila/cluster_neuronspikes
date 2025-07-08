@@ -107,7 +107,7 @@ config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\final_overl
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/lddavila/data_from_local_machine/final_overlap_table/final_table_with_overlap_only_neurons.mat";
 
 %
-config.WHICH_NEURAL_NET = "complex_choose_better";
+config.WHICH_NEURAL_NET = "acc_cat_with_windows";
 config.DIR_TO_SAVE_ACC_RESULTS_TO ="D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\06_04_choose_better_mean_waveform_results_equalize_proportion";
 config.DIR_TO_SAVE_ACC_RESULTS_TO_ON_HPC = "/scratch/lddavila/data_to_copy_to_local_machine/06_09_2025_twin_nn_tests";
 
@@ -176,7 +176,7 @@ config.FP_TO_CHOOSE_BETTER_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/c
 config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN = "D:\cluster_neuronspikes\accuracy_category_based_on_mean_waveform_nn\accuracy score 0.69231num accuracy cats 3 num layers 2 num neurons per layer30 accuracy_category_based_on_mean_waveform.mat";
 config.FP_TO_PREDICT_ACC_CAT_USING_MEAN_WAVEFORM_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/accuracy_category_based_on_mean_waveform_nn/accuracy score 0.69231num accuracy cats 3 num layers 2 num neurons per layer30 accuracy_category_based_on_mean_waveform.mat";
 
-config.DIR_TO_SAVE_RESULTS_TO = "07_03_2025_complex_choose_better_structured";
+config.DIR_TO_SAVE_RESULTS_TO = "07_06_2025_window_acc_cat";
 
 config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN  = "D:\cluster_neuronspikes\Predict_accuracy_cat_using_grades_nn\accuracy score 0.86357number of acc cats 3 num layers 6 num neurons per layer40 grades neural network.mat";
 config.FP_TO_PREDICTING_ACCURACY_ON_GRADES_NN_ON_HPC = "/scratch/lddavila/cluster_neuronspikes/Predict_accuracy_cat_using_grades_nn/accuracy score 0.86357number of acc cats 3 num layers 6 num neurons per layer40 grades neural network.mat";
@@ -192,10 +192,16 @@ config.FP_TO_COMPLEX_CHOOSE_BETTER_NN_ON_HPC =  "/scratch/cnheaton/data_from_loc
 
 config.FP_TO_PRE_RANKED_TABLE = "D:\cluster_neuronspikes\Data\06_25_2025_general_choose_better_test\1.xlsx";
 
-config.FPS_OF_STRUCTURED_CHOOSE_BETTER_NEURAL_NETS= [];
-
+config.FPS_OF_STRUCTURED_CHOOSE_BETTER_NEURAL_NETS= ["D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\07_03_2025_comp_ch_better_shrt_names\Ranging Between 100 90\a_s 1 n_l 11 n_n_p_l20 c_c_b_acc_diff 100 90  80.5754 .mat",...
+    "D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\07_03_2025_comp_ch_better_shrt_names\Ranging Between 90 80\a_s 0.99028 n_l 1 n_n_p_l30 c_c_b_acc_diff 90 80  34.7165 .mat",...
+    "D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\07_03_2025_comp_ch_better_shrt_names\Ranging Between 70 60\a_s 0.98992 n_l 1 n_n_p_l50 c_c_b_acc_diff 70 60  23.969 .mat",...
+    "D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\07_03_2025_comp_ch_better_shrt_names\Ranging Between 60 50\a_s 0.95272 n_l 1 n_n_p_l10 c_c_b_acc_diff 60 50  33.3521 .mat",...
+    "D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\07_03_2025_comp_ch_better_shrt_names\Ranging Between 30 20\a_s 0.89951 n_l 18 n_n_p_l50 c_c_b_acc_diff 30 20  75.4688 .mat",...
+    "D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\07_03_2025_comp_ch_better_shrt_names\Ranging Between 20 10\a_s 0.81213 n_l 24 n_n_p_l50 c_c_b_acc_diff 20 10  108.2946 .mat",...
+    "D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\07_03_2025_comp_ch_better_shrt_names\Ranging Between 10 5\a_s 0.68417 n_l 13 n_n_p_l15 c_c_b_acc_diff 10 5  62.9002 .mat",...
+    "D:\cluster_neuronspikes\Data\All_Neural_Networks_Ever_Trained\07_03_2025_comp_ch_better_shrt_names\Ranging Between 2 1\a_s 0.55977 n_l 8 n_n_p_l50 c_c_b_acc_diff 2 1  87.605 .mat"];
+config.WINDOWS_PER_NN = [100 90; 90 80; 70 60; 60 50; 30 20; 20 10; 10 5; 2 1];
 config.FPS_OF_STRUCTURED_CHOOSE_BETTER_NEURAL_NETS_ON_HPC= [];
-
 
 % ORIGINAL BEGINS HERE
 
