@@ -1,6 +1,6 @@
 function [all_window_beginning,all_window_end] = get_window_based_on_multiple_neural_networks(blind_pass_table,neural_networks_array,presorted_table,cluster_size_col,mean_waveform_array,grades_array,config)
     function [beginning_of_window,end_of_window] = run_all_neural_networks(neural_networks_array,presorted_table,i,blind_pass_table,cluster_size_col,mean_waveform_array,grades_array,config)
-        max_iterations = 100;
+        max_iterations = 50;
 
         %each end of the window has 2 scenarios that must be accounted for
         %starting from 1 the best case scenario is that our example (i) has an accuracy score of 99%
@@ -11,6 +11,18 @@ function [all_window_beginning,all_window_end] = get_window_based_on_multiple_ne
         current_example_grades = grades_array(i,:);
         current_example_size = cluster_size_col(i);
         current_example_mean_waveform = mean_waveform_array(i,:);
+
+        %compute ahead of time the overlap between the current cluster and all example cluster to avoid repeat computations
+        overlap_between_current_cluster_and_all_others = nan(size(presorted_table,1),1);
+        for overlap_counter=1:size(presorted_table,1)
+            c1 = blind_pass_table{:,"Z Score"} == presorted_table{overlap_counter,"Z Score"};
+            c2 = blind_pass_table{:,"Tetrode"} == presorted_table{overlap_counter,"Tetrode"};
+            c3 = blind_pass_table{:,"Cluster"} == presorted_table{overlap_counter,"Cluster"};
+
+            timestamp_index = fin
+
+            get_overlap_percentage_between_2_cluster_ts(blind_pass_table{i,"timestamps"}{1},blind_pass_table{top_of_window_index,"timestamps"}{1},config);
+        end
         for nn_counter=1:size(neural_networks_array,2)
             current_nn = neural_networks_array{nn_counter};
             %start by setting the broadest window possible
@@ -42,26 +54,38 @@ function [all_window_beginning,all_window_end] = get_window_based_on_multiple_ne
                 [~,is_left_better] = max(prediction_probabilities);
                 is_left_better = is_left_better-1;
                 if is_left_better
-                    
-                else
-
+                    beginning_of_window = beginning_of_window+1;
                 end
-
+                num_iterations = num_iterations+1;
+                % print_status_iter_message("get_window_based_on_multiple_neural_networks.m:first window loop:",[nn_counter,num_iterations],max_iterations);
             end
-            while end_of_window > 1 && abs(prediction_probabilities(2) - prediction_probabilities(1))>0.05 && end_of_window > beginning_of_window
+
+            num_iterations = 1;
+            prediction_probabilities = [1 1000];
+            while end_of_window > 1 && abs(prediction_probabilities(2) - prediction_probabilities(1))>0.05 && end_of_window > beginning_of_window && num_iterations < max_iterations
                 c1_for_bow = blind_pass_table{:,"Z Score"} == presorted_table{end_of_window,"Z Score"};
                 c2_for_bow = blind_pass_table{:,"Tetrode"} == presorted_table{end_of_window,"Tetrode"};
                 c3_for_bow = blind_pass_table{:,"Cluster"} == presorted_table{end_of_window,"Cluster"};
-                [bottom_of_window_index,~] = find(c1_for_bow,c2_for_bow,c3_for_bow);
+                [bottom_of_window_index,~] = find(c1_for_bow & c2_for_bow &c3_for_bow);
                 end_of_window_grades = grades_array(bottom_of_window_index,:);
                 end_of_window_size = cluster_size_col(bottom_of_window_index,1);
                 end_of_window_mean_waveform = mean_waveform_array(bottom_of_window_index,:);
 
                 %get the overlap between the the beginning of the window and current example
                 overlap = get_overlap_percentage_between_2_cluster_ts(blind_pass_table{i,"timestamps"}{1},blind_pass_table{bottom_of_window_index,"timestamps"}{1},config);
-                data_for_nn = [current_example_mean_waveform,current_example_grades,end_of_window_mean_waveform,end_of_window_grades,overlap,current_example_size,end_of_window_size];
+                
+                %because this is the end of the window we must organize the neural network data in such a way that we're trying to predict if the current example is worse
+                %therefore the end of the window information must be placed in the left category
+                data_for_nn = [end_of_window_mean_waveform,end_of_window_grades,current_example_mean_waveform,current_example_grades,overlap,end_of_window_size,current_example_size];
 
                 prediction_probabilities = predict(current_nn,data_for_nn);
+                [~,is_left_better] = max(prediction_probabilities);
+                is_left_better = is_left_better-1;
+                if is_left_better
+                    end_of_window = end_of_window-1;
+                end
+                % print_status_iter_message("get_window_based_on_multiple_neural_networks.m:second window loop:",[nn_counter,num_iterations],max_iterations);
+                num_iterations = num_iterations+1;
             end
 
             if beginning_of_window>5
@@ -74,12 +98,17 @@ function [all_window_beginning,all_window_end] = get_window_based_on_multiple_ne
         end
 
     end
-all_window_beginning = nan(size(blind_pass_table,1));
-all_window_end = nan(size(blind_pass_table,1));
+all_window_beginning = nan(size(blind_pass_table,1),1);
+all_window_end = nan(size(blind_pass_table,1),1);
 for i=1:size(blind_pass_table,1)
     %for every sample in the blind_pass_table we must try to minimize the window where its true accuracy might exist
+    beginning_time = tic;
     [all_window_beginning(i),all_window_end(i)]= run_all_neural_networks(neural_networks_array,presorted_table,i,blind_pass_table,cluster_size_col,mean_waveform_array,grades_array,config);
+    end_time = toc(beginning_time);
+    
     print_status_iter_message("get_window_based_on_multiple_neural_networks.m",i,size(blind_pass_table,1));
+    disp([all_window_beginning(i),all_window_end(i)]);
+    disp("It Took "+string(end_time)+" Seconds");
 end
 
 end

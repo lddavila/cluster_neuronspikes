@@ -1,0 +1,34 @@
+function [initial_observation,initial_state] =custom_reset_function()
+%import the config
+config = spikesort_config();
+%get the presorted table
+if config.ON_HPC
+    parent_save_dir = config.parent_save_dir_ON_HPC;
+    blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
+    presorted_table = importdata(fullfile(config.parent_save_dir,config.config.DIR_TO_SAVE_RESULTS_TO,"presorted_table.mat"));
+else
+    parent_save_dir = config.parent_save_dir;
+    blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
+    presorted_table = importdata(fullfile(config.parent_save_dir_ON_HPC,config.config.DIR_TO_SAVE_RESULTS_TO,"presorted_table.mat"));
+end
+
+random_sample_index = randi(size(blind_pass_table,1),1);
+
+
+[grade_names,all_grades]= flatten_grades_cell_array(blind_pass_table{:,"grades"},config);
+[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
+grades_array = all_grades(:,indexes_of_grades_were_looking_for);
+
+c1 = blind_pass_table{:,"Z Score"}==presorted_table{1,"Z Score"};
+c2 = blind_pass_table{:,"Tetrode"}==presorted_table{1,"Tetrode"};
+c3 = blind_pass_table{:,"Cluster"}==presorted_table{1,"Cluster"};
+
+[beginning_of_environment_index,~] = find(c1 & c2 & c3);
+
+beginning_of_environment_grades = grades_array(beginning_of_environment_index,:);
+random_sample_grades = grades_array(random_sample_index,:);
+
+initial_state = [beginning_of_environment_grades,random_sample_grades];
+initial_observation = initial_state;
+
+end

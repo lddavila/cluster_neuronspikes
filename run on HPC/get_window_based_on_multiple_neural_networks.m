@@ -11,6 +11,19 @@ function [all_window_beginning,all_window_end] = get_window_based_on_multiple_ne
         current_example_grades = grades_array(i,:);
         current_example_size = cluster_size_col(i);
         current_example_mean_waveform = mean_waveform_array(i,:);
+
+        %compute ahead of time the overlap between the current cluster and all example cluster to avoid repeat computations
+        overlap_between_current_cluster_and_all_others = nan(size(presorted_table,1),1);
+        for overlap_counter=1:size(presorted_table,1)
+            c1 = blind_pass_table{:,"Z Score"} == presorted_table{overlap_counter,"Z Score"};
+            c2 = blind_pass_table{:,"Tetrode"} == presorted_table{overlap_counter,"Tetrode"};
+            c3 = blind_pass_table{:,"Cluster"} == presorted_table{overlap_counter,"Cluster"};
+
+            [timestamp_index,~] = find(c1 & c2 & c3);
+
+            overlap_between_current_cluster_and_all_others(overlap_counter) =get_overlap_percentage_between_2_cluster_ts(blind_pass_table{i,"timestamps"}{1},blind_pass_table{timestamp_index,"timestamps"}{1},config);
+        end
+
         for nn_counter=1:size(neural_networks_array,2)
             current_nn = neural_networks_array{nn_counter};
             %start by setting the broadest window possible
@@ -30,7 +43,7 @@ function [all_window_beginning,all_window_end] = get_window_based_on_multiple_ne
                 beginning_of_window_mean_waveform = mean_waveform_array(top_of_window_index,:);
 
                 %get the overlap between the the beginning of the window and current example
-                overlap = get_overlap_percentage_between_2_cluster_ts(blind_pass_table{i,"timestamps"}{1},blind_pass_table{top_of_window_index,"timestamps"}{1},config);
+                overlap = overlap_between_current_cluster_and_all_others(beginning_of_window);
 
                 %now the beginning of window should be akin to the min amount of accuracy we expect example i to be
                 %therefore we should put example i's data in the left position as we expect it's accuracy to be higher than this
@@ -60,7 +73,7 @@ function [all_window_beginning,all_window_end] = get_window_based_on_multiple_ne
                 end_of_window_mean_waveform = mean_waveform_array(bottom_of_window_index,:);
 
                 %get the overlap between the the beginning of the window and current example
-                overlap = get_overlap_percentage_between_2_cluster_ts(blind_pass_table{i,"timestamps"}{1},blind_pass_table{bottom_of_window_index,"timestamps"}{1},config);
+                overlap = overlap_between_current_cluster_and_all_others(end_of_window);
                 
                 %because this is the end of the window we must organize the neural network data in such a way that we're trying to predict if the current example is worse
                 %therefore the end of the window information must be placed in the left category
@@ -90,8 +103,13 @@ all_window_beginning = nan(size(blind_pass_table,1),1);
 all_window_end = nan(size(blind_pass_table,1),1);
 for i=1:size(blind_pass_table,1)
     %for every sample in the blind_pass_table we must try to minimize the window where its true accuracy might exist
+    beginning_time = tic;
     [all_window_beginning(i),all_window_end(i)]= run_all_neural_networks(neural_networks_array,presorted_table,i,blind_pass_table,cluster_size_col,mean_waveform_array,grades_array,config);
+    end_time = toc(beginning_time);
+    
     print_status_iter_message("get_window_based_on_multiple_neural_networks.m",i,size(blind_pass_table,1));
+    disp([all_window_beginning(i),all_window_end(i)]);
+    disp("It Took "+string(end_time)+" Seconds");
 end
 
 end
