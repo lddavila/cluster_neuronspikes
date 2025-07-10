@@ -1,76 +1,48 @@
-function [next_observation,reward,is_done,next_state] = custom_step_function(action,state)
-home_dir = cd("..");
-addpath(genpath(pwd));
-cd(home_dir);
-%import the config
-config = spikesort_config();
-%define environment constants
-if config.ON_HPC
-    parent_save_dir = config.parent_save_dir_ON_HPC;
-    blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
-    presorted_table = importdata(fullfile(config.parent_save_dir,config.DIR_TO_SAVE_RESULTS_TO,"presorted_table.mat"));
-else
-    parent_save_dir = config.parent_save_dir;
-    blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
-    presorted_table = importdata(fullfile(config.parent_save_dir,config.DIR_TO_SAVE_RESULTS_TO,"presorted_table.mat"));
-end
+function [next_observation,reward,is_done,info] = custom_step_function(action,info)
 
-[grade_names,all_grades]= flatten_grades_cell_array(blind_pass_table{:,"grades"},config);
-[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
-grades_array = all_grades(:,indexes_of_grades_were_looking_for);
+all_possible_permutations_of_grades=info.all_possible_permutations_of_grades;
+loc_of_current_step = info.loc_of_current_step;
+terminal_state_1_index =info.terminal_state_1_index;
 
-%get only the grads of the enviornment
-grade_locs_for_presorted = nan(size(presorted_table,1),1);
-for i=1:size(presorted_table,1)
-    c1 = blind_pass_table{:,"Z Score"}==presorted_table{i,"Z Score"};
-    c2 = blind_pass_table{:,"Tetrode"}==presorted_table{i,"Tetrode"};
-    c3 = blind_pass_table{:,"Cluster"}==presorted_table{i,"Cluster"};
-    [grade_locs_for_presorted(i),~] =find(c1 & c2 & c3);
-end
+state = info.initial_state;
 
-all_possible_grades = [grades_array(grade_locs_for_presorted,:),repmat(state(19:end),size(presorted_table,1),1)];
 
-%determine where the current step is in the process
-[loc_of_current_step,~] = find(ismember(state,all_possible_grades,"rows"));
-
-%now get the ACTUAL accuracy of the current state
-[original_loc_in_bp_table,~] = find(ismember(state(19:end),grades_array,"rows"));
-true_accuracy = blind_pass_table{original_loc_in_bp_table,"accuracy"};
-
-%define 2 terminal states (can't move down anymore)/have reached true accuracy
-[~,terminal_state_1_index]= min(abs(true_accuracy-presorted_table{:,"accuracy"}));
 terminal_state_2_index= 100;
 
 %set rewards for terminal condition
 if action==0 && loc_of_current_step==terminal_state_1_index
-    reward = 10; %stopping at the correct location invokes a reward of 10
+    reward = 100; %stopping at the correct location invokes a reward of 10
 elseif action==1 && loc_of_current_step+1>terminal_state_1_index
     reward = -10; %moving past the correct state invokes a penalty of -10
-                  %moving past the correct state should invoke a steeper penalty as I'd prefer to be more conservative than liberal in estimating accuracy
+    %moving past the correct state should invoke a steeper penalty as I'd prefer to be more conservative than liberal in estimating accuracy
 elseif action==0 && loc_of_current_step ~= terminal_state_1_index
     reward = -10; %staying on the correct location invokes a penalty of -10
 elseif action==1 && loc_of_current_step ~= terminal_state_1_index
     reward = -1; %movement in general invokes a penalty of -1
 end
 
-%check to see if moving down is possible 
+%check to see if moving down is possible
 %it's only ever not possible when your at the bottom of the table
 if action==1 && loc_of_current_step==terminal_state_2_index
-    error("Must stay when you're already at the final position");
-end
-
-%now define the reward/punishment based on the true accuracy
-if action ==0
-    next_state = state;
+    reward = -10;
+    is_done=true;
+    next_observation = state;
+    
 else
-    next_state = all_possible_grades(loc_of_current_step+1,:);
-end
 
-next_observation = next_state;
+    %now define the reward/punishment based on the true accuracy
+    if action ==0
+        next_observation = state;
+    else
+        next_observation = all_possible_permutations_of_grades(loc_of_current_step+1,:);
+        info.initial_state = next_observation;
+        info.loc_of_current_step = loc_of_current_step+1;
+    end
+end
 
 
 %check if you have reached either possible terminal state
-if loc_of_current_step == terminal_state_1_index || loc_of_current_step == terminal_state_2_index
+if loc_of_current_step == terminal_state_1_index
     is_done=true;
 else
     is_done = false;

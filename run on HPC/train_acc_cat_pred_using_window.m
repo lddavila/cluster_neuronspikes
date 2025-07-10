@@ -75,11 +75,11 @@ for i=1:size(number_of_accuracy_categories,2)
         num_layers = number_of_layers(j);
         for k=1:size(filter_sizes,2)
             num_neurons = filter_sizes(k);
-            if ~isempty(already_done_nn)
-                if any(ismember(already_done_nn,[number_of_accuracy_cats,num_layers,num_neurons],'rows' ))
-                    continue;
-                end
-            end
+            % if ~isempty(already_done_nn)
+            %     if any(ismember(already_done_nn,[number_of_accuracy_cats,num_layers,num_neurons],'rows' ))
+            %         continue;
+            %     end
+            % end
 
             beginning_time = tic;
             [accuracy_score,net,~]=predict_acc_cat_using_leaky_relu(table_of_nn_data,num_neurons,num_layers);

@@ -34,23 +34,44 @@ for i=1:1:100
 end
 disp("Finished getting presorted table");
 
-%save the presorted table to use in environment creation
-cd(dir_to_save_results_to);
-save("presorted_table.mat","presorted_table");
-cd(home_dir)
-disp("finished saving presorted_table")
+%get only the grads of the enviornment
+grade_locs_for_presorted = nan(size(presorted_table,1),1);
+for i=1:size(presorted_table,1)
+    c1 = blind_pass_table{:,"Z Score"}==presorted_table{i,"Z Score"};
+    c2 = blind_pass_table{:,"Tetrode"}==presorted_table{i,"Tetrode"};
+    c3 = blind_pass_table{:,"Cluster"}==presorted_table{i,"Cluster"};
+    [grade_locs_for_presorted(i),~] =find(c1 & c2 & c3);
+end
 
+c1 = blind_pass_table{:,"Z Score"}==presorted_table{1,"Z Score"};
+c2 = blind_pass_table{:,"Tetrode"}==presorted_table{1,"Tetrode"};
+c3 = blind_pass_table{:,"Cluster"}==presorted_table{1,"Cluster"};
+
+[beginning_of_environment_index,~] = find(c1 & c2 & c3);
+
+size_of_blind_pass_table = size(blind_pass_table,1);
 [grade_names,all_grades]= flatten_grades_cell_array(blind_pass_table{:,"grades"},config);
 [indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
 grades_array = all_grades(:,indexes_of_grades_were_looking_for);
 disp("Finished Flattening Grades")
 
+ResetHandle = @() custom_reset_function(b)
+[initial_obs_info, info] = custom_reset_function(beginning_of_environment_index,size_of_blind_pass_table);
+
+[observation,reward,is_done,info] = custom_step_function(Action,info,);
+
 num_neurons_per_layer = filter_sizes(1);
 
 features = [grades_array,grades_array];
-[agent,critic,obs_info,action_info] = get_agent_and_critique_net(features,num_neurons_per_layer);
+[agent,~,obs_info,action_info] = get_agent_and_critique_net(features,num_neurons_per_layer);
 
-opt = rlTrainingOptions(MaxEpisodes= size(blind_pass_table),MaxStepsPerEpisode=5000,SaveAgentCriteria="AverageReward",StopTrainingValue=)
+opt = rlTrainingOptions(MaxEpisodes=1000, ...
+    MaxStepsPerEpisode=150, ...
+    SaveAgentCriteria="AverageReward");
+
+env = rlFunctionEnv(obs_info,action_info,"custom_step_function","custom_reset_function");
+
+train_results = train(agent,env,opt);
 
 
 end

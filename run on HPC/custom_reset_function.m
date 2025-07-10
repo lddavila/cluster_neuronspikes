@@ -1,37 +1,25 @@
-function [initial_observation,initial_state] =custom_reset_function()
-home_dir = cd("..");
-addpath(genpath(pwd));
-cd(home_dir);
-%import the config
-config = spikesort_config();
-%get the presorted table
-if config.ON_HPC
-    parent_save_dir = config.parent_save_dir_ON_HPC;
-    blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
-    presorted_table = importdata(fullfile(config.parent_save_dir,config.DIR_TO_SAVE_RESULTS_TO,"presorted_table.mat"));
-else
-    parent_save_dir = config.parent_save_dir;
-    blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
-    presorted_table = importdata(fullfile(config.parent_save_dir,config.DIR_TO_SAVE_RESULTS_TO,"presorted_table.mat"));
-end
+function [initial_observation,info] =custom_reset_function(beginning_of_environment_index,grades_array,size_of_blind_pass_table,blind_pass_table,presorted_grades_array,presorted_table)
 
-random_sample_index = randi(size(blind_pass_table,1),1);
+random_sample_index = randi(size_of_blind_pass_table,1);
 
 
-[grade_names,all_grades]= flatten_grades_cell_array(blind_pass_table{:,"grades"},config);
-[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
-grades_array = all_grades(:,indexes_of_grades_were_looking_for);
 
-c1 = blind_pass_table{:,"Z Score"}==presorted_table{1,"Z Score"};
-c2 = blind_pass_table{:,"Tetrode"}==presorted_table{1,"Tetrode"};
-c3 = blind_pass_table{:,"Cluster"}==presorted_table{1,"Cluster"};
 
-[beginning_of_environment_index,~] = find(c1 & c2 & c3);
 
 beginning_of_environment_grades = grades_array(beginning_of_environment_index,:);
 random_sample_grades = grades_array(random_sample_index,:);
 
 initial_state = [beginning_of_environment_grades,random_sample_grades];
+%define the first terminal step and also the location of the current step as to define rewards
+[terminal_state_1_index,loc_of_current_step,all_possible_permutations_of_grades] = find_terminal_state_index_and_current_step_index(presorted_grades_array,random_sample_index,presorted_table,blind_pass_table,initial_state);
+
+
 initial_observation = initial_state;
+
+info.initial_state = initial_state;
+info.random_sample_index = random_sample_index;
+info.terminal_state_1_index = terminal_state_1_index;
+info.loc_of_current_step = loc_of_current_step;
+info.all_possible_permutations_of_grades = all_possible_permutations_of_grades;
 
 end
