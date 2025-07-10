@@ -108,7 +108,7 @@ for i=1:size(blind_pass_table,1)
     end_time = toc(beginning_time);
     
     print_status_iter_message("get_window_based_on_multiple_neural_networks.m",i,size(blind_pass_table,1));
-    disp([all_window_beginning(i),all_window_end(i)]);
+    % disp([all_window_beginning(i),all_window_end(i)]);
     disp("It Took "+string(end_time)+" Seconds");
 end
 
