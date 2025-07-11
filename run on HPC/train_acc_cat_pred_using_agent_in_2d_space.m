@@ -1,4 +1,4 @@
-function [] = train_acc_cat_pred_using_agent()
+function [] = train_acc_cat_pred_using_agent_in_2d_space()
 home_dir = cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
@@ -22,15 +22,21 @@ if ~exist(dir_to_save_results_to,"dir")
 end
 disp("Finished Creating Save Dir")
 
+size_of_blind_pass_table = size(blind_pass_table,1);
+[grade_names,all_grades]= flatten_grades_cell_array(blind_pass_table{:,"grades"},config);
+[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
+grades_array = all_grades(:,indexes_of_grades_were_looking_for);
+disp("Finished Flattening Grades")
+
 
 %get a table of known accuracy amounts from simulated data
 presorted_table = [];
 rng(0); %set the seed for reproducability 
-for i=1:1:100
+for i=2:1:100
     lower_bound = i-1;
     upper_bound = i;
     [rows_in_boundary,~] = find(blind_pass_table{:,"accuracy"}<= upper_bound & blind_pass_table{:,"accuracy"} > lower_bound);
-    presorted_table = [presorted_table;blind_pass_table(rows_in_boundary(randperm(size(rows_in_boundary,1),1)),:)];
+    presorted_table = [presorted_table;blind_pass_table(rows_in_boundary(randperm(size(rows_in_boundary,1),5)),:)];
 end
 disp("Finished getting presorted table");
 
@@ -43,33 +49,34 @@ for i=1:size(presorted_table,1)
     [grade_locs_for_presorted(i),~] =find(c1 & c2 & c3);
 end
 
-c1 = blind_pass_table{:,"Z Score"}==presorted_table{1,"Z Score"};
-c2 = blind_pass_table{:,"Tetrode"}==presorted_table{1,"Tetrode"};
-c3 = blind_pass_table{:,"Cluster"}==presorted_table{1,"Cluster"};
 
-[beginning_of_environment_index,~] = find(c1 & c2 & c3);
 
-size_of_blind_pass_table = size(blind_pass_table,1);
-[grade_names,all_grades]= flatten_grades_cell_array(blind_pass_table{:,"grades"},config);
-[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
-grades_array = all_grades(:,indexes_of_grades_were_looking_for);
-disp("Finished Flattening Grades")
+presorted_grades_array = cell(size(reshape(grade_locs_for_presorted,5,[])'));
+grade_locs_for_presorted = reshape(grade_locs_for_presorted,5,[])';
+for i=1:size(grade_locs_for_presorted,1)
+    for j=1:size(grade_locs_for_presorted,2)
+        presorted_grades_array{i,j} = grades_array(grade_locs_for_presorted(i,j),:);
+    end
+end
 
-ResetHandle = @() custom_reset_function(b)
-[initial_obs_info, info] = custom_reset_function(beginning_of_environment_index,size_of_blind_pass_table);
 
-[observation,reward,is_done,info] = custom_step_function(Action,info,);
+
+
+ResetHandle = @() custom_reset_function_for_grid(grade_locs_for_presorted,grades_array,size_of_blind_pass_table,blind_pass_table,presorted_grades_array,presorted_table);
+% [initial_obs_info, info] = custom_reset_function(beginning_of_environment_index,size_of_blind_pass_table);
+
+StepHandle = @(Action,Info) custom_step_function_for_grid(Action,Info);
 
 num_neurons_per_layer = filter_sizes(1);
 
 features = [grades_array,grades_array];
-[agent,~,obs_info,action_info] = get_agent_and_critique_net(features,num_neurons_per_layer);
+[agent,~,obs_info,action_info] = get_agent_and_critique_net_for_grid(features,num_neurons_per_layer);
 
-opt = rlTrainingOptions(MaxEpisodes=1000, ...
-    MaxStepsPerEpisode=150, ...
+opt = rlTrainingOptions(MaxEpisodes=2000, ...
+    MaxStepsPerEpisode=200, ...
     SaveAgentCriteria="AverageReward");
 
-env = rlFunctionEnv(obs_info,action_info,"custom_step_function","custom_reset_function");
+env = rlFunctionEnv(obs_info,action_info,StepHandle,ResetHandle);
 
 train_results = train(agent,env,opt);
 

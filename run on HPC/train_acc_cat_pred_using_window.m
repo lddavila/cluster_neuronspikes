@@ -57,11 +57,13 @@ disp("Finished Getting Mean Waveform Array")
 cluster_size_col = cell2mat(cellfun(@size, blind_pass_table{:,"timestamps"}, 'UniformOutput', false));
 
 %for each item in the blind pass table define a window
+
 [window_beginning,window_end] = get_window_based_on_multiple_neural_networks(blind_pass_table,choose_better_neural_nets,presorted_table,cluster_size_col,mean_waveform_array,grades_array,config);
 disp("Finished Getting Windows");
 disp([window_beginning,window_end])
 cd(dir_to_save_results_to);
 disp(pwd);
+save("windows.mat","window_beginning","window_end")
 for i=1:size(number_of_accuracy_categories,2)
     number_of_accuracy_cats = number_of_accuracy_categories(i);
     % tic;
@@ -85,9 +87,9 @@ for i=1:size(number_of_accuracy_categories,2)
             [accuracy_score,net,~]=predict_acc_cat_using_leaky_relu(table_of_nn_data,num_neurons,num_layers);
             % [accuracy_score,net,~]= grades_neural_network_on_hpc(table_with_accuracy,spikesort_config,num_neurons,num_layers);
             end_time = toc(beginning_time);
-            current_iteration = ((i-1)*first_for_loop_num_iters)+((j-1)*second_for_loop_num_iters)+k;
+            % current_iteration = ((i-1)*first_for_loop_num_iters)+((j-1)*second_for_loop_num_iters)+k;
             % disp("Projected end time:"+string(currentDateTime+end_time));
-            disp("Finished "+string(current_iteration)+"/"+string(total_num_iterations));
+            % disp("Finished "+string(current_iteration)+"/"+string(total_num_iterations));
             disp("The last iteration took "+string(end_time)+" seconds")
             name_to_save_under = "accuracy score "+string(accuracy_score)+"number of acc cats " +string(number_of_accuracy_cats)+" num layers "+string(num_layers)+ " num neurons per layer"+string(num_neurons)+ " "+which_nn;
             fileID = fopen(name_to_save_under+ ".txt",'w');
