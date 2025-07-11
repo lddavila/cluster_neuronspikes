@@ -57,15 +57,8 @@ disp("Finished Getting Mean Waveform Array")
 cluster_size_col = cell2mat(cellfun(@size, blind_pass_table{:,"timestamps"}, 'UniformOutput', false));
 
 %for each item in the blind pass table define a window
-cd(dir_to_save_results_to);
-list_of_files = struct2table(dir(fullfile(pwd,"*.mat")));
-filenames = string(list_of_files.name);
-if any(contains(filenames,"windows"))
-    load("windows.mat","window_beginning","window_end")
-else
-    [window_beginning,window_end] = get_window_based_on_multiple_neural_networks(blind_pass_table,choose_better_neural_nets,presorted_table,cluster_size_col,mean_waveform_array,grades_array,config);
-end
-cd(home_dir);
+
+[window_beginning,window_end] = get_window_based_on_multiple_neural_networks(blind_pass_table,choose_better_neural_nets,presorted_table,cluster_size_col,mean_waveform_array,grades_array,config);
 disp("Finished Getting Windows");
 disp([window_beginning,window_end])
 cd(dir_to_save_results_to);
