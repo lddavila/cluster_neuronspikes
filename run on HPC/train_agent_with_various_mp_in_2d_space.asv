@@ -1,0 +1,218 @@
+function [] = train_agent_with_various_mp_in_2d_space()
+%avg_dist_from_correct_accuracy: An absolute distance measurement from the terminal row to the actual stopping row
+%a scalar between 1-100
+%smaller is better as it indicates you are near the correct row
+%bigger indicates you are far from the correct row
+%this is calculated off 1000 tests that the agent was NOT trained on
+%how to read meta data_string
+%1st number: illegal move penalty
+%2nd number: correct stop reward
+%3rd number: incorrect stop penalty
+%4th number: move toward goal reward
+%5th number: move away from goal penalty
+%6th number: lateral move on non row penalty
+%7th number: lateral move on terminal row penalty
+%8th number: number of neurons per layer
+%9th number: number of layers
+%10th number: time in seconds it took to train and validate the 
+%example agent_file_name
+% avg_dist_from_correct_acc_1_1st number_2nd number_3rd number_4th number_ ... _9th number_10th_number.mat
+
+home_dir = cd("..");
+addpath(genpath(pwd));
+cd(home_dir);
+
+%we want to play with various meta parameters in order to create a better agent
+%meta parameters to mess with
+%number of layers in the decision making NN
+%Discount Rate
+%the Rewards and Costs
+%
+
+
+config = spikesort_config();
+if config.ON_HPC
+    parent_save_dir = config.parent_save_dir_ON_HPC;
+    blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
+else
+    parent_save_dir = config.parent_save_dir;
+    blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
+end
+blind_pass_table.OG_IDX = (1:size(blind_pass_table,1)).';
+disp("Finished importing blind_pass_table")
+
+dir_to_save_results_to = fullfile(parent_save_dir,config.DIR_TO_SAVE_RESULTS_TO);
+if ~exist(dir_to_save_results_to,"dir")
+    dir_to_save_results_to = create_a_file_if_it_doesnt_exist_and_ret_abs_path(dir_to_save_results_to);
+end
+disp("Finished Creating Save Dir")
+
+size_of_blind_pass_table = size(blind_pass_table,1);
+[grade_names,all_grades]= flatten_grades_cell_array(blind_pass_table{:,"grades"},config);
+[indexes_of_grades_were_looking_for,~] = find(ismember(grade_names,config.NAMES_OF_CURR_GRADES(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST)));
+grades_array = all_grades(:,indexes_of_grades_were_looking_for);
+disp("Finished Flattening Grades")
+
+
+%get a table of known accuracy amounts from simulated data
+presorted_table = [];
+rng(0); %set the seed for reproducability
+for i=2:1:100
+    lower_bound = i-1;
+    upper_bound = i;
+    [rows_in_boundary,~] = find(blind_pass_table{:,"accuracy"}<= upper_bound & blind_pass_table{:,"accuracy"} > lower_bound);
+    presorted_table = [presorted_table;blind_pass_table(rows_in_boundary(randperm(size(rows_in_boundary,1),5)),:)];
+end
+disp("Finished getting presorted table");
+
+%get only the grades of the enviornment
+grade_locs_for_presorted = nan(size(presorted_table,1),1);
+for i=1:size(presorted_table,1)
+    c1 = blind_pass_table{:,"Z Score"}==presorted_table{i,"Z Score"};
+    c2 = blind_pass_table{:,"Tetrode"}==presorted_table{i,"Tetrode"};
+    c3 = blind_pass_table{:,"Cluster"}==presorted_table{i,"Cluster"};
+    [grade_locs_for_presorted(i),~] =find(c1 & c2 & c3);
+end
+
+
+
+presorted_grades_array = cell(size(reshape(grade_locs_for_presorted,5,[])'));
+grade_locs_for_presorted = reshape(grade_locs_for_presorted,5,[])';
+for i=1:size(grade_locs_for_presorted,1)
+    for j=1:size(grade_locs_for_presorted,2)
+        presorted_grades_array{i,j} = grades_array(grade_locs_for_presorted(i,j),:);
+    end
+end
+
+rng(0);
+training_idxs = randperm(round(size(blind_pass_table,1)/2));
+testing_idxs = setdiff(1:size(blind_pass_table,1),training_idxs).';
+
+
+ResetHandle = @() custom_reset_function_for_grid_dynamic(grade_locs_for_presorted,grades_array,blind_pass_table,presorted_grades_array,presorted_table,training_idxs);
+% [initial_obs_info, info] = custom_reset_function(beginning_of_environment_index,size_of_blind_pass_table);
+
+number_of_layers = 1:1:50;
+filter_sizes = [5 10 15 20 25 30 35 40 50];
+possible_eps = [0.2 0.1 0.01 0.3 0.4 0.5];
+
+possible_illegal_move_penalties = [-2];
+possible_rewards_for_correct_stop = [100];
+possible_penalty_for_incorrect_stop = [-5];
+possible_rewards_for_moving_towards_terminal_row = [1 2 3 4 5];
+possible_penalties_for_moving_away_from_terminal_rows = [0 -1 -2 -3 -4 -5];
+possible_lateral_move_on_incorrect_row_penalty = [0 -1 -2];
+possible_lateral_move_on_correct_row_reward = [0 1 2];
+%how to read meta data_string
+%1st number: illegal move penalty
+%2nd number: correct stop reward
+%3rd number: incorrect stop penalty
+%4th number: move toward goal reward
+%5th number: move away from goal penalty
+%6th number: lateral move on non row penalty
+%7th number: lateral move on terminal row penalty
+%8th number: number of neurons per layer
+%9th number: number of layers
+opt = rlTrainingOptions(MaxEpisodes=2000, ...
+    MaxStepsPerEpisode=50, ...,
+    Plots="none",...
+    Verbose=1,...
+    SaveAgentCriteria="AverageReward");
+for illegal_move_penalty =possible_illegal_move_penalties
+    for reward_for_correct_stop = possible_rewards_for_correct_stop
+        for penalty_for_incorrect_stop = possible_penalty_for_incorrect_stop
+            for reward_for_moving_towards_terminal_row = possible_rewards_for_moving_towards_terminal_row
+                for penalty_for_moving_away_from_terminal_row = possible_penalties_for_moving_away_from_terminal_rows
+                    for lateral_move_on_incorrect_row_penalty = possible_lateral_move_on_incorrect_row_penalty
+                        for lateral_move_on_correct_row_reward = possible_lateral_move_on_correct_row_reward
+                            StepHandle = @(Action,Info) custom_step_function_for_grid_dynamic(Action,Info, ...
+                                illegal_move_penalty, ...
+                                reward_for_correct_stop, ...
+                                penalty_for_incorrect_stop, ...
+                                reward_for_moving_towards_terminal_row, ...
+                                penalty_for_moving_away_from_terminal_row, ...
+                                lateral_move_on_incorrect_row_penalty, ...
+                                lateral_move_on_correct_row_reward);
+                            for k=1:size(possible_eps,2)
+                                current_eps = possible_eps(k);
+                                parfor i=1:size(number_of_layers,2)
+                                    num_layers = number_of_layers(i);
+                                    for j=1:size(filter_sizes,2)
+                                        beginning_time = tic;
+                                        num_neurons = filter_sizes(j);
+                                        features = [grades_array,grades_array];
+                                        [agent,~,obs_info,action_info] = get_agent_and_critique_net_for_grid_dynamic(features,num_neurons,num_layers,current_eps);
+
+                                        env = rlFunctionEnv(obs_info,action_info,StepHandle,ResetHandle);
+
+                                        train_results = train(agent,env,opt);
+
+                                        agent.AgentOptions.CriticOptimizerOptions.LearnRate = 0;
+                                        agent.AgentOptions.EpsilonGreedyExploration.Epsilon=0;
+
+                                        total_distances_from_true_terminal_row = nan(size(training_idxs,2),1);
+
+                                        num_episodes =size(testing_idxs,1);
+
+                                        for test_idx =1:num_episodes
+                                            [observation,info]= custom_reset_function_for_grid_dynamic(grade_locs_for_presorted,grades_array,blind_pass_table,presorted_grades_array,presorted_table,testing_idxs);
+                                            is_done = false;
+                                            max_num_steps = 500;
+                                            step_counter = 0;
+                                            while ~is_done && step_counter <= max_num_steps
+                                                action = getAction(agent,observation);
+                                                [next_observation,~,is_done,info] = custom_step_function_for_grid_dynamic(action{1},info, ...
+                                                    illegal_move_penalty, ...
+                                                    reward_for_correct_stop, ...
+                                                    penalty_for_incorrect_stop, ...
+                                                    reward_for_moving_towards_terminal_row, ...
+                                                    penalty_for_moving_away_from_terminal_row, ...
+                                                    lateral_move_on_incorrect_row_penalty, ...
+                                                    lateral_move_on_correct_row_reward);
+                                                observation = next_observation;
+                                                step_counter = step_counter+1;
+                                                % if mod(step_counter,100) ==0
+                                                %     print_status_iter_message("validating training",step_counter,max_num_steps);
+                                                % end
+                                            end
+                                            % print_status_iter_message("testing_agent",test_idx,num_episodes)
+                                            total_distances_from_true_terminal_row(test_idx) = abs(info.loc_of_current_step{1} - info.row_of_terminal_state);
+                                        end
+                                        average_distance_from_correct_accuracy = round(mean(total_distances_from_true_terminal_row,"all","omitmissing"));
+                                        elapsed_time = toc(beginning_time);
+                                        file_save_name = sprintf("avg_dist_from_true_acc_%i_%i_%i_%i_%i_%i_%i_%i_%i_%i_%.2f.mat", ...
+                                            average_distance_from_correct_accuracy, ...
+                                            illegal_move_penalty, ...
+                                            reward_for_correct_stop, ...
+                                            penalty_for_incorrect_stop, ...
+                                            reward_for_moving_towards_terminal_row, ...
+                                            penalty_for_moving_away_from_terminal_row, ...
+                                            lateral_move_on_incorrect_row_penalty, ...
+                                            lateral_move_on_correct_row_reward, ...
+                                            num_layers,...
+                                            num_neurons,...                                    
+                                            elapsed_time);
+
+                                        agent_struct = struct("ag",agent);
+                                        save(fullfile(dir_to_save_results_to,file_save_name),"-fromstruct","agent")
+                                        fprintf("Finished training agent, it took %f seconds",elapsed_time);
+
+
+                                        
+
+
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+
+
+
+end

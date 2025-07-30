@@ -11,12 +11,12 @@ terminal_state_2_index= 100;
 
 %set rewards for terminal condition
 if action==0 && loc_of_current_step==terminal_state_1_index
-    reward = 100; %stopping at the correct location invokes a reward of 10
+    reward = 5; %stopping at the correct location invokes a reward of 10
 elseif action==1 && loc_of_current_step+1>terminal_state_1_index
-    reward = -10; %moving past the correct state invokes a penalty of -10
+    reward = -2; %moving past the correct state invokes a penalty of -10
     %moving past the correct state should invoke a steeper penalty as I'd prefer to be more conservative than liberal in estimating accuracy
 elseif action==0 && loc_of_current_step ~= terminal_state_1_index
-    reward = -10; %staying on the correct location invokes a penalty of -10
+    reward = -2; %staying on the incorrect location invokes a penalty of -10
 elseif action==1 && loc_of_current_step ~= terminal_state_1_index
     reward = -1; %movement in general invokes a penalty of -1
 end
