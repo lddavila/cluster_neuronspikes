@@ -144,7 +144,7 @@ config.twin_nn_test_data = "D:\cluster_neuronspikes\Data\Cluster Plots Sorted In
 config.twin_nn_test_data_on_hpc = "/home/lddavila/data_from_local_server/test_twin_nn_data";
 
 config.parent_save_dir = "D:\cluster_neuronspikes\Data";
-config.parent_save_dir_ON_HPC = '/scratch/lddavila/data_to_copy_to_local_machine';
+config.parent_save_dir_ON_HPC = '/scratch/cnheaton/data_to_copy_to_local_machine';
 
 
 config.USE_WHAT_FOR_CHOOSE_BETTER = "images"; %used by train_pick_better_between_2_nn.m
