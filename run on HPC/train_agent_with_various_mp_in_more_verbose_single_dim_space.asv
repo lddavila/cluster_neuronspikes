@@ -105,7 +105,7 @@ for num_acc_cats=possible_number_of_acc_cats
     %6th number: number of neurons per layer
     %7th number: number of layers
     %8th number: time in seconds it took to train
-    opt = rlTrainingOptions(MaxEpisodes=100, ...
+    opt = rlTrainingOptions(MaxEpisodes=2000, ...
         MaxStepsPerEpisode=50, ...,
         Plots="none",...
         Verbose=1,...
@@ -125,7 +125,7 @@ for num_acc_cats=possible_number_of_acc_cats
                             current_eps = possible_eps(k);
                             for i=1:size(number_of_layers,2)
                                 num_layers = number_of_layers(i);
-                                for j=1:size(filter_sizes,2)
+                                for j=2:size(filter_sizes,2)
                                     beginning_time = tic;
                                     num_neurons = filter_sizes(j);
                                     [agent,~,obs_info,action_info] = get_agent_and_critique_net_for_verbose_states(number_of_features,num_neurons,num_layers,current_eps);
@@ -139,7 +139,7 @@ for num_acc_cats=possible_number_of_acc_cats
 
                                     total_distances_from_true_terminal_row = nan(size(training_idxs,2),1);
 
-                                    num_test_episodes =20;%size(testing_idxs,1);
+                                    num_test_episodes =size(testing_idxs,1);
                                     true_class = nan(1,num_test_episodes);
                                     final_class = nan(1,num_test_episodes);
                                     for test_idx =1:num_test_episodes
@@ -149,9 +149,10 @@ for num_acc_cats=possible_number_of_acc_cats
                                         step_counter = 0;
                                         true_class(test_idx) = info.row_of_terminal_state;
                                         while ~is_done && step_counter <= max_num_steps
-                                            action = getAction(agent,observation);
+                                            [action,idx_act] = getAction(agent,observation);
                                             disp(action);
-                                            disp(info.loc_of_current_step)
+                                            % disp(idx_act);
+                                            % disp(info.loc_of_current_step)
                        
                                             [next_observation,reward,is_done,info] = custom_step_function_for_grid_dynamic_verbose_states(action{1},info, ...
                                                 illegal_move_penalty, ...
@@ -161,8 +162,8 @@ for num_acc_cats=possible_number_of_acc_cats
                                 
                                             observation = next_observation;
                                             step_counter = step_counter+1;
-                                            disp(info.loc_of_current_step);
-                                            disp("####################")
+                                            % disp(info.loc_of_current_step);
+                                            % disp("####################")
                                             
                                         end
                                         final_class(test_idx) = info.loc_of_current_step;
@@ -171,8 +172,9 @@ for num_acc_cats=possible_number_of_acc_cats
                                     accuracy = ( sum(number_of_matches,'all')/ size(final_class,2))  * 100;
                                     
                                     elapsed_time = toc(beginning_time);
-                                    file_save_name = sprintf("acc_score_%i_%i_%i_%i_%i_%i_%i_%i_%i_%i_%.2f.mat", ...
+                                    file_save_name = sprintf("acc_score_%.2f_%i_%i_%i_%i_%i_%i_%i_%i_%.2f.mat", ...
                                         accuracy, ...
+                                        num_acc_cats,...
                                         illegal_move_penalty, ...
                                         reward_for_correct_stop, ...
                                         penalty_for_incorrect_stop, ...
@@ -184,7 +186,7 @@ for num_acc_cats=possible_number_of_acc_cats
 
                                     agent_struct = struct("ag",agent);
                                     save(fullfile(dir_to_save_results_to,file_save_name),"-fromstruct",agent_struct)
-                                    fprintf("Finished training agent, it took %f seconds",elapsed_time);
+                                    fprintf("Finished training agent, it took %f seconds\n",elapsed_time);
 
 
 

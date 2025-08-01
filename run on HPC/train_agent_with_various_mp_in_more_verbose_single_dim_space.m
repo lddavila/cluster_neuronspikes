@@ -125,7 +125,7 @@ for num_acc_cats=possible_number_of_acc_cats
                             current_eps = possible_eps(k);
                             for i=1:size(number_of_layers,2)
                                 num_layers = number_of_layers(i);
-                                for j=1:size(filter_sizes,2)
+                                for j=2:size(filter_sizes,2)
                                     beginning_time = tic;
                                     num_neurons = filter_sizes(j);
                                     [agent,~,obs_info,action_info] = get_agent_and_critique_net_for_verbose_states(number_of_features,num_neurons,num_layers,current_eps);
@@ -150,7 +150,7 @@ for num_acc_cats=possible_number_of_acc_cats
                                         true_class(test_idx) = info.row_of_terminal_state;
                                         while ~is_done && step_counter <= max_num_steps
                                             [action,idx_act] = getAction(agent,observation);
-                                            % disp(action);
+                                            disp(action);
                                             % disp(idx_act);
                                             % disp(info.loc_of_current_step)
                        
@@ -186,7 +186,7 @@ for num_acc_cats=possible_number_of_acc_cats
 
                                     agent_struct = struct("ag",agent);
                                     save(fullfile(dir_to_save_results_to,file_save_name),"-fromstruct",agent_struct)
-                                    fprintf("Finished training agent, it took %f seconds",elapsed_time);
+                                    fprintf("Finished training agent, it took %f seconds\n",elapsed_time);
 
 
 
