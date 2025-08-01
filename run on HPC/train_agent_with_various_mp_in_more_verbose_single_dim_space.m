@@ -125,7 +125,7 @@ for num_acc_cats=possible_number_of_acc_cats
                             current_eps = possible_eps(k);
                             for i=1:size(number_of_layers,2)
                                 num_layers = number_of_layers(i);
-                                for j=2:size(filter_sizes,2)
+                                parfor j=2:size(filter_sizes,2)
                                     beginning_time = tic;
                                     num_neurons = filter_sizes(j);
                                     [agent,~,obs_info,action_info] = get_agent_and_critique_net_for_verbose_states(number_of_features,num_neurons,num_layers,current_eps);
@@ -137,7 +137,7 @@ for num_acc_cats=possible_number_of_acc_cats
                                     % agent.AgentOptions.CriticOptimizerOptions.LearnRate = 0.1;
                                     % agent.AgentOptions.EpsilonGreedyExploration.Epsilon=0.1;
 
-                                    total_distances_from_true_terminal_row = nan(size(training_idxs,2),1);
+                                   
 
                                     num_test_episodes =size(testing_idxs,1);
                                     true_class = nan(1,num_test_episodes);
