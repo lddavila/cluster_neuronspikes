@@ -139,7 +139,7 @@ for num_acc_cats=possible_number_of_acc_cats
 
                                     total_distances_from_true_terminal_row = nan(size(training_idxs,2),1);
 
-                                    num_test_episodes =20;%size(testing_idxs,1);
+                                    num_test_episodes =size(testing_idxs,1);
                                     true_class = nan(1,num_test_episodes);
                                     final_class = nan(1,num_test_episodes);
                                     for test_idx =1:num_test_episodes
