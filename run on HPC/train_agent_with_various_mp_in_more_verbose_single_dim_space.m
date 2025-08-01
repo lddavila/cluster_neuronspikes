@@ -21,6 +21,9 @@ home_dir = cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
 
+
+
+
 %we want to play with various meta parameters in order to create a better agent
 %meta parameters to mess with
 %number of layers in the decision making NN
@@ -33,12 +36,20 @@ config = spikesort_config();
 if config.ON_HPC
     parent_save_dir = config.parent_save_dir_ON_HPC;
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
+    dir_for_jobs = config.parent_save_dir_ON_HPC;
+    c = parcluster('local');
+    c.JobStorageLocation = dir_for_jobs;
+    saveAsProfile(c, 'local_scratch');
+    parpool('local_scratch', 37);
+    disp("Finished setting batch location");
 else
     parent_save_dir = config.parent_save_dir;
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
 end
 blind_pass_table.OG_IDX = (1:size(blind_pass_table,1)).';
 disp("Finished importing blind_pass_table")
+
+
 
 dir_to_save_results_to = fullfile(parent_save_dir,config.DIR_TO_SAVE_RESULTS_TO);
 if ~exist(dir_to_save_results_to,"dir")
