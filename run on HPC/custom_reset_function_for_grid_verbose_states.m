@@ -1,6 +1,5 @@
 function [initial_observation,info] =custom_reset_function_for_grid_verbose_states(grades_array,blind_pass_table,array_of_training_idxs,cell_array_of_grades,acc_cat_dividers)
 
-acc_cat_dividers = [0,acc_cat_dividers];
 
 %choose a random grade set for the agent to bring into the environment 
 training_set_idx = randi([1,size(array_of_training_idxs,2)],1,1);
@@ -21,20 +20,15 @@ for i=1:size(cell_array_of_grades,1)
 end
 
 %find the terminal state
-is_set = false;
+row_of_terminal_state = 1; %in the case of accuracy less then 1 we put it in the bucket that already has 1% accuracy in it 
 for i=1:size(acc_cat_dividers,2)-1
     lower_bound_cond = acc_cat_dividers(i) < random_sample_accuracy; 
     upper_bound_cond = acc_cat_dividers(i+1) >= random_sample_accuracy;
     if lower_bound_cond && upper_bound_cond
         row_of_terminal_state = i;
-        is_set = true;
     end 
 end
-if ~is_set
-    disp("the terminal state row was never set")
-    disp(acc_cat_dividers)
-    disp(random_sample_accuracy)
-end
+
 
 initial_state = cell_array_of_grades{random_starting_point};
 
