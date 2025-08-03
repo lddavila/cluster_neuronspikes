@@ -91,7 +91,7 @@ rng(0);
 training_idxs = randperm(round(size(blind_pass_table,1)/2));
 testing_idxs = setdiff(1:size(blind_pass_table,1),training_idxs).';
 
-possible_number_of_acc_cats = [4 5 6 7 8 9 10];
+possible_number_of_acc_cats = [10];
 for num_acc_cats=possible_number_of_acc_cats
     [~,number_of_features,cell_array_of_grades,acc_cat_dividers] = get_environment_and_nn_dims(num_acc_cats,presorted_table,size(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST,2),grades_array);
 

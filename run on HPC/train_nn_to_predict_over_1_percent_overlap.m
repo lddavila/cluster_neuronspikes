@@ -1,4 +1,4 @@
-function [] = train_nn_to_ID_MUA_defined_as_multi_unit_overlap()
+function [] = train_nn_to_predict_over_1_percent_overlap()
 home_dir =cd("..");
 addpath(genpath(pwd));
 cd(home_dir);
@@ -18,7 +18,7 @@ else
 end
 disp("Finished loading the updated table of overlap")
 
-blind_pass_table = determine_multiple_under_units(blind_pass_table);
+blind_pass_table = add_number_of_overlap_percentages_above_one_col(blind_pass_table);
 
 
 
@@ -42,7 +42,7 @@ disp("Finished Flattening Grades")
 %get the mean waveform from each row
 mean_waveform_array = cell2mat(blind_pass_table{:,"Mean Waveform"});
 
-use_mean_waveform_or_dont = [0 1];
+use_mean_waveform_or_dont = [1 0];
 
 for use_mean_waveform=use_mean_waveform_or_dont
     for j=1:size(number_of_layers,2)
@@ -50,10 +50,10 @@ for use_mean_waveform=use_mean_waveform_or_dont
         for k=1:size(filter_sizes,2)
             num_neurons = filter_sizes(k);
             if use_mean_waveform
-                table_of_nn_data = array2table([grades_array,mean_waveform_array,blind_pass_table{:,"has_multiple_under_units"}]);
+                table_of_nn_data = array2table([grades_array,mean_waveform_array,blind_pass_table{:,"num_of_overlap_percentages_over_1"}]);
                 to_add = "_used_mean_waveform";
             else
-                table_of_nn_data = array2table([grades_array,blind_pass_table{:,"has_multiple_under_units"}]);
+                table_of_nn_data = array2table([grades_array,blind_pass_table{:,"num_of_overlap_percentages_over_1"}]);
                 to_add = "";
             end
             beginning_time = tic;
