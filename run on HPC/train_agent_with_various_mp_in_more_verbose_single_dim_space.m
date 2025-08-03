@@ -98,13 +98,13 @@ for num_acc_cats=possible_number_of_acc_cats
     ResetHandle = @() custom_reset_function_for_grid_verbose_states(grades_array,blind_pass_table,training_idxs,cell_array_of_grades,acc_cat_dividers);
     % [initial_obs_info, info] = custom_reset_function(beginning_of_environment_index,size_of_blind_pass_table);
 
-    number_of_layers = 1:1:50;
-    filter_sizes = [5 10 15 20 25 30 35 40 50];
+    number_of_layers = 100:1:1005;
+    filter_sizes = [1000,5000];
     possible_eps = [0.2 0.1 0.01 0.3 0.4 0.5];
 
     possible_illegal_move_penalties = [-2,-3];
     possible_rewards_for_correct_stop = [100,90,80];
-    possible_penalty_for_incorrect_stop = [-5,-10];
+    possible_penalty_for_incorrect_stop = [-150,-100,-85,-50,-10];
     possible_rewards_for_moving_towards_terminal_row = [1 2 3 4 5];
     possible_penalties_for_moving_away_from_terminal_rows = [0 -1 -2 -3 -4 -5];
     %how to read meta data_string
@@ -116,7 +116,7 @@ for num_acc_cats=possible_number_of_acc_cats
     %6th number: number of neurons per layer
     %7th number: number of layers
     %8th number: time in seconds it took to train
-    opt = rlTrainingOptions(MaxEpisodes=2000, ...
+    opt = rlTrainingOptions(MaxEpisodes=10, ...
         MaxStepsPerEpisode=50, ...,
         Plots="none",...
         Verbose=1,...
@@ -131,12 +131,13 @@ for num_acc_cats=possible_number_of_acc_cats
                             illegal_move_penalty, ...
                             reward_for_correct_stop, ...
                             reward_for_moving_towards_terminal_row, ...
-                            penalty_for_moving_away_from_terminal_row);
+                            penalty_for_moving_away_from_terminal_row, ...
+                            penalty_for_incorrect_stop);
                         for k=1:size(possible_eps,2)
                             current_eps = possible_eps(k);
                             for i=1:size(number_of_layers,2)
                                 num_layers = number_of_layers(i);
-                                parfor j=1:size(filter_sizes,2)
+                                for j=1:size(filter_sizes,2)
                                     beginning_time = tic;
                                     num_neurons = filter_sizes(j);
                                     [agent,~,obs_info,action_info] = get_agent_and_critique_net_for_verbose_states(number_of_features,num_neurons,num_layers,current_eps);
@@ -169,7 +170,8 @@ for num_acc_cats=possible_number_of_acc_cats
                                                 illegal_move_penalty, ...
                                                 reward_for_correct_stop, ...
                                                 reward_for_moving_towards_terminal_row,...
-                                                penalty_for_moving_away_from_terminal_row);
+                                                penalty_for_moving_away_from_terminal_row, ...
+                                                penalty_for_incorrect_stop);
                                 
                                             observation = next_observation;
                                             step_counter = step_counter+1;

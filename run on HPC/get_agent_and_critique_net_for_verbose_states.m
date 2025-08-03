@@ -38,7 +38,7 @@ net = connectLayers(net,"action_out","cct/in2");
 
 net = initialize(net);
 
-critic = rlQValueFunction(net,obs_info,action_info);
+critic = rlQValueFunction(net,obs_info,action_info,'ObservationInputNames','input','ActionInputNames','input_1');
 agent_options = rlQAgentOptions;
 
 agent = rlQAgent(critic,agent_options);

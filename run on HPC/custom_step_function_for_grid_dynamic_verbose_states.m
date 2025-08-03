@@ -2,7 +2,8 @@ function [next_observation,reward,is_done,info] = custom_step_function_for_grid_
     penalty_for_illegal_move, ...
     reward_for_correct_stop, ...
     reward_for_moving_towards_terminal_row, ...
-    penalty_for_moving_away_from_terminal_row)
+    penalty_for_moving_away_from_terminal_row, ...
+    penalty_for_incorrect_stop)
 % disp(action);
 
 all_possible_permutations_of_grades=info.all_possible_permutations_of_grades;
@@ -20,7 +21,7 @@ if action==0 %stay
         is_done = true;
         next_observation = state;
     else %stopping on the incorrect row, a dynamic penalty which is calculated based off distance from terminal row
-        reward = -1*abs(loc_of_current_step-terminal_state_row);
+        reward = penalty_for_incorrect_stop;
         is_done = false;
         %randomly jump to another state as a kind of soft reset
         %soft_reset_loc = randi([1,size(all_possible_permutations_of_grades,1)],1,1);
