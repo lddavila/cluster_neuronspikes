@@ -104,7 +104,7 @@ config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO ="D:\cluster_neuronspikes\Data\limited_
 config.DIR_TO_SAVE_CLUSTER_IMAGE_PNGS_TO_ON_HPC ="/scratch/lddavila/data_from_local_machine/100_by_100_cluster_pngs";
 
 config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS= "D:\cluster_neuronspikes\Data\final_overlap_table\final_table_with_overlap_only_neurons.mat";
-config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/cnheaton/data_from_local_machine/final_table_with_overlap_only_neurons.mat";
+config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC = "/scratch/cnheaton/data_from_local_machine/final_overlap_table/final_table_with_overlap_only_neurons.mat";
 
 %
 config.WHICH_NEURAL_NET = "under_unit_count";
