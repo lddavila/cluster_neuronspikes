@@ -12,6 +12,12 @@ config = spikesort_config;
 if config.ON_HPC
     parent_save_dir = config.parent_save_dir_ON_HPC;
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS_ON_HPC);
+    dir_for_jobs = config.parent_save_dir_ON_HPC;
+    c = parcluster('local');
+    c.JobStorageLocation = dir_for_jobs;
+    saveAsProfile(c, 'local_scratch');
+    parpool('local_scratch', 37);
+    disp("Finished setting batch location");
 else
     parent_save_dir = config.parent_save_dir;
     blind_pass_table = importdata(config.FP_TO_TABLE_OF_ALL_BP_CLUSTERS);
@@ -39,7 +45,7 @@ for i=possible_num_bins
     for use_mean_waveform=use_mean_waveform_or_dont
         for j=1:size(number_of_layers,2)
             num_layers = number_of_layers(j);
-            for k=1:size(filter_sizes,2)
+            parfor k=1:size(filter_sizes,2)
                 num_neurons = filter_sizes(k);
                 if use_mean_waveform
                     table_of_nn_data = array2table([grades_array,mean_waveform_array,blind_pass_table{:,"num_of_overlap_percentages_over_1"}]);
