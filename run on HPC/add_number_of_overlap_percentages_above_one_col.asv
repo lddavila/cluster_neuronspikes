@@ -6,18 +6,9 @@ has_mulitple_under_units = zeros(size(blind_pass_table,1),1);
 for i=1:size(blind_pass_table,1)
     current_data = sliced_bp_table{i};
     overlaps_with_all_units = current_data{1,"overlap % with all units"}{1};
-    over_min_count = sum(overlaps_with_all_units>10,"all");
-    %determine which bin this exists in 
-    %by default it will be 0 unless proved otherwhile
-    for j=1:size(bounds,2)-1
-        lower_bound_cond = bounds(j) <=over_min_count ;
-        upper_bound_cond = bounds(j+1) > over_min_count;
-        if lower_bound_cond && upper_bound_cond
-            has_mulitple_under_units(i) = j;
-        end
-        
-    end
-
+    has_mulitple_under_units(i) = sum(overlaps_with_all_units>10,"all");
+    %determine how many bins exist in here
+    
 end
 blind_pass_table.("num_of_overlap_percentages_over_1") = has_mulitple_under_units;
 disp("Finished getting under unit data.")

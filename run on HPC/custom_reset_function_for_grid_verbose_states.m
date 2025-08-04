@@ -1,5 +1,7 @@
 function [initial_observation,info] =custom_reset_function_for_grid_verbose_states(grades_array,blind_pass_table,array_of_training_idxs,cell_array_of_grades,acc_cat_dividers)
 
+%get the min and max of the enviornment data so that we can rescale the features later
+[feature_min,feature_max] = bounds(reshape(cell2mat(cell_array_of_grades),[],18));
 
 %choose a random grade set for the agent to bring into the environment 
 training_set_idx = randi([1,size(array_of_training_idxs,2)],1,1);
@@ -17,6 +19,19 @@ random_sample_grades = grades_array(random_sample_index,:);
 %append the agent's grade set to the enviornment indexes
 for i=1:size(cell_array_of_grades,1)
     cell_array_of_grades{i} = [cell_array_of_grades{i},random_sample_grades];
+end
+
+%rescale the features between 0-1
+
+reshaped_grades = reshape(cell2mat(cell_array_of_grades),[],18);
+normalized_grades = rescale(reshaped_grades,-1,1,"InputMax",feature_max,"InputMin",feature_min);
+%normalized_grades = reshaped_grades; You can verify that the order of the orignal hasn't changed by uncommenting this line
+ %then run the following line in the command line 
+ %all(cell_array_of_grades{1}==reshaped_grades(1,:))
+ %this should be true for all rows of the table
+reshaped_grades = reshape(normalized_grades,[],size(cell_array_of_grades{1},2));
+for i=1:size(cell_array_of_grades,1)
+    cell_array_of_grades{i} =reshaped_grades(i,:);
 end
 
 %find the terminal state

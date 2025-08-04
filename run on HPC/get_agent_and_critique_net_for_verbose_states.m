@@ -5,27 +5,27 @@ action_info = rlFiniteSetSpec([0,1,-1]);
 
 obs_path = [featureInputLayer(prod(obs_info.Dimension))];
 for i=1:num_layers
-    obs_path = [obs_path,fullyConnectedLayer(num_neurons_per_layer),reluLayer];
+    obs_path = [obs_path,fullyConnectedLayer(num_neurons_per_layer),leakyReluLayer];
 end
 obs_path = [obs_path,...
     fullyConnectedLayer(num_neurons_per_layer),...
-    reluLayer,...
+    leakyReluLayer,...
     fullyConnectedLayer(num_neurons_per_layer,Name="obs_out")];
 
 act_path = [featureInputLayer(prod(action_info.Dimension))];
 for i=1:num_layers
-    act_path = [act_path,fullyConnectedLayer(num_neurons_per_layer),reluLayer];
+    act_path = [act_path,fullyConnectedLayer(num_neurons_per_layer),leakyReluLayer];
 end
 act_path = [act_path,...
     fullyConnectedLayer(num_neurons_per_layer),...
-    reluLayer,...
+    leakyReluLayer,...
     fullyConnectedLayer(num_neurons_per_layer,Name="action_out")
     ];
 
 
 common_path = [concatenationLayer(1,2,Name="cct")
     fullyConnectedLayer(num_neurons_per_layer)
-    reluLayer
+    leakyReluLayer
     fullyConnectedLayer(1,Name="output")];
 
 net = dlnetwork;

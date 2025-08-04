@@ -91,15 +91,15 @@ rng(0);
 training_idxs = randperm(round(size(blind_pass_table,1)/2));
 testing_idxs = setdiff(1:size(blind_pass_table,1),training_idxs).';
 
-possible_number_of_acc_cats = [4 5 6 7 8 9 10];
+possible_number_of_acc_cats = [10, 3,9,7];
 for num_acc_cats=possible_number_of_acc_cats
     [~,number_of_features,cell_array_of_grades,acc_cat_dividers] = get_environment_and_nn_dims(num_acc_cats,presorted_table,size(config.GRADE_IDXS_THAT_ARE_USED_TO_PICK_BEST,2),grades_array);
 
     ResetHandle = @() custom_reset_function_for_grid_verbose_states(grades_array,blind_pass_table,training_idxs,cell_array_of_grades,acc_cat_dividers);
     % [initial_obs_info, info] = custom_reset_function(beginning_of_environment_index,size_of_blind_pass_table);
 
-    number_of_layers = 1:1:50;
-    filter_sizes = [5 10 15 20 25 30 35 40 50];
+    number_of_layers = 10:1:1005;
+    filter_sizes = 50:1:100;
     possible_eps = [0.2 0.1 0.01 0.3 0.4 0.5];
 
     possible_illegal_move_penalties = [-2,-3];
@@ -116,7 +116,7 @@ for num_acc_cats=possible_number_of_acc_cats
     %6th number: number of neurons per layer
     %7th number: number of layers
     %8th number: time in seconds it took to train
-    opt = rlTrainingOptions(MaxEpisodes=50, ...
+    opt = rlTrainingOptions(MaxEpisodes=size(training_idxs,2), ...
         MaxStepsPerEpisode=50, ...,
         Plots="none",...
         Verbose=1,...
@@ -171,7 +171,7 @@ for num_acc_cats=possible_number_of_acc_cats
                                                 reward_for_correct_stop, ...
                                                 reward_for_moving_towards_terminal_row,...
                                                 penalty_for_moving_away_from_terminal_row, ...
-                                                ,penalty_for_incorrect_stop);
+                                                penalty_for_incorrect_stop);
                                 
                                             observation = next_observation;
                                             step_counter = step_counter+1;
